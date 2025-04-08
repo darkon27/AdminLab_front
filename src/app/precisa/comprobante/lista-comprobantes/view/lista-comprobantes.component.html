@@ -1,0 +1,152 @@
+<nb-card fixed>
+    <nb-card-header>
+        <nav class="fixed">
+            <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+        </nav>
+    </nb-card-header>
+
+    <nb-card-body>
+        <p-fieldset legend="Consulta General">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="compania">Compañía</label>
+                        <p-dropdown [(ngModel)]="filtro.Compania" [filter]="true" [options]="lstCompania"                  
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="unidadNegocio">Unidad de Negocio</label>
+                        <p-dropdown id="unidadNegocio" placeholder="--Unidad de Negocio--"></p-dropdown>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="sede">Sede</label>
+                        <p-dropdown [(ngModel)]="filtro.Compania" [filter]="true" [options]="lstCompania"                  
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="tipoComprobante">Tipo Comprobante</label>
+                        <p-dropdown [(ngModel)]="filtro.TipoComprobante" [filter]="true" [options]="lstTipocomprobante"                  
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="serie">Serie</label>
+                        <p-dropdown [(ngModel)]="filtro.Compania" [filter]="true" [options]="lstCompania"                  
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="nroComprobante" class="label">Nro. Comprobante</label>
+                        <input pInputText type="text" placeholder="" style="width:100%; height: 30px;"
+                        [(ngModel)]="filtro.NumeroComprobante" id="inputOrdAten" maxlength="10" />                      
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="cliente">Cliente</label>
+                        <div class="p-inputgroup">
+                            <input pInputText type="text" placeholder="Código" [style]="{'width':'50px'}" />
+                            <input pInputText type="text" disabled class="hoverDisabled p-mr-2" style="width:100%" />
+                            <p-button icon="pi pi-search" styleClass="p-button-outlined p-mr-2" title="Buscar"></p-button>
+                            <p-button icon="pi pi-times" styleClass="p-button-outlined p-button-danger" title="Limpiar"></p-button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="fechaEmision">Fecha de Emisión</label>
+                        <div class="p-inputgroup">
+                            <p-calendar id="fechaEmision" dateFormat="dd/mm/yy" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"></p-calendar>
+                            <p-button icon="pi pi-times" styleClass="p-button-outlined p-button-danger"></p-button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="fechaVencimiento">Fecha de Vencimiento</label>
+                        <div class="p-inputgroup">
+                            <p-calendar id="fechaVencimiento" dateFormat="dd/mm/yy" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"></p-calendar>
+                            <p-button icon="pi pi-times" styleClass="p-button-outlined p-button-danger"></p-button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="p-field">
+                        <label for="estado">Estado</label>
+                        <p-dropdown [(ngModel)]="filtro.Estado" [filter]="true" [options]="lstEstado"                  
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                    </div>
+                </div>
+            </div>
+        </p-fieldset>
+
+        <p-fieldset legend="Leyenda General">
+
+        </p-fieldset>
+        <br>
+        <p-fieldset legend="Comprobante">
+                    <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="tipousuario"
+                        [responsive]="true" [sortOrder]="-1" sortField="tipousuario"
+                        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                        [showCurrentPageReport]="true">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="checkbox" style="width: 3rem;" scope="col"><input type="checkbox"></th>
+                                <th pSortableColumn="tipousuario" style="width: 5rem;">E.Envío<p-sortIcon field="tipousuario">
+                                    </p-sortIcon>
+                                </th>
+                                <th pSortableColumn="Perfil" style="width: 5rem;">Sunat<p-sortIcon field="Perfil"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="VaEstado">F.Factura<p-sortIcon field="VaEstado">
+                                    </p-sortIcon>
+                                </th>
+                                <th pSortableColumn="tipousuario">Nro.Factura<p-sortIcon field="tipousuario">
+                                    </p-sortIcon>
+                                </th>
+                                <th pSortableColumn="tipousuario">Cliente<p-sortIcon field="tipousuario">
+                                    </p-sortIcon>
+                                </th>
+                                <th pSortableColumn="tipousuario">Concepto<p-sortIcon field="tipousuario">
+                                    </p-sortIcon>
+                                </th>
+                                <th pSortableColumn="tipousuario">Clasificador<p-sortIcon field="tipousuario">
+                                    </p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-asignarPerfil>
+                            <tr>
+                                <td>{{asignarPerfil.tipousuario}}</td>
+                                <td>{{asignarPerfil.Perfil}}</td>
+                                <td>
+                                    <span>{{asignarPerfil.VaEstado}}</span>
+                                </td>
+                                <td>
+                                    <p-dropdown appendTo="body" [options]="perfilesAsignar" [filter]="true"
+                                        placeholder="Asignar Perfil"></p-dropdown>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+        </p-fieldset>
+    </nb-card-body>
+</nb-card>
+<ngx-lista-comprobantes-mantenimiento></ngx-lista-comprobantes-mantenimiento>

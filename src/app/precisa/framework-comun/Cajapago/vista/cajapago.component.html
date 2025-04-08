@@ -1,0 +1,445 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="9000">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+
+<p-dialog [(visible)]="verCajapago" [draggable]="false" [modal]="true" [resizable]="false"
+    [breakpoints]="{'950px': '100vw'}" [style]="{'width': '100vh', 'min-height': '100vh'}" [header]="acciones"
+    [position]="position" [maximizable]="true" [baseZIndex]="1000">
+    <br>
+    <ng-template pTemplate="content" [ngStyle]="{'min-height': '95vh'}">
+        <nb-stepper orientation="horizontal" disableStepNavigation>
+            <nb-step [label]="labelOne" [ngStyle]="{'margin-bottom':'0px'}">
+                <ng-template #labelOne>Datos Personales</ng-template>
+                <div class="row">
+                    <p-fieldset legend="Persona a facturar" class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Paciente</label>
+                                    <div class="p-inputgroup">
+                                        <input pInputText type="text" disabled
+                                            class="hoverDisabled  size-large  col-4 status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px"  [(ngModel)]="filtro.Documento" />&nbsp;
+                                        <input pInputText type="text" disabled
+                                            class="hoverDisabled  size-medium col-8 status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height:30px"  [(ngModel)]="filtro.NombreCompleto" />                                   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Comprobante</label>
+                                    <p-dropdown placeholder="Seleccione" [options]="lstTipoComprobante" 
+                                    [disabled]="puedeEditar" [(ngModel)]="filtro.TipoComprobante">
+                                </p-dropdown>    
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Serie</label>
+                                    <p-dropdown placeholder="Seleccione" [options]="lstSerie" 
+                                    [disabled]="puedeEditar" [(ngModel)]="filtro.SerieComprobante">
+                                    </p-dropdown>  
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Cliente</label>
+                                    <div class="p-inputgroup">
+                                        <input pInputText type="text"
+                                            class="hoverDisabled  size-large  col-4 status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px" [(ngModel)]="filtro.DocumentoCliente" />&nbsp;
+                                        <input pInputText type="text" disabled
+                                            class="hoverDisabled  size-medium col-8 status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height:30px" [(ngModel)]="filtro.NombreCliente" />
+                                        <div class="input-group-append">
+                                            <button class="botonbuscar" type="button" id="button-addon2" pButton icon="pi pi-times"
+                                            style=" height:30px; margin-left:-32px" (click)="limpiarPersona()"></button>
+                                        </div>
+                                        <button pButton icon="fa fa-search" class="botonbuscar" type="button"
+                                            title="Buscar Paciente"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Email</label>
+                                    <input pInputText type="text" [(ngModel)]="filtro.CorreoElectronico"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; background-color: rgb(255, 255, 255); height: 30px;" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Forma de pago</label>
+                                    <p-dropdown placeholder="Seleccione" [options]="lstMedioPago" 
+                                    [disabled]="puedeEditar" [(ngModel)]="filtro.TipoVenta">
+                                    </p-dropdown>                                
+                                 </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Moneda</label>                          
+                                        <p-dropdown placeholder="Seleccione" [options]="lstMoneda" 
+                                        [disabled]="puedeEditar" [(ngModel)]="filtro.Moneda">
+                                    </p-dropdown>                                     
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Afecto</label>
+                                    <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                    <input pInputText type="text" [(ngModel)]="filtro.Afecto"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; height: 30px;" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">IGV</label>
+                                    <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                    <input pInputText type="text" [(ngModel)]="filtro.Igv"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; height: 30px;" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Saldo</label>
+                                    <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2" style="width: 90%;"></p-inputNumber> -->
+                                    <input pInputText type="text"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; height: 30px;" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Total</label>
+                                    <!-- <p-inputNumber [disabled]="true" mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                    <input pInputText type="text" [(ngModel)]="filtro.Total"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; height: 30px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+
+                    <div class="col-sm-12 " style="display: flex; justify-content: space-between; margin-top: 5px;">
+                        <button pButton icon="pi pi-arrow-left" type="button" label="Anterior" class="prev-button"
+                            disabled nbStepperNext> </button>
+                        <button pButton icon="pi pi-arrow-right" type="button" label="Siguiente" class="next-button"
+                            nbStepperNext> </button>
+                    </div>
+
+                </div>
+
+            </nb-step>
+            <nb-step [label]="labelOne2">
+                <ng-template #labelOne2>Forma de Pago</ng-template>
+                <div class="row">
+                    <p-fieldset legend="Persona a facturar" class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Forma de pago</label>
+                                    <p-dropdown [filter]="false" [options]="lstTipoPago"
+                                        (onChange)="elegirTipoPago($event)"
+                                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Tipo de cambio</label>
+                                    <input pInputText type="text"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; height: 30px;" />
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-12" *ngIf="tipoPagoSeleccionado == 'EFECTIVO'"
+                                style="display: flex; flex-wrap: wrap;">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Moneda</label>
+                                        <p-dropdown placeholder="Seleccione" [options]="lstMoneda" 
+                                        [disabled]="puedeEditar" [(ngModel)]="filtro.Monedadet">
+                                    </p-dropdown>   
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Monto entregado</label>
+                                        <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                        <input pInputText type="text"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Total a pagar</label>
+                                        <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                        <input pInputText type="text"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Vuelto</label>
+                                        <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                        <input pInputText type="text"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="" *ngIf="tipoPagoSeleccionado != 'EFECTIVO'"
+                                style="display: flex; flex-wrap: wrap;">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Moneda</label>
+                                        <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                        <p-dropdown [filter]="false" [options]="[]"
+                                            [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Entidad</label>
+                                        <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                        <p-dropdown [filter]="false" [options]="[]"
+                                            [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Referencia</label>
+                                        <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                        <input pInputText type="text"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Importe</label>
+                                        <!-- <p-inputNumber  mode="decimal" [minFractionDigits]="2"></p-inputNumber> -->
+                                        <input pInputText type="text"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 mt-3"
+                                style="display: flex; justify-content: center; margin-top: 5px;">
+                                <button pButton icon="pi pi-save" type="button" label="Guardar"> </button>
+                            </div>
+
+                            <p-divider align="left" type="dashed" class="col-sm-12">
+                                <b>Total de pagos</b>
+                            </p-divider>
+
+                            <div class="col-sm-12">
+                                <p-table
+                                    [value]="[{LineNum:1,name:'Efectivo',total:'200'},{LineNum:2,name:'Tarjeta',total:'150'}]"
+                                    dataKey="LineNum" editMode="row">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th class="label text-center" ALIGN="center" style="width: 4rem;">Accion
+                                            </th>
+                                            <th class="label text-center" ALIGN="center" style="width: 2rem;">#</th>
+                                            <th class="label text-center" ALIGN="center" style="width: 8rem;">Tipo de
+                                                pago</th>
+                                            <th class="label text-center" ALIGN="center" style="width: 4rem;">Tipo de
+                                                pago</th>
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-tipoPago let-editing="editing" let-ri="rowIndex">
+                                        <tr [pEditableRow]="tipoPago">
+                                            <td style="text-align:center">
+                                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                                    icon="pi pi-pencil" (click)="onRowEditInit(tipoPago)"
+                                                    class="p-button-rounded p-button-text"></button>
+                                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                                    icon="pi pi-check" (click)="onRowEditSave(tipoPago)"
+                                                    class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                                    icon="pi pi-times" (click)="onRowEditCancel(tipoPago, ri)"
+                                                    class="p-button-rounded p-button-text p-button-danger"></button>
+                                            </td>
+                                            <td>
+                                                <p-cellEditor class="justify-content-center" style="display: flex;">
+                                                    <ng-template pTemplate="input" class="text-center">
+                                                        {{tipoPago.LineNum}}
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output" class="text-center">
+                                                        {{tipoPago.LineNum}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td>
+                                                <p-cellEditor class="justify-content-center" style="display: flex;">
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" [(ngModel)]="tipoPago.name"
+                                                            required
+                                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                                            style="width:100%; height: 30px;" />
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{tipoPago.name}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+
+                                            <td>
+                                                <p-cellEditor class="justify-content-center" style="display: flex;">
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" [(ngModel)]="tipoPago.total"
+                                                            required
+                                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                                            style="width:100%; height: 30px;" />
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{tipoPago.total | number:'1.2-2'}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="footer">
+                                        <tr>
+                                            <td style="width: 4rem;">
+                                                <span> </span>
+                                            </td>
+                                            <td style="width: 8rem;">
+                                                <span> </span>
+                                            </td>
+                                           
+                                            <td style="width: 12rem;">
+                                                <span style="width: 100%; display: block; text-align: end;"> Total S/.</span>
+                                            </td>
+                                            <td style="width: 12rem;" class="text-center">
+                                                <span style="width: 100%; display: block; text-align: center;"> 
+                                                    {{'1300' | number:'1.2-2'}}</span>
+                                            </td>
+                                            
+
+                                        </tr>
+
+
+
+                                    </ng-template>
+
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                    <div class="col-sm-12 " style="display: flex; justify-content: space-between;">
+                        <button pButton icon="pi pi-arrow-left" type="button" label="Anterior" class="prev-button"
+                            nbStepperPrevious> </button>
+                        <button pButton icon="pi pi-arrow-right" type="button" label="Siguiente" class="next-button"
+                            nbStepperNext> </button>
+                    </div>
+
+                </div>
+
+            </nb-step>
+            <nb-step [label]="labelOne3">
+                <ng-template #labelOne3>Confirmación</ng-template>
+                <div class="row">
+                    <div class="col-sm-12" style="height: 100%;">
+                        <h4>Step content #1</h4>
+                        <p class="lorem">
+                          ¡ COMPROBANTE F004 - 00009001 Generado con éxito!
+                        </p>         
+                    </div>
+                    <div class="col-sm-12" style="height: 100%;display: flex; justify-content: space-between;">
+                     
+                        <button pButton type="button" label="Ver Comprobante"> </button>
+                        <button pButton type="button" label="Aceptar" > </button>
+
+                    </div>   
+                </div>
+                    <br>  <br>  <br>
+                <div class="row">
+                    <div class="col-sm-12 " style="display: flex; justify-content: space-between;">
+                        <button pButton icon="pi pi-arrow-left" type="button" label="Anterior" class="prev-button"
+                            nbStepperPrevious> </button>
+                        <button pButton icon="pi pi-arrow-right" type="button" label="Siguiente" class="next-button"
+                            nbStepperNext> </button>
+                    </div>
+                </div>
+             
+
+            </nb-step>
+
+        </nb-stepper>
+
+    </ng-template>
+</p-dialog>
+
+<!-- 
+<p-dialog header="{{accionDetalle | uppercase}}" [(visible)]="isDialogDetalle" [modal]="true"
+    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" [baseZIndex]="1001"
+    (onHide)="btnCerrarDetalle()">
+    <br>
+    <p-fieldset legend="Nuevo Detalle">
+        <div class="row">
+            <div class="col-sm-6">
+                <label class="label">Tipo de Pago</label>
+
+                <p-dropdown [disabled]="puedeEditar" class="tablaCompletaIzquieda"               
+                    [style]="{'width':'100%','text-transform': 'uppercase','background-color': 'rgb(247, 247, 208)'  }"
+                 [options]="lstTipoPago">
+                </p-dropdown>
+            </div>
+            <div class="col-sm-6">
+                <label class="label">Moneda</label>
+                <p-dropdown [disabled]="puedeEditar" class="tablaCompletaIzquieda"
+      
+                [style]="{'width':'100%','text-transform': 'uppercase','background-color': 'rgb(247, 247, 208)'  }"
+               [options]="lstMoneda">
+            </p-dropdown>
+            </div>
+            <div class="col-sm-6">
+                <label class="label">Banco</label>
+                <p-dropdown [disabled]="puedeEditar" class="tablaCompletaIzquieda"
+              
+                [style]="{'width':'100%','text-transform': 'uppercase','background-color': 'rgb(247, 247, 208)'  }"
+              [options]="lstBanco">
+            </p-dropdown>
+            </div>   
+            <div class="col-sm-6">
+                <label class="label">Referencia</label>
+                <input pInputText type="text" [style]="{'width':'100%' }" [disabled]="puedeEditar" maxlength="100"
+              />
+            </div> 
+            <div class="col-sm-3">
+                <label class="label">Importe</label>
+                <p-inputNumber mode="decimal" [disabled]="puedeEditar"
+                    [inputStyle]="{'width':'100%','text-align': 'left','background-color': 'rgb(247, 247, 208)'}"
+                    [style]="{'width':'100%'}" [maxFractionDigits]="2" [minFractionDigits]="2" >
+                </p-inputNumber>           
+             
+            </div>
+        </div>
+    </p-fieldset>
+    <ng-template pTemplate="footer">
+        <p-button label="{{accionDetalle | titlecase }}" icon="pi pi-save" styleClass="p-button-primary"
+            [disabled]="puedeEditar" type="submit" (click)="ingresarDetalle()"></p-button>
+    </ng-template>
+</p-dialog> -->
+<p-toast key="bc" [baseZIndex]="1000"></p-toast>
+<p-toast [baseZIndex]="9999"></p-toast>

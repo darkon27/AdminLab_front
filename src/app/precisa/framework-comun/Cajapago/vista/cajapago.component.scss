@@ -1,0 +1,19 @@
+:host ::ng-deep {
+    .p-inputnumber-input {
+        width: -webkit-fill-available !important;
+    }
+    .nb-theme-default nb-stepper .step-content {
+        padding-bottom: 0px;
+    }
+    .p-datatable .p-datatable-tfoot > tr > td{
+        padding: 0px;
+    }
+
+    .p-dialog .p-dialog-content {
+    min-height: 90vh;
+    }
+
+    .nb-theme-default nb-stepper .step-content {
+        padding: 0px;
+    }
+}

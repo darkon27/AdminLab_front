@@ -1,0 +1,277 @@
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'1200px': '78vw'}"
+    [style]="{width: '1200px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    <ng-template pTemplate="content">   
+
+        <p-blockUI [blocked]="bloquearPag">
+            <img src="assets\img\ZZ5H.gif" style="width: 5%">
+        </p-blockUI>
+   
+            <div class="row">
+                <div class="col-sm-6">             
+                <p-fieldset legend="Cabecera">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label for="inputLastName" class="label">N° Liquidación</label>                            
+                                    <input pInputText type="text" placeholder="" 
+                                        style="width:100%; height: 30px;" [(ngModel)]="dto.cabecera.CodigoExpediente" />
+                                </div>    
+                                <div class="col-sm-4">
+                                    <label class="label">Fecha Liquidación</label>
+                                    <p-calendar [monthNavigator]="true"  [yearNavigator]="true"
+                                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2300" [locale]="es"
+                                        dateFormat="dd/mm/yy" [showIcon]="true"  [(ngModel)]="dto.cabecera.FechaInicio" >
+                                    </p-calendar>
+                                </div>         
+                                <div class="col-sm-4">
+                                    <label for="inputLastName" class="label">Tipo Admisión </label>
+                                    <p-dropdown   
+                                    [(ngModel)]="dto.cabecera.TipoAtencion"  [options]="lstAdmision"   >                
+                                    </p-dropdown> 
+                                </div>  
+                            </div> 
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="label">Fecha Aprobación</label>
+                                    <p-calendar [monthNavigator]="true" [yearNavigator]="true" [(ngModel)]="dto.cabecera.FechaAprobacion"
+                                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
+                                        dateFormat="dd/mm/yy" [showIcon]="true">
+                                    </p-calendar>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <label class="label">Fecha Cierre</label>
+                                    <p-calendar [monthNavigator]="true" [yearNavigator]="true" [style]="{'width':'100%'}" 
+                                    [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
+                                        dateFormat="dd/mm/yy" [showIcon]="true" [(ngModel)]="dto.cabecera.FechaFinal" >
+                                    </p-calendar>
+                                </div>                 
+
+                                <div class="col-sm-4">
+                                    <label for="inputLastName" class="label">Estado</label>
+                                    <p-dropdown   [filter]="true"
+                                    [(ngModel)]="dto.cabecera.Estado"  [options]="lstEstado" >                
+                                    </p-dropdown> 
+                                </div>  
+                            </div> 
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="inputLastName" class="label">Tipo Liquidación</label>
+                                    <p-dropdown  placeholder="Seleccione" [(ngModel)]="dto.cabecera.TipoExpediente"
+                                    [options]="lstTiposLiquidaciones" [filter]="true" >
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="inputLastName" class="label">Clasificador Negociador</label>
+                                    <p-dropdown  
+                                    [(ngModel)]="dto.cabecera.ClasificadorMovimiento"  [options]="lstClasificadorNegocio" >                
+                                    </p-dropdown> 
+                                </div>   
+                            </div>  
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="documentoFiscal" class="label">Cliente</label>
+                                    <div class="p-inputgroup">
+                                        <input pInputText type="text" id="documentoFiscal" name="documentoFiscal"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition" [disabled]="true"
+                                            style="width:70%; height: 30px;" [(ngModel)]="dto.cabecera.Documento"
+                                            (keydown)="keydownBuscar($event)" />
+                                        &nbsp;
+                                        <input pInputText type="text"
+                                            class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                                            style="width:130%; height: 30px;" [disabled]="true"
+                                            [(ngModel)]="dto.cabecera.NombreCompleto" />
+                                        <div class="input-group-append">
+                                            <button pButton icon="fa fa-times" type="button" title="Limpiar Cliente" 
+                                                class="p-button-secondary" style="margin-bottom: 5px;"
+                                                (click)="coreLimpiar()" style=" height:30px; margin-left: 3px; margin-right: 2px;"></button>
+                                                <button pButton icon="fa fa-search" class="botonbuscar" type="button"
+                                                (click)="verSelectorEmpresa()" title="Buscar Cliente"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="observacionAlta" class="label">Comentario</label>
+                                    <textarea pInputText type="text" placeholder="Ingrese comentario de la atención" id="observacionAlta"
+                                    name="observacionAlta" [style]="{'width':'100%'}" [(ngModel)]="dto.cabecera.Descripcion" 
+                                    class=" input-full-width size-large status-basic shape-round nb-transition "
+                                    ></textarea>
+                                </div>
+                            </div>  
+                          
+                        </div> 
+                    </div> 
+                </p-fieldset>
+                </div>
+                <div class="col-sm-6">
+                    <p-fieldset legend="Filtro adicionales">  
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="inputLastName" class="label">Periodo </label>
+                                        <p-dropdown  placeholder="Seleccione " 
+                                            [filter]="true" [(ngModel)]="dto.cabecera.Periodo" [options]="lstPeriodo" >
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="inputLastName" class="label">Tipo Paciente</label>
+                                        <p-dropdown  placeholder="Seleccione "  [filter]="true" 
+                                        [filter]="true" [(ngModel)]="dto.cabecera.TipoPaciente" [options]="lstTipoPaciente" (onChange)="selectedItemTipoPaciente($event)" >
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="inputLastName" class="label">Contrato</label>
+                                        <p-dropdown  placeholder="Seleccione "   [filter]="true" 
+                                        [filter]="true" [(ngModel)]="dto.cabecera.IdContrato" [options]="lstContrato"  (onChange)="selectedItemContrato($event)">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="inputLastName" class="label">Sede</label>
+                                        <p-dropdown  placeholder="Seleccione " 
+                                            [filter]="true"  [(ngModel)]="dto.cabecera.IdSede" [options]="lstSede" >
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="label">Fecha Inicial</label>
+                                        <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                            [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
+                                            dateFormat="dd/mm/yy" [(ngModel)]="dto.cabecera.fechaInicial" [showIcon]="true">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="label">Fecha Final</label>
+                                        <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                            [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
+                                            dateFormat="dd/mm/yy" [(ngModel)]="dto.cabecera.fechaFinal" [showIcon]="true">
+                                        </p-calendar>
+                                    </div>
+                                </div>
+              
+                            </div>
+                        </div>
+                    </p-fieldset>
+                    <p-fieldset legend="Detalle de liquidación">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">N° Petición</label>
+                                    <div class="p-inputgroup">
+                                        <input pInputText type="text" 
+                                            class="hoverDisabled  size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px" />&nbsp;
+                                        <button pButton icon="fa fa-search" class="botonbuscar" type="button"
+                                            title="Factura" ></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Cod. Componente</label>
+                                    <div class="p-inputgroup">
+                                        <input pInputText type="text" 
+                                            class="hoverDisabled  size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px"  />&nbsp;
+                                        <button pButton icon="fa fa-search" class="botonbuscar" type="button"
+                                            title="Factura"  ></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                                    
+                            </div>                
+                            <div class="col-sm-12"> 
+                                <p-table id="contenido" #dt [rows]="15" [paginator]="true" [rowHover]="true" [responsive]="true "
+                                        [style]="{ width: '100%'}" [sortOrder]="1" sortField="num" [value]="lstExpedienteDetalle" [(selection)]="seleccion"
+                                        selectionMode="single" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                                        [globalFilterFields]="['Nombre', 'CodigoComponente', 'NroPeticion']"
+                                        [rowsPerPageOptions]="[25,50,100]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+                                        <ng-template pTemplate="header">
+                                            <tr>  
+                                                <th style="width: 8rem;" class="label">Acción</th>
+                                                <th class="label" pSortableColumn="IdSecuencia" ALIGN="center" 
+                                                    style="width: 4rem; text-align: center;">
+                                                    Nro<p-sortIcon field="IdSecuencia"></p-sortIcon>
+                                                </th>
+                                                <th class="label" pSortableColumn="CodigoComponente" ALIGN="center"
+                                                    style="width: 8rem; text-align: center;">
+                                                    Componente<p-sortIcon field="CodigoComponente"></p-sortIcon>
+                                                </th>                    
+                                                <th class="label" pSortableColumn="NroPeticion" ALIGN="center"
+                                                    style="width: 8rem; text-align: center;">
+                                                    NroPeticion<p-sortIcon field="NroPeticion"></p-sortIcon>
+                                                </th>  
+                                                <th class="label" pSortableColumn="Periodo" ALIGN="center" 
+                                                    style="width: 6rem; text-align: center;">
+                                                    Periodo<p-sortIcon field="Periodo"></p-sortIcon>
+                                                </th>                                      
+                                                <th class="label" pSortableColumn="MontoTotal" ALIGN="center" 
+                                                    style="width: 6rem; text-align: center;">
+                                                    Monto<p-sortIcon field="MontoTotal"></p-sortIcon>
+                                                </th>
+                                            </tr>                                         
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-rowData>
+                                            <tr [pSelectableRow]="rowData"> 
+                                                <td style="width: 8rem">
+                                                    <span class="p-column-title">Acción</span>
+                                                    <table>
+                                                    <tr>
+                                                        <th>
+                                                        <button pButton pRipple type="button" icon="fal fa-trash-alt"
+                                                            class="p-button-rounded p-button-text" title="Inactivar" (click)="coreInactivar(rowData)"
+                                                            [disabled]="rowData.Estado == '2'"></button>
+                                                        </th>
+                                                    </tr>
+                                                    </table>
+                                                </td>
+                                                <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 4rem; text-align: center;">
+                                                    <span class="p-column-title">Nro</span>
+                                                    {{ rowData.IdSecuencia }}
+                                                </td> 
+                                                <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
+                                                    <span class="p-column-title">Codigo</span>
+                                                    {{ rowData.CodigoComponente |uppercase }}
+                                                </td>
+                                                <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
+                                                    <span class="p-column-title">NroPeticion</span>
+                                                    {{ rowData.NroPeticion |uppercase }}
+                                                </td>                         
+                                                <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem;">
+                                                    <span class="p-column-title">Periodo</span>
+                                                    {{ rowData.Periodo |uppercase }}
+                                                </td>
+                                                <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem; text-align: center;">
+                                                    <span class="p-column-title">Total</span>
+                                                    {{ rowData.MontoTotal | number:'1.2-2'}}
+                                                </td>                                      
+                                            </tr>
+                                        </ng-template>
+                                </p-table>                    
+                            </div>                      
+                        </div>
+                    </p-fieldset>
+                </div>
+            </div>
+            <div class="row">
+                <nb-card class="col-sm-12 fondocard2 bordercard">
+                    <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
+                        [modificacionFecha]="fechaModificacion"></ngx-auditoria>
+                </nb-card>
+            </div>    
+
+     
+    </ng-template>    
+    <ng-template pTemplate="footer">
+        <p-button label="Guardar" icon="pi pi-save"  styleClass="p-button-primary"
+            type="submit"   (click)="coreGuardar()"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-toast [baseZIndex]="5000"></p-toast>
+<ngx-empresa-buscar></ngx-empresa-buscar>

@@ -1,0 +1,7 @@
+{
+  "env": "http://localhost",
+  "proxy.precisa": ":44334/",
+  "proxy.soa": "/ServiciosRest/RestServices/",
+  "proxy.reporte": "http://localhost/AppReporte/",
+  "recursos.precisa": "Probando"
+}	

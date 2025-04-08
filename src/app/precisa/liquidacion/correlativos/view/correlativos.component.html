@@ -1,0 +1,131 @@
+<p-blockUI [blocked]="bloquearPag">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+  </p-blockUI>
+  <p-confirmDialog #c key="confirm2">
+    <p-footer>
+      <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+        (click)="c.accept()"></button>
+      <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded" (click)="c.reject()"></button>
+    </p-footer>
+  </p-confirmDialog>
+   
+ <p-card> 
+    <nb-card-header>
+        <nav class="fixed">
+            <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+        </nav>
+    </nb-card-header>
+    <p-fieldset legend="Información Consulta">
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="inputLastName" class="label">Compañia</label>
+                <p-dropdown [(ngModel)]="filtro.CompaniaCodigo" [filter]="true" [options]="lstCompania"                  
+                [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+            </div>
+            <div class="col-sm-3">         
+                <label for="inputLastName" class="label">Tipo Comprobante</label>
+                <p-dropdown [(ngModel)]="filtro.TipoComprobante" [filter]="true" [options]="lstTipoComprobante"                  
+                [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>         
+            </div>
+            <div class="col-sm-3">
+                <label for="inputLastName" class="label">Serie</label>
+                <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" mode="currency"
+                    currency="PEN" locale="es-PE" [(ngModel)]="filtro.Serie"/>
+            </div>
+          <div class="col-sm-3">
+            <label for="inputLastName" class="label">Estado</label>
+            <p-dropdown [(ngModel)]="filtro.Estado" [filter]="true" [options]="lstEstado"
+            [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+          </div>
+        </div>
+      </p-fieldset>
+    <nb-card-body style="background-color: transparent;">       
+            <p-fieldset legend="Detalle">            
+                <div class="row">
+                    <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstGrilla"
+                    [responsive]="true" [sortOrder]="1" sortField="num"
+                    [ngStyle]="{'padding-left': '25px','padding-right': '25px','background-color': '#9cb9d1 !important;'}"
+                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                    [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+                    <ng-template pTemplate="header">
+                            <tr>
+                                <th class="tablaHeaderAccion3" style="font-size: 11px;">Acción</th>
+                                <th pSortableColumn="tipousuario" style="font-size: 11px;">Nro <p-sortIcon
+                                        field="tipousuario"> </p-sortIcon>
+                                </th>
+                                <th pSortableColumn="Perfil" style="font-size: 11px;">Compañia <p-sortIcon
+                                        field="Perfil"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="VaEstado" style="font-size: 11px;">Tipo Comprobante<p-sortIcon
+                                        field="VaEstado"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="VaEstado" style="font-size: 11px;">Serie <p-sortIcon
+                                        field="VaEstado"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="Perfil" style="font-size: 11px;">Correlativo Número <p-sortIcon
+                                        field="Perfil"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="Perfil" style="font-size: 11px;">Correlativo Desde <p-sortIcon
+                                        field="Perfil"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="Perfil" style="font-size: 11px;"> Correlativo Hasta <p-sortIcon
+                                        field="Perfil"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="Perfil" style="font-size: 11px;">Estado <p-sortIcon field="Perfil">
+                                    </p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData>
+                            <tr>
+                                <td class="tablaColumnaAccion3">
+                                    <span class="p-column-title">Acción</span>
+                                    <table>
+                                        <tr>
+                                            <th>
+                                                <button pButton pRipple type="button" icon="fad fa-pencil-alt"
+                                                    class="p-button-rounded p-button-text" title="Editar"
+                                                    (click)="coreEditar(rowData)"></button>
+                                            </th>
+                                            <th>
+                                                <button pButton pRipple type="button" icon="fad fa-search"
+                                                    (click)="coreVer(rowData)"
+                                                    class="p-button-rounded p-button-text" title="Ver"></button>
+                                            </th>
+                                            <th>
+                                                <button pButton pRipple type="button" icon="fal fa-trash-alt"
+                                                    (click)="coreInactivar(rowData)"
+                                                   class="p-button-rounded p-button-text" title="Inactivar"></button>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </td>
+                                
+                                <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 4rem; text-align: center;">
+                                    <span class="p-column-title">Nro</span>
+                                    {{ rowData.num }}
+                                </td>
+
+                                <td>{{rowData.DescripcionCorta}}</td>
+
+                                <td>{{rowData.TipoComprobante}}</td>
+
+                                <td>
+                                    <span>{{rowData.Serie}}</span>
+                                </td>
+                                <td>{{rowData.CorrelativoNumero}}</td>
+
+                                <td>{{rowData.CorrelativoDesde}}</td>
+
+                                <td>
+                                    <span>{{rowData.CorrelativoHasta}}</span>
+                                </td>
+                                <td>{{rowData.ESTADOdesc}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>            
+        </p-fieldset>  
+    </nb-card-body>
+</p-card>
+<ngx-correlativos-mantenimiento></ngx-correlativos-mantenimiento>

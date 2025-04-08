@@ -1,0 +1,127 @@
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'1050px': '75vw'}"
+  [style]="{width: '950px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+          <!--
+            * Autor: Geampier Smc
+            * Tipo: Maquetación
+            * Detalle: Mejora de diseño
+          -->
+  <ng-template pTemplate="content">
+    <p-fieldset [style]="{'margin-top':'8px'}" legend="Registros Asignados">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="inputLastName" class="label">Examen</label>
+            <input pInputText type="text" placeholder="" style="width:100%; height: 30px;" />
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="inputLastName" class="label">Homologación</label>
+            <input pInputText type="text" placeholder=""
+              style="width:100%; background-color: rgb(247, 247, 208); height: 30px;" />
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="inputLastName" class="label">Cliente</label>
+          <div class="p-inputgroup">
+            <div class="p-inputgroup">
+              <input pInputText type="text" (keydown)="validarTeclaEnterEmpresaAseguradora($event)" [(ngModel)]="filtro.Documento"
+              class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                style="width:70%; background-color: rgb(247, 247, 208); height: 30px;"
+                [disabled]="editarCampoEmpresa"  />
+              <input pInputText type="text"
+                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                style="width:130%; background-color: rgb(247, 247, 208); height: 30px;"
+                [(ngModel)]="filtro.NombreCompleto" [disabled]="true" />
+
+                <div class="input-group-append">
+                  <button pButton icon="fad fa-minus-circle" type="button" title="Limpiar"  id="button-addon2"
+                      (click)="limpiarEmpresa()" [disabled]="editarCampos">
+                  </button>
+                  <button (click)="verSelectorEmpresa('CLIENTE')" pButton icon="fal fa-search"
+                      class="botonbuscar" [disabled]="editarCampos" type="button"
+                      title="Buscar Empresa"></button>
+                  <button (click)="crearPersona()" pButton icon="fal fa-user-plus"
+                      class="botonbuscar" [disabled]="editarCampos" type="button"
+                      title="Nueva Empresa"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <br>
+      <div class="col">
+        <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="tipousuario" [responsive]="true"
+          [sortOrder]="1" sortField=""  [value]="lsthomologacion"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+          [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="200px" [style]="{ width: '100%'}"
+          [rowsPerPageOptions]="[15,30,50]">
+
+          <ng-template pTemplate="colgroup">
+            <colgroup>
+              <col style="width:45px">
+            </colgroup>
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="tablaHeaderAccion3 label">
+                Acciones</th>
+              <th pSortableColumn="numeroempresa" class="label text-center" style="width: 3rem;">
+                N°<p-sortIcon field="numeroempresa"> </p-sortIcon>
+              </th>
+              <th class="label  text-center" style="width: 8rem;" pSortableColumn="Persona">Cliente<p-sortIcon
+                  field="Persona">
+                </p-sortIcon>
+              </th>
+              <th class="label  text-center" style="width: 8rem;" pSortableColumn="NombreCompleto">Homologación<p-sortIcon
+                field="NombreCompleto">
+              </p-sortIcon>
+            </th>
+
+
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+
+            <tr>
+              <!-- <tr [pSelectableRow]="rowData"> -->
+
+              <td class="tablaColumnaCodigoChico" style="width: 3rem;" ALIGN="center">
+                <span>{{rowData.numeroExamen}}</span>
+              </td>
+        
+              <td class="tablaColumnaCodigoChico" style="width: 10rem;" ALIGN="center">
+                <span>{{rowData.NombreCompleto}}</span>
+              </td>
+
+              <td class="tablaColumnaCodigoChico" style="width: 8rem;" ALIGN="center">
+                <span>{{rowData.CodigoHomologado}}</span>
+              </td>
+
+              <td class="tablaColumnaCodigoChico" style="width: 5rem;" ALIGN="center">
+             
+              </td>
+
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-fieldset>
+
+    <!-- <p-fieldset legend="Datos Generales">
+                <ngx-auditoria></ngx-auditoria>
+            </p-fieldset> -->
+
+
+  </ng-template>
+  <ng-template pTemplate="footer" aria-orientation="horizontal">
+    <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" type="submit"
+      (click)="coreGuardar()" [disabled]="editarCampos"></p-button>
+  </ng-template>
+
+
+</p-dialog>
+<ngx-empresa-buscar></ngx-empresa-buscar>

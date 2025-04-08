@@ -1,0 +1,54 @@
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
+    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    <ng-template pTemplate="content">
+        <p-fieldset legend="Información">       
+                <div class="container">
+                    <div class="row">
+                      <!-- Primera columna: Campos de texto -->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="codigo" class="label">Código</label>
+                          <input pInputText type="text" id="codigo" [(ngModel)]="dto.IdCodigo" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                          <label for="descripcion" class="label">Descripción</label>
+                          <input pInputText type="text" id="descripcion" [(ngModel)]="dto.Descripcion" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                          <label for="orden" class="label">Orden</label>
+                          <input pInputText type="text" id="orden" [(ngModel)]="dto.Orden" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                          <label for="estado" class="label">Estado</label>
+                          <p-dropdown [options]="lstEstado" [(ngModel)]="dto.Estado" [disabled]="puedeEditar"></p-dropdown> 
+                        </div>
+                      </div>
+                  
+                      <!-- Segunda columna: Checkboxes -->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <nb-checkbox status="success" [(ngModel)]="dto.Visible">Visible</nb-checkbox>
+                        </div> <br>                       
+                        <div class="form-group">
+                            <nb-checkbox status="success" [(ngModel)]="dto.FlagReferencia">Referencia</nb-checkbox>                      
+                        </div> <br>
+                        <div class="form-group">
+                            <nb-checkbox status="success" [(ngModel)]="dto.FlagBanco">Banco</nb-checkbox>                       
+                        </div> <br>
+                        <div class="form-group">                            
+                            <nb-checkbox status="success" [(ngModel)]="dto.Orden">Orden</nb-checkbox>                    
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        </p-fieldset>
+        <p-fieldset legend="Auditoria">
+            <ngx-auditoria></ngx-auditoria>
+        </p-fieldset>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar"
+        type="submit"   (click)="saveProduct($event)" ></p-button>
+    </ng-template>
+</p-dialog>
+<p-toast></p-toast>

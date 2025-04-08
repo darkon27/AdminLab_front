@@ -1,0 +1,197 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+        <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-confirmDialog #c key="UsuaDialog" [visible]="visible" [baseZIndex]="10000">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'1050px': '75vw'}"
+    [style]="{width: '1050px'}" [header]="acciones" [position]="position" [maximizable]="true"  [baseZIndex]="1000">
+
+    <ng-template pTemplate="content">
+        <div class="row">
+            <div class="col-sm-7">
+                <p-fieldset legend="Información General">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="label">Persona</label>
+                            <div class="p-inputgroup">
+                                <div class="p-inputgroup">
+                                    <input pInputText type="text" (keydown)="validarTeclaEnter($event)"
+                                        [(ngModel)]="DtoUsuario.Usuario" [disabled]="editarrepresen" [disabled]="true"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:70%; background-color: rgb(247, 247, 208); height: 30px;" />
+                                    &nbsp;
+                                    <input pInputText type="text" [(ngModel)]="DtoUsuario.NombreCompleto"
+                                        class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                                        style="width:130%; background-color: rgb(247, 247, 208); height: 30px;"
+                                        [disabled]="true" />
+                                    <div class="input-group-append">
+                                        <button pButton icon="fad fa-minus-circle" type="button" title="Limpiar"
+                                            (click)="limpiarDocumento()" [disabled]="puedeEditar">
+                                        </button>
+                                    </div>
+                                </div>
+                                <button (click)="verSelector()" pButton icon="fal fa-search" class="botonbuscar"
+                                    [disabled]="puedeEditar" type="button" title="Buscar"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="label">Password</label>
+                                <input pInputText type="text" [style]="{'width':'100%'}" [disabled]="puedeEditar"
+                                    [(ngModel)]="DtoUsuario.Clave"
+                                    style="background-color: rgb(247, 247, 208); height: 30px;" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="label">Confirmar Password</label><input pInputText type="text"
+                                    [style]="{'width':'100%'}" [disabled]="puedeEditar"
+                                    style="background-color: rgb(247, 247, 208); height: 30px;"
+                                    [(ngModel)]="DtoUsuario.ClaveNueva" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="label">Fecha de Expiracion</label>
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon"
+                                        style="padding: 0; background-color: #00008000;border: none;"><input
+                                            (click)="isFechaExpiracion()" class="" type="checkbox"
+                                            name="inlineRadioOptions" id="inlineRadio1" value="option1"
+                                            [(ngModel)]="tieneFechaExpiracion" [checked]="tieneFechaExpiracion"></span>
+                                    <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                        [style]="{'width':'100%'}" [(ngModel)]="DtoUsuario.FechaExpiracion"
+                                        [inputStyle]="{'width':'100%'}" [disabled]="true" yearRange="1940:2300"
+                                        [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
+                                    </p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="label">Perfil</label>
+                                <p-dropdown [options]="lstPerfil"
+                                    [style]="{'background-color': 'rgb(247, 247, 208)', 'height': '30px'}"
+                                    [disabled]="puedeEditar" [(ngModel)]="DtoUsuario.Perfil"> </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="label">Tipo Usuario</label>
+                                <p-dropdown [options]="lstTipoUsuario"
+                                    [style]="{'background-color': 'rgb(247, 247, 208)', 'height': '30px'}"
+                                    [disabled]="puedeEditar" [(ngModel)]="DtoUsuario.TipoUsuario"> </p-dropdown>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="label">Estado</label>
+                                <p-dropdown [options]="lstEstados" [disabled]="puedeEditar"
+                                    [(ngModel)]="DtoUsuario.Estado"
+                                    [style]="{'background-color': 'rgb(247, 247, 208)', 'height': '30px'}">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="label">Correo</label>
+                                <input pInputText type="text" [style]="{'width':'100%'}" [disabled]="puedeEditar"
+                                    [(ngModel)]="DtoUsuario.correo_empresa" />
+                            </div>
+                        </div>
+                    </div>
+                </p-fieldset>
+            </div>
+            <div class="col-sm-5">
+                <p-fieldset legend="Permiso a Sedes">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <p-dropdown [options]="lstSedecombo" [disabled]="puedeEditar" [(ngModel)]="DtoUsuario.IdSede"
+                            [filter]="true"  [style]="{'background-color': 'rgb(247, 247, 208)', 'height': '30px'}">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-sm-4">
+                            <p-button title="Agregar" icon="pi pi-plus" *ngIf="!puedeEditar"
+                                styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
+                                (click)="agregarSede()"></p-button>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p-table #dt [rows]="15" [rowHover]="true" [responsive]="true " [style]="{ width: '100%'}"
+                                [value]="lstSede"
+                                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                                dataKey="num" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class=" label" style="width: 2rem; text-align: center;" ALIGN="center">
+                                            Acciones</th>
+                                        <th class=" label" style="width: 2rem; text-align: center;" ALIGN="center">
+                                            Nro </th>
+                                        <th class=" label" style="width: 8rem; text-align: center;" ALIGN="center">
+                                            Descripción</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowSede let-ri="rowIndex">
+                                    <tr>
+                                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                                            style="width: 2rem;">
+                                            <span class="p-column-title">Acciones</span>
+                                            <table>
+                                                <tr>
+                                                    <th>
+                                                        <button pButton pRipple type="button" icon="fad fa-minus-circle"
+                                                            class="p-button-rounded p-button-text" title="Eliminar"
+                                                            (click)="eliminarSede(rowSede)"></button>
+                                                    </th>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                                            style="width: 2rem;">
+                                            <span class="p-column-title">Nro</span>
+                                            {{rowSede.num}}
+                                        </td>
+                                        <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 8rem;">
+                                            <span class="p-column-title">Sede</span>
+                                            {{rowSede.SedDescripcion}}                                          
+                                        </td>
+                                    </tr>
+
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-fieldset>
+            </div>
+        </div>
+        <p-fieldset legend="Auditoria">
+            <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
+                [modificacionFecha]="fechaModificacion"></ngx-auditoria>
+        </p-fieldset>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary"  [disabled]="puedeEditar" (click)="coreGuardar()"></p-button>
+  
+    </ng-template>
+</p-dialog>
+<p-toast key="x1bc" [baseZIndex]="1005"></p-toast>
+<ngx-persona-buscar></ngx-persona-buscar>
+<ngx-persona-mantenimiento></ngx-persona-mantenimiento>

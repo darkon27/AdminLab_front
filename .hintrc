@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "-webkit-text-size-adjust",
+          "-webkit-tap-highlight-color",
+          "-moz-appearance",
+          "-webkit-font-feature-settings"
+        ]
+      }
+    ],
+    "no-inline-styles": "off",
+    "axe/forms": "off"
+  }
+}

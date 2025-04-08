@@ -1,0 +1,298 @@
+<div class="nav-home d-flex p-1 w-100 row bg-white grupo-atencion-styles">
+  <div class="container" style="padding: 0.5rem;">
+      <div class="row">
+          <div class="col-md-6">
+              <!-- Botones -->
+              <div class="titulo flex align-items-center">
+                  <!-- Enlace con Imagen -->
+                  <a href="#/maestros" class="d-inline-block">
+                      <img src="./assets/icon/circle-chevron-left.svg" style="cursor: pointer;" height="30"  alt="Back">
+                  </a>
+                  <span class="titulo">Especialidad</span>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-12 ">
+      <div class="row mx-2">
+          <div class="d-flex flex-column p-2 w-20">
+              <label for="">Código</label>
+              <input class="rounded text-decoration-none border-0 p-1 px-4" />                  
+          </div>
+          <div class="d-flex flex-column p-2 w-40">
+              <label for="">Nombre</label>
+              <input class="rounded text-decoration-none border-0 p-1 px-4" />           
+          </div>
+          <div class="d-flex flex-column p-1 w-20">
+              <label for="">Estado</label>
+              <select class="form-select .fs-4 text rounded text-decoration-none border-0 p-1 px-4"
+                  style="font-size: .8rem!important; background-color: #f4f9ff;" >               
+              </select>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="container-fluid p-2 adm-citas">
+  <div class="row">
+      <div class="col-sm-4">
+          <button class="btn w-50 btn-outline-new m-1" data-bs-toggle="offcanvas" #abrirModal 
+              data-bs-target="#modalEspecialidad"><i class="bi bi-plus-circle-fill w-25"></i> <label class="w-75"
+                  for="">Nuevo</label></button>
+      </div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4" style="text-align: right">
+          <button class="btn w-50 btn-outline-new m-1"><i class="bi bi-binoculars "></i> <label
+                  class="w-75" for="">Buscar</label></button>
+      </div>
+  </div>
+
+
+  <div class="table-container">
+      <table class="table table-hover">
+          <thead>
+              <tr style="border-color: white;">
+                  <th class="bg-transparent" style="font-weight: 500; font-size: 14px; text-align: center;"
+                      scope="col">
+                      Código</th>
+                  <th class="bg-transparent" style="font-weight: 500; font-size: 14px; text-align: center;"
+                      scope="col">
+                      Nombre</th>
+                  <th class="bg-transparent" style="font-weight: 500; font-size: 14px; text-align: center;"
+                      scope="col">
+                      Descripción</th>
+                  <th class="bg-transparent" style="font-weight: 500; font-size: 14px; text-align: center;"
+                      scope="col">
+                      Tiempo Promedio</th>
+                  <th class="bg-transparent" style="font-weight: 500; font-size: 14px; text-align: center;"
+                      scope="col">
+                      Estado</th>
+                  <th class="bg-transparent" style="font-weight: 500; font-size: 14px; text-align: center;"
+                      scope="col"></th>
+              </tr>
+          </thead>
+
+          <tbody >
+              <tr style="height: 45px;border-color: white;" class="position-relative">
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">
+        <!--               <span *ngIf="item.estado == '2'" class="badge bg-success">Activo</span>
+                      <span *ngIf="item.estado == '1'" class="badge bg-danger">Inactivo</span> -->
+                  </td>
+                  <td class="text-row text-center" style="padding: 12px 10px; font-size:12px; text-align: center;">
+                      <div class="btn-group">
+                          <div style="cursor: pointer;" data-bs-toggle="dropdown">
+                              <i class="bi bi-three-dots-vertical" style="font-size: 16px; color: #000;"></i>
+                          </div>
+                          <ul class="dropdown-menu" style="font-size: 11px;">
+                              <li style="cursor: pointer;" data-bs-toggle="offcanvas"
+                                  #abrirModal data-bs-target="#modalEspecialidad"><a class="dropdown-item"
+                                      style="color: #99A8C0;"><i class="bi bi-pen"
+                                          style="padding-right: 5%;"></i>Editar</a></li>
+                              <li style="cursor: pointer;" data-bs-toggle="offcanvas" #abrirModal
+                                  data-bs-target="#modalEspecialidad" ><a class="dropdown-item"
+                                      style="color: #99A8C0;"><i class="bi bi-eye"
+                                          style="padding-right: 5%;"></i>Ver</a></li>
+                              <li style="cursor: pointer;" ><a class="dropdown-item"
+                                      style="color: #99A8C0;"><i class="bi bi-x-octagon-fill"
+                                          style="padding-right: 5%;"></i>Inactivar</a></li>
+                          </ul>
+                      </div>
+                  </td>
+              </tr>
+              <tr style="height: 10px;border-color: white;"></tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end offcanvas-width solicitud-petitorio" tabindex="-1" data-bs-backdrop="true"
+  id="modalEspecialidad" aria-labelledby="offcanvasRightLabel" visible="false">
+  <div class="title">
+      <span></span>
+      <div class="badge">
+          <div>
+              <i id="cerrarModal" #cerrarModalEspecialidad class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                  class="bi bi-x-lg"></i>
+          </div>
+      </div>
+  </div>
+  <div class="offcanvas-body">
+
+      <div class="row">
+          <div class="col-3 p-2">
+              <div class="form-group">
+                  <label>Código</label>
+                  <input type="text" class="form-control input-inputs"
+                      [disabled]="!puedeEditar">
+              </div>
+          </div>
+
+          <div class="col-9 p-2">
+              <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" class="form-control input-inputs" 
+                      [disabled]="!puedeEditar">
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-12 p-2">
+              <div class="form-group">
+                  <label>Descripción</label>
+                  <input type="text" class="form-control input-inputs" 
+                      [disabled]="!puedeEditar">
+              </div>
+          </div>
+      </div>
+
+
+      <div class="row">
+          <div class="col-6 p-2">
+              <div class="form-group">
+                  <label>Tiempo Prom.</label>
+                  <input type="text" class="form-control input-inputs" 
+                      [disabled]="!puedeEditar">
+              </div>
+          </div>
+
+          <div class="col-6 p-2">
+              <div class="form-group">
+                  <label for="">Validar Triaje</label>
+              </div>
+              <div class="form-check">
+                  <input class="form-check-input" type="checkbox" 
+                      [disabled]="!puedeEditar">
+              </div>
+
+          </div>
+
+
+      </div>
+
+      <div class="row">
+          <div class="col-6 p-2">
+              <div class="form-group">
+                  <label>Código UPS</label>
+                  <input type="text" class="form-control input-inputs" 
+                      [disabled]="!puedeEditar">
+              </div>
+          </div>
+
+          <div class="col-6 p-2">
+              <div class="form-group">
+                  <label>Pago Web</label>
+              </div>
+              <div class="form-check">
+                  <input class="form-check-input" type="checkbox" 
+                      [disabled]="!puedeEditar">
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-6 p-2">
+              <div class="form-group">
+                  <label>Modalidad</label>
+                  <select class="form-select rounded text-decoration-none border-1 p-1  text-center"
+                [disabled]="!puedeEditar">                     
+                  </select>
+              </div>
+          </div>
+
+          <div class="col-6 p-2">
+              <div class="form-group">
+                  <label for="">Estado</label>
+                  <select class="form-select rounded text-decoration-none border-1 p-1  text-center"
+                  [disabled]="!puedeEditar">                     
+                    </select>
+              </div>
+          </div>
+      </div>
+      
+      <div class="row">
+          <div class="col-9"></div>
+          <div class="col-3 p-2 text-center align-self-end">
+              <button class="btn btn-save w-100" type="submit" 
+                  [disabled]="!puedeEditar">Guardar</button>
+          </div>
+      </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleFormInicial" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header" style="padding: 0.5rem; height: 50px; text-align: center;">
+              <h2 class="modal-title">Selector Formulario</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" #cerrarModalFomrInicial
+                  aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <!-- Contenido del modal -->
+              <div class="table-container">
+                  <table class="table table-hover border-1">
+                      <thead>
+                          <tr style="border-color: white;">
+                              <th class="bg-transparent"
+                                  style="font-weight: 500; font-size: 14px; text-align: center;" scope="col">
+                                  Acción</th>
+                              <th class="bg-transparent"
+                                  style="font-weight: 500; font-size: 14px; text-align: center;" scope="col">
+                                  Plantilla</th>
+                              <th class="bg-transparent"
+                                  style="font-weight: 500; font-size: 14px; text-align: center;" scope="col">
+                                  Código</th>
+                              <th class="bg-transparent"
+                                  style="font-weight: 500; font-size: 14px; text-align: center;" scope="col">
+                                  Nombre</th>
+                              <th class="bg-transparent"
+                                  style="font-weight: 500; font-size: 14px; text-align: center;" scope="col">
+                                  Tipo Plantilla</th>
+                              <th class="bg-transparent"
+                                  style="font-weight: 500; font-size: 14px; text-align: center;" scope="col">
+                                  Versión</th>
+                              <th class="bg-transparent"
+                                  style="font-weight: 500; font-size: 14px; text-align: center;" scope="col">
+                                  Estado</th>
+                          </tr>
+                      </thead>
+
+                      <tbody >
+                          <tr style="height: 20px; border-color: white;">
+                              <td class="text-row text-center"
+                                  style="padding: 5px 10px; font-size: 12px; text-align: center;">
+                                  <button type="button" class="btn btn-outline-success btn-rounded p-2"
+                                      title="Seleccionar" >
+                                      <i class="fas fa-check"></i>
+                                  </button>
+                              </td>
+                              <td class="text-center"></td>
+                              <td class="text-center">
+                                 
+                              </td>
+                              <td class="text-center"></td>
+                              <td class="text-center"></td>
+                              <td class="text-center"></td>
+                              <td class="text-center">
+                                 <!--  <span *ngIf="item.estado == '2'" class="badge bg-success">Activo</span>
+                                  <span *ngIf="item.estado == '1'" class="badge bg-danger">Inactivo</span> -->
+                              </td>
+                          </tr>
+                          <tr style="height: 5px;border-color: white;"></tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+

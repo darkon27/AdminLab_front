@@ -1,0 +1,175 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="2000">
+  <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+
+
+<p-dialog [(visible)]="verConsultaDetalle" [draggable]="false" [modal]="true" [resizable]="false"
+  [breakpoints]="{'750px': '75vw'}" [style]="{width: '70%'}" [header]="acciones" [position]="position"
+  [maximizable]="true" [baseZIndex]="1000">
+
+  <ng-template pTemplate="content">
+    <nb-card-body style="background-color: transparent; margin-top: 0px;">
+      <p-fieldset legend="Información">
+        <div class="row fondocard3" style="padding: 10px;">
+            <div class="col-sm-3">
+              <label for="inputLastName" class="label">Nro Petición</label>
+              <div class="p-inputgroup">
+                <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+                  [(ngModel)]="filtro.NroPeticion" />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label for="inputLastName" class="label">Fecha Admision</label>
+              <div class="p-inputgroup">
+                <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+                  [(ngModel)]="filtro.FechaAdmision" />
+              </div>
+            </div>
+            <div class="col-sm-3">         
+                <label for="inputLastName" class="label">Tipo Paciente</label>
+                <div class="p-inputgroup">
+                  <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+                  [(ngModel)]="filtro.TipoPaciente" />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label for="inputLastName" class="label">Contrato</label>
+              <div class="p-inputgroup">
+                <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+                  [(ngModel)]="filtro.Contrato" />
+              </div>
+          </div>
+            <div class="col-sm-12">
+              <label for="inputLastName" class="label">Paciente</label>
+              <div class="p-inputgroup">
+                  <div class="p-inputgroup">
+                      <input pInputText type="text" 
+                          class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                          style="width:70%; height: 30px;" [(ngModel)]="filtro.Documento"
+                          [disabled]="editarCampoEmpresa" />
+                      &nbsp;
+                      <input pInputText type="text"
+                          class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                          style="width:130%; height: 30px;" [(ngModel)]="filtro.NombreCompleto"
+                          [disabled]="true" />                  
+                  </div>  
+              </div>
+          </div> 
+          <div class="col-sm-4">
+            <label for="inputLastName" class="label">Edad</label>
+            <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+              [(ngModel)]="filtro.edad" />
+          </div>
+          <div class="col-sm-4">
+            <label for="inputLastName" class="label">Sexo</label>              
+            <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+            [(ngModel)]="filtro.Sexo" />
+          </div>
+          <div class="col-sm-4">
+            <label for="inputLastName" class="label">Telefono</label>
+            <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+              [(ngModel)]="filtro.Telefono" />
+          </div>
+          <div class="col-sm-6">
+            <label for="inputLastName" class="label">Cliente</label>
+            <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+              [(ngModel)]="filtro.CLIENTE" />
+          </div>
+          <div class="col-sm-6">
+            <label for="inputLastName" class="label">Medico</label>
+            <div class="p-inputgroup">
+            <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+              [(ngModel)]="filtro.MEDICO" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="inputLastName" class="label">Aseguradora</label>
+            <div class="p-inputgroup">
+            <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+              [(ngModel)]="filtro.NombreEmpresa" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="inputLastName" class="label">Empresa Paciente</label>
+            <div class="p-inputgroup">
+            <input pInputText type="text" [disabled]="editarCampos" style="width:100%; height: 30px;"
+              [(ngModel)]="filtro.EMPRESA" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="col">
+              <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" [responsive]="true"
+                [totalRecords]="cantidad" [sortOrder]="-1" selectionMode="single" [loading]="loading"
+                [value]="lstListarDet" responsiveLayout="scroll"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                [showCurrentPageReport]="true" [(selection)]="registroSeleccionado" [scrollable]="true"
+                scrollHeight="200px" [style]="{width:'100%'}" [rowsPerPageOptions]="[15,30,50]">
+
+                <ng-template pTemplate="colgroup">
+                  <colgroup>
+                    <col style="width:75px">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th class="label" style="width: 2rem;" pSortableColumn="numeroXadmision" ALIGN="center">N°
+                      <p-sortIcon field="numeroXadmision"></p-sortIcon>
+                    </th>
+
+                    <th class="label" style="width: 6rem;" pSortableColumn="CodigoComponente" ALIGN="center">Código
+                      <p-sortIcon field="CodigoComponente"></p-sortIcon>
+                    </th>                  
+
+                    <th class="label" style="width: 15rem;" pSortableColumn="Descripcion" ALIGN="center">Prueba /
+                      Examen<p-sortIcon field="Descripcion">
+                      </p-sortIcon>
+                    </th>
+                    <th class="label" style="width: 5rem;" pSortableColumn="Precio IGV" ALIGN="center">
+                      Precio 
+                      <p-sortIcon field="Precio ">
+                      </p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData>
+
+                  <tr>
+                    <td class="tablaColumnaCodigoChico" style="width: 2rem;" ALIGN="center">
+                      {{rowData.numeroXadmision}}
+                    </td>
+                    <td class="tablaColumnaCodigoChico" style="width: 6rem;" ALIGN="center">
+                      {{rowData.CodigoComponente}}
+                    </td>                 
+                    <td class="tablaColumnaCodigoChico" style="width: 15rem;" ALIGN="center">
+                      {{rowData.Descripcion}}
+                    </td>
+                    <td class="tablaColumnaCodigoChico" style="width: 5rem;" ALIGN="center">
+                      {{rowData.igvprecioexamenes | currency: 'S/'}}
+                    </td>   
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                  <tr>
+                    <td colspan="3" class="text-right">Total</td>
+                    <td>{{lastYearTotal | currency: 'S/'}}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </p-fieldset>
+
+    </nb-card-body>
+  </ng-template>
+  <ng-template pTemplate="footer">         
+    <button pButton icon="pi pi-save" class="p-button-primary" type="button"  label="Aprobar"
+    title="Aprobar"  (click)="coreGuardar()"></button>
+    <button pButton icon="pi pi-save" class="p-button-primary" type="button"  label="Anular"
+    title="Anular"  (click)="coreAnular()"></button>
+</ng-template>
+</p-dialog>
+<p-toast key="bc" [baseZIndex]="2000"></p-toast>
+

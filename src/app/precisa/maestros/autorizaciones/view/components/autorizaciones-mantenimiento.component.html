@@ -1,0 +1,124 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-confirmDialog #c key="RegAutDialog" [visible]="visible" [baseZIndex]="10000">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
+
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
+    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+
+    <ng-template pTemplate="content">
+        <br>
+        <p-fieldset legend="Datos">
+            <div class="row">
+                <div class="col-sm-12">        
+                     <label for="inputLastName" class="label">Titular</label>
+                     <div class="p-inputgroup">
+                        <div class="p-inputgroup">
+                            <input pInputText type="text" (keydown)="validarTeclaEnter($event)"
+                                [(ngModel)]="Entydad.Usuario" [disabled]="editarrepresen" [disabled]="true"
+                                class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                style="width:70%; background-color: rgb(247, 247, 208); height: 30px;" />
+                            &nbsp;
+                            <input pInputText type="text" [(ngModel)]="Entydad.NombreCompleto"
+                                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                                style="width:130%; background-color: rgb(247, 247, 208); height: 30px;"
+                                [disabled]="true" />
+                            <div class="input-group-append">
+                                <button pButton icon="fad fa-minus-circle" type="button" title="Limpiar"
+                                    (click)="limpiarDocumento()" [disabled]="puedeEditar">
+                                </button>
+                            </div>
+                        </div>
+                        <button (click)="verSelector()" pButton icon="fal fa-search" class="botonbuscar"
+                            [disabled]="puedeEditar" type="button" title="Buscar"></button>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <label class="label">Persona</label>
+                    <div class="p-inputgroup">
+                        <div class="p-inputgroup">
+                            <input pInputText type="text" (keydown)="validarTeclaEnter($event)"
+                                [(ngModel)]="Entydad.Usuario" [disabled]="editarrepresen" [disabled]="true"
+                                class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                style="width:70%; background-color: rgb(247, 247, 208); height: 30px;" />
+                            &nbsp;
+                            <input pInputText type="text" [(ngModel)]="Entydad.NombreCompleto"
+                                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                                style="width:130%; background-color: rgb(247, 247, 208); height: 30px;"
+                                [disabled]="true" />
+                            <div class="input-group-append">
+                                <button pButton icon="fad fa-minus-circle" type="button" title="Limpiar"
+                                    (click)="limpiarDocumento()" [disabled]="puedeEditar">
+                                </button>
+                            </div>
+                        </div>
+                        <button (click)="verSelector()" pButton icon="fal fa-search" class="botonbuscar"
+                            [disabled]="puedeEditar" type="button" title="Buscar"></button>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                        <label for="inputLastName" class="label">Observación</label>
+                        <textarea pInputTextarea style="width: 100%" rows="3" cols="30" maxlength="800"></textarea>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="inputLastName" class="label">Fecha Inicio</label>
+                    <div class="p-inputgroup">
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                [style]="{'width':'100%'}"  
+                                [disabled]="true" yearRange="2000:2100"
+                                [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
+                        </p-calendar>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="inputLastName" class="label">Fecha Fin</label>
+                    <div class="p-inputgroup">
+                        <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                [style]="{'width':'100%'}"  
+                                [disabled]="true" yearRange="2000:2100"
+                                [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
+                        </p-calendar>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <br>
+                </div>
+     
+                <div class="col-sm-6">  
+                    <nb-checkbox status="success">Asume Titular</nb-checkbox>
+                </div>
+        
+                <div class="col-sm-6">  
+                    <nb-checkbox status="success">Aplica Descuento</nb-checkbox>
+                </div>
+                <div class="col-sm-12">
+                    <br>
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputLastName" class="label">Estado</label>
+                    <p-dropdown placeholder="Seleccione" [options]="lstEstados" [disabled]="puedeEditar"></p-dropdown>  
+                </div>
+            </div>
+        </p-fieldset>
+        <p-fieldset legend="Datos Generales">
+            <ngx-auditoria></ngx-auditoria>
+        </p-fieldset>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
+            (click)="coreGuardar($event)"></p-button>
+    </ng-template>
+</p-dialog>
+<p-toast key="x1auto" [baseZIndex]="10000"></p-toast>
+<ngx-persona-buscar></ngx-persona-buscar>

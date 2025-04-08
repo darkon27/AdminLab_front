@@ -1,0 +1,104 @@
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'1050px': '75vw'}"
+  [style]="{width: '750px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+          <!--
+            * Autor: Geampier Smc
+            * Tipo: Maquetación
+            * Detalle: Mejora de diseño
+          -->
+  <ng-template pTemplate="content">
+    <br>
+
+    <p-fieldset legend="Registros Asignados">
+      <div class="row" [style]="{'margin-top':'8px'}">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputLastName" class="label">Perfil</label>
+            <input pInputText type="text" placeholder="" style="width:100%; height: 30px;" />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputLastName" class="label">Prueba</label>
+            <input pInputText type="text" placeholder=""
+              [style]="{'width':'100%','background-color':'rgb(247, 247, 208)','height':'30px'}" />
+          </div>
+        </div>
+        <!-- <div class="col-sm-4">
+          <div class="form-group">
+            <label for="inputLastName" class="label">Nombre de Prueba</label>
+            <input pInputText type="text" placeholder="" />
+          </div>
+        </div>-->
+      </div>
+      <br>
+      <div class="col">
+        <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="tipousuario" [responsive]="true"
+          [sortOrder]="1" sortField=""  [value]="lstperfil"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+          [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="200px" [style]="{ width: '100%'}"
+          [rowsPerPageOptions]="[15,30,50]">
+
+          <ng-template pTemplate="colgroup">
+            <colgroup>
+              <col style="width:45px">
+            </colgroup>
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="tablaHeaderAccion3 label">
+                Acciones</th>
+              <th pSortableColumn="numeroempresa" class="label text-center" style="width: 3rem;">
+                N°<p-sortIcon field="numeroempresa"> </p-sortIcon>
+              </th>  
+              <th class="label  text-center" style="width: 5rem;" pSortableColumn="CodigoHomologado">Codigo<p-sortIcon
+                field="CodigoHomologado">
+              </p-sortIcon>
+            </th> 
+              <th class="label  text-center" style="width: 5rem;" pSortableColumn="DesHomologacion">Prueba<p-sortIcon
+                  field="DesHomologacion">
+                </p-sortIcon>
+              </th> 
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td class="tablaColumnaAccion3" style="width: 5rem;">
+                <span class="p-column-title">Acción</span>
+                <table>
+                  <tr>
+                    <th>
+                      <button pButton pRipple type="button" icon="fal fa-trash-alt"
+                        class="p-button-rounded p-button-text" 
+                        title="Inactivar"></button>
+                    </th>
+                  </tr>
+                </table>
+              </td>
+              <td class="tablaColumnaCodigoChico" style="width: 3rem;" ALIGN="center">
+                <span>{{rowData.numeroExamen}}</span>
+              </td>
+              <td class="tablaColumnaCodigoChico" style="width: 5rem;" ALIGN="center">
+                <span>{{rowData.CodigoHomologado}}</span>
+              </td>
+              <td class="tablaColumnaCodigoChico" style="width: 5rem;" ALIGN="center">
+                <span>{{rowData.DesHomologacion}}</span>
+              </td>
+              <!--<td class="tablaColumnaCodigoChico" style="width: 8rem;" ALIGN="center"></td>-->
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-fieldset>
+
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button label="Nuevo" icon="fas fa-eraser" styleClass="p-button-primary" type="submit"
+      (click)="saveProduct($event)" [disabled]="editarCampos"></p-button>
+    <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" type="submit"
+      (click)="saveProduct($event)" [disabled]="editarCampos"></p-button>
+  </ng-template>
+
+
+</p-dialog>
+<ngx-empresa-buscar></ngx-empresa-buscar>

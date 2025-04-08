@@ -1,0 +1,73 @@
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
+    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+
+    <ng-template pTemplate="content">
+
+        <p-fieldset legend="Información General">   
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Tipo Admisión</label>
+                    <div class="form-group">   
+                        <p-dropdown placeholder="Seleccione" [options]="lsttipoadmision" [(ngModel)]="dto.TIPOADMISIONID"  [disabled]="puedeEditar"  (onChange)="selectedTipoAdmision($event)">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <label for="inputLastName" class="label">Cliente</label>
+                    <div class="p-inputgroup">
+                        <input pInputText type="text" disabled class="hoverDisabled" style="width:90px" />&nbsp;
+                        <input pInputText type="text" disabled class="hoverDisabled" [(ngModel)]="dto.empresa" 
+                            style="width:100%; height: 30px;" />
+                        <button pButton icon="fa fa-binoculars" type="button" title="Buscar Empleado"></button>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Descripcion</label>
+                    <div class="form-group">                
+                        <input pInputText type="text" placeholder="" [(ngModel)]="dto.MosDescripcion"  [style]="{'width':'100%'}" />
+                    </div>
+                </div>
+
+                <div class="col-sm-4">             
+                    <label for="inputLastName" class="label">Tipo Paciente</label>
+                    <div class="form-group"> 
+                        <p-dropdown placeholder="Seleccione" [options]="lstTipoPaciente" [(ngModel)]="dto.TipoPacienteId"  [disabled]="puedeEditar">
+                        </p-dropdown>  
+                    </div>                   
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Configuración Contrato</label>
+                    <div class="form-group">   
+                        <p-dropdown placeholder="Seleccione" [options]="lstEstados" [(ngModel)]="dto.TipoOperacionId"  [disabled]="puedeEditar">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="col-sm-4" >   
+                    <nb-checkbox status="success" >Requiere Adelanto</nb-checkbox>
+                </div>
+                <div class="col-sm-4" >   
+                    <label for="inputLastName" class="label">% Minimo</label> 
+                    <input pInputText type="text"  [style]="{'width':'100%'}" 
+                    (keypress)="validateDecimalInput($event)"  [(ngModel)]="dto.MosFactor"  
+                    (paste)="validatePaste($event)"
+                    pattern="^\d+(\.\d{0,2})?$"  />
+                </div>
+                <div class="col-sm-4">             
+                    <label for="inputLastName" class="label">Estado</label>
+                    <p-dropdown placeholder="Seleccione" [options]="lstEstados" [disabled]="puedeEditar" [(ngModel)]="dto.MosEstado"></p-dropdown> 
+                </div>    
+            </div>
+        </p-fieldset>
+      
+        <p-fieldset legend="Datos Generales">
+            <ngx-auditoria></ngx-auditoria>
+        </p-fieldset>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar"
+        type="submit"   (click)="saveProduct($event)" ></p-button>
+    </ng-template>
+
+</p-dialog>
+<p-toast></p-toast>

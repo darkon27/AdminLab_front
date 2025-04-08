@@ -1,0 +1,334 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+
+    <p-dialog [(visible)]="verCajapago" [draggable]="false" [modal]="true" [resizable]="false"
+    [breakpoints]="{'950px': '75vw'}"  [style]="{width: '1700px'}"  [header]="acciones"
+     [position]="position"     [maximizable]="true"  [baseZIndex]="10000">
+        <ng-template pTemplate="content">
+           <div class="row">
+                <div class="col-sm-5">
+                    <p-fieldset legend="Documento">
+                    <div class="row" >
+                        <div class="col-sm-12">
+                            <div class="row" >
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Tipo Comprobante</label>
+                                        <p-dropdown [(ngModel)]="filtro.TipoComprobante" [filter]="true" [options]="lstTipoComprobante"                  
+                                        (onChange)="selectedItemTipoComprobante($event)"  [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown> 
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Serie</label>
+                                        <p-dropdown [(ngModel)]="filtro.SerieComprobante" [filter]="true" [options]="lstSerie"                  
+                                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>  
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">N° Comprobante</label>
+                                        <div class="p-inputgroup">
+                                            <input pInputText type="text" [(ngModel)]="filtro.Numero"
+                                                class="hoverDisabled  size-large status-basic shape-rectangle nb-transition"
+                                                style="width:100%; height: 30px" (keydown)="keydownBuscar($event)" />&nbsp;
+                                            <button pButton icon="fa fa-search" class="botonbuscar" type="button"
+                                                title="Factura"  (click)="coreBuscar()"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-sm-12">  
+                            <div class="row" >
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Cliente</label>
+                                        <div class="p-inputgroup">
+                                            <input pInputText type="text"   [(ngModel)]="filtro.DocumentoCliente" 
+                                                class="hoverDisabled col-3 status-basic shape-rectangle nb-transition"
+                                                style="width:100%; height: 30px" />&nbsp;
+                                            <input pInputText type="text" disabled [(ngModel)]="filtro.NombreCliente" 
+                                                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                                                style="width:100%; height:30px" />
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline" type="button" id="button-addon2"
+                                                    style=" height:30px; margin-left:-32px">x</button>
+                                            </div>                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-sm-12"> 
+                            <div class="row" >
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="label">Fecha de Emisión</label>
+                                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [style]="{'width':'100%'}"
+                                            [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
+                                            dateFormat="dd/mm/yy" [showIcon]="true" [(ngModel)]="filtro.FechaEmision"  >
+                                        </p-calendar>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="label">Fecha de Vencimiento</label>
+                                        <p-calendar [monthNavigator]="true" [yearNavigator]="true" [style]="{'width':'100%'}"
+                                            [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
+                                            dateFormat="dd/mm/yy" [showIcon]="true" [(ngModel)]="filtro.FechaVencimiento" >
+                                        </p-calendar>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">N° Cobranza</label>
+                                        <input pInputText type="text" [(ngModel)]="filtro.NumeroCobranza" 
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-sm-12"> 
+                            <div class="row" >
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Email</label>
+                                        <input pInputText type="text" [(ngModel)]="filtro.CorreoElectronico" 
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; background-color: rgb(247, 247, 208); height: 30px;" />
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Cajero</label>
+                                        <input pInputText type="text" [(ngModel)]="filtro.Cajero"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+                            </div> 
+                        </div> 
+                        <div class="col-sm-12">    
+                            <div class="row" >
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Sede</label>
+                                        <input pInputText type="text" [(ngModel)]="filtro.SedDescripcion"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Moneda</label>
+                                        <p-dropdown [(ngModel)]="filtro.Moneda" [filter]="true" [options]="lstMoneda"                  
+                                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>  
+                                    </div>
+                                </div>                                            
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">T.C.</label>
+                                        <input pInputText type="text" [(ngModel)]="filtro.TipoCambio"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+                            </div> 
+                        </div> 
+                        <div class="col-sm-12"> 
+                            <div class="row" >
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Afecto</label>
+                                        <input pInputText type="text" [(ngModel)]="filtro.MontoAfecto"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">IGV</label>
+                                        <input pInputText type="text" [(ngModel)]="filtro.IGV"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputLastName" class="label">Total(S)</label>
+                                        <input pInputText type="text" [(ngModel)]="filtro.MontoTotal"
+                                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                            style="width:100%; height: 30px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    </p-fieldset>
+                </div>
+                <div class="col-sm-7">
+                    <p-fieldset legend="Cobranza T.C. 3.500000" >
+                        <div class="row" style="padding: 10px;">
+                            <div class="col-sm-12">
+                                <p-table  #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [responsive]="true" 
+                                    [value]="lstDetalle"  [(selection)]="lstSeleccionadomultiple" [sortOrder]="1" sortField="num" editMode="row" 
+                                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" [scrollable]="true" 
+                                    [rowsPerPageOptions]="[15, 30, 50]" [showCurrentPageReport]="true" scrollHeight="600px">                
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="tablaHeaderAccion3 label" ALIGN="center">Acción</th>
+                                        <th pSortableColumn="num" class="label" ALIGN="center" style="width: 8rem;">
+                                        Tipo Pago <p-sortIcon field="TipoPago"> </p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Moneda" class="label" ALIGN="center" style="width: 8rem;">
+                                            Moneda <p-sortIcon field="Moneda"> </p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Banco" class="label" ALIGN="center" style="width: 8rem;">
+                                            Banco <p-sortIcon field="Banco"> </p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="NumeroTarjeta" class="label" ALIGN="center" style="width: 6rem;">
+                                            Referencia <p-sortIcon field="NumeroTarjeta"> </p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Monto" class="label" ALIGN="center" style="width: 6rem;">
+                                            Importe <p-sortIcon field="Monto"> </p-sortIcon>
+                                        </th>  
+                                    </tr>
+                                </ng-template>                           
+                                    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                                    <tr [pEditableRow]="rowData">
+                                        <td class="tablaColumnaCodigoChico">
+                                            <div class="flex align-items-center justify-content-center gap-2">
+                                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(rowData)" class="p-button-rounded p-button-text"></button>
+                                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(rowData)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(rowData, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                                            </div>
+                                        </td>    
+                                        <td class="tablaColumnaCodigoChico">
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <p-dropdown [(ngModel)]="rowData.FormaPagoDES" [filter]="true" [options]="lstTipoPago"                  
+                                                    [style]="{'width':'100%','text-transform': 'uppercase'}"
+                                                    [baseZIndex]="20000" appendTo="body" ></p-dropdown>  
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{rowData.FormaPagoDES | uppercase}}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </td>     
+                                        <td class="tablaColumnaCodigoChico">
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <p-dropdown [(ngModel)]="rowData.MonedaDes" [filter]="true" [options]="lstMonedadet"                  
+                                                    [style]="{'width':'100%','text-transform': 'uppercase'}"
+                                                    [baseZIndex]="20000" appendTo="body"></p-dropdown>  
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{rowData.MonedaDes | uppercase}}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </td>    
+                                        <td class="tablaColumnaCodigoChico">
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <p-dropdown  [(ngModel)]="rowData.BancoDes" [options]="lstBanco" [disabled]="editarCantidad"
+                                                    [baseZIndex]="20000" appendTo="body"
+                                                    [style]="{'width':'100%','text-transform': 'uppercase'}">                                                   
+                                                    </p-dropdown>
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{rowData.BancoDes | uppercase}}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </td>
+                                        <td class="tablaColumnaCodigoChico">
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <input pInputText type="text" [disabled]="editarCantidad"
+                                                    [(ngModel)]="rowData.NumeroTarjeta"
+                                                    [style]="{'width':'100%'}" required>
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{rowData.NumeroTarjeta | uppercase}}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </td>                
+                                        <td class="tablaColumnaCodigoChico">
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <input pInputText type="number" [disabled]="editarCantidad"
+                                                    [(ngModel)]="rowData.Monto" (keydown)="keydownMonto($event)"
+                                                    [style]="{'width':'100%'}" required>
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{rowData.Monto}}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </td>  
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="paginatorleft">
+                                    <p-button type="button"  (click)="coreAgregar()" icon="pi pi-plus"
+                                        styleClass="p-button-text"></p-button>
+                                </ng-template>
+                                    <!--  
+                                        <ng-template pTemplate="summary">
+                                            <p style="display: flex; justify-content: center;">
+                                                SUB-TOTAL: &nbsp;    IGV:  &nbsp;    TOTAL:
+                                                SUB-TOTAL: {{egreso.MontoAfecto | number:'1.2-2'}}&nbsp;
+                                                IGV: {{egreso.MontoImpuesto | number:'1.2-2'}} &nbsp;
+                                                TOTAL: {{egreso.MontoTotal | number:'1.2-2'}} 
+                                            </p>
+                                        </ng-template> 
+                                    -->
+                            </p-table>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Afecto</label>
+                                    <input pInputText type="text"  [(ngModel)]="filtro.CalAfecto"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; height: 30px;" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Exon</label>
+                                    <input pInputText type="text" [(ngModel)]="filtro.CalExon"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; height: 30px;" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">IGV</label>
+                                    <input pInputText type="text" [(ngModel)]="filtro.CalIGV"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; height: 30px;" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Total S/.</label>
+                                    <input pInputText type="text" placeholder="0.00"  [(ngModel)]="filtro.CalTotal"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:100%; height: 30px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">         
+                <button pButton icon="pi pi-save" class="p-button-primary" type="button"  label="Guardar"
+                title="Guardar"  (click)="coreGuardar()"></button>
+        </ng-template>
+    </p-dialog>
+    <p-toast [baseZIndex]="10000" ></p-toast>

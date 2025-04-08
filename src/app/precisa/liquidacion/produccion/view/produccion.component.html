@@ -1,0 +1,202 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-toast></p-toast>
+<p-confirmDialog #c key="confirm2">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
+<p-card>
+    <div class="row">
+        <div class="col-sm-4">
+            <h4 class="titulonuevo">Producción</h4>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="col-sm-2" style="background-color: transparent;"></div>
+        <div class="col-sm-6" style="background-color: transparent;" aria-orientation="horizontal">
+            <button pButton icon="fa fa-search" type="button" title="Buscar" label="Buscar" class="p-button-secondary"
+                style="margin-bottom: 5px;" (click)="coreBuscar()"></button>
+            <button pButton icon="fa fa-file" type="button" title="Nuevo" label="Nuevo" class="p-button-secondary"
+                style="margin-bottom: 5px;" (click)="coreNuevo()"></button>
+            <!-- <button pButton icon="fa fa-file" type="button" title="Editar" label="Editar" style="margin-bottom: 5px;"
+                class="p-button-secondary" (click)="coreEditar()"></button> -->
+            <button pButton icon="fa fa-download" type="button" title="Exportar" label="Exportar"
+                style="margin-bottom: 5px;" class="p-button-secondary"></button>
+            <button pButton icon="fa fa-trash" type="button" title="Eliminar" label="Eliminar"
+                style="margin-bottom: 5px;" class="p-button-secondary"></button>
+        </div>
+    </div>
+    <br>
+    <p-fieldset legend="Información" (keyup.enter)="coreBuscar()">
+        <div class="row">
+            <div class="col-sm-4">
+                <label for="inputOrdAten" class="label">Periodo</label>
+                <p-dropdown [(ngModel)]="filtro.Periodo" [filter]="true" [options]="lstPeriodo"
+                    [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+            </div>
+            <!-- <div class="col-sm-4">
+                <label class="label">Fecha Inicio</label>
+                <p-calendar [monthNavigator]="true" [(ngModel)]="filtro.FechaInicio" [yearNavigator]="true"
+                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2300" [locale]="es"
+                    dateFormat="dd/mm/yy" [showIcon]="true">
+                </p-calendar>
+            </div>
+            <div class="col-sm-4">
+                <label class="label">Fecha Fin</label>
+                <p-calendar [monthNavigator]="true" [(ngModel)]="filtro.FechaFinal" [yearNavigator]="true"
+                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
+                    dateFormat="dd/mm/yy" [showIcon]="true">
+                </p-calendar>
+            </div> -->
+        </div>
+    </p-fieldset>
+    <br>
+    <p-fieldset legend="Detalle">
+
+        <p-table id="contenido" #dt [rows]="25" [paginator]="true" [rowHover]="true" [responsive]="true "
+            [style]="{ width: '100%'}" [sortOrder]="1" sortField="num" [value]="lstProduccion" [(selection)]="seleccion"
+            selectionMode="single" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            [rowsPerPageOptions]="[25,50,100]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="num" class="label" ALIGN="center" style="width: 4rem; text-align: center;">
+                        Nro<p-sortIcon field="num"></p-sortIcon>
+                    </th>
+                    <!-- <th pSortableColumn="Periodo" class="label" ALIGN="center" style="width: 6rem; text-align: center;">
+                        Periodo<p-sortIcon field="Periodo"></p-sortIcon>
+                    </th> -->
+                    <th class="label" pSortableColumn="AdmDescripcion" ALIGN="center"
+                        style="width: 8rem; text-align: center;">
+                        Periodo<p-sortIcon field="AdmDescripcion"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="UnidadNegocio" ALIGN="center"
+                        style="width: 10rem; text-align: center;">
+                        Clasificacion<p-sortIcon field="UnidadNegocio"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="Cliente" ALIGN="center"
+                        style="width: 15rem; text-align: center;">
+                        Unidad De Negocio<p-sortIcon field="Cliente"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="Sede" class="label" ALIGN="center" style="width: 15rem; text-align: center;">
+                        Cliente<p-sortIcon field="Sede"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="Descripcion" ALIGN="center"
+                        style="width: 10rem; text-align: center;">
+                        Sede<p-sortIcon field="Descripcion"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="Examen" ALIGN="center" style="width: 8rem; text-align: center;">
+                        Nro. Examen<p-sortIcon field="Examen"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="Examen" ALIGN="center" style="width: 10rem; text-align: center;">
+                        Examen<p-sortIcon field="Examen"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="Cantidad" class="label" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        Cantidad<p-sortIcon field="Cantidad"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="PrecioVenta" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        Total<p-sortIcon field="PrecioVenta"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="Pendiente" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        Pendiente<p-sortIcon field="Pendiente"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="Liquidado" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        Liquidado<p-sortIcon field="Liquidado"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="Facturado" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        Facturado<p-sortIcon field="Facturado"></p-sortIcon>
+                    </th>
+                    <th class="label" pSortableColumn="Cerrado" ALIGN="center" style="width: 6rem; text-align: center;">
+                        Cerrado<p-sortIcon field="Cerrado"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+                <tr [pSelectableRow]="rowData">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 4rem; text-align: center;">
+                        <span class="p-column-title">Nro</span>
+                        {{ rowData.num }}
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 8rem; text-align: center;">
+                        <span class="p-column-title">Periodo</span>
+                        {{ rowData.Periodo |uppercase }}
+                    </td>
+
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 10rem;">
+                        <span class="p-column-title">Clasificacion</span>
+                        {{ rowData.AdmDescripcion |uppercase }}
+                    </td>
+
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 15rem;">
+                        <span class="p-column-title">Unidad De Negocio</span>
+                        {{ rowData.UnidadNegocio |uppercase }}
+                    </td>
+
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 15rem;">
+                        <span class="p-column-title">Cliente</span>
+                        {{ rowData.CLIENTE |uppercase }}
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 10rem;">
+                        <span class="p-column-title">Sede</span>
+                        {{ rowData.Sede |uppercase }}
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
+                        <span class="p-column-title">Nro. Examen</span>
+                        {{ rowData.Examen   }}
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 10rem; text-align: center;">
+                        <span class="p-column-title">Examen</span>
+                        {{ rowData.Descripcion |uppercase}}
+                    </td>
+
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        <span class="p-column-title">Cantidad</span>
+                        {{ rowData.Cantidad | number:'1.2-2'}}
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+
+                        <span class="p-column-title">Total</span>
+                        {{ rowData.PrecioVenta | number:'1.2-2'}}
+                    </td>
+                    <td class=" tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        <span class="p-column-title">Pendiente</span>
+                        {{ rowData.Pendiente | number:'1.2-2'}}
+                    </td>
+                    <td class=" tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        <span class="p-column-title">Liquidado</span>
+                        {{ rowData.Liquidado | number:'1.2-2'}}
+                    </td>
+                    <td class=" tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        <span class="p-column-title">Facturado</span>
+                        {{ rowData.Facturado | number:'1.2-2'}}
+                    </td>
+                    <td class=" tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 6rem; text-align: center;">
+                        <span class="p-column-title">Cerrado</span>
+                        {{ rowData.Cerrado | number:'1.2-2'}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+</p-card>
+<ngx-produccion-mantenimiento></ngx-produccion-mantenimiento>
+<p-toast key="bc" [baseZIndex]="4000"></p-toast>

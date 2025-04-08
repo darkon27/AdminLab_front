@@ -1,0 +1,254 @@
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
+    [style]="{width: '1050px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    <ng-template pTemplate="content">    
+        <div class="row">
+            <p-tabView class="tabs">
+                <p-tabPanel header="Información General">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Unidad de Negocio</label>
+                                    <!-- <p-dropdown placeholder="Seleccione" [options]="lstEstados" [disabled]="puedeEditar" [(ngModel)]="dto.Estado"></p-dropdown> -->
+                                    <p-dropdown placeholder="Seleccione" [options]="lstServicio" [disabled]="puedeEditar"  [(ngModel)]="examen.ClasificadorMovimiento">
+                                    </p-dropdown>
+                                </div>
+                            </div>  
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Clasificación</label>                                     
+                                    <p-dropdown placeholder="Seleccione" [options]="lstClasificacion"
+                                        [disabled]="puedeEditar" [(ngModel)]="examen.IdClasificacion">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Código</label>
+                                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}"
+                                        [(ngModel)]="examen.CodigoComponente" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Abreviatura</label>
+                                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}"
+                                        [(ngModel)]="examen.Abreviatura" />
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Descripción</label>                                     
+                                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}"
+                                        [(ngModel)]="examen.Descripcion" />
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mt-2 mb-2">
+                                <p-fieldset legend="Tiempo de entrega">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="inputLastName" class="label"></label>
+                                                    <p-dropdown placeholder="Seleccione" [options]="lstTiempo"
+                                                        [disabled]="puedeEditar" [(ngModel)]="examen.IdUnidadMedida">
+                                                    </p-dropdown>                                                
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="inputLastName" class="label"></label>
+                                                    <input pInputText type="text" placeholder=""
+                                                        [style]="{'width':'100%'}"   [(ngModel)]="examen.TiempoMuestra" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p-fieldset>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Sexo</label>
+                                    <p-dropdown placeholder="Seleccione" [options]="lstSexo"
+                                        [disabled]="puedeEditar" [(ngModel)]="examen.Sexo">
+                                    </p-dropdown>
+                                </div>
+                            </div>                               
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Estado</label>
+                                    <p-dropdown placeholder="Seleccione" [options]="lstEstado"
+                                        [disabled]="puedeEditar" [(ngModel)]="examen.Estado">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="inputLastName" class="label">Condiciones pre
+                                        analíticas</label>
+                                    <textarea pInputText type="text" placeholder="" cols="5" rows="7"
+                                        [style]="{'width':'100%'}" [(ngModel)]="examen.Observacion"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Homologación">
+                    <p-fieldset legend="Homologación" class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p-table #dt [rows]="20" [paginator]="false" [rowHover]="true"
+                                            [responsive]="true" [value]="lstHomologacion" [sortOrder]="1"
+                                            sortField="codigoComponente" [showCurrentPageReport]="true"
+                                            [scrollable]="true" scrollHeight="300px">
+
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="codigoComponente"
+                                                        class="label text-center" style="width: 3rem;">
+                                                        N°<p-sortIcon field="codigoComponente"> </p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="NombreCompleto"
+                                                        class="label text-center" style="width: 10rem;">
+                                                        Cliente<p-sortIcon field="NombreCompleto">
+                                                        </p-sortIcon>
+                                                    </th>
+                                                    <th class="label text-center" style="width: 10rem;"
+                                                        pSortableColumn="CodigoHomologado">
+                                                        Homologación<p-sortIcon
+                                                            field="CodigoHomologado"></p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-rowData>
+                                                <tr [pSelectableRow]="rowData">
+                                                    <td class="tablaColumnaCodigoChico text-center"
+                                                        style="width: 3rem;" ALIGN="center">
+                                                        {{rowData.codigoComponente}}</td>
+                                                    <td class="tablaColumnaCodigoChico" style="width: 10rem;"
+                                                        ALIGN="center">{{rowData.NombreCompleto}}</td>
+                                                    <td class="tablaColumnaCodigoChico text-center"
+                                                        style="width: 10rem;" ALIGN="center">
+                                                        {{rowData.CodigoHomologado}}</td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                </p-fieldset>
+                </p-tabPanel>
+                <p-tabPanel header="Muestra">
+                    <p-fieldset legend="Muestra"class="col-sm-12 mt-4">
+                        <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" [responsive]="true" [sortOrder]="1"
+                        sortField="numeroExamen" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                        [showCurrentPageReport]="true" selectionMode="single" selectionMode="multiple" [scrollable]="true"
+                        scrollHeight="200px" [style]="{width:'100%'}" [rowsPerPageOptions]="[15,30,50]"  [value]="lstMuestra" >
+                        <ng-template pTemplate="colgroup">
+                        <colgroup>
+                            <col style="width:50px">
+                        </colgroup>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5rem;" class="label" pSortableColumn="numeroExamen">Id<p-sortIcon
+                                field="numeroExamen">
+                            </p-sortIcon>
+                            </th>
+                            <th style="width: 10rem;" class="label" pSortableColumn="CodigoComponente">Muestra
+                            <p-sortIcon field="CodigoComponente">
+                            </p-sortIcon>
+                            </th>
+   
+                            <th style="width: 5rem;" class="label" pSortableColumn="Abreviatura">Abreviatura<p-sortIcon
+                                field="Abreviatura">
+                            </p-sortIcon>
+                            </th>  
+
+                            <th style="width: 5rem;" class="label" pSortableColumn="Descripcion">Cantidad<p-sortIcon
+                                field="Descripcion">
+                            </p-sortIcon>
+                            </th>                        
+                        </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData>
+                        <tr>               
+                            <td style="width: 5rem;" class="tablaColumnaCodigoChico" ALIGN="center">
+                            <span>{{rowData.IdMuestra}}</span>                </td>
+                            <td style="width: 10rem;" class="tablaColumnaCodigoChico" ALIGN="center">
+                            <span>{{rowData.Nombre}}</span>
+                            </td>
+                            <td style="width: 5rem;" class="tablaColumnaCodigoChico" ALIGN="center">
+                                <span>{{rowData.Abreviatura}}</span>
+                                </td> 
+                            <td style="width: 5rem;" class="tablaColumnaCodigoChico" ALIGN="center">
+                            <span>{{rowData.Cantidad}}</span>
+                            </td>                       
+                        </tr>
+                        </ng-template>
+                    </p-table>                       
+                </p-fieldset>
+                </p-tabPanel>
+                <p-tabPanel header="Perfil">
+                    <p-fieldset legend="Perfil"class="col-sm-12 mt-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <p-table #dt [rows]="20" [paginator]="false" [rowHover]="true"
+                                                    [responsive]="true" [value]="lstPerfil" [sortOrder]="1"
+                                                    sortField="codigoComponente" [showCurrentPageReport]="true"
+                                                    [scrollable]="true" scrollHeight="300px">
+
+                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                            <th pSortableColumn="codigoComponente"
+                                                                class="label text-center" style="width: 3rem;">
+                                                                N°<p-sortIcon field="codigoComponente"> </p-sortIcon>
+                                                            </th>
+                                                            <th pSortableColumn="CodigoHomologado"
+                                                                class="label text-center" style="width: 10rem;">
+                                                                Descripción<p-sortIcon field="CodigoHomologado">
+                                                                </p-sortIcon>
+                                                            </th>
+                                                            <th class="label text-center" style="width: 10rem;"
+                                                                pSortableColumn="DesHomologacion">
+                                                                Código<p-sortIcon field="DesHomologacion"></p-sortIcon>
+                                                            </th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-rowData>
+                                                        <tr [pSelectableRow]="rowData">
+                                                            <td class="tablaColumnaCodigoChico text-center"
+                                                                style="width: 3rem;" ALIGN="center">
+                                                                {{rowData.codigoComponente}}</td>
+                                                            <td class="tablaColumnaCodigoChico" style="width: 10rem;"
+                                                                ALIGN="center">{{rowData.CodigoHomologado}}</td>
+                                                            <td class="tablaColumnaCodigoChico text-center"
+                                                                style="width: 10rem;" ALIGN="center">
+                                                                {{rowData.DesHomologacion}}</td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                    </p-fieldset> 
+                </p-tabPanel>
+        </p-tabView>
+
+    </div>  
+       
+    </ng-template>
+
+</p-dialog>
+<p-toast></p-toast>

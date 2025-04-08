@@ -1,0 +1,181 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="2000">
+  <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'850px': '75vw'}"
+  [style]="{width: '1200px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="2000">
+  <ng-template pTemplate="content">
+    <p-fieldset legend="" >
+      <div style="display: flex; flex-wrap: wrap; margin: 0px 10px; justify-content: center;">
+        <div class="" style="width: 45.55555555%;">
+          <div class="row">
+            <p-fieldset legend="Lista de Atenciones" [ngStyle]="{'height':'100%'}">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="inputPaciente" class="label">Paciente</label>
+                  <div class="p-inputgroup">
+                    <input pInputText type="text" id="inputPaciente"
+                      class="hoverDisabled  size-large  col-4 status-basic shape-rectangle nb-transition"
+                      style="width:100%" [(ngModel)]="filtro.Documento" [disabled]="editarCampoDocumento"
+                      (keydown)="validarTeclaEnter($event)" />&nbsp;
+                    <input pInputText type="text"
+                      class="hoverDisabled  size-medium col-8 status-basic shape-rectangle nb-transition"
+                      style="width:100%; height:30px" [(ngModel)]="filtro.NombreCompleto" [disabled]="true" />
+                    <div class="input-group-append">
+                      <button class="btn btn-outline" type="button" id="button-addon2"
+                        style=" height:30px; margin-left:-32px" (click)="limpiarPersona()">x</button>
+                    </div>
+                    <button (click)="verSelectorPaciente()" pButton icon="fa fa-user" class="botonbuscar" type="button"
+                      title="Buscar Paciente"></button>
+                    <button (click)="coreBuscar()" pButton icon="fa fa-search" class="botonbuscar" type="button"
+                      title="Buscar Atenciones"></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12">
+
+                <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstAdmision"
+                  [responsive]="true" [sortOrder]="1" sortField="num" [(selection)]="lstSeleccionadomultiple"
+                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                  [rowsPerPageOptions]="[15, 50, 100]" [showCurrentPageReport]="true" [scrollable]="true">
+
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th class="tablaHeaderCheckBox">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                      </th>
+                      <th style="width: 6rem;" pSortableColumn="NroPeticion" class="label">N° Petición<p-sortIcon
+                          field="NroPeticion">
+                        </p-sortIcon>
+                      </th>
+                      <th style="width: 6rem;" pSortableColumn="OrdenAtencion" class="label">OA Clínica<p-sortIcon
+                          field="OrdenAtencion">
+                        </p-sortIcon>
+                      </th>
+                      <th style="width: 4rem;" pSortableColumn="Estado" class="label">Estado<p-sortIcon field="Estado">
+                        </p-sortIcon>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData>
+                    <tr>
+                      <td class="tablaColumnaCheckBox">
+                        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                      </td>
+                      <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 8rem;">
+                        {{rowData.NroPeticion}}
+                      </td>
+                      <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 8rem;">
+                        {{rowData.OrdenAtencion}}
+                      </td>
+                      <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
+                        {{rowData.DesEstado}}
+                      </td>
+
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </p-fieldset>
+          </div>
+        </div>
+        <div class="col-sm-1" [style]="{'display': 'flex', 'justify-content': 'center','align-items':'center'}">
+          <div class="row">
+            <div [ngStyle]="{'height':'100%'}">
+              
+              <div class="col-sm-12" style="margin-bottom: 5px;">
+                <p-button icon="pi pi-angle-double-right" styleClass="p-button-primary" [disabled]="puedeEditar"
+                  type="submit" (click)="coreEnviarUnificacion()"></p-button>
+              </div>
+              
+              <div class="col-sm-12" style="margin-bottom: 5px;">
+                <p-button icon="pi pi-angle-double-left" styleClass="p-button-primary" [disabled]="puedeEditar"
+                  type="submit" (click)="coreWQuitarUnificacion()"></p-button>
+              </div>
+              
+            </div>
+          </div>
+
+        </div>
+        <div class="" style="width: 45.55555555%;">
+          <div class="row">
+            <p-fieldset legend="Lista de Atenciones Unificación" [ngStyle]="{'height':'100%'}">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="inputPaciente" class="label">Paciente</label>
+                  <div class="p-inputgroup">
+                    <input pInputText type="text" id="inputPaciente"
+                      class="hoverDisabled  size-large  col-4 status-basic shape-rectangle nb-transition"
+                      style="width:100%" [(ngModel)]="filtroUnificado.Documento" [disabled]="editarUnifiDocumento"
+                      (keydown)="TeclaEnterUnificacion($event)" />&nbsp;
+                    <input pInputText type="text"
+                      class="hoverDisabled  size-medium col-8 status-basic shape-rectangle nb-transition"
+                      style="width:100%; height:30px" [(ngModel)]="filtroUnificado.NombreCompleto" [disabled]="true" />
+                    <div class="input-group-append">
+                      <button class="btn btn-outline" type="button" id="button-addon2"
+                        style=" height:30px; margin-left:-32px" (click)="limpiarUnificacion()">x</button>
+                    </div>
+                    <button (click)="verSelectorUnificacion()" pButton icon="fa fa-user" class="botonbuscar"
+                      type="button" title="Buscar Paciente"></button>
+                    <button (click)="coreGuardarUnificacion()" pButton icon="fa fa-save" class="botonbuscar"
+                      type="button" title="Unificar"></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+
+                <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstUnificacion"
+                  [responsive]="true" [sortOrder]="-1" sortField="numeroAdmision"
+                  [(selection)]="lstSeleccionadoUnificacion"
+                  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                  [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true"
+                  scrollHeight="300px">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th class="tablaHeaderCheckBox">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                      </th>
+                      <th style="width: 6rem;" pSortableColumn="NroPeticion" class="label">N° Petición<p-sortIcon
+                          field="NroPeticion">
+                        </p-sortIcon>
+                      </th>
+                      <th style="width: 6rem;" pSortableColumn="OrdenAtencion" class="label">OA Clínica<p-sortIcon
+                          field="OrdenAtencion">
+                        </p-sortIcon>
+                      </th>
+                      <th style="width: 4rem;" pSortableColumn="Estado" class="label">Estado<p-sortIcon field="Estado">
+                        </p-sortIcon>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData>
+                    <tr>
+                      <td class="tablaColumnaCheckBox">
+                        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                      </td>
+                      <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 8rem;">
+                        {{rowData.NroPeticion}}
+                      </td>
+                      <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 8rem;">
+                        {{rowData.OrdenAtencion}}
+                      </td>
+                      <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
+                        {{rowData.DesEstado}}
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </p-fieldset>
+          </div>
+        </div>
+      </div>
+    </p-fieldset>
+    <p-fieldset legend="Auditoria">
+      <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
+        [modificacionFecha]="fechaModificacion"></ngx-auditoria>
+    </p-fieldset>
+  </ng-template>
+</p-dialog>
+
+<ngx-persona-buscar></ngx-persona-buscar>

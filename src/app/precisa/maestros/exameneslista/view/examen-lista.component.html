@@ -1,0 +1,117 @@
+<p-blockUI [blocked]="bloquearPag">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+  </p-blockUI>
+  <p-confirmDialog #c key="confirm">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+  </p-confirmDialog>
+<nb-card>
+    <nb-card-header>
+        <nav class="fixed">
+            <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+        </nav>
+    </nb-card-header>
+    <nb-card-body>
+        <p-fieldset legend="Información Consulta">
+            <div class="row" style="padding: 10px;">
+                <div class="col-sm-6">                
+                    <label for="inputLastName" class="label">Lista Base</label>
+                    <p-dropdown [options]="lstListaBase" [(ngModel)]="filtro.IdListaBase" [filter]="true"
+                    [style]="{'background-color':'rgb(247, 247, 208)'}" >
+                 </p-dropdown>
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputLastName" class="label">Codigo </label>
+                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
+                </div>            
+                <div class="col-sm-6">
+                    <label for="inputLastName" class="label">Descripcion</label>
+                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputLastName" class="label">Estado</label>
+                    <p-dropdown [options]="lstEstados" [(ngModel)]="filtro.Estado" [filter]="true"
+                     [style]="{'background-color':'rgb(247, 247, 208)'}" >
+                  </p-dropdown>
+                </div>
+            </div>
+        </p-fieldset>
+        <br>
+        <p-fieldset legend="Detalle">
+            <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="tipousuario" [responsive]="true"
+                [value]="lstListaBaseComponente" [sortOrder]="-1" sortField="tipousuario"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                [showCurrentPageReport]="true">
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="tablaHeaderAccion3">Acción</th>
+                        <th pSortableColumn="tipousuario">Estado <p-sortIcon field="tipousuario"> </p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="Perfil">Código<p-sortIcon field="Perfil"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="VaEstado">Lista Base<p-sortIcon field="VaEstado"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="VaEstado">Descripción<p-sortIcon field="VaEstado"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="Perfil">PrecioUnitarioLista<p-sortIcon field="Perfil"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="Perfil">TipoFactor<p-sortIcon field="Perfil"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="Perfil">Estado<p-sortIcon field="Perfil"></p-sortIcon>
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-asignarPerfil>
+                    <tr>
+                        <td class="tablaColumnaAccion3">
+                            <span class="p-column-title">Acción</span>
+                            <table>
+                                <tr>
+                                    <th>
+                                        <button pButton pRipple type="button" icon="fad fa-pencil-alt"
+                                            class="p-button-rounded p-button-text" title="Editar"
+                                            (click)="coreEditar(asignarPerfil)"></button>
+                                    </th>
+                                    <th>
+                                        <button pButton pRipple type="button" icon="fad fa-search"
+                                            class="p-button-rounded p-button-text" title="Ver"
+                                            (click)="coreVer(asignarPerfil)"></button>
+                                    </th>
+                                    <th>
+                                        <button pButton pRipple type="button" icon="fal fa-trash-alt"
+                                            class="p-button-rounded p-button-text" title="Inactivar"></button>
+                                    </th>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>{{asignarPerfil.CodigoTabla}}</td>
+
+                        <td>{{asignarPerfil.Descripcion}}</td>
+
+                        <td>
+                            <span>{{asignarPerfil.Nombre}}</span>
+                        </td>
+                        <td>{{asignarPerfil.CodigoTabla}}</td>
+
+                        <td>{{asignarPerfil.Descripcion}}</td>
+
+                        <td>
+                            <span>{{asignarPerfil.Nombre}}</span>
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-fieldset>
+    </nb-card-body>
+
+</nb-card>
+<ngx-examen-lista-mantenimiento></ngx-examen-lista-mantenimiento>

@@ -1,0 +1,130 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-confirmDialog #c key="refinanciar" [visible]="visible" [baseZIndex]="10000">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
+<!-- <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
+    [style]="{width: '950px', height: '860px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="1000"> -->
+    <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'850px': '75vw'}"
+    [style]="{width: '950px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="2000">
+    <ng-template pTemplate="content">
+        <div class="row">
+            <div class="col-sm-6">
+                <p-fieldset legend="Información General">
+                    <div class="col-sm-12">
+                                <label class="label">Código</label>
+                                <input pInputText type="text"
+                                    [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}" [disabled]="puedeEditar"
+                                    (ngModelChange)="dto.SedCodigo = $event.toUpperCase()" [(ngModel)]="dto.SedCodigo"
+                                    maxlength="4" />                                         
+                    </div>
+                    <div class="col-sm-12">
+                                <label class="label">Sucursal</label>
+                                <input pInputText type="text"
+                                    [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}" [disabled]="puedeEditar"
+                                    [(ngModel)]="dto.SedDescripcion" maxlength="60" />
+                    </div>
+                    <div class="col-sm-12"> 
+                            <label for="inputLastName" class="label">Empresa Cliente</label>
+                            <div class="p-inputgroup">
+                                <div class="p-inputgroup">
+                                    <input pInputText type="text" [(ngModel)]="dto.CodEmpresaRoe"
+                                    (keydown)="validarTeclaEnterCliente($event)"   [disabled]="editarCampoCliente"
+                                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                        style="width:60%; background-color: rgb(247, 247, 208); height: 30px;" />
+                                    &nbsp;
+                                    <input pInputText type="text"
+                                        class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                                        style="width:140%; background-color: rgb(247, 247, 208); height: 30px;"
+                                        [(ngModel)]="dto.NombreCompleto" [disabled]="true" />
+
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline" type="button" id="button-addon2"
+                                        (click)="limpiarClienteRuc()" style=" height:30px; margin-left:-32px" >x</button>
+                                    </div>
+                                </div>
+                                <button pButton icon="fa fa-search" class="botonbuscar" type="button" title="Buscar Cliente" 
+                                 (click)="verSelectorCliente()"></button>
+                            </div> 
+                    </div>
+                    <div class="col-sm-12">  
+                            <label class="label">Sede Cliente</label>
+                            <p-dropdown [options]="lstsedeCliente" [(ngModel)]="dto.FlatCodigo" [filter]="true"
+                                [disabled]="puedeEditar" [style]="{'background-color':'rgb(247, 247, 208)'}"
+                                [style]="{'width':'100%'}"></p-dropdown>
+                    </div>
+                    <div class="col-sm-12"> 
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    <p-button label="Agregar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
+                    (click)="coreGuardar()"></p-button>
+                </div>
+                </p-fieldset>
+            </div>
+            <div class="col-sm-6">
+                <p-fieldset legend="Detalle">
+                    <p-table #dt [rows]="20" [paginator]="false" [rowHover]="true"
+                    [responsive]="true" [value]="lstCompartirSede" [sortOrder]="1"
+                    sortField="codigoComponente" [showCurrentPageReport]="true"
+                    [scrollable]="true" scrollHeight="300px">
+                    <ng-template pTemplate="header">
+                        <tr>   
+                            <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
+                            <th pSortableColumn="IdSedeCompartida"
+                                class="label text-center" style="width: 4rem;">
+                                Id<p-sortIcon field="IdSedeCompartida"> </p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SedCodigo"
+                                class="label text-center" style="width: 5rem;">
+                                Codigo<p-sortIcon field="SedCodigo">
+                                </p-sortIcon>
+                            </th>
+                            <th class="label text-center" style="width: 10rem;"
+                                pSortableColumn="SedDescripcion">
+                                Sede Compartida<p-sortIcon
+                                    field="SedDescripcion"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData>
+                        <tr [pSelectableRow]="rowData">
+                            <td class="tablaColumnaAccion3">
+                                <span class="p-column-title">Acción</span>
+                                <table>
+                                  <tr>
+                                    <th>
+                                      <button pButton pRipple type="button" icon="fad fa-minus-circle" 
+                                        (click)="coreinactivar(rowData)" class="p-button-rounded p-button-text" title="Eliminar"></button>
+                                    </th>                 
+                                  </tr>
+                                </table>
+                              </td>
+                            <td class="tablaColumnaCodigoChico text-center"
+                                style="width: 4rem;" ALIGN="center">
+                                {{rowData.IdSedeCompartida}}</td>
+                            <td class="tablaColumnaCodigoChico text-center" style="width: 5rem;"
+                                ALIGN="center">{{rowData.SedCodigo}}</td>
+                            <td class="tablaColumnaCodigoChico text-center"
+                                style="width: 10rem;" ALIGN="center">
+                                {{rowData.SedDescripcion}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+                </p-fieldset>
+
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+<ngx-clienteruc-buscar></ngx-clienteruc-buscar>
+<p-toast key="x1bc" [baseZIndex]="1005"></p-toast>

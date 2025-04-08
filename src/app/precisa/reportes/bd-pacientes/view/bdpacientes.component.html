@@ -1,0 +1,198 @@
+<nb-card>
+
+
+
+    <nb-card-header>
+        <nav class="fixed">
+            <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+        </nav>
+        <div class="row">
+            <div class="col-sm-2">
+                <h4 class="titulonuevo"></h4>
+            </div>
+            <div class="col-sm-10" style="background-color: transparent;">
+                <div>
+
+                    <!-- <nb-card class="col-sm-6 fondocard" style="padding: 2px; margin-bottom: -10px; margin-top: -10px;">
+                  <div class="row col-sm-12">
+                    <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/ico5.ico" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Buscar</label></button> 
+                     
+                 <button  style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/NUEVO.png" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Nuevo</label> </button> 
+                 <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/ico_editar.ico" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Editar</label></button> 
+                 <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/ico4.ico" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Ver</label></button>
+                 <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/inactivar.png" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Inactivar</label></button> 
+                 <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/COPIAR.png" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Copiar</label></button>
+  
+  
+              </div>
+              </nb-card>     -->
+                </div>
+
+            </div>
+        </div>
+    </nb-card-header>
+    <!-- <p-divider align="left" [ngStyle]="{'padding-left': '15px','padding-right': '15px'}">
+    <div class="p-d-inline-flex p-ai-center">
+        <i class="pi pi-bars p-mr-2"></i>
+        <b>&nbsp;Configuración de Contratos</b>
+    </div>
+  </p-divider> -->
+  
+
+
+
+    <div class="row" style="padding: 10px;">
+        <div class="col-sm-4">
+
+            <label for="inputLastName" class="label">Cliente</label>
+            <div class="p-inputgroup">
+                <input pInputText type="text" disabled class="hoverDisabled" style="width:60px" />&nbsp;
+                <input pInputText type="text" disabled class="hoverDisabled" style="width:150%; height: 30px;" />
+                <button pButton icon="fa fa-binoculars" type="button" title="Buscar Empleado"></button>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <label for="inputLastName" class="label">Fecha Inicio</label>
+            <div class="p-inputgroup">
+                <p-calendar class="calendar_size" dateFormat="dd/mm/yy" [ngStyle]="{'width': '150%'}" [showIcon]="true"
+                    [showTime]="true" yearRange="2000:2010" placeholder='' [monthNavigator]="true"
+                    [yearNavigator]="true">
+                </p-calendar>
+            </div>
+
+
+            <label for="inputLastName" class="label">Fecha Final</label>
+            <div class="p-inputgroup">
+                <p-calendar class="calendar_size" dateFormat="dd/mm/yy" [ngStyle]="{'width': '100%'}" [showIcon]="true"
+                    [showTime]="true" yearRange="2000:2010" placeholder='' [monthNavigator]="true"
+                    [yearNavigator]="true">
+                </p-calendar>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-4">
+
+            <label for="inputLastName" class="label">Sede</label>
+            <p-dropdown placeholder="Seleccione"></p-dropdown>
+            <label for="inputLastName" class="label">Estado</label>
+            <p-dropdown placeholder="Seleccione"></p-dropdown>
+        </div>
+        <!-- <div class="col-sm-4">
+
+            <label for="inputLastName" class="label">Cliente</label>
+            <div class="p-inputgroup">
+                <input pInputText type="text" disabled class="hoverDisabled" style="width:60px" />&nbsp;
+                <input pInputText type="text" disabled class="hoverDisabled" style="width:100%; height: 30px;" />
+                <button pButton icon="fa fa-binoculars" type="button" title="Buscar Empleado"></button>
+            </div>
+
+
+
+        </div> -->
+
+
+    </div>
+    <br>
+
+    <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="tipousuario" [responsive]="true"
+        [value]="dto" [sortOrder]="-1" sortField="tipousuario"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+        [showCurrentPageReport]="true">
+
+        <!-- <ng-template pTemplate="header">
+            <tr>
+                <th class="tablaHeaderAccion3">Acción</th>
+                <th pSortableColumn="tipousuario">Nro<p-sortIcon field="tipousuario"> </p-sortIcon>
+                </th>
+
+                <th pSortableColumn="Perfil">Admisión<p-sortIcon field="Perfil"></p-sortIcon>
+                </th>
+
+                <th pSortableColumn="VaEstado">Paciente<p-sortIcon field="VaEstado"></p-sortIcon>
+                </th>
+                <th pSortableColumn="VaEstado">Empresa<p-sortIcon field="VaEstado"></p-sortIcon>
+                </th>
+                <th pSortableColumn="VaEstado">Sede<p-sortIcon field="VaEstado">
+                    </p-sortIcon>
+                </th>
+
+                <th pSortableColumn="VaEstado">Contrato<p-sortIcon field="VaEstado">
+                    </p-sortIcon>
+                </th>
+                <th pSortableColumn="VaEstado">Lista Base<p-sortIcon field="VaEstado">
+                    </p-sortIcon>
+                </th>
+                <th pSortableColumn="VaEstado">Copago<p-sortIcon field="VaEstado">
+                    </p-sortIcon>
+                </th>
+                <th pSortableColumn="VaEstado">Factor<p-sortIcon field="VaEstado">
+                    </p-sortIcon>
+                </th>
+                <th pSortableColumn="VaEstado">Estado<p-sortIcon field="VaEstado">
+                    </p-sortIcon>
+                </th>
+
+
+
+
+
+
+
+
+
+
+            </tr>
+        </ng-template> -->
+        <!-- <ng-template pTemplate="body" let-asignarPerfil>
+            <tr>
+                <td class="tablaColumnaAccion3">
+                    <span class="p-column-title">Acción</span>
+                    <table>
+                        <tr>
+                            <th>
+                                <button pButton pRipple type="button" icon="fad fa-pencil-alt"
+                                    class="p-button-rounded p-button-text" title="Editar"
+                                    (click)="coreEditar(asignarPerfil)"></button>
+                            </th>
+                            <th>
+                                <button pButton pRipple type="button" icon="fad fa-search"
+                                    class="p-button-rounded p-button-text" title="Ver"
+                                    (click)="coreVer(asignarPerfil)"></button>
+                            </th>
+                            <th>
+                                <button pButton pRipple type="button" icon="fal fa-trash-alt"
+                                    class="p-button-rounded p-button-text" title="Inactivar"></button>
+                            </th>
+                        </tr>
+                    </table>
+                </td>
+                <td>{{asignarPerfil.CodigoTabla}}</td>
+
+                <td>{{asignarPerfil.Descripcion}}</td>
+
+                <td>
+                    <span>{{asignarPerfil.Nombre}}</span>
+                </td>
+                <td>{{asignarPerfil.CodigoTabla}}</td>
+
+                <td>{{asignarPerfil.Descripcion}}</td>
+
+                <td>
+                    <span>{{asignarPerfil.Nombre}}</span>
+                </td>
+                <td>{{asignarPerfil.CodigoTabla}}</td>
+
+                <td>{{asignarPerfil.Descripcion}}</td>
+                <td>{{asignarPerfil.CodigoTabla}}</td>
+
+                <td>{{asignarPerfil.Descripcion}}</td>
+
+            </tr>
+        </ng-template> -->
+    </p-table>
+
+
+</nb-card>
+<ngx-bdpacientes-mantenimiento></ngx-bdpacientes-mantenimiento>

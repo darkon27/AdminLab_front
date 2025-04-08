@@ -1,0 +1,162 @@
+<p-blockUI [blocked]="bloquearPag">
+  <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<!DOCTYPE html>
+<html lang="es">
+<nb-card style="background-color: transparent;" accent="warning" class="col-sm-12">
+  <nb-card-header style="background-color: transparent; margin-top: 0px;">
+    <div class="row">
+      <div class="col-sm-2">
+        <br>
+        <h4 class="titulonuevo">&nbsp; &nbsp;Examen</h4>
+      </div>
+
+      <div class="col-sm-5" style="background-color: transparent;">
+      </div>
+      <div class="col-sm-5" style="background-color: transparent;" aria-orientation="horizontal">
+        <div>
+
+          <!--
+            * Autor: Geampier Smc
+            * Tipo: Maquetación
+            * Detalle: Mejora de diseño
+          -->
+          <nb-card class="col-sm-12 fondocard" style="padding: 10px 10px; left: 200px; width: 40%; margin-bottom: -10px; margin-top: 5px;">
+            <div class="row" aria-orientation="horizontal" style="justify-content: end;">
+              <br>
+              <button (click)="coreBuscar()" style="color: #2B4E64; padding: 0px;" class="col-sm-6 button btn">
+                <img src="assets/img/Busc_mante.ico" style="filter: drop-shadow(5px 5px 7px #444); width: 30%;
+                  flex: 0 0 30%;max-width: 30%;"><br><label
+                  style="font-size: 10px;font-weight: bold">Buscar</label></button>
+              <br>
+              <!-- <button (click)="coreNuevo()" style="color: #2B4E64; padding: 0px;" class="col button btn"><img
+                  src="assets/img/nuevo1.ico" style="filter: drop-shadow(5px 5px 7px #444); width: 30%;
+                  flex: 0 0 30%;max-width: 30%;"><br><label style="font-size: 10px;font-weight: bold">Nuevo</label>
+              </button> -->
+              <br>             
+              <button (click)="coreVerExamen()" style="color: #2B4E64; padding: 0px;" class="col-sm-6 button btn"><img
+                  src="assets/img/homologacion.png" style="filter: drop-shadow(5px 5px 7px #444); width: 30%;
+                  flex: 0 0 30%;max-width: 30%;"><br><label style="font-size: 10px;font-weight: bold">
+                  Detalle</label></button>
+              <br>
+              <!-- <button (click)="coreAsignarHomologacion()" style="color: #2B4E64; padding: 0px;"
+                class="col button btn"><img src="assets/img/homologacion.png" style="filter: drop-shadow(5px 5px 7px #444); width: 30%;
+                  flex: 0 0 30%;max-width: 30%;"><br><label style="font-size: 10px;font-weight: bold">
+                  Hmlg</label></button>
+              <br>
+              <button (click)="corePerfil()" style="color: #2B4E64; padding: 0px;" class="col button btn"><img
+                  src="assets/img/homologacion.png" style="filter: drop-shadow(5px 5px 7px #444); width: 30%;
+                  flex: 0 0 30%;max-width: 30%;"><br><label style="font-size: 10px;font-weight: bold">
+                  Perfil</label></button>
+              <br> -->
+            </div>
+          </nb-card>
+        </div>
+
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <p-fieldset legend="Información Consulta">
+      <div class="row" style="padding: 10px;">
+        <div class="col">
+          <label for="inputLastName" class="label">Código Componente</label>
+          <input pInputText type="text" placeholder="" style="width:100%; height: 30px;"
+            [(ngModel)]="filtro.CodigoComponente" />
+        </div>
+        <div class="col">
+
+          <label for="inputLastName" class="label">Descripción</label>
+          <input pInputText type="text" placeholder="" style="width:100%; height: 30px;"
+            [(ngModel)]="filtro.Descripcion" />
+        </div>
+        <div class="col">
+
+          <label for="inputLastName" class="label">Servicio</label>
+          <p-dropdown [options]="lstServicio" [filter]="true" [(ngModel)]="filtro.ClasificadorMovimiento"></p-dropdown>
+
+
+        </div>
+        <div class="col">
+          <label for="inputLastName" class="label">Clasificación</label>
+          <p-dropdown [options]="lstClasificacion" [filter]="true" [(ngModel)]="filtro.IdClasificacion"></p-dropdown>
+
+        </div>
+
+        <div class="col">
+          <label for="inputLastName" class="label">Estado</label>
+          <p-dropdown [options]="lstEstado" [filter]="true" [(ngModel)]="filtro.Estado"></p-dropdown>
+        </div>
+      </div>
+    </p-fieldset>
+    <br>
+    <p-fieldset legend="Detalle">
+      <div class="col">
+        <p-table #dt [rows]="20" [paginator]="true" [rowHover]="true" [responsive]="true" [value]="lstexamen"
+          [sortOrder]="1" sortField="codigoComponente" (onLazyLoad)="grillaCargarDatos($event)"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" selectionMode="single"
+          [(selection)]="registroSeleccionado" [rowsPerPageOptions]="[20,50,100]" [showCurrentPageReport]="true"
+          [scrollable]="true" scrollHeight="300px" (onRowSelect)="onRowSelect($event)">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <!-- <th class="tablaHeaderAccion3 label">
+                Acciones</th> -->
+              <th pSortableColumn="Id" class="label text-center" style="width: 3rem;">
+                N°<p-sortIcon field="Id"> </p-sortIcon>
+              </th>
+              <th pSortableColumn="DesMovimiento" class="label text-center" style="width: 10rem;">
+                Unidad de negocio<p-sortIcon field="DesMovimiento"> </p-sortIcon>
+              </th>
+              <th class="label text-center" style="width: 10rem;" pSortableColumn="clasificacion">
+                Clasificación<p-sortIcon field="clasificacion"></p-sortIcon>
+              </th>
+              <th class="label  text-center" style="width: 6rem;" pSortableColumn="CodigoComponente">Código<p-sortIcon
+                  field="CodigoComponente">
+                </p-sortIcon>
+              </th>
+              <th class="label  text-center" style="width: 10rem;" pSortableColumn="Nombre">Descripción<p-sortIcon
+                  field="Nombre">
+                </p-sortIcon>
+              </th>
+
+              <th class="label  text-center" style="width: 7rem;" pSortableColumn="Abreviatura">SLA<p-sortIcon
+                  field="Abreviatura">
+                </p-sortIcon>
+              </th>
+              <th class="label  text-center" style="width: 5rem;" pSortableColumn="ESTADOdesc">Estado<p-sortIcon
+                  field="ESTADOdesc">
+                </p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">            
+              <td class="tablaColumnaCodigoChico" style="width: 3rem;" ALIGN="center">{{rowData.numeroExamen}}</td>
+              <td class="tablaColumnaCodigoChico" style="width: 10rem;" ALIGN="center">{{rowData.DesMovimiento}}</td>
+              <td class="tablaColumnaCodigoChico" style="width: 10rem;" ALIGN="center">{{rowData.clasificacion}}</td>
+              <td class="tablaColumnaCodigoChico" style="width: 5rem;" ALIGN="center">
+                <span>{{rowData.CodigoComponente}}</span>
+              </td>
+              <td class="tablaColumnaCodigoChico" style="width: 10rem;" ALIGN="center">{{rowData.Nombre}}
+              </td>
+              <td class="tablaColumnaCodigoChico" style="width: 5rem;" ALIGN="center">{{rowData.SLA}}</td>
+              <td class="tablaColumnaCodigoChico" style="width: 5rem;" ALIGN="center">
+                <span>{{rowData.ESTADOdesc}}</span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-fieldset>
+
+  </nb-card-body>
+</nb-card>
+
+</html>
+<ngx-examen-mantenimiento></ngx-examen-mantenimiento>
+<ngx-examen-asignar-muestra></ngx-examen-asignar-muestra>
+<ngx-examen-asignar-homologacion></ngx-examen-asignar-homologacion>
+<ngx-examen-perfil></ngx-examen-perfil>
+<ngx-examen-mantenimiento-vista></ngx-examen-mantenimiento-vista>
