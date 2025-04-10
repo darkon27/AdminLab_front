@@ -3,106 +3,119 @@
 </p-blockUI>
 <p-confirmDialog #c key="confirm">
   <p-footer>
-      <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
-          (click)="c.accept()"></button>
-      <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded"
-          (click)="c.reject()"></button>
+    <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+      (click)="c.accept()"></button>
+    <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded" (click)="c.reject()"></button>
   </p-footer>
 </p-confirmDialog>
 <p-card>
   <nb-card-header>
     <nav class="fixed">
-        <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+      <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
     </nav>
-</nb-card-header>
+  </nb-card-header>
   <p-fieldset legend="Información Consulta">
     <div class="row">
       <div class="col-sm-4">
-          <label for="documentoFiscal" class="label">Empresa</label>
+        <label for="documentoFiscal" class="label">Empresa</label>
+        <div class="p-inputgroup">
           <div class="p-inputgroup">
-            <div class="p-inputgroup">
-              <input pInputText type="text" (keydown)="validarEnterEmpresa($event)" 
-                class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
-                style="width:70%; height: 30px;" [(ngModel)]="filtro.RucEmpresa"
-                [disabled]="editarCampoEmpresa" />
-              &nbsp;
-              <input pInputText type="text"
-                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
-                style="width:130%; height: 30px;" [(ngModel)]="filtro.empresa" [disabled]="true" />
-              <div class="input-group-append">
-                <button class="btn btn-outline" type="button" id="button-addon2"
-                  style=" height:30px; margin-left:-32px" (click)="limpiarEmpresa()"
-                  [disabled]="editarCampos">x</button>
-              </div>
+            <input pInputText type="text" (keydown)="validarEnterEmpresa($event)"
+              class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+              style="width:70%; height: 30px;" [(ngModel)]="filtro.RucEmpresa" [disabled]="editarCampoEmpresa" />
+            &nbsp;
+            <input pInputText type="text"
+              class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+              style="width:130%; height: 30px;" [(ngModel)]="filtro.empresa" [disabled]="true" />
+            <div class="input-group-append">
+              <button class="btn btn-outline" type="button" id="button-addon2"
+                *ngIf="filtro?.empresa != '' || filtro?.empresa != null || filtro?.empresa !=undefined"
+                style=" height:30px; margin-left:-32px; display: flex; align-items: center;" (click)="limpiarEmpresa()"
+                [disabled]="editarCampos" title="Limpiar Empresa">x</button>
             </div>
-            <button (click)="verSelectorEmpresa()" pButton icon="fa fa-search" class="botonbuscar" type="button"
-              title="Buscar Empresa" [disabled]="editarCampos"></button>
           </div>
-        </div>     
-        <div class="col-sm-4">
-          <label for="inputLastName" class="label">Sede</label>
-          <p-dropdown placeholder="--Seleccione--" value="" [options]="lstsedes" [(ngModel)]="filtro.IdSede"
-            [filter]="true">
-          </p-dropdown>
+          <button (click)="verSelectorEmpresa()" pButton icon="fa fa-search" class="botonbuscar" type="button"
+            title="Buscar Empresa" [disabled]="editarCampos"></button>
         </div>
-        <div class="col-sm-4">
-        </div>
-        <div class="col-sm-4">
-            <label for="inputLastName" class="label">Tipo Admision</label>
-            <p-dropdown [options]="lstTipoAdmision" [(ngModel)]="filtro.TipoAdmisionId" [filter]="true"
-            [disabled]="editarCampos" [style]="{'background-color':'rgb(247, 247, 208)'}"  (onChange)="selectedTipoAdmision($event)">
-          </p-dropdown>
-        </div>
+      </div>
+      <div class="col-sm-4">
+        <label for="inputLastName" class="label">Sede</label>
+        <p-dropdown placeholder="--Seleccione--" value="" [options]="lstsedes" [(ngModel)]="filtro.IdSede"
+          [filter]="true">
+        </p-dropdown>
+      </div>
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-4">
+        <label for="inputLastName" class="label">Tipo Admision 
+          <!-- <b style="color: rgb(209, 5, 5);">*</b>  -->
+        </label>
+        <p-dropdown [options]="lstTipoAdmision" [(ngModel)]="filtro.TipoAdmisionId" [filter]="true"
+          [disabled]="editarCampos" [style]="{'background-color':'rgb(247, 247, 208)'}"
+          (onChange)="selectedTipoAdmision($event)">
+        </p-dropdown>
+      </div>
 
-        <div class="col-sm-4">
-            <label for="inputLastName" class="label">Tipo Paciente</label>
-            <p-dropdown [options]="lstTipoPaciente" [(ngModel)]="filtro.TipoPacienteId" [filter]="true"
-            [disabled]="editarCampos" [style]="{'background-color':'rgb(247, 247, 208)'}" >
-          </p-dropdown>
-          </div>
-        <div class="col-sm-4">
-            <label for="inputLastName" class="label">Estado</label>
-            <p-dropdown [options]="lstEstados" [(ngModel)]="filtro.TipEstado" [filter]="true"
-            [disabled]="editarCampos" [style]="{'background-color':'rgb(247, 247, 208)'}" >
-          </p-dropdown>
-          </div>
+      <div class="col-sm-4">
+        <label for="inputLastName" class="label">Tipo Paciente </label>
+        <p-dropdown [options]="lstTipoPaciente" [(ngModel)]="filtro.TipoPacienteId" [filter]="true"
+          [disabled]="editarCampos" [style]="{'background-color':'rgb(247, 247, 208)'}">
+        </p-dropdown>
+      </div>
+      <div class="col-sm-4">
+        <label for="inputLastName" class="label">Estado </label>
+        <p-dropdown [options]="lstEstados" [(ngModel)]="filtro.TipEstado" [filter]="true" [disabled]="editarCampos"
+          [style]="{'background-color':'rgb(247, 247, 208)'}">
+        </p-dropdown>
+      </div>
     </div>
-</p-fieldset>
+  </p-fieldset>
   <br>
-<p-fieldset legend="Información Consulta">
+  <p-fieldset legend="Información Consulta">
     <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstTipoOperacion"
       [responsive]="true" [sortOrder]="-1" sortField="FechaCreacion"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
       [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
       <ng-template pTemplate="header">
-          <tr>
-            <th class="tablaHeaderCheckBox"   >
-              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        <tr style="text-wrap: nowrap;">
+          <th class="tablaHeaderCheckBox">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th class="tablaHeaderAccion3 label" ALIGN="center" >Acciones</th>
-              <th pSortableColumn="num" class="label" ALIGN="center" style="width: 3rem;  ">Nro <p-sortIcon field="num"> </p-sortIcon>
-              </th>
-              <th pSortableColumn="FechaCreacion" class="label" ALIGN="center" style="width: 5em;  ">Fecha<p-sortIcon field="FechaCreacion"></p-sortIcon>
-              </th>
-              <th pSortableColumn="AdmDescripcion" class="label" ALIGN="center" style="width: 8rem;  ">Admisión<p-sortIcon field="AdmDescripcion"></p-sortIcon>
-              </th>
-              <th pSortableColumn="Descripcion" class="label" ALIGN="center" style="width: 7rem;  ">Tipo Paciente<p-sortIcon field="Descripcion"></p-sortIcon>
-              </th>
-              <th pSortableColumn="Empresa" class="label" ALIGN="center" style="width: 12rem;  ">Empresa<p-sortIcon field="Empresa"></p-sortIcon>
-              </th>
-              <th pSortableColumn="SedDescripcion" class="label" ALIGN="center" style="width: 8rem;  ">Sede<p-sortIcon field="SedDescripcion"></p-sortIcon>
-              </th>
-              <th pSortableColumn="CodigoContrato" class="label" ALIGN="center" style="width: 5rem;  ">Codigo<p-sortIcon field="CodigoContrato"></p-sortIcon>
-              </th>
-              <th pSortableColumn="Nombre" class="label" ALIGN="center" style="width: 8rem;  ">Lista Base<p-sortIcon field="Nombre"></p-sortIcon>
-              </th>
-              <th pSortableColumn="Monto" class="label" ALIGN="center" style="width: 5rem;  ">Monto<p-sortIcon field="Monto"></p-sortIcon>
-              </th>
-              <th pSortableColumn="TPFactor" class="label" ALIGN="center" style="width: 5rem;  ">Factor<p-sortIcon field="TPFactor"></p-sortIcon>
-              </th>
-              <th pSortableColumn="EstadoDesc" class="label" ALIGN="center" style="width: 5rem;  ">Estado<p-sortIcon field="EstadoDesc"></p-sortIcon>
-              </th>
-          </tr>
+          <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
+          <th pSortableColumn="num" class="label" ALIGN="center" style="width: 4rem;  ">Nro <p-sortIcon field="num">
+            </p-sortIcon>
+          </th>
+          <th pSortableColumn="FechaCreacion" class="label" ALIGN="center" style="width: 5rem;  ">Fecha<p-sortIcon
+              field="FechaCreacion"></p-sortIcon>
+          </th>
+          <th pSortableColumn="AdmDescripcion" class="label" ALIGN="center" style="width: 8rem;  ">Admisión<p-sortIcon
+              field="AdmDescripcion"></p-sortIcon>
+          </th>
+          <th pSortableColumn="Descripcion" class="label" ALIGN="center" style="width: 10rem;  ">Tipo
+            Paciente<p-sortIcon field="Descripcion"></p-sortIcon>
+          </th>
+          <th pSortableColumn="Empresa" class="label" ALIGN="center" style="width: 12rem;  ">Empresa<p-sortIcon
+              field="Empresa"></p-sortIcon>
+          </th>
+          <th pSortableColumn="SedDescripcion" class="label" ALIGN="center" style="width: 10rem;  ">Sede<p-sortIcon
+              field="SedDescripcion"></p-sortIcon>
+          </th>
+          <th pSortableColumn="CodigoContrato" class="label" ALIGN="center" style="width: 6rem;  ">Codigo<p-sortIcon
+              field="CodigoContrato"></p-sortIcon>
+          </th>
+          <th pSortableColumn="Nombre" class="label" ALIGN="center" style="width: 10rem;  ">Lista Base<p-sortIcon
+              field="Nombre"></p-sortIcon>
+          </th>
+          <th pSortableColumn="Monto" class="label" ALIGN="center" style="width: 6rem;  ">Monto<p-sortIcon
+              field="Monto"></p-sortIcon>
+          </th>
+          <th pSortableColumn="TPFactor" class="label" ALIGN="center" style="width: 5rem;  ">Factor<p-sortIcon
+              field="TPFactor"></p-sortIcon>
+          </th>
+          <th pSortableColumn="EstadoDesc" class="label" ALIGN="center" style="width: 5rem;  ">Estado<p-sortIcon
+              field="EstadoDesc"></p-sortIcon>
+          </th>
+        </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData>
         <tr>
@@ -110,75 +123,77 @@
             <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
           </td>
           <td class="tablaColumnaAccion3">
-                  <span class="p-column-title">Acción</span>
-                  <table>
-                      <tr>
-                          <th>
-                              <button pButton pRipple type="button" icon="fad fa-pencil-alt"
-                                  class="p-button-rounded p-button-text" title="Editar"
-                                  (click)="coreEditar(rowData)"></button>
-                          </th>
-                          <th>
-                              <button pButton pRipple type="button" icon="fad fa-search"
-                                  (click)="coreVer(rowData)" class="p-button-rounded p-button-text"
-                                  title="Ver"></button>
-                          </th>
-                          <th>
-                              <button pButton pRipple type="button" icon="fad fa-minus-circle" 
-                              *ngIf="rowData.TipEstado == '1' "  (click)="coreinactivar(rowData)"
-                                  class="p-button-rounded p-button-text" title="Inactivar"></button>
-                          </th>
-                      </tr>
-                  </table>
+            <span class="p-column-title">Acción</span>
+            <table>
+              <tr>
+                <th>
+                  <button pButton pRipple type="button" icon="fad fa-pencil-alt" class="p-button-rounded p-button-text"
+                    title="Editar" (click)="coreEditar(rowData)"></button>
+                </th>
+                <th>
+                  <button pButton pRipple type="button" icon="fad fa-search" (click)="coreVer(rowData)"
+                    class="p-button-rounded p-button-text" title="Ver"></button>
+                </th>
+                <th>
+                  <button pButton pRipple type="button" icon="fad fa-minus-circle" *ngIf="rowData.TipEstado == '1' "
+                    (click)="coreinactivar(rowData)" class="p-button-rounded p-button-text" title="Inactivar"></button>
+                </th>
+              </tr>
+            </table>
           </td>
-          <td  class="tablaColumnaCodigoChico text-center" style="width: 3rem;">
-                <span class="p-column-title">Nro</span>
-                {{rowData.num}}
+          <td class="tablaColumnaCodigoChico text-center" style="width: 4rem;">
+            <span class="p-column-title">Nro</span>
+            {{rowData.num}}
           </td>
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
-                <span class="p-column-title">FechaCreacion</span>
-                <span> {{rowData.FechaCreacion | date: 'dd/MM/yyyy'}}</span>
-              </td>
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 8rem;">
-                <span class="p-column-title">Admisión</span>
-                <span>{{rowData.AdmDescripcion|uppercase}}</span>
-              </td>
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 7rem;">
-                <span class="p-column-title">Paciente</span>
-                  <span>{{rowData.Descripcion|uppercase}}</span>
-              </td>                
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 12rem;">
-                <span class="p-column-title">Empresa</span>
-                <span>{{rowData.empresa|uppercase}}</span>
-              </td>
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 8rem;">
-                <span class="p-column-title">Sede</span>
-                <span>{{rowData.SedDescripcion|uppercase}}</span>
-              </td>
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 6rem;">
-                <span class="p-column-title">Contrato</span>
-                  <span>{{rowData.CodigoContrato|uppercase}}</span>
-              </td>                
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
-                <span class="p-column-title">Lista Base</span>
-                <span>{{rowData.Nombre|uppercase}}</span>
-              </td>
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
-                <span class="p-column-title">Monto</span>
-                <span>{{rowData.Monto|currency: 'S/'}}</span>
-              </td>
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
-                <span class="p-column-title">Factor</span>
-                  <span>{{rowData.TPFactor}}</span>
-              </td>                
-              <td  class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
-                <span class="p-column-title">Estado</span>
-                <span>{{rowData.EstadoDesc|uppercase}}</span>
-              </td>
-          </tr>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
+            <span class="p-column-title">Fecha</span>
+            <span> {{rowData.FechaCreacion | date: 'dd/MM/yyyy'}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 8rem;">
+            <span class="p-column-title">Admisión</span>
+            <span>{{rowData.AdmDescripcion|uppercase}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 10rem;">
+            <span class="p-column-title">Tipo Paciente</span>
+            <span>{{rowData.Descripcion|uppercase}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 12rem;">
+            <span class="p-column-title">Empresa</span>
+            <span>{{rowData.empresa|uppercase}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 10rem;">
+            <span class="p-column-title">Sede</span>
+            <span>{{rowData.SedDescripcion|uppercase}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 6rem;">
+            <span class="p-column-title">Código</span>
+            <span>{{rowData.CodigoContrato|uppercase}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 10rem;">
+            <span class="p-column-title">Lista Base</span>
+            <span>{{rowData.Nombre|uppercase}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 6rem;">
+            <span class="p-column-title">Monto</span>
+            <span>{{rowData.Monto|currency: 'S/'}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
+            <span class="p-column-title">Factor</span>
+            <span>{{rowData.TPFactor}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico" ALIGN="center" style="width: 5rem;">
+            <span class="p-column-title">Estado</span>
+            <span>{{rowData.EstadoDesc|uppercase}}</span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="11">No se encontraron resultados.</td>
+        </tr>
       </ng-template>
     </p-table>
-</p-fieldset>
+  </p-fieldset>
 </p-card>
 <ngx-configuracion-contratos-mantenimiento></ngx-configuracion-contratos-mantenimiento>
 <ngx-empresa-buscar></ngx-empresa-buscar>

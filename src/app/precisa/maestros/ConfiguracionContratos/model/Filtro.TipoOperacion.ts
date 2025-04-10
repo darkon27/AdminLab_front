@@ -12,5 +12,5 @@ export class filtroTipoOperacion{
     IdSedeCliente:      number;
     DesSedeCliente:     string;
     RucEmpresa:           string; 
-    empresa:              string; 
+    empresa:              string = ''; 
 }

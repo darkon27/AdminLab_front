@@ -14,179 +14,194 @@
     [style]="{width: '1000px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
-        <div class="row">
+        <div class="row mt-2 mb-2" [formGroup]="contratoForm">
             <div class="col-sm-6">
                 <p-fieldset legend="Información General">
                     <div class="row">
-                        <div class="col-sm-6">                           
-                            <label for="inputLastName" class="label">Tipo Admisión</label>
-                            <div class="form-group">                              
-                                <p-dropdown  [options]="lstTipoAdmision" 
-                                [(ngModel)]="Entydad.TIPOADMISIONID"  (onChange)="selectedTipoAdmision($event)" [disabled]="puedeEditar">
+                        <div class="col-sm-6">
+                            <label for="inputLastName" class="label">Tipo Admisión
+                                <b style="color: rgb(209, 5, 5);">*</b>
+                            </label>
+                            <div class="form-group">
+                                <p-dropdown [options]="lstTipoAdmision" formControlName="TIPOADMISIONID"
+                                    placeholder="-- Seleccione --" (onChange)="selectedTipoAdmision($event)"
+                                    [disabled]="puedeEditar">
                                 </p-dropdown>
                             </div>
                         </div>
-                        <div class="col-sm-6">                   
-                            <label for="inputLastName" class="label">Tipo Paciente</label>                      
-                            <div class="form-group"> 
-                                <p-dropdown [options]="lstTipoPaciente" [(ngModel)]="Entydad.TipoPacienteId" [disabled]="puedeEditar" [filter]="true">
+                        <div class="col-sm-6">
+                            <label for="inputLastName" class="label">Tipo Paciente</label>
+                            <div class="form-group">
+                                <p-dropdown [options]="lstTipoPaciente" formControlName="TipoPacienteId"
+                                    placeholder="-- Seleccione --" [disabled]="puedeEditar" [filter]="true">
                                 </p-dropdown>
-                            </div> 
+                            </div>
                         </div>
-                        <div class="col-sm-12" *ngIf="mostrarCliente">     
+                        <div class="col-sm-12" *ngIf="mostrarCliente">
                             <label for="inputLastName" class="label">Cliente</label>
                             <div class="p-inputgroup">
                                 <div class="p-inputgroup">
-                                    <input pInputText type="text" [(ngModel)]="Entydad.RucEmpresa"
-                                    (keydown)="validarTeclaEnterCliente($event)"   [disabled]="editarCampoCliente"
+                                    <input pInputText type="text" formControlName="RucEmpresa"
+                                        (keydown)="validarTeclaEnterCliente($event)" 
                                         class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
                                         style="width:60%; background-color: rgb(247, 247, 208); height: 30px;" />
                                     &nbsp;
                                     <input pInputText type="text"
                                         class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
                                         style="width:140%; background-color: rgb(247, 247, 208); height: 30px;"
-                                        [(ngModel)]="Entydad.empresa" [disabled]="true" />
+                                        formControlName="empresa"  />
 
                                     <div class="input-group-append">
                                         <button class="btn btn-outline" type="button" id="button-addon2"
-                                        (click)="limpiarClienteRuc()" style=" height:30px; margin-left:-32px" >x</button>
+                                            (click)="limpiarClienteRuc()" title="Limpiar" [disabled]="deshabilitarOpt"
+                                            *ngIf="contratoForm.get('empresa').value.trim().length > 0 "
+                                            style=" height:30px; margin-left:-32px; display: flex; align-items: center;">x</button>
                                     </div>
                                 </div>
-                                <button pButton icon="fa fa-search" class="botonbuscar" type="button" title="Buscar Cliente" 
-                                 (click)="verSelectorCliente()"></button>
+                                <button pButton icon="fa fa-search" class="botonbuscar" type="button"
+                                    [disabled]="deshabilitarOpt" title="Buscar Cliente"
+                                    (click)="verSelectorCliente()"></button>
                             </div>
 
                         </div>
                         <div class="col-sm-12">
                             <label for="inputLastName" class="label">Descripcion</label>
-                            <input pInputText type="text"  [style]="{'width':'100%'}"  [(ngModel)]="Entydad.Descripcion"/>             
-                        </div> 
+                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="Descripcion" />
+                        </div>
 
                         <div class="row">
-                            <div class="col-sm-6" *ngIf="mostrarFecha">                              
-                                    <label class="label">Fecha Inicio</label>
-                                    <div class="p-inputgroup">
-                                        <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                            [style]="{'width':'100%'}"  [(ngModel)]="Entydad.FechaInicio" 
-                                            [inputStyle]="{'width':'100%'}" [disabled]="true" yearRange="1940:2300"
-                                            [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
-                                        </p-calendar>
-                                    </div>                        
+                            <div class="col-sm-6" *ngIf="mostrarFecha">
+                                <label class="label">Fecha Inicio</label>
+                                <div class="p-inputgroup">
+                                    <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                        [style]="{'width':'100%'}" formControlName="FechaInicio"
+                                        [inputStyle]="{'width':'100%'}" [disabled]="true" yearRange="1940:2300"
+                                        [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
+                                    </p-calendar>
+                                </div>
                             </div>
-                            <div class="col-sm-6" *ngIf="mostrarFecha">              
-                                    <label class="label">Fecha Fin</label>
-                                    <div class="p-inputgroup">                                
-                                        <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                            [style]="{'width':'100%'}"  [(ngModel)]="Entydad.FechaTermino" 
-                                            [inputStyle]="{'width':'100%'}" [disabled]="true" yearRange="1940:2300"
-                                            [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
-                                        </p-calendar>
-                                    </div>                    
-                            </div> 
-                        </div> 
-                        <div class="col-sm-6" *ngIf="mostrarContrato">  
-                            <label for="inputLastName" class="label">Contrato</label> 
-                                <input pInputText type="text"  [style]="{'width':'100%'}" [(ngModel)]="Entydad.CodigoContrato"/>
+                            <div class="col-sm-6" *ngIf="mostrarFecha">
+                                <label class="label">Fecha Fin</label>
+                                <div class="p-inputgroup">
+                                    <p-calendar [monthNavigator]="true" [yearNavigator]="true"
+                                        [style]="{'width':'100%'}" formControlName="FechaTermino"
+                                        [inputStyle]="{'width':'100%'}" [disabled]="true" yearRange="1940:2300"
+                                        [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
+                                    </p-calendar>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-6" *ngIf="mostrarSede">  
-                            <label for="inputLastName" class="label">Sede</label>                      
-                            <div class="form-group"> 
-                                <p-dropdown placeholder="Seleccione" [options]="lstsedes"  [(ngModel)]="Entydad.IdSede"  [disabled]="puedeEditar">
+                        <div class="col-sm-6" *ngIf="mostrarContrato">
+                            <label for="inputLastName" class="label">Contrato</label>
+                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="CodigoContrato" />
+                        </div>
+                        <div class="col-sm-6" *ngIf="mostrarSede">
+                            <label for="inputLastName" class="label">Sede</label>
+                            <div class="form-group">
+                                <p-dropdown placeholder="-- Seleccione --" [options]="lstsedes" formControlName="IdSede"
+                                    [disabled]="puedeEditar">
                                 </p-dropdown>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="inputLastName" class="label">Estado</label>
-                            <div class="form-group">                            
-                                <p-dropdown placeholder="Seleccione" [options]="lstEstados" [disabled]="puedeEditar" 
-                                [(ngModel)]="Entydad.TipEstado" >
+                            <div class="form-group">
+                                <p-dropdown placeholder="-- Seleccione --" [options]="lstEstados"
+                                    [disabled]="puedeEditar" formControlName="TipEstado">
                                 </p-dropdown>
                             </div>
-                        </div>  
+                        </div>
                     </div>
-                </p-fieldset>   
+                </p-fieldset>
             </div>
             <div class="col-sm-6">
                 <p-fieldset legend="Información General">
                     <div class="row">
                         <div class="col-sm-6">
                             <label for="inputLastName" class="label">Lista Base</label>
-                            <div class="form-group"> 
-                                <p-dropdown placeholder="Seleccione" [options]="lstListaBase" [disabled]="puedeEditar" [(ngModel)]="Entydad.IdListaBase" [filter]="true">
+                            <div class="form-group">
+                                <p-dropdown placeholder="-- Seleccione --" [options]="lstListaBase"
+                                    [disabled]="puedeEditar" formControlName="IdListaBase" [filter]="true">
                                 </p-dropdown>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="inputLastName" class="label">Moneda</label>
                             <div class="form-group">
-                                <p-dropdown placeholder="Seleccione" [options]="lstMoneda" [disabled]="puedeEditar" [(ngModel)]="Entydad.TPMoneda">
+                                <p-dropdown placeholder="-- Seleccione --" [options]="lstMoneda"
+                                    [disabled]="puedeEditar" formControlName="TPMoneda">
                                 </p-dropdown>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="inputLastName" class="label"> Tipo Formula</label>
-                            <div class="form-group"> 
-                                <p-dropdown placeholder="Seleccione" [options]="lstFormula" [(ngModel)]="Entydad.AplicaFormula" [disabled]="puedeEditar" [filter]="true">
+                            <div class="form-group">
+                                <p-dropdown placeholder="-- Seleccione --" [options]="lstFormula"
+                                    formControlName="AplicaFormula" [disabled]="puedeEditar" [filter]="true">
                                 </p-dropdown>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-6">
-                            <label for="inputLastName" class="label">Asume Empresa</label> 
-                            <input pInputText type="text"  [style]="{'width':'100%'}"  [(ngModel)]="Entydad.Monto"  
-                            (keypress)="validateDecimalInput($event)" 
-                            (paste)="validatePaste($event)"
-                            pattern="^\d+(\.\d{0,2})?$"  />
+                            <label for="inputLastName" class="label">Asume Empresa</label>
+                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="Monto"
+                                (keypress)="validateDecimalInput($event)" (paste)="validatePaste($event)"
+                                pattern="^\d+(\.\d{0,2})?$" />
                         </div>
-                        <div class="col-sm-6"  style="margin-top: 10px;">  
-                            <nb-checkbox status="success" [(ngModel)]="Entydad.TPAplicaFactor">Aplica Factor</nb-checkbox> 
+                        <div class="col-sm-6" style="margin-top: 10px;">
+                            <nb-checkbox status="success" formControlName="TPAplicaFactor">Aplica
+                                Factor</nb-checkbox>
                         </div>
                         <div class="col-sm-6">
-                            <label for="inputLastName" class="label">Factor</label> 
-                            <input pInputText type="text"  [style]="{'width':'100%'}" [(ngModel)]="Entydad.TPFactor"
-                            (keypress)="validateDecimalInput($event)" 
-                            (paste)="validatePaste($event)"
-                            pattern="^\d+(\.\d{0,2})?$"  />
+                            <label for="inputLastName" class="label">Factor</label>
+                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="TPFactor"
+                                (keypress)="validateDecimalInput($event)" (paste)="validatePaste($event)"
+                                pattern="^\d+(\.\d{0,2})?$" />
                         </div>
-                        <div class="col-sm-6" style="margin-top: 10px;">  
-                            <nb-checkbox status="success" [(ngModel)]="Entydad.FlaCon">Consentimiento</nb-checkbox>
+                        <div class="col-sm-6" style="margin-top: 10px;">
+                            <nb-checkbox status="success" formControlName="FlaCon">Consentimiento</nb-checkbox>
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarSedeCliente" style="margin-top: 10px;">
-                            <label for="inputLastName" class="label">Sede Cliente</label> 
+                            <label for="inputLastName" class="label">Sede Cliente</label>
                             <div class="form-group">
-                                <p-dropdown placeholder="Seleccione" [options]="lstsedeCliente" [disabled]="puedeEditar" [(ngModel)]="Entydad.IdSedeCliente">
+                                <p-dropdown placeholder="-- Seleccione --" [options]="lstsedeCliente"
+                                    [disabled]="puedeEditar" formControlName="IdSedeCliente">
                                 </p-dropdown>
                             </div>
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarAprobacion" style="margin-top: 10px;">
-                            <nb-checkbox status="success" [(ngModel)]="Entydad.TPFactor">Aprobación</nb-checkbox> 
+                            <nb-checkbox status="success" formControlName="TPFactor">Aprobación</nb-checkbox>
                         </div>
-                        <div class="col-sm-6" *ngIf="mostrarAdelanto" style="margin-top: 10px;">   
-                            <nb-checkbox status="success" [(ngModel)]="Entydad.FlagAdelanto">Requiere Adelanto</nb-checkbox>
+                        <div class="col-sm-6" *ngIf="mostrarAdelanto" style="margin-top: 10px;">
+                            <nb-checkbox status="success" formControlName="FlagAdelanto">Requiere
+                                Adelanto</nb-checkbox>
                         </div>
-                        <div class="col-sm-6" *ngIf="mostrarMinimo" style="margin-top: 10px;">   
-                            <label for="inputLastName" class="label">% Minimo</label> 
-                            <input pInputText type="text"  [style]="{'width':'100%'}" [(ngModel)]="Entydad.MontoMinimo"
-                            (keypress)="validateDecimalInput($event)" 
-                            (paste)="validatePaste($event)"
-                            pattern="^\d+(\.\d{0,2})?$"  />
+                        <div class="col-sm-6" *ngIf="mostrarMinimo" style="margin-top: 10px;">
+                            <label for="inputLastName" class="label">% Minimo</label>
+                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="MontoMinimo"
+                                (keypress)="validateDecimalInput($event)" (paste)="validatePaste($event)"
+                                pattern="^\d+(\.\d{0,2})?$" />
                         </div>
-                        <div class="col-sm-6" *ngIf="mostrarRedondeo" style="margin-top: 10px;">     
-                            <nb-checkbox status="success" [(ngModel)]="Entydad.FlagRedondeo">Redondeo a Entero</nb-checkbox>
-                        </div>                        
-                        <div class="col-sm-6" *ngIf="mostrarCortesia" style="margin-top: 10px;">  
-                            <nb-checkbox status="success" [(ngModel)]="Entydad.FlagCortesia">Cortesia (Grat. Inafecto)</nb-checkbox>                   
+                        <div class="col-sm-6" *ngIf="mostrarRedondeo" style="margin-top: 10px;">
+                            <nb-checkbox status="success" formControlName="FlagRedondeo">Redondeo a
+                                Entero</nb-checkbox>
+                        </div>
+                        <div class="col-sm-6" *ngIf="mostrarCortesia" style="margin-top: 10px;">
+                            <nb-checkbox status="success" formControlName="FlagCortesia">Cortesia (Grat.
+                                Inafecto)</nb-checkbox>
                         </div>
                     </div>
-                </p-fieldset>   
+                </p-fieldset>
             </div>
-        </div>         
+        </div>
         <p-fieldset legend="Datos Generales">
             <ngx-auditoria></ngx-auditoria>
         </p-fieldset>
     </ng-template>
     <ng-template pTemplate="footer">
-        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary"  [disabled]="puedeEditar" (click)="coreGuardar()"></p-button>
+        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar"
+            [disabled]="deshabilitarOpt" (click)="coreGuardar()"></p-button>
     </ng-template>
 </p-dialog>
 <p-toast key="x1contra" [baseZIndex]="10000"></p-toast>
 <ngx-persona-buscar></ngx-persona-buscar>
+<ngx-clienteruc-buscar></ngx-clienteruc-buscar>
