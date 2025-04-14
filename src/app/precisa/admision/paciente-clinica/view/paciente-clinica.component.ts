@@ -375,10 +375,10 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     }
     else if (mensage.componente == "BUSCEXAM") {
       if (this.filtro.NombreCompleto != null) {
-      
+
 
         /**SE MODIFICO EL RECORRIDO PARA CALCULAR */
-    
+
         this.loading = true;
         for (let examenParaAgregar of mensage.resultado) {
           for (let examenEnDetalle of this.lstListarXAdmision) {
@@ -396,15 +396,15 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
                 title: '¡Mensaje!',
                 text: 'El Paciente es de sexo distinto al del examen'
               });
-            //  this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El Paciente es de sexo distinto al del examen', life: 3000 })
+              //  this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El Paciente es de sexo distinto al del examen', life: 3000 })
               this.loading = false;
             }
-        }
+          }
 
-/*           if (examenParaAgregar.Sexo != this.filtro.Sexo) {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El Paciente es de sexo distinto al del examen', life: 3000 })
-            this.loading = false;
-          } */
+          /*           if (examenParaAgregar.Sexo != this.filtro.Sexo) {
+                      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El Paciente es de sexo distinto al del examen', life: 3000 })
+                      this.loading = false;
+                    } */
 
           this.lstListarXAdmision.push({ ...examenParaAgregar });
         }
@@ -463,35 +463,35 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         }
 
 
-        var valoesexo=0;
-          for (let examenParaAgregar of mensage.resultado.list_AdmisionServicio) {
-                if (examenParaAgregar.Sexo != "A") {
-                    if (examenParaAgregar.Sexo != this.filtro.Sexo) {
-                      console.log("es de sexo distinto", examenParaAgregar.Sexo);
-                      console.log("es de sexo distinto", this.filtro.Sexo);
-                      valoesexo=1;
-                      break;
-                    }
-                }
+        var valoesexo = 0;
+        for (let examenParaAgregar of mensage.resultado.list_AdmisionServicio) {
+          if (examenParaAgregar.Sexo != "A") {
+            if (examenParaAgregar.Sexo != this.filtro.Sexo) {
+              console.log("es de sexo distinto", examenParaAgregar.Sexo);
+              console.log("es de sexo distinto", this.filtro.Sexo);
+              valoesexo = 1;
+              break;
+            }
           }
-          if (valoesexo == 1) {  
+        }
+        if (valoesexo == 1) {
 
-            Swal.fire({
-              icon: 'warning',
-              title: '¡Mensaje!',
-              confirmButtonColor: '#094d74',
-              text: 'El Paciente es de sexo distinto al del examen'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.listarConsentimientoXdocumento(mensage.resultado.Admision.Documento);
-              } else {
-                this.listarConsentimientoXdocumento(mensage.resultado.Admision.Documento);
-              }
-            })
-             this.loading = false;
-          }else{
-            this.listarConsentimientoXdocumento(mensage.resultado.Admision.Documento);
-          }  
+          Swal.fire({
+            icon: 'warning',
+            title: '¡Mensaje!',
+            confirmButtonColor: '#094d74',
+            text: 'El Paciente es de sexo distinto al del examen'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.listarConsentimientoXdocumento(mensage.resultado.Admision.Documento);
+            } else {
+              this.listarConsentimientoXdocumento(mensage.resultado.Admision.Documento);
+            }
+          })
+          this.loading = false;
+        } else {
+          this.listarConsentimientoXdocumento(mensage.resultado.Admision.Documento);
+        }
 
         this.guardarOAmedico(mensage.resultado.Admision.MedicoId);
         this.guardarOAaseguradora(mensage.resultado.Admision.IdAseguradora);
@@ -513,38 +513,38 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         }
         this.filtro.TipoOperacionID = mensage.resultado.Admision.TipoOperacionId;
         this.admision = mensage.resultado.Admision;
- 
-          if (mensage.resultado.list_AdmisionServicio[0].hasOwnProperty("CodigoComponente")) {
 
-            this.contarExamenes = mensage.resultado.list_AdmisionServicio.length;
+        if (mensage.resultado.list_AdmisionServicio[0].hasOwnProperty("CodigoComponente")) {
 
-            this.lstListarXAdmision = [];
-            for (let examenParaAgregar of mensage.resultado.list_AdmisionServicio) {
+          this.contarExamenes = mensage.resultado.list_AdmisionServicio.length;
 
-              /**SE SOLICITO QUE LA CANTIDAD DE LAS PRUEBAS SEA 1 CUANDO EL SERVICIO SEA LABORATORIO CLINICO */
-              if (mensage.resultado.Admision.ClasificadorMovimiento == '01') {
-                examenParaAgregar.Cantidad = 1;
-              }
+          this.lstListarXAdmision = [];
+          for (let examenParaAgregar of mensage.resultado.list_AdmisionServicio) {
 
-              /**FIN */
-
-              /**SE HACE EL CALCULO POR EL HECHO DE QUE EL VALOR VIENE EN DIFERENTE VARIABLE */
-              //examenParaAgregar.numeroXadmision = null; // si son nuevo, resultan estar en undefined
-              examenParaAgregar.valorBruto = examenParaAgregar.ValorEmpresa; // se agrega el valor de empresa
-              examenParaAgregar.ValorEmpresa = null; // se limpia por seguridad
-              let ExamenConIgv = examenParaAgregar.valorBruto * this.getUsuarioAuth().data[0].Igv;
-              examenParaAgregar.ValorEmpresa = examenParaAgregar.valorBruto + ExamenConIgv;
-              examenParaAgregar.ValorEmpresa = examenParaAgregar.ValorEmpresa * examenParaAgregar.Cantidad;
-              this.lstListarXAdmision.push({ ...examenParaAgregar });
+            /**SE SOLICITO QUE LA CANTIDAD DE LAS PRUEBAS SEA 1 CUANDO EL SERVICIO SEA LABORATORIO CLINICO */
+            if (mensage.resultado.Admision.ClasificadorMovimiento == '01') {
+              examenParaAgregar.Cantidad = 1;
             }
-            this.lstListarXAdmision = [...this.lstListarXAdmision];
-            await this.calculoDePruebasIgv();   
 
-            this.verBtnAnular = true;
-            this.colCard1 = "col-sm-3";
-            this.colCard2 = "col-sm-6";
+            /**FIN */
+
+            /**SE HACE EL CALCULO POR EL HECHO DE QUE EL VALOR VIENE EN DIFERENTE VARIABLE */
+            //examenParaAgregar.numeroXadmision = null; // si son nuevo, resultan estar en undefined
+            examenParaAgregar.valorBruto = examenParaAgregar.ValorEmpresa; // se agrega el valor de empresa
+            examenParaAgregar.ValorEmpresa = null; // se limpia por seguridad
+            let ExamenConIgv = examenParaAgregar.valorBruto * this.getUsuarioAuth().data[0].Igv;
+            examenParaAgregar.ValorEmpresa = examenParaAgregar.valorBruto + ExamenConIgv;
+            examenParaAgregar.ValorEmpresa = examenParaAgregar.ValorEmpresa * examenParaAgregar.Cantidad;
+            this.lstListarXAdmision.push({ ...examenParaAgregar });
           }
-       
+          this.lstListarXAdmision = [...this.lstListarXAdmision];
+          await this.calculoDePruebasIgv();
+
+          this.verBtnAnular = true;
+          this.colCard1 = "col-sm-3";
+          this.colCard2 = "col-sm-6";
+        }
+
 
         //this.bloquearPag = false;
         this.loading = false;
@@ -701,7 +701,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.dtofinal.Admision.OrdenAtencion = this.filtro.OrdenAtencion;
       this.dtofinal.Admision.MedicoId = this.filtro.MedicoId;
       this.dtofinal.Admision.IdSede = this.getUsuarioAuth().data[0].IdSede;
-      this.dtofinal.Admision.FechaModificacion = new Date();  
+      this.dtofinal.Admision.FechaModificacion = new Date();
       this.dtofinal.Admision.UsuarioModificacion = this.getUsuarioAuth().data[0].Usuario;
       this.dtofinal.Admision.IpModificacion = this.getIp();  //crear metodo que nos muestre la IP del usuario
       this.dtofinal.Admision.IdEmpresaPaciente = this.filtro2.Persona;
@@ -1042,6 +1042,31 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     this.personaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'TIPREGEMPRESA', ''), 'NUEVO', 2);
   }
 
+  /**
+   * Mensaje de confirmación agregado en base a solicitud AD-136
+   */
+  confirmarMultiPersona() {
+    if (this.filtro.NombreCompleto == null && this.filtro.Documento == null) {
+      this.MultiPersona();
+    } else {
+
+      Swal.fire({
+        title: '¡Importante!',
+        text: "¿Está seguro de modificar los datos del paciente? \n Los cambios podrían afectar a peticiones existentes",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#094d74',
+        cancelButtonColor: '#ffc72f',
+        cancelButtonText: 'No, Cancelar!',
+        confirmButtonText: 'Si, modificar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.MultiPersona();
+        }
+      });
+    }
+  }
+
   MultiPersona() {
     //  this.bloquearPag = true;
 
@@ -1299,7 +1324,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             var totala = 0;
             var cantidadExamenes = 0;
             var contadorsito = 1;
-            res.list_AdmisionServicio.forEach(element => {           
+            res.list_AdmisionServicio.forEach(element => {
               cantidadExamenes += element.Cantidad;
               element.ValorEmpresa = element.Valor * element.Cantidad;
               totala += element.ValorEmpresa;
@@ -1313,7 +1338,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           } else {
             this.registroSeleccionado = null;
             this.toastMensaje(`${res.mensaje}`, 'warning', 2000);
-       
+
           }
         }).catch(error => error)
 
@@ -1384,7 +1409,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
   }
 
-  
+
   async QuitarDetallePrueba(listaEliminar: DtoPacienteClinica[]): Promise<boolean> {
     let lstEliminar: DtoPacienteClinica[] = listaEliminar;
     var validar: boolean = true;
@@ -1421,7 +1446,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           }
 
           this.loading = true;
-       
+
           this.registroSeleccionado = null;
           this.loading = false;
         } else {
@@ -1722,22 +1747,22 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       return;
     }
 
-    if (this.filtro.TipoAtencion == 1 || this.filtro.TipoAtencion == 4 ) {
-        if (validacion.correo == "" || validacion.correo == null || validacion.correo == undefined) {
-          this.mensajeValidacion('warning',
-            `¡Completar Campos Obligatorios!`,
-            "Atención Ambulatorio o Domicilio :  Datos del teléfono y correo son obligaciones",
-            "N_Rpta");
-          return;
-        }
+    if (this.filtro.TipoAtencion == 1 || this.filtro.TipoAtencion == 4) {
+      if (validacion.correo == "" || validacion.correo == null || validacion.correo == undefined) {
+        this.mensajeValidacion('warning',
+          `¡Completar Campos Obligatorios!`,
+          "Atención Ambulatorio o Domicilio :  Datos del teléfono y correo son obligaciones",
+          "N_Rpta");
+        return;
+      }
 
-        if (this.esNumeroVacio(this.filtro.Telefono) || this.filtro.Telefono == null || this.filtro.Telefono == undefined) {
-          this.mensajeValidacion('warning',
-            `¡Completar Campos Obligatorios!`,
-            "Atención Ambulatorio o Domicilio :  Datos del teléfono y correo son obligaciones",
-            "N_Rpta");
-          return;
-        }
+      if (this.esNumeroVacio(this.filtro.Telefono) || this.filtro.Telefono == null || this.filtro.Telefono == undefined) {
+        this.mensajeValidacion('warning',
+          `¡Completar Campos Obligatorios!`,
+          "Atención Ambulatorio o Domicilio :  Datos del teléfono y correo son obligaciones",
+          "N_Rpta");
+        return;
+      }
     }
 
 
@@ -1989,7 +2014,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       console.log("GuardarAdmision dtofinal Modificar", this.dtofinal);
       this.bloquearPag = true;
       this.pacienteClinicaService.ValidarComponentePerfil(1, this.dtofinal, this.getUsuarioToken()).then((resPerfil) => {
-        this.bloquearPag = false;  
+        this.bloquearPag = false;
         console.log("ValidarComponentePerfil :: ", resPerfil);
         if (resPerfil.valor == 1) {
           console.log("DTO  GUARDAR", this.dtofinal);
@@ -1999,7 +2024,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
               this.auditoria(res.Admision, 2);
               if (this.estaVacio(res.mensaje)) {
                 this.toastMensaje('Se actualizó el registro con éxito.', 'success', 2000);
-              } 
+              }
               else {
                 if (res.valor == 1) {
                   this.toastMensaje(`${res.mensaje}`, 'success', 3000);
@@ -2008,16 +2033,16 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
                 }
               }
               console.log("DTO  GUARDAR mantenimientoAdmisionClinica", res);
-    
+
               this.dtofinal.Admision.DesEstado = res.Admision.DesEstado;
               this.dtofinal.Admision.Estado = res.Admision.Estado;
               this.filtro.Estado = res.Admision.Estado;
               admision.DesEstado = res.Admision.DesEstado;
               // admision.Estado = res.Admision.Estado;
-    
+
               if (res.list_AdmisionServicio[0].hasOwnProperty("CodigoComponente")) {
-    
-    
+
+
                 this.lstListarXAdmision = [];
                 for (let examenParaAgregar of res.list_AdmisionServicio) {
                   /**SE HACE EL CALCULO POR EL HECHO DE QUE EL VALOR VIENE EN DIFERENTE VARIABLE */
@@ -2031,7 +2056,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
                 }
                 this.lstListarXAdmision = [...this.lstListarXAdmision];
                 await this.calculoDePruebasIgv();
-    
+
                 this.editarCampoMedico = true;
                 this.editarCampoAseguradora = true;
                 this.editarCampoEmpresa = true;
@@ -2053,7 +2078,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
                   text: `${res.mensaje}`
                 })
               }
-    
+
             }).catch(error => error)
         } else {
           this.toastMensaje(`${resPerfil.mensaje}`, 'warning', 3000);
@@ -2122,58 +2147,57 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.bloquearPag = true;
       console.log("GuardarAdmision dtofinal insertar", this.dtofinal);
       this.pacienteClinicaService.ValidarComponentePerfil(1, this.dtofinal, this.getUsuarioToken()).then((resPerfil) => {
-        this.bloquearPag = false;  
+        this.bloquearPag = false;
         console.log("ValidarComponentePerfil :: ", resPerfil);
         if (resPerfil.valor == 1) {
           this.bloquearPag = true;
           this.loading = true;
           this.pacienteClinicaService.mantenimientoAdmisionClinica(1, this.dtofinal, this.getUsuarioToken()).then(
-              async res => {
-                this.bloquearPag = false;
-                this.loading = false;
-                console.log("data registrada:", res)
-                this.toastMensaje(`${res.mensaje}`, 'warning', 3000);
-                if (res.valor > 0) {
+            async res => {
+              this.bloquearPag = false;
+              this.loading = false;
+              console.log("data registrada:", res)
+              this.toastMensaje(`${res.mensaje}`, 'warning', 3000);
+              if (res.valor > 0) {
+                this.admision = res.Admision;
+                this.filtro.NroPeticion = res.Admision.NroPeticion;
+                // this.filtro.Estado = res.Admision.Estado;
+                // admision.Estado = res.Admision.Estado;
+                if (res.list_AdmisionServicio[0].hasOwnProperty("CodigoComponente")) {
+                  this.lstListarXAdmision = [];
+                  for (let examenParaAgregar of res.list_AdmisionServicio) {
+                    /**SE HACE EL CALCULO POR EL HECHO DE QUE EL VALOR VIENE EN DIFERENTE VARIABLE */
+                    //examenParaAgregar.numeroXadmision = null; // si son nuevo, resultan estar en undefined
+                    examenParaAgregar.valorBruto = examenParaAgregar.ValorEmpresa; // se agrega el valor de empresa
+                    examenParaAgregar.ValorEmpresa = null; // se limpia por seguridad
+                    let ExamenConIgv = examenParaAgregar.valorBruto * this.getUsuarioAuth().data[0].Igv;
+                    examenParaAgregar.ValorEmpresa = examenParaAgregar.valorBruto + ExamenConIgv;
+                    examenParaAgregar.ValorEmpresa = examenParaAgregar.ValorEmpresa * examenParaAgregar.Cantidad;
+                    this.lstListarXAdmision.push({ ...examenParaAgregar });
+                  }
+                  this.lstListarXAdmision = [...this.lstListarXAdmision];
+                  await this.calculoDePruebasIgv();
+
+                  this.auditoria(res.Admision, 2);
+                  this.editarCampoMedico = true;
+                  this.editarCampoAseguradora = true;
+                  this.editarCampoEmpresa = true;
+                  this.registroSeleccionado = null;
+                  this.verBtnAnular = true;
+                  this.colCard1 = "col-sm-3"
+                  this.colCard2 = "col-sm-6"
+                  this.editarCampos = true;
+                  this.editarDetallePrueba = true;
+                  this.editarDetallePrueba_check = true;
+                  this.editarCampoOA = true;
+                  this.editarCampoSevicio = false;
                   this.admision = res.Admision;
                   this.filtro.NroPeticion = res.Admision.NroPeticion;
-                  // this.filtro.Estado = res.Admision.Estado;
-                  // admision.Estado = res.Admision.Estado;
-                  if (res.list_AdmisionServicio[0].hasOwnProperty("CodigoComponente")) 
-                  { 
-                    this.lstListarXAdmision = [];
-                    for (let examenParaAgregar of res.list_AdmisionServicio) {
-                      /**SE HACE EL CALCULO POR EL HECHO DE QUE EL VALOR VIENE EN DIFERENTE VARIABLE */
-                      //examenParaAgregar.numeroXadmision = null; // si son nuevo, resultan estar en undefined
-                      examenParaAgregar.valorBruto = examenParaAgregar.ValorEmpresa; // se agrega el valor de empresa
-                      examenParaAgregar.ValorEmpresa = null; // se limpia por seguridad
-                      let ExamenConIgv = examenParaAgregar.valorBruto * this.getUsuarioAuth().data[0].Igv;
-                      examenParaAgregar.ValorEmpresa = examenParaAgregar.valorBruto + ExamenConIgv;
-                      examenParaAgregar.ValorEmpresa = examenParaAgregar.ValorEmpresa * examenParaAgregar.Cantidad;
-                      this.lstListarXAdmision.push({ ...examenParaAgregar });
-                    }
-                    this.lstListarXAdmision = [...this.lstListarXAdmision];
-                    await this.calculoDePruebasIgv();
-    
-                    this.auditoria(res.Admision, 2);
-                    this.editarCampoMedico = true;
-                    this.editarCampoAseguradora = true;
-                    this.editarCampoEmpresa = true;      
-                    this.registroSeleccionado = null;
-                    this.verBtnAnular = true;
-                    this.colCard1 = "col-sm-3"
-                    this.colCard2 = "col-sm-6"
-                    this.editarCampos = true;
-                    this.editarDetallePrueba = true;
-                    this.editarDetallePrueba_check = true;
-                    this.editarCampoOA = true;
-                    this.editarCampoSevicio = false;
-                    this.admision = res.Admision;
-                    this.filtro.NroPeticion = res.Admision.NroPeticion;
-                    admision.Estado = res.Admision.Estado;
-                    admision.DesEstado = res.Admision.DesEstado;
-                  }
+                  admision.Estado = res.Admision.Estado;
+                  admision.DesEstado = res.Admision.DesEstado;
                 }
-              });
+              }
+            });
         } else {
           this.toastMensaje(`${resPerfil.mensaje}`, 'warning', 3000);
           return;
@@ -2290,24 +2314,24 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
   verSelectorPaciente(): void {
 
-    this.personaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECPACIENTE', 'BUSCAR'), 'BUSCAR','N');
+    this.personaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECPACIENTE', 'BUSCAR'), 'BUSCAR', 'N');
   }
   verSelectorMedico(): void {
-   
+
     this.medicoBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECMEDICO', 'BUSCAR'), 'BUSCAR');
   }
   verSelectorAseguradora(): void {
-   
+
     this.aseguradoraBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECASEGURADORA', 'BUSCAR'), 'BUSCAR');
   }
   verSelectorEmpresa(): void {
-   
+
     this.empresaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECEMPRESA', 'BUSCAR'), 'BUSCAR');
   }
   verSelectorExamen(): void {
-  
+
     this.examenBuscarComponent.coreIniciarComponenteBuscar(new MensajeController(this, 'BUSCEXAM', ''), 'BUSCAR', 1, this.filtro);
-  
+
 
   }
 
@@ -2353,7 +2377,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
   MostrarMedico(MedicoId) {
     var dtoadmin = new FiltroPacienteClinica();
-     dtoadmin.MedicoId = MedicoId;
+    dtoadmin.MedicoId = MedicoId;
     return this.medicoService.listarpaginado(dtoadmin).then((res) => {
       console.log("mostrar medico", res)
       if (res[0].MedicoId == 0) {
@@ -3134,15 +3158,15 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             return;
           }
           if (examenParaAgregar.Sexo != "A") {
-              if (examenParaAgregar.Sexo != this.filtro.Sexo) {
-                Swal.fire({
-                  icon: 'warning',
-                  title: '¡Mensaje!',
-                  text: 'El Paciente es de sexo distinto al del examen'
-                });
+            if (examenParaAgregar.Sexo != this.filtro.Sexo) {
+              Swal.fire({
+                icon: 'warning',
+                title: '¡Mensaje!',
+                text: 'El Paciente es de sexo distinto al del examen'
+              });
               //  this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El Paciente es de sexo distinto al del examen', life: 3000 })
-                this.loading = false;
-              }
+              this.loading = false;
+            }
           }
 
           for (let examenEnDetalle of this.lstListarXAdmision) {

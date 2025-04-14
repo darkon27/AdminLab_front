@@ -684,6 +684,11 @@ export class ParticularComponent extends ComponenteBasePrincipal implements OnIn
 
   }
 
+   /**
+      * Mensaje de confirmación agregado en base a solicitud AD-136
+      * agregar para culminar solicitud
+      */
+
   MultiPersona(txbscPersona) {
     console.log("multipersona filtro", txbscPersona);
     /**

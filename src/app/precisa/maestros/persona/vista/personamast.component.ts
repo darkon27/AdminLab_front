@@ -66,14 +66,14 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
 
   @ViewChild('myTipoPersona', { static: false }) myTipoPersona: ElementRef;
   @ViewChild('myDocumento', { static: false }) myDocumento: ElementRef;
-  
+
 
   constructor(
     private messageService: MessageService,
     private personaService: PersonaService) {
     super();
   }
- 
+
   ngOnInit(): void {
 
     this.bloquearPag = true;
@@ -85,7 +85,7 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
 
     Promise.all([p1, p2, p3]).then(resp => {
       this.bloquearPag = false;
-      this.filtro.Estado='A';
+      this.filtro.Estado = 'A';
     });
 
   }
@@ -108,28 +108,49 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
 
   coreHomologar(): void {
     console.log("coreHomologar");
-    this.personamastunificacionComponent.cargarAcciones(new MensajeController(this, 'TIPMAPERSONA', ''),ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo);
+    this.personamastunificacionComponent.cargarAcciones(new MensajeController(this, 'TIPMAPERSONA', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo);
   }
-  
+
   coreGuardar(): void {
     throw new Error('Method not implemented.');
   }
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
   }
-  
+
   coreExportar(): void {
     throw new Error('Method not implemented.');
   }
   coreSalir(): void {
     throw new Error('Method not implemented.');
   }
+  /**
+    * Mensaje de confirmación agregado en base a solicitud AD-136
+    */
+  confirmarCoreEditar(row: dtoPersona) {
 
-  coreEditar(row:dtoPersona) {
+    Swal.fire({
+      title: '¡Importante!',
+      text: "¿Está seguro de modificar los datos del paciente? \n Los cambios podrían afectar a peticiones existentes",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#094d74',
+      cancelButtonColor: '#ffc72f',
+      cancelButtonText: 'No, Cancelar!',
+      confirmButtonText: 'Si, modificar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.coreEditar(row);
+      }
+    });
+
+  }
+
+  coreEditar(row: dtoPersona) {
     this.personaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'TIPMAPERSONA', ''), "EDITAR", 1, row);
   }
 
-  coreVer(row:dtoPersona) {
+  coreVer(row: dtoPersona) {
     this.personaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'TIPMAPERSONA', ''), "VER", 1, row);
   }
 
@@ -176,20 +197,20 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
   }
 
   Salirmodal() {
-    this.verMantPersona=false;
+    this.verMantPersona = false;
   }
 
 
   grillaCargarDatos(event: LazyLoadEvent) {
 
-    if(this.estaVacio(this.filtro.TipoPersona)){
-      this.messageService.add({key: 'bc', severity:'warn', summary: 'Advertencia', detail: 'Debe Selecionar el tipo de Persona.'});
+    if (this.estaVacio(this.filtro.TipoPersona)) {
+      this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'Debe Selecionar el tipo de Persona.' });
       this.myTipoPersona.nativeElement.focus();
       return;
     }
 
-    if(this.estaVacio(this.filtro.Documento) &&  this.estaVacio(this.filtro.NombreCompleto) ){
-      this.messageService.add({key: 'bc', severity:'warn', summary: 'Advertencia', detail: 'Debe ingresar N° Documento /o Nombre.'});
+    if (this.estaVacio(this.filtro.Documento) && this.estaVacio(this.filtro.NombreCompleto)) {
+      this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'Debe ingresar N° Documento /o Nombre.' });
       this.myDocumento.nativeElement.focus();
       return;
     }
@@ -250,7 +271,7 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
 
     } else {
       this.editarTipoDocumento = false;
-    }    
+    }
   }
 
   onRowSelect(event: any) {
