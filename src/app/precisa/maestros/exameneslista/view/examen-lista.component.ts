@@ -7,7 +7,7 @@ import { UIMantenimientoController } from '../../../../../util/UIMantenimientoCo
 import { ConstanteAngular } from '../../../../@theme/ConstanteAngular';
 import { UsuarioAuth } from '../../../auth/model/usuario';
 import { DtoListaComponente } from '../../../framework-comun/Examen/dominio/dto/DtoListaComponente';
-import { Maestro } from '../../FormMaestro/model/maestro';
+import { ExamenService } from '../../../framework-comun/Examen/servicio/Examen.service';
 import { listabaseServices } from '../../lista-base/service/listabase.service';
 import { ExamenListaMantenimientoComponent } from '../components/examen-lista-mantenimiento.component';
 
@@ -16,7 +16,7 @@ import { ExamenListaMantenimientoComponent } from '../components/examen-lista-ma
   templateUrl: './examen-lista.component.html',
   styleUrls: ['./examen-lista.component.scss']
 })
-export class ExamenListaComponent extends ComponenteBasePrincipal implements OnInit,UIMantenimientoController {
+export class ExamenListaComponent extends ComponenteBasePrincipal implements OnInit, UIMantenimientoController{
   @ViewChild(ExamenListaMantenimientoComponent, { static: false }) examenListaMantenimientoComponent: ExamenListaMantenimientoComponent;
   bloquearPag: boolean;
   usuarioAuth: UsuarioAuth = new UsuarioAuth();
@@ -29,27 +29,53 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
 
   constructor(
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
+    private ExamenService: ExamenService,
     private listabaseServices: listabaseServices,
     private toastrService: NbToastrService) {
     super();
   }
+
   coreMensaje(mensage: MensajeController): void {
-    throw new Error('Method not implemented.');
+
   }
 
   coreNuevo(): void {
     this.examenListaMantenimientoComponent.iniciarComponente("NUEVO",this.objetoTitulo.menuSeguridad.titulo)
   }
+
   coreBuscar(): void {
-    throw new Error('Method not implemented.');
+    // Validación de campos obligatorios
+    if (this.estaVacio(this.filtro.IdListaBase)) {
+      this.messageShow('warn', 'Advertencia', 'Debe seleccionar una Lista Base.');
+      return;
+    }
+  
+    if (this.estaVacio(this.filtro.Estado)) {
+      this.messageShow('warn', 'Advertencia', 'Debe seleccionar un Estado.');
+      return;
+    }
+
+    // Búsqueda
+    this.bloquearPag = true;
+    this.ExamenService.ListadoBaseComponente(this.filtro).then((res) => {
+      this.bloquearPag = false;  
+      let contado = 1;
+      res.forEach(element => {
+        element.num = contado++;
+      });  
+      this.lstListaBaseComponente = res;
+      console.log("coreBuscar ListadoBaseComponente:", res);
+    });
   }
+
   coreGuardar(): void {
     throw new Error('Method not implemented.');
   }
+
   coreExportar(): void {
     throw new Error('Method not implemented.');
   }
+
   coreSalir(): void {
     throw new Error('Method not implemented.');
   }
@@ -64,6 +90,7 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
 
   ngOnInit(): void {
     this.bloquearPag = true;
+    console.log("ngOnInit::");
     const p4 = this.tituloListadoAsignar(1, this);
     Promise.all([p4]).then(
       f => {
@@ -79,6 +106,7 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
     await this.iniciarComponent();
     await this.cargarComboEstados();
     await this.cargarComboListaBase();
+    console.log("cargarFuncionesIniciales::");
   }
 
 
@@ -102,4 +130,16 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
         });
     });
   }
+
+  defaultBuscar(event) {
+    if (event.keyCode === 13) {
+      this.coreBuscar();
+    }
+  }
+
+  async messageShow(_severity: string, _summary: string, _detail: string) {
+    this.messageService.add({ key: 'bc', severity: _severity, summary: _summary, detail: _detail, life: 1000 });
+  }
+
+
 }

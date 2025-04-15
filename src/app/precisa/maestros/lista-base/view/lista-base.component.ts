@@ -5,6 +5,7 @@ import { ComponenteBasePrincipal } from '../../../../../util/ComponenteBasePrinc
 import { MensajeController } from '../../../../../util/MensajeController';
 import { UIMantenimientoController } from '../../../../../util/UIMantenimientoController';
 import { ConstanteAngular } from '../../../../@theme/ConstanteAngular';
+import { ExamenService } from '../../../framework-comun/Examen/servicio/Examen.service';
 import { ExportarService } from '../../../framework-comun/Exportar/exportar.service';
 import { ListaBaseMantenimientoComponent } from '../components/lista-base-mantenimiento.component';
 import { IdListaBase } from '../model/IListaBase';
@@ -16,7 +17,7 @@ import { listabaseServices } from '../service/listabase.service';
   templateUrl: './lista-base.component.html',
   styleUrls: ['./lista-base.component.scss']
 })
-export class ListaBaseComponent extends ComponenteBasePrincipal implements OnInit,UIMantenimientoController {
+export class ListaBaseComponent extends ComponenteBasePrincipal implements OnInit, UIMantenimientoController{
   @ViewChild(ListaBaseMantenimientoComponent, { static: false }) listaBaseMantenimientoComponent: ListaBaseMantenimientoComponent;
   @ViewChild(Table, { static: false }) dataTableComponent: Table;
   bloquearPag: boolean;
@@ -36,6 +37,7 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
     private messageService: MessageService,
     private exportarService: ExportarService,
     private listabaseServices: listabaseServices,
+    private ExamenService: ExamenService,    
     private confirmationService: ConfirmationService) {
     super();
   }
@@ -182,7 +184,7 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
       key: "confirm2",
       accept: () => {
         row.SedEstado = 2;
-        this.listabaseServices.MantenimientoBase(3, row, this.getUsuarioToken()).then(
+        this.ExamenService.MantenimientoBaseComponente(3, row, this.getUsuarioToken()).then(
           res => {
             if (res != null) {
               this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Anulado con éxito.' });
@@ -202,7 +204,7 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
       this.filtro.Codigo = this.filtro.Codigo.trim();
     }
     this.bloquearPag = true;
-    this.listabaseServices.ListadoBase(this.filtro).then((res) => {
+    this.ExamenService.ListadoBaseComponente(this.filtro).then((res) => {
       this.bloquearPag = false;
       var contado = 1;
       res.forEach(element => {

@@ -6,10 +6,7 @@ export class tipoPaciente{
     TipoAdmisionId?:      number;
     TipoPacienteId?:      number;
     Codigo:               string;
-    Descripcion:          string;   
-    AdmDescripcion:       string;
-    
-    
+    Descripcion:          string;
     FechaCreacion?:       Date; 
     FechaModificacion?:   Date; 
     UsuarioCreacion:      string; 
@@ -17,6 +14,8 @@ export class tipoPaciente{
     IpCreacion:           string; 
     IpModificacion:       string; 
     Estado?:              number;
+    AdmDescripcion:       string;   
     ESTADOdesc:           string; 
-  
+
+
 }

@@ -34,5 +34,5 @@ export class DtoListaComponente {
     Estado: number;
     ESTADOdesc: string;
 
-
+    num: number; 
 }

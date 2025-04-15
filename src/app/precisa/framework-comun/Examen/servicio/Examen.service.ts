@@ -132,7 +132,7 @@ export class ExamenService {
       }
     
     ListadoBaseComponente(filtro: any) {   
-        return this.config.getHttp().post(`${this.urladm}ListadoBaseComponente`, filtro)         
+        return this.config.getHttp().post(`${this.urlmae}ListadoBaseComponente`, filtro)         
             .toPromise()
             .then(response => response)
             .catch(error => error)
@@ -140,7 +140,7 @@ export class ExamenService {
 
     MantenimientoBaseComponente(codigo: number, dtoexamen: any, token: string) {
         const headers = new HttpHeaders().set("Authorization", token)    
-        return this.config.getHttp().post(`${this.urladm}MantenimientoBaseComponente/` + codigo, dtoexamen, { headers: headers })
+        return this.config.getHttp().post(`${this.urlmae}MantenimientoBaseComponente/` + codigo, dtoexamen, { headers: headers })
           .toPromise()
           .then(response => response)
           .catch(error => error)

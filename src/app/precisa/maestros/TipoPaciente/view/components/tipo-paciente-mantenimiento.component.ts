@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ComponenteBasePrincipal } from "../../../../../../util/ComponenteBasePrincipa";
+import { MensajeController } from "../../../../../../util/MensajeController";
 
 
 
@@ -16,7 +17,7 @@ export class TipoPacienteMantenimientoComponent extends ComponenteBasePrincipal 
   acciones: string = ''
   position: string = 'top'
 
-  iniciarComponente(accion: string,titulo) {
+  iniciarComponenteMaestro(msj: MensajeController, accion: string, titulo, rowdata?: any): void {
     //if (accion == "NUEVO") {
       this.cargarAcciones(accion,titulo)
 

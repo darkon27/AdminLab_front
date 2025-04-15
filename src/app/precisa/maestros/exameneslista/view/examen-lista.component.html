@@ -26,11 +26,11 @@
                 </div>
                 <div class="col-sm-6">
                     <label for="inputLastName" class="label">Codigo </label>
-                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
+                    <input pInputText type="text" placeholder="" [(ngModel)]="filtro.CODIGOCOMPONENTE" [style]="{'width':'100%'}" />
                 </div>            
                 <div class="col-sm-6">
                     <label for="inputLastName" class="label">Descripcion</label>
-                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
+                    <input pInputText type="text" placeholder=""  [(ngModel)]="filtro.DESCRIPCION"  [style]="{'width':'100%'}" />
                 </div>
                 <div class="col-sm-6">
                     <label for="inputLastName" class="label">Estado</label>
@@ -42,29 +42,25 @@
         </p-fieldset>
         <br>
         <p-fieldset legend="Detalle">
-            <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="tipousuario" [responsive]="true"
-                [value]="lstListaBaseComponente" [sortOrder]="-1" sortField="tipousuario"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-                [showCurrentPageReport]="true">
-
-                <ng-template pTemplate="header">
+            <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstListaBaseComponente"
+            [responsive]="true" [sortOrder]="1" sortField="num"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+            <ng-template pTemplate="header">
                     <tr>
                         <th class="tablaHeaderAccion3">Acción</th>
-                        <th pSortableColumn="tipousuario">Estado <p-sortIcon field="tipousuario"> </p-sortIcon>
+                       
+                        <th pSortableColumn="Perfil" class="label" ALIGN="center" style="width: 5rem;  ">Código<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
-
-                        <th pSortableColumn="Perfil">Código<p-sortIcon field="Perfil"></p-sortIcon>
+                        <th pSortableColumn="VaEstado" class="label" ALIGN="center" style="width: 10rem;  ">Lista Base<p-sortIcon field="VaEstado"></p-sortIcon>
                         </th>
-
-                        <th pSortableColumn="VaEstado">Lista Base<p-sortIcon field="VaEstado"></p-sortIcon>
+                        <th pSortableColumn="VaEstado" class="label" ALIGN="center" style="width: 10rem;  ">Descripción<p-sortIcon field="VaEstado"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="VaEstado">Descripción<p-sortIcon field="VaEstado"></p-sortIcon>
+                        <th pSortableColumn="Perfil" class="label" ALIGN="center" style="width: 5rem;  ">PrecioUnitarioLista<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="Perfil">PrecioUnitarioLista<p-sortIcon field="Perfil"></p-sortIcon>
+                        <th pSortableColumn="Perfil" class="label" ALIGN="center" style="width: 5rem;  ">TipoFactor<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="Perfil">TipoFactor<p-sortIcon field="Perfil"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="Perfil">Estado<p-sortIcon field="Perfil"></p-sortIcon>
+                        <th pSortableColumn="Perfil" class="label" ALIGN="center" style="width: 5rem;  ">Estado<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
 
                     </tr>
@@ -92,21 +88,21 @@
                                 </tr>
                             </table>
                         </td>
-                        <td>{{asignarPerfil.CodigoTabla}}</td>
+                        <td class="tablaColumnaCodigoChico"  ALIGN="center" style="width: 5rem;">{{asignarPerfil.CODIGOCOMPONENTE}}</td>
 
-                        <td>{{asignarPerfil.Descripcion}}</td>
+                        <td class="tablaColumnaCodigoChico"  ALIGN="center" style="width: 10rem;">{{asignarPerfil.Nombre}}</td>
 
-                        <td>
-                            <span>{{asignarPerfil.Nombre}}</span>
+                        
+                        <td class="tablaColumnaCodigoChico"  ALIGN="center" style="width: 10rem;">{{asignarPerfil.DESCRIPCION}}</td>
+
+                        <td class="tablaColumnaCodigoChico"  ALIGN="center" style="width: 5rem;">{{asignarPerfil.PrecioUnitarioBase}}</td>
+
+                        <td class="tablaColumnaCodigoChico"  ALIGN="center" style="width: 5rem;">
+                            <span>{{asignarPerfil.TipoFactor}}</span>
                         </td>
-                        <td>{{asignarPerfil.CodigoTabla}}</td>
-
-                        <td>{{asignarPerfil.Descripcion}}</td>
-
-                        <td>
-                            <span>{{asignarPerfil.Nombre}}</span>
+                        <td class="tablaColumnaCodigoChico"  ALIGN="center" style="width: 5rem;">
+                            <span>{{asignarPerfil.ESTADOdesc}}</span>
                         </td>
-
                     </tr>
                 </ng-template>
             </p-table>
@@ -115,3 +111,4 @@
 
 </nb-card>
 <ngx-examen-lista-mantenimiento></ngx-examen-lista-mantenimiento>
+<p-toast key="bc" [baseZIndex]="3000"></p-toast>
