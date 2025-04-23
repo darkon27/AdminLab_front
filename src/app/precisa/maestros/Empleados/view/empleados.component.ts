@@ -141,14 +141,14 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
 
   listaComboTipoDocumento() {
     this.lstTipoDocumento.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPODOCIDENTID").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPODOCIDENTID").forEach(i => {
       this.lstTipoDocumento.push({ label: i.Nombre, value: i.Codigo })
     });
   }
 
   listaComboCargo() {
     this.lstCargo.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "CARGX").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "CARGX").forEach(i => {
       this.lstCargo.push({ label: i.Nombre, value: i.Codigo })
     });
   }

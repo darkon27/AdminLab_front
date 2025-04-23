@@ -183,7 +183,7 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   listarComboEstados() {
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
       this.lstEstados.push({ label: i.Nombre, value: i.Codigo })
     });
   }

@@ -26,7 +26,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   @ViewChild('myApellidoMaterno', { static: false }) myApellidoMaterno: ElementRef;
   @ViewChild('myDocumento', { static: false }) myDocumento: ElementRef;
   @ViewChild('myTelefono', { static: false }) myTelefono: ElementRef;
-  
+
   labelSi: string;
   iconSi: string;
   labelNo: string;
@@ -187,6 +187,8 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         if (!this.esEmailValido(this.dto.CorreoElectronico)) {
           // this.validarPer2.markAllAsTouched();
           validar = 2;
+        } else {
+          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'El correo electrónico no es válido.', life: 700 });
         }
       }
       if (validar == 1) {
@@ -264,12 +266,11 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   }
 
   auditoria(filtro?: any, accion?: string) {
-    if (accion == "NUEVO")   
-     {
+    if (accion == "NUEVO") {
       this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
       this.fechaCreacion = new Date();
       this.fechaModificacion = new Date();
-    }else{    
+    } else {
       console.log("mostrar auditoria comparacion Inicio", this.getUsuarioAuth().data[0].Usuario, filtro);
       if (this.estaVacio(filtro.UltimoUsuario)) {
         console.log("UsuarioCreacion Igual a UsuarioLogeado");
@@ -277,40 +278,37 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         this.fechaCreacion = new Date();
         this.fechaModificacion = new Date();
       } else {
-        console.log("VAlidar Usuario Lleno", this.getUsuarioAuth().data[0].Usuario , filtro.UltimoUsuario);
-        if (filtro.UltimoUsuario == this.getUsuarioAuth().data[0].Usuario) 
-           {
-              console.log("Usuario Logeado")
-              this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
-              if (this.esFechaVacia(filtro.UltimaFechaModif)) 
-              {
-                this.fechaModificacion = new Date();
-                this.fechaCreacion = new Date();
-               }  
-               else{
-                this.fechaCreacion = new Date(filtro.UltimaFechaModif);        
-                this.fechaModificacion = new Date(filtro.UltimaFechaModif);  
-               }
-           } 
-        else 
-        {
-            console.log("Usuario Rest", filtro.UltimoUsuario,filtro.UltimaFechaModif);
-            let dto = {
-              Documento: filtro.UltimoUsuario.trim(),
-              tipopersona: "USU",
-              SoloBeneficiarios: "-1",
-              UneuNegocioId: "-1"
+        console.log("VAlidar Usuario Lleno", this.getUsuarioAuth().data[0].Usuario, filtro.UltimoUsuario);
+        if (filtro.UltimoUsuario == this.getUsuarioAuth().data[0].Usuario) {
+          console.log("Usuario Logeado")
+          this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
+          if (this.esFechaVacia(filtro.UltimaFechaModif)) {
+            this.fechaModificacion = new Date();
+            this.fechaCreacion = new Date();
+          }
+          else {
+            this.fechaCreacion = new Date(filtro.UltimaFechaModif);
+            this.fechaModificacion = new Date(filtro.UltimaFechaModif);
+          }
+        }
+        else {
+          console.log("Usuario Rest", filtro.UltimoUsuario, filtro.UltimaFechaModif);
+          let dto = {
+            Documento: filtro.UltimoUsuario.trim(),
+            tipopersona: "USU",
+            SoloBeneficiarios: "-1",
+            UneuNegocioId: "-1"
+          }
+          return this.personaService.listaPersonaUsuario(dto).then((res) => {
+            this.usuario = res[0].NombreCompleto;
+            this.fechaCreacion = new Date(filtro.IngresoFechaRegistro);
+            if (this.esFechaVacia(filtro.UltimaFechaModif)) {
+              this.fechaModificacion = new Date();
+            } else {
+              this.fechaModificacion = new Date(filtro.UltimaFechaModif);
             }
-            return this.personaService.listaPersonaUsuario(dto).then((res) => {
-              this.usuario = res[0].NombreCompleto;
-              this.fechaCreacion = new Date(filtro.IngresoFechaRegistro);
-              if (this.esFechaVacia(filtro.UltimaFechaModif)) {
-                this.fechaModificacion = new Date();
-              } else {
-                this.fechaModificacion = new Date(filtro.UltimaFechaModif);
-              }
-              console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion);
-            })
+            console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion);
+          })
         }
       }
     }
@@ -347,10 +345,10 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   }
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, page: number, dtoEditPersona?: any): void {
-    this.mensajeController = mensaje; 
+    this.mensajeController = mensaje;
     console.log("Mant dtoEditPersona :", dtoEditPersona);
     console.log("Mant persona accionform :", accionform);
-    console.log("Mant persona mensajeController:",this.mensajeController);
+    console.log("Mant persona mensajeController:", this.mensajeController);
     this.listarComboDepartamento();
     this.dto = new dtoPersona();
     this.verMantPersona = true;
@@ -365,11 +363,11 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
       this.validarmintexto = 11;
     }
     this.acciones = this.titulo + ":" + accionform;
-    this.auditoria(dtoEditPersona,accionform);
+    this.auditoria(dtoEditPersona, accionform);
     if (accionform == "NUEVO") {
-      this.editarCampos=false;
-      this.dto.TipoPersona = "N";    
-      this.dto.Estado="A";
+      this.editarCampos = false;
+      this.dto.TipoPersona = "N";
+      this.dto.Estado = "A";
       if (this.dto.TipoPersona == "N") {
         this.esCliente = true;
         this.verpersonajuridica = false;
@@ -378,7 +376,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
       }
     }
     else if (accionform == "EDITAR") {
-      this.editarCampos=false;
+      this.editarCampos = false;
       const p1 = this.listarComboDepartamento();
       const p2 = this.listarComboProvincia(dtoEditPersona.DEPARTAMENTO);
       const p3 = this.listarComboDistrito(dtoEditPersona.DEPARTAMENTO + dtoEditPersona.PROVINCIA);
@@ -389,34 +387,34 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         this.dto = dtoEditPersona;
         if (this.dto.TipoPersona == "J") {
           this.editarTipoDocumento = true;
-          this.disabledTipoPerso= true;
+          this.disabledTipoPerso = true;
           this.verpersonajuridica = true;
           this.verrucmodi = true;
           this.dto.Nombres = dtoEditPersona.NombreCompleto;
-          if (this.estaVacio(dtoEditPersona.FechaNacimiento)){
+          if (this.estaVacio(dtoEditPersona.FechaNacimiento)) {
 
           }
-          else{
+          else {
             this.dto.FechaNacimiento = new Date(dtoEditPersona.FechaNacimiento);
           }
-        } 
-        else  {
+        }
+        else {
           this.verpersonajuridica = false;
           this.disabledTipoPerso = true;
-          this.verrucmodi = false;      
+          this.verrucmodi = false;
           this.dto.FechaNacimiento = new Date(dtoEditPersona.FechaNacimiento);
-        }  
+        }
         this.validarflagABooleanCampos(dtoEditPersona);
         this.CalcularAnios();
         console.log("Mant persona dto llegando:", this.dto);
       });
 
-    } else if ( accionform == "VER") {
+    } else if (accionform == "VER") {
       const p1 = this.listarComboDepartamento();
       const p2 = this.listarComboProvincia(dtoEditPersona.DEPARTAMENTO);
       const p3 = this.listarComboDistrito(dtoEditPersona.DEPARTAMENTO + dtoEditPersona.PROVINCIA);
-      this.editarCampos=true;
-      this.editarPassword=true;
+      this.editarCampos = true;
+      this.editarPassword = true;
       Promise.all([p1, p2, p3]).then((resp) => {
         this.dto = dtoEditPersona;
         if (this.dto.TipoPersona == "J") {
@@ -431,7 +429,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         this.CalcularAnios();
         this.validarflagABooleanCampos(dtoEditPersona);
         this.editarTipoDocumento = true;
-        this.disabledTipoPerso= true;
+        this.disabledTipoPerso = true;
         console.log("Mant persona dto llegando:", this.dto);
       });
     }
@@ -466,7 +464,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
       this.verValidarTelefono = false;
     }
   }
- 
+
   editarPersona(persona: any) {
     console.log("persona editarPersona", persona);
     // if (this.dto.TipoPersona == "J") {
@@ -486,7 +484,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
           this.makeToast(this.getMensajeActualizado(persona.Persona))
           this.verMantPersona = false;
           this.mensajeController.resultado = persona.Persona;
-          console.log("editarPersona   this.mensajeController:",    this.mensajeController);
+          console.log("editarPersona   this.mensajeController:", this.mensajeController);
           this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
           this.bscPersonaCopia = this.dto;
         }
@@ -527,7 +525,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
                 sessionStorage.removeItem('access_user')
                 sessionStorage.removeItem('access_user_token')
                 sessionStorage.removeItem('access_menu')
-                this.router.navigate(['/auth/login']); 
+                this.router.navigate(['/auth/login']);
               }
 
             }
@@ -538,14 +536,14 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
 
   ServicioRegistrarPersona() {
     this.dto.NombreCompleto = `${this.dto.ApellidoPaterno} ${this.dto.ApellidoMaterno}, ${this.dto.Nombres}`
-    console.log("ServicioRegistrarPersona dto a guardar:",this.dto);
+    console.log("ServicioRegistrarPersona dto a guardar:", this.dto);
     this.personaService.mantenimientoMaestro(1, this.dto, this.getUsuarioToken()).then(
       res => {
         console.log("res guardado:", res);
         if (res.success) {
           this.makeToast(this.getMensajeGrabado(this.dto.Documento));
           this.verMantPersona = false;
-          console.log("entro:",this.mensajeController.resultado)
+          console.log("entro:", this.mensajeController.resultado)
           this.mensajeController.resultado = res;
           console.log("res enviando:", res);
           this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
@@ -587,7 +585,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
                 sessionStorage.removeItem('access_user')
                 sessionStorage.removeItem('access_user_token')
                 sessionStorage.removeItem('access_menu')
-                this.router.navigate(['/auth/login']); 
+                this.router.navigate(['/auth/login']);
               }
 
             }
@@ -599,19 +597,17 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   ServicioRegistrarEmpresa() {
     //this.dto.NombreCompleto = this.dto.Nombres;
     this.dto.NombreCompleto = `${this.dto.Nombres}`
-    if(this.dto.IndicadorRetencion ==" true" )
-    {
-      console.log("Verdadero",this.dto.IndicadorRetencion)
-      this.dto.IndicadorRetencion="1";
+    if (this.dto.IndicadorRetencion == " true") {
+      console.log("Verdadero", this.dto.IndicadorRetencion)
+      this.dto.IndicadorRetencion = "1";
     }
-    else
-    {
-      console.log("Falso",this.dto.IndicadorRetencion)
-      this.dto.IndicadorRetencion="0";
+    else {
+      console.log("Falso", this.dto.IndicadorRetencion)
+      this.dto.IndicadorRetencion = "0";
     }
 
     if (this.esNumeroVacio(this.dto.DiaVencimiento)) {
-      this.dto.DiaVencimiento=0;
+      this.dto.DiaVencimiento = 0;
     }
 
     console.log("DTO INSERTANDO: ", this.dto);
@@ -664,7 +660,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
                 sessionStorage.removeItem('access_user_token')
                 sessionStorage.removeItem('access_menu')
                 this.router.navigate(['/auth/login'])
-               
+
               }
             }
           })
@@ -680,11 +676,11 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
     }
 
     if (this.validarAccion == "NUEVO") {
-     
+
       if (this.dto.TipoPersona == "J") {
         if (!this.validarCamposFormulario()) {
           if (this.estaVacio(this.dto.CorreoElectronico)) {
-            this.verMantPersona = false;       
+            this.verMantPersona = false;
             this.dto.IngresoUsuario = this.getUsuarioAuth().data[0].Usuario;
             Swal.fire({
               icon: 'warning',
@@ -701,14 +697,16 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
               } else {
                 this.verMantPersona = true;
               }
-            })  
+            })
           } else {
             if (this.esEmailValido(this.dto.CorreoElectronico)) {
               this.ServicioRegistrarEmpresa();
+            } else {
+              this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'El correo electrónico no es válido.', life: 700 });
             }
           }
         }
-      } else if(this.dto.TipoPersona == "N") {  
+      } else if (this.dto.TipoPersona == "N") {
         if (!this.validarCamposFormulario()) {
           if (this.dto.Documento.length >= 5) {
             if (this.estaVacio(this.dto.CorreoElectronico)) {
@@ -733,21 +731,23 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
             } else {
               if (this.esEmailValido(this.dto.CorreoElectronico)) {
                 this.ServicioRegistrarPersona();
+              } else {
+                this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'El correo electrónico no es válido.', life: 700 });
               }
             }
           }
-        }        
+        }
       }
     } else if (this.validarAccion == "EDITAR") {
 
       if (this.dto.TipoPersona == "J") {
-        if(this.dto.IndicadorRetencion=="true"){
-          this.dto.IndicadorRetencion="1";
-        }else{
-          this.dto.IndicadorRetencion="0";
+        if (this.dto.IndicadorRetencion == "true") {
+          this.dto.IndicadorRetencion = "1";
+        } else {
+          this.dto.IndicadorRetencion = "0";
         }
-        if(this.esNumeroVacio(this.dto.DiaVencimiento)) {
-          this.dto.DiaVencimiento=0;
+        if (this.esNumeroVacio(this.dto.DiaVencimiento)) {
+          this.dto.DiaVencimiento = 0;
         }
       }
       console.log("persona EDITAR", this.validarAccion);
@@ -779,17 +779,19 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
             if (this.esEmailValido(this.dto.CorreoElectronico)) {
               this.dto.NombreCompleto = this.dto.Nombres;
               this.editarPersona(this.dto);
+            } else {
+              this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'El correo electrónico no es válido.', life: 700 });
             }
           }
 
         }
-      
+
       } else {
         console.log("guardar dto sss:", this.dto);
         // this.validarCamposFormulario();
         if (!this.validarCamposFormulario()) {
           var userUltimo = this.getUsuarioAuth().data[0].Documento;
-          if(this.dto.UltimoUsuario != userUltimo){
+          if (this.dto.UltimoUsuario != userUltimo) {
             this.dto.UltimoUsuario = userUltimo;
           }
 
@@ -818,6 +820,8 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
                 this.dto.CorreoElectronico = this.dto.CorreoElectronico.toUpperCase();
                 this.dto.NombreCompleto = `${this.dto.ApellidoPaterno} ${this.dto.ApellidoMaterno}, ${this.dto.Nombres}`
                 this.editarPersona(this.dto);
+              } else {
+                this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'El correo electrónico no es válido.', life: 700 });
               }
             }
           }
@@ -830,136 +834,136 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   validarCamposFormulario() {
     var validar = false;
     if (this.dto.TipoPersona == "J") {
-       
-        if (this.validarIsNullCheckTipoPersona()) {
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Selecionar Tipo de Persona.', life: 700 });
-          validar = true;
-          console.log("VALIDA a validarCamposFormulario: 1");
-        }
 
-        if (this.estaVacio(this.dto.Nombres)) {
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar la Razón Social.', life: 700 });
-          validar = true;
-          console.log("VALIDA a Nombres: 2");
-        }
+      if (this.validarIsNullCheckTipoPersona()) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Selecionar Tipo de Persona.', life: 700 });
+        validar = true;
+        console.log("VALIDA a validarCamposFormulario: 1");
+      }
 
-        if (this.esFechaVacia(this.dto.FechaNacimiento)) {
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Fecha de Nacimiento.', life: 700 });
-          validar = true;
-          console.log("VALIDA a FechaNacimiento: 2");
-        }
+      if (this.estaVacio(this.dto.Nombres)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar la Razón Social.', life: 700 });
+        validar = true;
+        console.log("VALIDA a Nombres: 2");
+      }
 
-        if (this.estaVacio(this.dto.Documento)) {
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar N° Documento.', life: 700 });
-          validar = true;
-          console.log("VALIDA a Documento: 4");
-        } 
+      if (this.esFechaVacia(this.dto.FechaNacimiento)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Fecha de Nacimiento.', life: 700 });
+        validar = true;
+        console.log("VALIDA a FechaNacimiento: 2");
+      }
 
-          if (this.dto.Documento.trim().length != 11) {
-            this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'El Ruc debe tener 11 caracteres.', life: 700 });
-            validar = true;
-            console.log("VALIDA a length: 5");
-          }
-     
+      if (this.estaVacio(this.dto.Documento)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar N° Documento.', life: 700 });
+        validar = true;
+        console.log("VALIDA a Documento: 4");
+      }
 
-        if (this.estaVacio(this.dto.Direccion)) {
-          this.myDireccion.nativeElement.focus();
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Dirección.', life: 700 });
-          validar = true;
-          console.log("VALIDA a Direccion: 6");
-        }
+      if (this.dto.Documento.trim().length != 11) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'El Ruc debe tener 11 caracteres.', life: 700 });
+        validar = true;
+        console.log("VALIDA a length: 5");
+      }
 
-        if (this.estaVacio(this.dto.Estado)) {
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Estado.', life: 700 });
-          validar = true;
-          console.log("VALIDA a Estado: 7");
-        }
 
-        if (this.estaVacio(this.dto.Telefono)) {
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Telefono.', life: 700 });
-          validar = true;
-          console.log("VALIDA a Telefono: 8");
-        }
+      if (this.estaVacio(this.dto.Direccion)) {
+        this.myDireccion.nativeElement.focus();
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Dirección.', life: 700 });
+        validar = true;
+        console.log("VALIDA a Direccion: 6");
+      }
 
-        console.log("VALIDA a validarCamposFormulario:", validar);
+      if (this.estaVacio(this.dto.Estado)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Estado.', life: 700 });
+        validar = true;
+        console.log("VALIDA a Estado: 7");
+      }
+
+      if (this.estaVacio(this.dto.Telefono)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Telefono.', life: 700 });
+        validar = true;
+        console.log("VALIDA a Telefono: 8");
+      }
+
+      console.log("VALIDA a validarCamposFormulario:", validar);
 
     } else if (this.dto.TipoPersona == "N") {
 
-        if (this.validarIsNullCheckTipoPersona()) {
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Selecionar Tipo de Persona.', life: 700 });
-          validar = true;
-        }
+      if (this.validarIsNullCheckTipoPersona()) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Selecionar Tipo de Persona.', life: 700 });
+        validar = true;
+      }
 
-        if (this.estaVacio(this.dto.TipoDocumento)) {
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Seleccionar Tipo de Documento.', life: 700 });
-          validar = true;
-        }
+      if (this.estaVacio(this.dto.TipoDocumento)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Seleccionar Tipo de Documento.', life: 700 });
+        validar = true;
+      }
 
-        if (this.estaVacio(this.dto.Documento)) {
-          this.myDocumento.nativeElement.focus();
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar N° Documento.', life: 700 });
-          validar = true;
-        }
-        else{
+      if (this.estaVacio(this.dto.Documento)) {
+        this.myDocumento.nativeElement.focus();
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar N° Documento.', life: 700 });
+        validar = true;
+      }
+      else {
 
-            if (this.dto.TipoDocumento == "D" || this.dto.TipoDocumento == "R") {
-              if (!this.esNumero(this.dto.Documento.trim())) {
-                this.myDocumento.nativeElement.focus();
-                this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Documento valido.', life: 700 });
-                return;
-              }
-            }
+        if (this.dto.TipoDocumento == "D" || this.dto.TipoDocumento == "R") {
+          if (!this.esNumero(this.dto.Documento.trim())) {
+            this.myDocumento.nativeElement.focus();
+            this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Documento valido.', life: 700 });
+            return;
+          }
         }
+      }
 
-        if(this.estaVacio(this.dto.Nombres)){
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Nombre.', life: 700 });
-          validar = true;
-        }
-    
-        if(this.estaVacio(this.dto.ApellidoPaterno)){
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Apellido Paterno..', life: 700 });
-          validar = true;
-        }
+      if (this.estaVacio(this.dto.Nombres)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Nombre.', life: 700 });
+        validar = true;
+      }
 
-/*         if(this.estaVacio(this.dto.ApellidoMaterno)){
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Apellido Materno.', life: 700 });
-          validar = true;
-        } */
-    
-        if(this.esFechaVacia(this.dto.FechaNacimiento)){
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Fecha de Nacimiento.', life: 700 });
-          validar = true;
-        }
+      if (this.estaVacio(this.dto.ApellidoPaterno)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Apellido Paterno..', life: 700 });
+        validar = true;
+      }
 
-/*         if (this.estaVacio(this.dto.ApellidoMaterno)) {
-            if (this.dto.TipoDocumento == "R") {
-              this.myApellidoMaterno.nativeElement.focus();
-              this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Seleccione Otro tipo de Documento.', life: 700 });
-              validar = true;
-            }
-        } */
+      /*         if(this.estaVacio(this.dto.ApellidoMaterno)){
+                this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Apellido Materno.', life: 700 });
+                validar = true;
+              } */
 
-        if (this.estaVacio(this.dto.Estado)) {
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Seleccionar el Estado.', life: 700 });
-          validar = true;
-        }
+      if (this.esFechaVacia(this.dto.FechaNacimiento)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Fecha de Nacimiento.', life: 700 });
+        validar = true;
+      }
 
-        if(this.estaVacio(this.dto.Telefono)){
-          this.myTelefono.nativeElement.focus();
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Teléfono.', life: 700 });
-          validar = true;
-        }
+      /*         if (this.estaVacio(this.dto.ApellidoMaterno)) {
+                  if (this.dto.TipoDocumento == "R") {
+                    this.myApellidoMaterno.nativeElement.focus();
+                    this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Seleccione Otro tipo de Documento.', life: 700 });
+                    validar = true;
+                  }
+              } */
 
-        if(this.estaVacio(this.dto.Sexo)){
-          this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Seleccionar el Sexo.', life: 700 });
-          validar = true;
-        }
+      if (this.estaVacio(this.dto.Estado)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Seleccionar el Estado.', life: 700 });
+        validar = true;
+      }
+
+      if (this.estaVacio(this.dto.Telefono)) {
+        this.myTelefono.nativeElement.focus();
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Teléfono.', life: 700 });
+        validar = true;
+      }
+
+      if (this.estaVacio(this.dto.Sexo)) {
+        this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Seleccionar el Sexo.', life: 700 });
+        validar = true;
+      }
 
       // if(this.estaVacio(this.dto.Direccion)){
       //   this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Dirección.', life: 700 });
       //   validar = true;
       // }
-    
+
     }
 
     return validar;
@@ -990,41 +994,68 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
     }
   }
 
-  entrando(evento){
+  entrando(evento) {
     console.log(this.dto.Documento);
     console.log(evento);
     let key02
-    if (this.dto.TipoDocumento == "R" || this.dto.TipoDocumento == "D"){
+    if (this.dto.TipoDocumento == "R" || this.dto.TipoDocumento == "D") {
       key02 = evento.keyCode;
       key02 = String.fromCharCode(key02);
-        console.log("key else 02", key02)
+      console.log("key else 02", key02)
       const regex = /[A-Z]|\./;
       if (regex.test(this.dto.Documento)) {
-        this.dto.Documento= null ;
+        this.dto.Documento = null;
       }
     }
-    if(this.dto.TipoDocumento == "X" || this.dto.TipoDocumento == "P"){
+    if (this.dto.TipoDocumento == "X" || this.dto.TipoDocumento == "P") {
       key02 = evento.keyCode;
       key02 = String.fromCharCode(key02);
-        console.log("key else 02", key02)
+      console.log("key else 02", key02)
       const regex = /[^a-zA-Z0-9 ]/;
       if (regex.test(this.dto.Documento)) {
-        this.dto.Documento= null ;
+        this.dto.Documento = null;
       }
     }
   }
+  // esRUCesDNIValido(event: KeyboardEvent | ClipboardEvent) {
+  //   let key: string;
+
+  //   if (event.type === 'paste') {
+  //     const clipboardEvent = event as ClipboardEvent;
+  //     key = clipboardEvent.clipboardData?.getData('text/plain') || '';
+  //     console.log("key paste:", key);
+  //   } else {
+  //     const keyboardEvent = event as KeyboardEvent;
+  //     key = keyboardEvent.key; 
+  //     console.log("key press:", key);
+  //   }
+
+  //   if (this.dto.TipoDocumento === "R" || this.dto.TipoDocumento === "D") {
+  //     const regex = /^[0-9]$/; // Solo permite números
+  //     if (!regex.test(key)) {
+  //       event.preventDefault(); 
+  //       console.log("Número no permitido:", key);
+  //     }
+  //   } else if (this.dto.TipoDocumento === "X" || this.dto.TipoDocumento === "P") {
+  //     const regex = /^[a-zA-Z0-9]$/; // Solo permite alfanuméricos
+  //     if (!regex.test(key)) {
+  //       event.preventDefault(); 
+  //       console.log("Caracter no permitido:", key);
+  //     }
+  //   }
+  // }
+
 
   esRUCesDNIValido(event) {
+    this.opcionTipoDocumento();
     if (this.dto.TipoDocumento == "R" || this.dto.TipoDocumento == "D") {
       let key;
-      console.log("event", event)
       if (event.type === 'paste') {
         key = event.clipboardData.getData('text/plain');
         console.log("key if", key)
       } else {
         key = event.keyCode;
         key = String.fromCharCode(key);
-        console.log("key else", key)
       }
       const regex = /[0-9]|\./;
       if (!regex.test(key)) {
@@ -1035,28 +1066,25 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         }
       }
     }
-    if(this.dto.TipoDocumento == "X" || this.dto.TipoDocumento == "P"){
+    if (this.dto.TipoDocumento == "X" || this.dto.TipoDocumento == "P") {
       let key;
       console.log("event", event)
       if (event.type === 'paste') {
         key = event.clipboardData.getData('text/plain');
-        console.log("key if", key)
       } else {
         key = event.keyCode;
         key = String.fromCharCode(key);
-        console.log("key else", key)
       }
       const regex = /[^a-zA-Z0-9]/g;
       if (regex.test(key)) {
         event.returnValue = false;
         if (event.preventDefault) {
           event.preventDefault();
-          console.log("event.prevent", event.preventDefault());
         }
       }
     }
 
-    
+
   }
 
 
@@ -1073,7 +1101,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
 
   listaComboTipoPersona() {
     this.lstTipoPersona.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOPERSONA").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOPERSONA").forEach(i => {
       this.lstTipoPersona.push({ label: i.Nombre, value: i.Codigo })
     });
   }
@@ -1082,26 +1110,26 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   selectedItemTipoDocumento(event) {
     this.selectedTipoDocuemento = event.value;
     console.log("COMBO TIPO DOCUMENTO", this.selectedTipoDocuemento);
-/*     
-    D	D.N.I.
-    R	RUC / NIT
-    X	Carnet Extranjería
-    P	Pasaporte
-
-    N	Partida Nacimiento
-    C	Carnet Militar o Policial
-    O	Otros
-    K	Referenciado
-    Q	Menor de Edad
-    L	Protocolo  
-    */
+    /*     
+        D	D.N.I.
+        R	RUC / NIT
+        X	Carnet Extranjería
+        P	Pasaporte
+    
+        N	Partida Nacimiento
+        C	Carnet Militar o Policial
+        O	Otros
+        K	Referenciado
+        Q	Menor de Edad
+        L	Protocolo  
+        */
 
     switch (this.selectedTipoDocuemento) {
 
       case "D": //D.N.I.
-      if (this.estaVacio(this.dto.ApellidoMaterno)) {
-        this.verApeMat = true;
-      }
+        if (this.estaVacio(this.dto.ApellidoMaterno)) {
+          this.verApeMat = true;
+        }
         this.verRuc = true;
         this.verDocumento = false;
         this.ocultarApeMat = true;
@@ -1122,21 +1150,21 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         if (this.estaVacio(this.dto.ApellidoMaterno)) {
           this.verApeMat = true;
         }
-          this.validarmaxtexto = 11;
-          this.validarmintexto = 11;
-          break;
+        this.validarmaxtexto = 11;
+        this.validarmintexto = 11;
+        break;
 
       case "X"://Carnet Extranjería
-          this.verRuc = false;
-          this.dto.Documento = null;
-          this.verApeMat = false;
-          this.verDocumento = false;
-          this.ocultarApeMat = false;
-          this.oculApeMatExt = true;
+        this.verRuc = false;
+        this.dto.Documento = null;
+        this.verApeMat = false;
+        this.verDocumento = false;
+        this.ocultarApeMat = false;
+        this.oculApeMatExt = true;
 
-          this.validarmaxtexto = 12;
-          this.validarmintexto = 5;
-          break;
+        this.validarmaxtexto = 12;
+        this.validarmintexto = 5;
+        break;
 
       case "P": //Pasaporte
         this.verRuc = false;
@@ -1151,73 +1179,124 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         break;
 
       case "Q": //Menor de Edad
-          this.verRuc = false;
-          this.dto.Documento = null;
-          this.verApeMat = false;
-          this.verDocumento = false;
-          this.ocultarApeMat = true;
-          this.oculApeMatExt = false;
-
-          this.validarmaxtexto = 9;
-          this.validarmintexto = 9;
-        break; 
-        
-      default:
-          this.verRuc = false;
-          this.dto.Documento = null;
-          this.verApeMat = false;
-          this.verDocumento = false;
-          this.ocultarApeMat = false;
-          this.oculApeMatExt = true;
-
-          this.validarmaxtexto = 15;
-          this.validarmintexto = 5;
-        break; 
-        
-    }
-
-   /*  if (this.selectedTipoDocuemento != "D") {
-      this.verRuc = false;
-      this.dto.Documento = null;
-      this.verApeMat = false;
-      this.verDocumento = false;
-      this.ocultarApeMat = false;
-      this.oculApeMatExt = true;
-      if (this.selectedTipoDocuemento != "R") {
-          this.validarmaxtexto = 15;
-          this.validarmintexto = 5;
-          if (this.selectedTipoDocuemento == "P") {//Pasaporte
-              this.validarmaxtexto = 12;
-              this.validarmintexto = 5;
-            }
-          if (this.selectedTipoDocuemento == "Q") {//Menor de Edad
-              this.validarmaxtexto = 9;
-              this.validarmintexto = 9;
-              this.ocultarApeMat = true;
-              this.oculApeMatExt = false;
-            }
-      }
-      else {//RUC / NIT
-        if (this.estaVacio(this.dto.ApellidoMaterno)) {
-          this.verApeMat = true;
-        }
+        this.verRuc = false;
+        this.dto.Documento = null;
+        this.verApeMat = false;
+        this.verDocumento = false;
         this.ocultarApeMat = true;
         this.oculApeMatExt = false;
+
+        this.validarmaxtexto = 9;
+        this.validarmintexto = 9;
+        break;
+
+      default:
+        this.verRuc = false;
+        this.dto.Documento = null;
+        this.verApeMat = false;
+        this.verDocumento = false;
+        this.ocultarApeMat = false;
+        this.oculApeMatExt = true;
+
+        this.validarmaxtexto = 15;
+        this.validarmintexto = 5;
+        break;
+
+    }
+
+    /*  if (this.selectedTipoDocuemento != "D") {
+       this.verRuc = false;
+       this.dto.Documento = null;
+       this.verApeMat = false;
+       this.verDocumento = false;
+       this.ocultarApeMat = false;
+       this.oculApeMatExt = true;
+       if (this.selectedTipoDocuemento != "R") {
+           this.validarmaxtexto = 15;
+           this.validarmintexto = 5;
+           if (this.selectedTipoDocuemento == "P") {//Pasaporte
+               this.validarmaxtexto = 12;
+               this.validarmintexto = 5;
+             }
+           if (this.selectedTipoDocuemento == "Q") {//Menor de Edad
+               this.validarmaxtexto = 9;
+               this.validarmintexto = 9;
+               this.ocultarApeMat = true;
+               this.oculApeMatExt = false;
+             }
+       }
+       else {//RUC / NIT
+         if (this.estaVacio(this.dto.ApellidoMaterno)) {
+           this.verApeMat = true;
+         }
+         this.ocultarApeMat = true;
+         this.oculApeMatExt = false;
+         this.validarmaxtexto = 11;
+         this.validarmintexto = 11;
+       }
+     } else {//D.N.I.
+       if (this.estaVacio(this.dto.ApellidoMaterno)) {
+         this.verApeMat = true;
+       }
+       this.verRuc = true;
+       this.verDocumento = false;
+       this.ocultarApeMat = true;
+       this.oculApeMatExt = false;
+       this.dto.Documento = null;
+       this.validarmaxtexto = 8;
+       this.validarmintexto = 8;
+     } */
+    console.log("validartext", this.validarmaxtexto)
+  }
+
+  opcionTipoDocumento() {
+    /*     
+        D	D.N.I.
+        R	RUC / NIT
+        X	Carnet Extranjería
+        P	Pasaporte
+    
+        N	Partida Nacimiento
+        C	Carnet Militar o Policial
+        O	Otros
+        K	Referenciado
+        Q	Menor de Edad
+        L	Protocolo  
+        */
+
+    switch (this.dto.TipoDocumento) {
+
+      case "D": //D.N.I.
+        this.validarmaxtexto = 8;
+        this.validarmintexto = 8;
+        break;
+
+      case "R": //RUC / NIT
         this.validarmaxtexto = 11;
         this.validarmintexto = 11;
-      }
-    } else {//D.N.I.
-      if (this.estaVacio(this.dto.ApellidoMaterno)) {
-        this.verApeMat = true;
-      }
-      this.verRuc = true;
-      this.verDocumento = false;
-      this.ocultarApeMat = true;
-      this.oculApeMatExt = false;
-      this.dto.Documento = null;
-      this.validarmaxtexto = 8;
-      this.validarmintexto = 8;
-    } */
+        break;
+
+      case "X"://Carnet Extranjería
+        this.validarmaxtexto = 12;
+        this.validarmintexto = 5;
+        break;
+
+      case "P": //Pasaporte
+        this.validarmaxtexto = 12;
+        this.validarmintexto = 5;
+        break;
+
+      case "Q": //Menor de Edad
+        this.validarmaxtexto = 9;
+        this.validarmintexto = 9;
+        break;
+
+      default:
+        this.validarmaxtexto = 15;
+        this.validarmintexto = 5;
+        break;
+
+    }
     console.log("validartext", this.validarmaxtexto)
   }
 
@@ -1246,21 +1325,21 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
 
   listaComboSexo() {
     this.lstSexo.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "SEXO").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "SEXO").forEach(i => {
       this.lstSexo.push({ label: i.Nombre, value: i.Codigo })
     });
   }
 
   listaComboTipoDocumento() {
     this.lstTipoDocumento.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPODOCIDENTID").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPODOCIDENTID").forEach(i => {
       this.lstTipoDocumento.push({ label: i.Nombre, value: i.Codigo })
     });
   }
 
   listaComboTipoAdmision() {
     this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOADMISION").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOADMISION").forEach(i => {
       this.lstTipoAdmision.push({ label: i.Nombre, value: i.IdCodigo })
     });
   }
@@ -1351,7 +1430,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   checkesRetencion() {
     this.verValidarTipoPersona = false;
   }
-  
+
 
   validarBooleanAFlagCampos() {
     this.dto.EsCliente = this.booleanAFlag(this.esCliente);
@@ -1370,7 +1449,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   validarIsNullCheckTipoPersona(): boolean {
     if (this.dto.EsCliente == 'N' && this.dto.EsProveedor == 'N' &&
       this.dto.EsEmpleado == 'N' && this.dto.EsOtro == 'N') {
-        console.log("entro validar true");
+      console.log("entro validar true");
       return true;
     } else {
       console.log("entro validar false");

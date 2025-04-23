@@ -267,7 +267,7 @@ export class AseguradoraMantenimientoComponent extends ComponenteBasePrincipal i
 
   listacomboTipoAseguradora() {
     this.lstTipoAseguradora.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPASE").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPASE").forEach(i => {
       this.lstTipoAseguradora.push({ label: i.Nombre, value: i.IdCodigo })
     });
   }

@@ -150,7 +150,7 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
   private cargarEstados() {
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    const lstEstados: any[] = this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS")
+    const lstEstados: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS")
     this.lstEstado = [...this.lstEstado, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.Codigo } })]
   }
 
@@ -164,7 +164,7 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
   listaComboTipoComprobante() {
     this.lstTipoComprobante = [];
     this.lstTipoComprobante.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
     console.log("llego cargarComboTipoComprobante", this.lstTipoComprobante);

@@ -209,7 +209,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
   cargarComboEstados() {
     this.lstEstados = [];
     // this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstados.push({ label: i.Nombre, value: i.Codigo })
     });
   }
@@ -218,7 +218,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
     this.lstFormula = [];
     // this.lstFormula.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     // Asume que getMiscelaneos() devuelve un array con los elementos filtrados
-    const miscelaneos = this.getMiscelaneos().filter(x => x.CodigoTabla == "FORMULA");
+    const miscelaneos = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "FORMULA");
     miscelaneos.forEach(i => {
       this.lstFormula.push({ label: i.Nombre, value: parseInt(i.Codigo.trim(), 10) });
     });

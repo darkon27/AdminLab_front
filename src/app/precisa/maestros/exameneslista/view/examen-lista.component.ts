@@ -113,7 +113,7 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
   cargarComboEstados() {
     this.lstEstados = [];
     this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstados.push({ label: i.Nombre, value: i.Codigo })
     });
   }

@@ -68,7 +68,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
   lstListarXAdmision: DtoPacienteClinica[] = [];
   registroSeleccionado: any;
   dtofinal: DtoAdmisionprueba = new DtoAdmisionprueba();
-  isPropio:boolean;
+  isPropio: boolean;
   constructor(
     private router: Router,
     private loginService: LoginService,
@@ -140,7 +140,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
   }
 
   verSelectorPaciente(): void {
-    this.personaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECPACIENTE', 'BUSCAR'), "BUSCAR","N");
+    this.personaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECPACIENTE', 'BUSCAR'), "BUSCAR", "N");
 
   }
 
@@ -166,18 +166,18 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
     }
   }
 
-PropiosClick():void{
+  PropiosClick(): void {
 
-  if(!this.isPropio){
-    this.filtro.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario;
-    this.filtro.UsuarioModificacion =this.getUsuarioAuth().data[0].Usuario;
-  } else{
-    this.filtro.UsuarioCreacion = undefined;
-    this.filtro.UsuarioModificacion =undefined;
+    if (!this.isPropio) {
+      this.filtro.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario;
+      this.filtro.UsuarioModificacion = this.getUsuarioAuth().data[0].Usuario;
+    } else {
+      this.filtro.UsuarioCreacion = undefined;
+      this.filtro.UsuarioModificacion = undefined;
+    }
+
+
   }
-
-
-}
 
   coreSeleccionar(dta: any) {
     this.mensajeController.resultado = dta;
@@ -606,6 +606,13 @@ PropiosClick():void{
         text: 'Debe de generar primero el número de petición.'
       })
     } else {
+      // Validacion agregada en base a solicitud AD-138
+      const pruebasPendientes: boolean = this.registroSeleccionado.Estado == 1 || this.registroSeleccionado.Estado == 0;
+
+      if (pruebasPendientes) {
+        this.toastMensaje('Guarde los exámenes para realizar la impresión', 'warning', 3000);
+        return;
+      }
 
       if (this.registroSeleccionado.Estado != 3) {
 

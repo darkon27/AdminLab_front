@@ -197,7 +197,9 @@ export class ComponenteBasePrincipal {
         let mailValido = false;
         'use strict'; // modo stricto si no es correctamente usado el metodo devolvera HORRORES
 
-        var EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0,9]{1,3}\.[0-9]{1,3}\.[0,9]{1,3}\])|(([a-zA-z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        // var EMAIL_REGEX = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/gm;
+        var EMAIL_REGEX = /^[\w\-.]+@([\w-]+\.)+[\w-]{2,}$/gm;
+
 
         if (email.match(EMAIL_REGEX)) {
             mailValido = true;

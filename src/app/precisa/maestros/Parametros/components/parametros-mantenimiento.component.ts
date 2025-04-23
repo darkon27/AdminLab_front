@@ -153,7 +153,7 @@ export class ParametrosMantenimientoComponent extends ComponenteBasePrincipal im
   cargarEstados() {
     this.lstEstados = [];
     this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
       this.lstEstados.push({ label: i.Nombre.trim().toUpperCase(), value: i.Codigo.trim() });
     });
     console.log("lstEstados",this.lstEstados);

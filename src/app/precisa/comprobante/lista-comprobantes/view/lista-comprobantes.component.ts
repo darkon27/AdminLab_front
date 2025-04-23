@@ -120,7 +120,7 @@ export class ListaComprobantesComponent extends ComponenteBasePrincipal implemen
   cargarEstados() {
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTFAC").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTFAC").forEach(i => {
       this.lstEstado.push({ label: i.Nombre, value: i.IdCodigo })
     });
   }
@@ -128,7 +128,7 @@ export class ListaComprobantesComponent extends ComponenteBasePrincipal implemen
   cargarTipocomprobante() {
     this.lstTipocomprobante = [];
     this.lstTipocomprobante.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipocomprobante.push({ label: i.Nombre, value: i.IdCodigo })
     });
   }
