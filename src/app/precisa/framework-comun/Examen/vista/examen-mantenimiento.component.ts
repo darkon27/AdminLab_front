@@ -105,7 +105,7 @@ export class ExamenMantenimientoComponent extends ComponenteBasePrincipal {
   listaComboEstado() {
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstado.push({ label: i.Nombre.toUpperCase(), value: i.IdCodigo });
     });
     this.filtro.Estado = 1;
@@ -113,14 +113,14 @@ export class ExamenMantenimientoComponent extends ComponenteBasePrincipal {
   listaComboTiempo() {
     this.lstTiempo = [];
     this.lstTiempo.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIEMPO").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIEMPO").forEach(i => {
       this.lstTiempo.push({ label: i.Nombre.toUpperCase(), value: i.Codigo })
     });
   }
   listaComboSexo() {
     this.lstSexo = [];
     this.lstSexo.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "SEXO").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "SEXO").forEach(i => {
       this.lstSexo.push({ label: i.Nombre.toUpperCase(), value: i.Codigo })
     });
   }

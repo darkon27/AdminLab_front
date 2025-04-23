@@ -166,7 +166,7 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
 
-    const lstEstados: any[] = this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLIQ")
+    const lstEstados: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLIQ")
     this.lstEstado = [...this.lstEstado, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.Codigo } })]
   }
 
@@ -174,7 +174,7 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
     this.lstTipoAtencion = [];
     this.lstTipoAtencion.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
 
-    const lstEstados: any[] = this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOATENCION")
+    const lstEstados: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOATENCION")
     this.lstTipoAtencion=[...this.lstTipoAtencion, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.IdCodigo } })]
   }
  

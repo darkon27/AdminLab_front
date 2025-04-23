@@ -313,7 +313,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
 
   listaComboCargo() {
     this.lstCargo.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "CARGX").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "CARGX").forEach(i => {
       this.lstCargo.push({ label: i.Nombre, value: i.Codigo })
     });
   }

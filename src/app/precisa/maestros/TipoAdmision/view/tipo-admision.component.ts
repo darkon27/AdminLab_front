@@ -228,7 +228,7 @@ export class TipoAdmisionComponent extends ComponenteBasePrincipal implements On
   cargarEstados() {
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstado.push({ label: i.Nombre, value: i.IdCodigo });
     });
   }

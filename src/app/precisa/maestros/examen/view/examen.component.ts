@@ -266,7 +266,7 @@ export class ExamenComponent extends ComponenteBasePrincipal implements OnInit, 
   comboCargarEstado() {
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstado.push({ label: i.Nombre.toUpperCase(), value: i.IdCodigo });
     });
     this.filtro.Estado = 1;

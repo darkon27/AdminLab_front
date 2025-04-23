@@ -1,11 +1,9 @@
 <p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
- <p-dialog [(visible)]="verMantPersona" [modal]="true" [resizable]="false"
-    [breakpoints]="{'950px': '75vw'}" [header]="acciones" [position]="position" 
-    [maximizable]="true"
-    [style]="{width: '1500px', minWidth: '200px'}"
-    [baseZIndex]="10000"  > 
+<p-dialog [(visible)]="verMantPersona" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
+    [header]="acciones" [position]="position" [maximizable]="true" [style]="{width: '1500px', minWidth: '200px'}"
+    [baseZIndex]="10000">
     <ng-template pTemplate="content">
         <br>
         <div class="row">
@@ -56,50 +54,46 @@
                                 <label class="label">N° Documento</label>
                                 <input #myDocumento pInputText type="text" placeholder=""
                                     style="width:100%; background-color: rgb(247, 247, 208); height: 30px;"
-                                    (blur)="entrando($event)"
-                                    (keydown)="validarInputDocumento($event)"
-                                    (keypress)="esRUCesDNIValido($event)"
-                                    [minlength]="validarmintexto" [maxlength]="validarmaxtexto"
-                                    [(ngModel)]="dto.Documento" [disabled]="editarCampos"   
-                                      />
+                                    (blur)="entrando($event)" (keydown)="validarInputDocumento($event)"
+                                    (keypress)="esRUCesDNIValido($event)" maxlength="{{validarmaxtexto}}"
+                                    [(ngModel)]="dto.Documento" [disabled]="editarCampos" />
                             </div>
-                            <div class="col-sm-4" *ngIf="!verrucmodi" >
-                                <label  class="label" >RUC</label>
+                            <div class="col-sm-4" *ngIf="!verrucmodi">
+                                <label class="label">RUC</label>
                                 <input pInputText type="text" placeholder="" style="width:100%;  height: 30px;"
-                                    [(ngModel)]="dto.DocumentoFiscal" [disabled]="editarCampos"
-                                    minlength="11" maxlength="11" />
+                                    [(ngModel)]="dto.DocumentoFiscal" [disabled]="editarCampos" minlength="11"
+                                    maxlength="11" />
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12" aria-orientation="horizontal" style="background-color:white;">
-                        <div class="row"  *ngIf="!verpersonajuridica" >
-                            <div class="col-sm-4" >
+                        <div class="row" *ngIf="!verpersonajuridica">
+                            <div class="col-sm-4">
                                 <label class="label">Nombre</label>
                                 <input pInputText type="text" placeholder="" [style]="{'width':'100%'}"
                                     style="width:100%; background-color: rgb(247, 247, 208); height: 30px;"
                                     [(ngModel)]="dto.Nombres" [disabled]="editarCampos" />
                             </div>
-                            <div class="col-sm-4"  >
-                                <label  class="label">A.Paterno</label>
+                            <div class="col-sm-4">
+                                <label class="label">A.Paterno</label>
                                 <input pInputText type="text" placeholder=""
                                     style="width:100%; background-color: #f7f7d0; height: 30px;"
                                     [(ngModel)]="dto.ApellidoPaterno" [disabled]="editarCampos" />
                             </div>
-                            <div class="col-sm-4" >
-                                <label  class="label">A.Materno</label>
+                            <div class="col-sm-4">
+                                <label class="label">A.Materno</label>
                                 <input #myApellidoMaterno pInputText type="text" placeholder=""
-                                    style="width:100%;  height: 30px;"
-                                    [(ngModel)]="dto.ApellidoMaterno" [disabled]="editarCampos"
-                                />
-                               <!--      (keydown)="validarApeMat($event)"      -->
+                                    style="width:100%;  height: 30px;" [(ngModel)]="dto.ApellidoMaterno"
+                                    [disabled]="editarCampos" />
+                                <!--      (keydown)="validarApeMat($event)"      -->
                             </div>
                         </div>
-                        <div class="row"  *ngIf="verpersonajuridica" >
-                            <div class="col-sm-12" >
-                                <label  class="label">Razón Social</label>
-                            <input pInputText type="text" placeholder=""
-                            style="width:100%; background-color: rgb(247, 247, 208); height: 30px;"
-                            [(ngModel)]="dto.Nombres" [disabled]="editarCampos"  />
+                        <div class="row" *ngIf="verpersonajuridica">
+                            <div class="col-sm-12">
+                                <label class="label">Razón Social</label>
+                                <input pInputText type="text" placeholder=""
+                                    style="width:100%; background-color: rgb(247, 247, 208); height: 30px;"
+                                    [(ngModel)]="dto.Nombres" [disabled]="editarCampos" />
                             </div>
                         </div>
                     </div>
@@ -114,13 +108,13 @@
                                     [yearNavigator]="true" (onClose)="selectedItemFechaNacimiento(dto.FechaNacimiento)">
                                 </p-calendar>
                             </div>
-                            <div class="col-sm-4" *ngIf="!verpersonajuridica"  >
-                                <label  class="label">Edad</label>
+                            <div class="col-sm-4" *ngIf="!verpersonajuridica">
+                                <label class="label">Edad</label>
                                 <input pInputText type="text" placeholder="" style="width:100%;  height: 30px;"
                                     [(ngModel)]="dto.Edad" [disabled]="editarCampos" />
                             </div>
-                            <div class="col-sm-4" *ngIf="!verpersonajuridica" >
-                                <label  class="label">Usuario Web / Password</label>
+                            <div class="col-sm-4" *ngIf="!verpersonajuridica">
+                                <label class="label">Usuario Web / Password</label>
                                 <div class="p-inputgroup">
                                     <input pInputText type="text" placeholder="" [disabled]="editarPassword"
                                         style="width:100%;  height: 30px;" />&nbsp;
@@ -128,28 +122,28 @@
                                         [(ngModel)]="dto.PasswordWeb" [disabled]="editarPassword" (click)="openNew()">
                                     </p-button>
                                 </div>
-                            </div>                         
-                                <div class="col-sm-4" *ngIf="verpersonajuridica" >
-                                    <label for="inputLastName" class="label">Días de
-                                        Vencimiento</label>
-                                    <input input pInputText type="text" placeholder="" style="width:100%; height: 30px;"
-                                        [(ngModel)]="dto.DiaVencimiento" [disabled]="editarCampos" />
-                                </div>                       
-                                <div class="col-sm-4" *ngIf="verpersonajuridica" >
-                                    <br>
-                                    <nb-checkbox status="primary" [(ngModel)]="dto.IndicadorRetencion"
-                                     [disabled]="editarCampos">I.Retención
-                                    </nb-checkbox>
-                                </div>
+                            </div>
+                            <div class="col-sm-4" *ngIf="verpersonajuridica">
+                                <label for="inputLastName" class="label">Días de
+                                    Vencimiento</label>
+                                <input input pInputText type="text" placeholder="" style="width:100%; height: 30px;"
+                                    [(ngModel)]="dto.DiaVencimiento" [disabled]="editarCampos" />
+                            </div>
+                            <div class="col-sm-4" *ngIf="verpersonajuridica">
+                                <br>
+                                <nb-checkbox status="primary" [(ngModel)]="dto.IndicadorRetencion"
+                                    [disabled]="editarCampos">I.Retención
+                                </nb-checkbox>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-12" aria-orientation="horizontal">
                         <div class="row">
                             <div class="col">
                                 <div class="p-inputgroup">
-                                    <label  class="label">Tipo Persona</label>
+                                    <label class="label">Tipo Persona</label>
                                 </div>
-                                <div  aria-orientation="horizontal">
+                                <div aria-orientation="horizontal">
                                     <nb-checkbox status="primary" (click)="checkesCliente()" name="groupname"
                                         binary="true" style="padding-left: 5;" [(ngModel)]="esCliente"
                                         [disabled]="editarCampos">
@@ -163,12 +157,11 @@
                                         binary="true" style="padding-left: 5;" [(ngModel)]="esEmpleado"
                                         [disabled]="editarCampos">
                                         Empleado&nbsp;</nb-checkbox>
-                                    <nb-checkbox status="primary" (click)="checkesOtro()" name="groupname"
-                                        binary="true" style="padding-left: 5;" [(ngModel)]="esOtro"
-                                        [disabled]="editarCampos">
+                                    <nb-checkbox status="primary" (click)="checkesOtro()" name="groupname" binary="true"
+                                        style="padding-left: 5;" [(ngModel)]="esOtro" [disabled]="editarCampos">
                                         Otro&nbsp;
                                     </nb-checkbox>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -181,7 +174,7 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="p-inputgroup">
-                                    <label  class="label">Teléfono 1</label>
+                                    <label class="label">Teléfono 1</label>
                                 </div>
                                 <div class="p-inputgroup">
                                     <input #myTelefono pInputText type="text" placeholder=""
@@ -194,7 +187,7 @@
 
                             <div class="col-sm-4">
                                 <div class="p-inputgroup">
-                                    <label  class="label">Teléfono 2</label>
+                                    <label class="label">Teléfono 2</label>
                                 </div>
                                 <div class="p-inputgroup">
                                     <input pInputText type="text" placeholder="" style="width:100%; height: 30px;"
@@ -204,7 +197,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="p-inputgroup">
-                                    <label  class="label">Email</label>
+                                    <label class="label">Email</label>
                                 </div>
                                 <div class="p-inputgroup">
                                     <input pInputText type="email" placeholder="" style="width:100%; height: 30px;"
@@ -213,22 +206,21 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup">
-                                    <label  class="label">Dirección</label>
+                                    <label class="label">Dirección</label>
                                 </div>
                                 <div class="p-inputgroup">
                                     <input #myDireccion pInputText type="text"
                                         style="width:100%; background-color: rgb(247, 247, 208); height: 30px;"
                                         [disabled]="editarCampos" [(ngModel)]="dto.Direccion"
-                                      *ngIf="verpersonajuridica" />
-                                        <input #myDireccion pInputText type="text"
-                                        style="width:100%; height: 30px;"
+                                        *ngIf="verpersonajuridica" />
+                                    <input #myDireccion pInputText type="text" style="width:100%; height: 30px;"
                                         [disabled]="editarCampos" [(ngModel)]="dto.Direccion"
-                                        *ngIf="!verpersonajuridica"  />
+                                        *ngIf="!verpersonajuridica" />
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="p-inputgroup">
-                                    <label  class="label">Estado</label>
+                                    <label class="label">Estado</label>
                                 </div>
                                 <div class="p-inputgroup">
                                     <p-dropdown placeholder="Seleccione" [options]="lstEstados" [filter]="true"
@@ -255,16 +247,16 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <label class="label">Departamento</label>
-                            <p-dropdown  [options]="lstDepartamento" [disabled]="editarCampos"
-                                [(ngModel)]="dto.DEPARTAMENTO"  (onChange)="selectedItemDepartamento($event)"
+                            <p-dropdown [options]="lstDepartamento" [disabled]="editarCampos"
+                                [(ngModel)]="dto.DEPARTAMENTO" (onChange)="selectedItemDepartamento($event)"
                                 [filter]="true">
                             </p-dropdown>
                         </div>
 
                         <div class="col-sm-4">
                             <label class="label">Provincia</label>
-                            <p-dropdown [options]="lstProvincia" [disabled]="editarCampos" (onChange)="selectedItemProvincia($event)"
-                               [(ngModel)]="dto.PROVINCIA" [filter]="true">
+                            <p-dropdown [options]="lstProvincia" [disabled]="editarCampos"
+                                (onChange)="selectedItemProvincia($event)" [(ngModel)]="dto.PROVINCIA" [filter]="true">
                             </p-dropdown>
                         </div>
 
@@ -279,7 +271,7 @@
                 <div class="col-sm-12" aria-orientation="horizontal">
                     <div class="row">
                         <div class="col-sm-12">
-                            <label  class="label">Comentario</label>
+                            <label class="label">Comentario</label>
                             <textarea pInputText type="text" placeholder="" [style]="{'width':'100%'}"
                                 [(ngModel)]="dto.Comentario" [disabled]="editarCampos"></textarea>
                         </div>
@@ -292,7 +284,7 @@
                 <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
                     [modificacionFecha]="fechaModificacion"></ngx-auditoria>
             </div>
-        </p-fieldset> 
+        </p-fieldset>
     </ng-template>
     <ng-template pTemplate="footer">
         <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="editarCampos"
@@ -300,5 +292,5 @@
     </ng-template>
 </p-dialog>
 
-<p-toast [baseZIndex]="10000" ></p-toast>
+<p-toast [baseZIndex]="10000"></p-toast>
 <ngx-persona-password-reset></ngx-persona-password-reset>

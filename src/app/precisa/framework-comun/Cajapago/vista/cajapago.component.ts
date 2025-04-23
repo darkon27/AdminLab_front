@@ -355,7 +355,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
   listaComboTipoComprobante() {
     this.lstTipoComprobante = [];
     this.lstTipoComprobante.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
     console.log("Facturacion cargarComboTipoComprobante", this.lstTipoComprobante);
@@ -364,7 +364,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
   listaComboTipoVenta() {
     this.lstTipoVenta = [];
     this.lstTipoVenta.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPVEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPVEN").forEach(i => {
       this.lstTipoVenta.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
     console.log("Facturacion listaComboTipoVenta", this.lstTipoVenta);
@@ -373,7 +373,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
   listaComboMedioPago() {
     this.lstMedioPago = [];
     this.lstMedioPago.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "MEDPAG").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "MEDPAG").forEach(i => {
       this.lstMedioPago.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
     console.log("Facturacion listaComboMedioPago", this.lstMedioPago);

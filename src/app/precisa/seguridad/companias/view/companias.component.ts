@@ -125,7 +125,7 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
   cargarEstados() {
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
       this.lstEstado.push({ label: i.Nombre.trim(), value: i.Codigo.trim() });
     });
   }

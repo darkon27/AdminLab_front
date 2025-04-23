@@ -189,7 +189,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
   private listarTipoLiquidaciones() {
     this.lstTiposLiquidaciones = [];
     this.lstTiposLiquidaciones.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    const lista = this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPLIQ");
+    const lista = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPLIQ");
     this.lstTiposLiquidaciones = [...this.lstTiposLiquidaciones, ...lista.map((item) => { return { label: item.Nombre.toUpperCase(), value: item.Codigo.trim() } })]
   }
 
@@ -215,7 +215,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
   private listaComboEstado() {
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    const lstEstados: any[] = this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLIQ")
+    const lstEstados: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLIQ")
     this.lstEstado = [...this.lstEstado, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.Codigo } })]
   }
 

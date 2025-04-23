@@ -235,7 +235,7 @@ export class SedesComponent extends ComponenteBasePrincipal implements OnInit, U
   cargarEstados() {
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstado.push({ label: i.Nombre, value: i.IdCodigo });
     });
   }

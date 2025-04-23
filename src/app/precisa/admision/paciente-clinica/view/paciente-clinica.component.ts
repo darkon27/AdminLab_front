@@ -538,6 +538,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             this.lstListarXAdmision.push({ ...examenParaAgregar });
           }
           this.lstListarXAdmision = [...this.lstListarXAdmision];
+          console.log(this.lstListarXAdmision)
           await this.calculoDePruebasIgv();
 
           this.verBtnAnular = true;
@@ -1222,6 +1223,15 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
   }
 
   imprimir(dto: Admision) {
+
+    // Validacion agregada en base a solicitud AD-138
+    const pruebasPendientes: boolean = this.lstListarXAdmision?.filter(f=> f.Estado == 1 || f.Estado == 0 ).length > 0;
+
+    if(pruebasPendientes){
+      this.toastMensaje('Guarde los exámenes para realizar la impresión', 'warning', 3000);
+      return;
+    }
+
     this.bloquearPag = true;
     var payload = {
       IdReporte: 1,
@@ -1229,7 +1239,6 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       NroPeticion: this.filtro.NroPeticion
     }
     this.consultaAdmisionService.printListadoReporte(payload).then(resp => {
-      console.log("prin", resp);
 
       this.verReporteModal = true;
 
