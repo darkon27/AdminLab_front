@@ -471,12 +471,27 @@ export class ComponenteBasePrincipal {
         let maestroFormateado: any[] = data.map((d: any) => ({
             tipo: d.CodigoTabla,
             value: d.Codigo,
+            IdCodigo: d.IdCodigo,
             label: d.Nombre.toUpperCase()
         }))
             .filter((f) =>
                 f.tipo == tipoMaestro
             );
         return of(maestroFormateado);
+    }
+    obtenerDataUsuario(): Observable<any> {
+        const listaComboliente: any = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('access_user')));
+
+        if (listaComboliente?.data?.length > 0) {
+            return listaComboliente.data[0];
+        }
+    }
+
+    obtenerDataSedes(): Observable<any[]> {
+        const listaComboSedes = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('access_sedes')));
+        if (listaComboSedes.length > 0) {
+            return listaComboSedes;
+        }
     }
 
 
