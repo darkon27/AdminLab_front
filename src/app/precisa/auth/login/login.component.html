@@ -56,7 +56,7 @@
             <label class="label" for="input-email">Sede:</label>
             <br>
             <p-dropdown ngClass="background: #ffffffbf" appendTo="body" [options]="sedes" formControlName="idSede" [filter]="true"
-              placeholder="-- Seleccione una Sede --" (keydown)="validarTeclaEnter($event)">
+              placeholder="{{msjCargaSedes}}" (keydown)="validarTeclaEnter($event)">
             </p-dropdown>
             <div *ngIf="sedeField.touched && sedeField.invalid">
               <p class="caption status-danger" *ngIf="sedeField.hasError('required')">
