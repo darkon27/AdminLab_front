@@ -11,28 +11,7 @@
     </p-footer>
 </p-confirmDialog>
 <p-card>
- <!--    <nb-card-header style="background-color: transparent; margin-top: 0px;">
-        <div class="row">
-            <div class="col-sm-6">
-                <br>
-                <h4 class="titulonuevo">Facturacion</h4>
-            </div>
-            <div class="col-sm-2"   style="background-color: transparent;"></div>
-            <div class="col-sm-4" style="right: 5%;    position: fixed;   z-index: 950;" aria-orientation="horizontal">
-                <nb-card class="col-sm-12 fondocard" style="padding: 2px; margin-bottom: -10px; margin-top: 5px;">
-                    <div class="row" aria-orientation="horizontal">
-                        <button pButton icon="fa fa-search" type="button" title="Buscar" label="Buscar" class="p-button-secondary"
-                        (click)="coreBuscar()"></button>
-                        <button pButton icon="fa fa-file" type="button" title="Nuevo" label="Nuevo" class="p-button-secondary"
-                        (click)="coreNuevo()"></button>
-                        <button pButton icon="fa fa-file" type="button" title="Exportar" label="Exportar" class="p-button-secondary"
-                        (click)="coreExportar()"></button>                      
-                    </div>
-                </nb-card>
-            </div>
-        </div>
-    </nb-card-header> -->
-    <nb-card-header>
+     <nb-card-header>
         <nav class="fixed">
             <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
         </nav>
@@ -120,31 +99,35 @@
             [rowsPerPageOptions]="[25,50,100]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
             <ng-template pTemplate="header">
                 <tr>  
-                    <th                        class="label" ALIGN="center" style="width: 6rem; text-align: center;">Acción</th>
-                    <th pSortableColumn="num"  class="label" ALIGN="center" style="width: 4rem; text-align: center;">
+                    <th class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 8rem; text-align: center;">
+                        Acción</th>
+                    <th pSortableColumn="num" class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 4rem; text-align: center;">
                         Nro <p-sortIcon field="num"> </p-sortIcon>
                     </th>
-                    <th pSortableColumn="FechaEmision" class="label" ALIGN="center"
-                        style="width: 4rem; text-align: center;">
+                    <th pSortableColumn="FechaEmision" class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 8rem; text-align: center;">
                         F. Factura<p-sortIcon field="FechaEmision"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="NumeroComprobante" class="label"  ALIGN="center" style="width: 4rem; text-align: center;">
+                    <th pSortableColumn="NumeroComprobante" class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 8rem; text-align: center;">
                         Nro Factura<p-sortIcon field="NumeroComprobante"></p-sortIcon>
                     </th>
-                    <th class="label" pSortableColumn="NombreCliente" ALIGN="center"
-                        style="width: 10rem; text-align: center;">
+                    <th pSortableColumn="NombreCliente" class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 12rem; text-align: center;">
                         Cliente<p-sortIcon field="NombreCliente"></p-sortIcon>
                     </th>
-                    <th class="label" pSortableColumn="CampoReferencia" ALIGN="center"
-                        style="width: 15rem; text-align: center;">
+                    <th pSortableColumn="CampoReferencia" class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 20rem; text-align: center;">
                         Concepto<p-sortIcon field="CampoReferencia"></p-sortIcon>
                     </th>                    
                     <th class="label" pSortableColumn="NomClasificador" ALIGN="center"
-                        style="width: 6rem; text-align: center;">
+                        style="width: 10rem; text-align: center;">
                         Clasificador<p-sortIcon field="NomClasificador"></p-sortIcon>
                     </th>                         
                     <th class="label" pSortableColumn="SedDescripcion" ALIGN="center"
-                        style="width: 6rem; text-align: center;">
+                        style="width: 8rem; text-align: center;">
                         Sede<p-sortIcon field="SedDescripcion"></p-sortIcon>
                     </th>
                     <th class="label" pSortableColumn="MontoAfecto" ALIGN="center" 
@@ -167,7 +150,8 @@
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
                 <tr [pSelectableRow]="rowData"> 
-                    <td style="width: 6rem">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 8rem; text-align: center;">
                         <span class="p-column-title">Acción</span>
                         <table>
                           <tr>
@@ -187,31 +171,37 @@
                           </tr>
                         </table>
                       </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 4rem; text-align: center;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 4rem; text-align: center;">
                         <span class="p-column-title">Nro</span>
                         {{ rowData.num }}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 8rem; text-align: center;">
                         <span class="p-column-title">F. Factura</span>                
                         {{rowData.FechaEmision| date: 'dd/MM/yyyy'}}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem; text-align: center;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 8rem; text-align: center;">
                         <span class="p-column-title">Nro Factura</span>
                         {{ rowData.NumeroComprobante |uppercase }}
                     </td>        
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 10rem;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 12rem; text-align: center;">
                         <span class="p-column-title">Cliente</span>
                         {{ rowData.NombreCliente |uppercase }}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 15rem;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 20rem; text-align: center;">
                         <span class="p-column-title">Concepto</span>
                         {{ rowData.CampoReferencia |uppercase }}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                    style="width: 10rem; text-align: center;">
                         <span class="p-column-title">Clasificador</span>
                         {{ rowData.NomClasificador |uppercase }}
                     </td>                         
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
                         <span class="p-column-title">Sede</span>
                         {{ rowData.SedDescripcion |uppercase }}
                     </td>

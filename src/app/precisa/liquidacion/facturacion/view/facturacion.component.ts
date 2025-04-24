@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
+import { SelectItem } from 'primeng/api';
 import { ComponenteBasePrincipal } from '../../../../../util/ComponenteBasePrincipa';
 import { MensajeController } from '../../../../../util/MensajeController';
 import { UIMantenimientoController } from '../../../../../util/UIMantenimientoController';
@@ -9,7 +9,6 @@ import { EmpresaBuscarComponent } from '../../../framework-comun/Empresa/view/em
 import { FiltroServicio } from '../../../framework-comun/Examen/dominio/filtro/FiltroExamen';
 import { ExamenService } from '../../../framework-comun/Examen/servicio/Examen.service';
 import { PersonaService } from '../../../framework-comun/Persona/servicio/persona.service';
-import { convertDateStringsToDates } from '../../../framework/funciones/dateutils';
 import { Maestro } from '../../../maestros/FormMaestro/model/maestro';
 import { MaestroSucursalService } from '../../../maestros/Sedes/servicio/maestro-sucursal.service';
 import { FiltroCompaniamast } from '../../../seguridad/companias/dominio/filtro/FiltroCompaniamast';
