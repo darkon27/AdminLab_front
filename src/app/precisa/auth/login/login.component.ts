@@ -33,7 +33,8 @@ export class LoginComponent implements OnInit {
   portal: Portal = new Portal()
   listSedes: Sedes = new Sedes()
   version = VERSION_APLICATIVO;
-  
+  msjCargaSedes= '-- Seleccione una Sede --';
+
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
@@ -270,6 +271,7 @@ export class LoginComponent implements OnInit {
   }
 
   listarSedes(): Promise<number> {
+    this.msjCargaSedes = 'Obteniendo sedes...';
     let sedes = { IdEmpresa: 75300, SedEstado: 1 }
     console.log("Login listarSedes ::", this.loginForm);
     console.log("Login listarSedes ::", this.sedes);
@@ -278,6 +280,7 @@ export class LoginComponent implements OnInit {
         if (sedes.length > 0) {
           sedes.forEach(obj => this.sedes.push({ label: obj.SedDescripcion, value: obj.IdSede }));
           sessionStorage.setItem('access_sedes', JSON.stringify(sedes));
+          this.msjCargaSedes = '-- Seleccione una Sede --';
         }
         return 1
       }
