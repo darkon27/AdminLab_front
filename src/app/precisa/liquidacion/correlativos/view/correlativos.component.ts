@@ -13,6 +13,7 @@ import { CorrelativosMantenimientoComponent } from '../components/correlativos-m
 import { dtoCorrelativo } from '../model/dtoCorrelativo';
 import { filtroCorrelativo } from '../model/filtro.Correlativo';
 import { CorrelativoService } from '../service/correlativo.Services';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'ngx-correlativos',
@@ -20,7 +21,7 @@ import { CorrelativoService } from '../service/correlativo.Services';
   styleUrls: ['./correlativos.component.scss']
 })
 
-export class CorrelativosComponent extends ComponenteBasePrincipal implements OnInit,UIMantenimientoController {
+export class CorrelativosComponent extends ComponenteBasePrincipal implements OnInit, UIMantenimientoController {
   @ViewChild(CorrelativosMantenimientoComponent, { static: false }) correlativosMantenimientoComponent: CorrelativosMantenimientoComponent;
   bloquearPag: boolean;
   lstCompania: SelectItem[] = [];
@@ -34,7 +35,7 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private CorrelativoService: CorrelativoService,    
+    private CorrelativoService: CorrelativoService,
     private toastrService: NbToastrService,
     private maestrocompaniaMastService: MaestrocompaniaMastService) {
     super();
@@ -45,17 +46,15 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
   }
 
   coreNuevo(): void {
-    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'NUEVO', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, ConstanteUI.ACCION_SOLICITADA_NUEVO, 0, {});
+    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO, ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
 
-  coreEditar(dto){
-    console.log("coreEditar :", dto);
-      this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'EDITAR', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, ConstanteUI.ACCION_SOLICITADA_NUEVO, 0,dto);
+  coreEditar(dto) {
+    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR, ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
   }
 
-  coreVer(dto){
-    console.log("coreVer :", dto);
-    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'VER', ''), ConstanteUI.ACCION_SOLICITADA_VER, ConstanteUI.ACCION_SOLICITADA_NUEVO, 0,dto);
+  coreVer(dto) {
+    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER, ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
   }
 
   coreBuscar(): void {
@@ -88,7 +87,7 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
         confirmButtonText: '¡Si, Anular!'
       }).then((result) => {
         if (result.isConfirmed) {
-          var hoy = new Date();     
+          var hoy = new Date();
           let Entity: dtoCorrelativo = new dtoCorrelativo();
           Entity.CompaniaCodigo = dto.CompaniaCodigo;
           Entity.TipoComprobante = dto.TipoComprobante;
@@ -119,68 +118,42 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
 
 
   coreGuardar(): void {
-    throw new Error('Method not implemented.');
+
   }
 
   coreExportar(): void {
-    throw new Error('Method not implemented.');
+
   }
 
   coreSalir(): void {
-    throw new Error('Method not implemented.');
+
   }
 
   ngOnInit(): void {
     this.bloquearPag = true;
-    const p4 = this.tituloListadoAsignar(1, this);
-    Promise.all([p4]).then(
-      f => {
-        setTimeout(() => {
-          this.iniciarComponent();
-          this.cargarEstados();
-          this.listaComboTipoComprobante();
-          this.listaCombocompania();
-          this.bloquearPag = false;
-        }, 100);
-      });
+    this.tituloListadoAsignar(1, this);
+    this.cargarSelect();
     this.bloquearPag = false;
+
   }
 
-
-  private cargarEstados() {
-    this.lstEstado = [];
-    this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    const lstEstados: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS")
-    this.lstEstado = [...this.lstEstado, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.Codigo } })]
-  }
-
-
-  defaultBuscar(event) {
-    if (event.keyCode === 13) {
-      this.coreBuscar();
-    }
-  }
-
-  listaComboTipoComprobante() {
-    this.lstTipoComprobante = [];
-    this.lstTipoComprobante.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
-      this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
-    });
-    console.log("llego cargarComboTipoComprobante", this.lstTipoComprobante);
-  }
-
-  listaCombocompania(): Promise<number> {
-    this.lstCompania = [];
+  cargarSelect(): void {
+    const optTodos = { label: ConstanteAngular.COMBOTODOS, value: null };
     this.FiltroCompan.estado = "A";
-    this.lstCompania.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    return this.maestrocompaniaMastService.listarCompaniaMast(this.FiltroCompan).then(res => {
-      console.log("listarCompaniaMast", res);
-      res.forEach(ele => {
-        this.lstCompania.push({ label: ele.DescripcionCorta.trim().toUpperCase(), value: ele.CompaniaCodigo.trim()+"00", title: ele.Persona });
-      });
-      return 1;
+
+    forkJoin({
+      estados: this.obtenerDataMaestro('ESTLETRAS'),
+      tipoComprobantes: this.obtenerDataMaestro('TIPOCOMPROBANTE'),
+      companias: this.maestrocompaniaMastService.listarCompaniaMast(this.FiltroCompan),
+    }
+    ).subscribe(resp => {
+      this.lstEstado = [optTodos, ...resp.estados];
+      this.lstTipoComprobante = [optTodos, ...resp.tipoComprobantes];
+
+      const dataCompania = resp.companias.map((ele: any) => ({
+        label: ele.DescripcionCorta?.trim()?.toUpperCase() || "", value: `${ele.CompaniaCodigo?.trim() || ""}00`, title: ele.Persona || ""
+      }));
+      this.lstCompania = [optTodos, ...dataCompania];
     });
   }
-
 }
