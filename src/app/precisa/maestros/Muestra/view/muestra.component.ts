@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'jspdf-autotable';
-import { MenuItem, SelectItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService, SelectItem } from 'primeng/api';
 import { ComponenteBasePrincipal } from '../../../../../util/ComponenteBasePrincipa';
 import { MensajeController } from '../../../../../util/MensajeController';
 import { UIMantenimientoController } from '../../../../../util/UIMantenimientoController';
+import { ExportarService } from '../../../framework-comun/Exportar/exportar.service';
 import { Muestra } from '../model/Muestra';
 import { MuestraService } from '../service/MuestraServicio';
 import { MuestrasMantenimientoComponent } from './components/muestra-mantenimiento.component';
@@ -50,7 +51,7 @@ export class MuestraComponent extends ComponenteBasePrincipal implements OnInit,
     this.openNew();
   }
   coreBuscar(): void {
-    if (!this.estaVacio(this.filtro.MosDescripcion)) {
+ /*    if (!this.estaVacio(this.filtro.MosDescripcion)) {
       this.filtro.MosDescripcion = this.filtro.MosDescripcion.trim();
     }
     this.bloquearPag = true;
@@ -62,7 +63,7 @@ export class MuestraComponent extends ComponenteBasePrincipal implements OnInit,
         });
         this.lstModeloServicio = res;
         console.log("coreBuscar listado:", res);
-      });
+      }); */
   }
   coreGuardar(): void {
     throw new Error('Method not implemented.');
