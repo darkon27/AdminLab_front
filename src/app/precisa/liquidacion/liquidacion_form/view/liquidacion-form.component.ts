@@ -17,6 +17,7 @@ import { ExpedienteModal } from '../model/ExpedienteModal';
 import { filtroExpediente } from '../model/filtro.Expediente';
 import { LiquidacionService } from '../service/liquidacion.services';
 import { ConstanteUI } from '../../../../../util/Constantes/Constantes';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'ngx-liquidacion-form',
@@ -50,19 +51,63 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
     private toastrService: NbToastrService) {
     super();
   }
+  ngOnInit(): void {
+    try {
+      this.bloquearPag = true;
+      this.tituloListadoAsignar(1, this);
+      this.cargarSelect();
+      this.cargaFiltro();
+    } catch (error) {
+      console.error('Hubo un error al iniciar componente: ERROR::' + error);
+    } finally {
+      this.bloquearPag = false;
+    }
+  }
+
+  cargarSelect(): void {
+    const optTodos = { label: ConstanteAngular.COMBOTODOS, value: null };
+
+    forkJoin({
+      estados: this.obtenerDataMaestro('ESTLIQ'),
+      tipoExpediente: this.obtenerDataMaestro('TIPLIQ'),
+      clasificadorMovimiento: this.examenService.serviciopaginado({ Estado: 'A' })
+    }
+    ).subscribe(resp => {
+      this.lstEstado = [optTodos, ...resp.estados];
+      this.lstTipoExpediente = [optTodos, ...resp.tipoExpediente];
+
+      const dataClasificadorMovimiento = resp.clasificadorMovimiento.map((item: any) => ({
+        label: item.Nombre.toLocaleUpperCase(), value: item.ClasificadorMovimiento
+      }));
+      this.lstClasificadorMovimiento = [optTodos, ...dataClasificadorMovimiento];
+    });
+  }
+
 
   coreMensaje(mensage: MensajeController): void {
-    throw new Error('Method not implemented.');
+    const dataDevuelta = mensage.resultado;
+    switch (mensage.componente.toUpperCase()) {
+      case 'SELECTEMPRESA':
+        this.obtenerClienteEmpresa(dataDevuelta); return;
+      default:
+        break;
+    }
   }
+  obtenerClienteEmpresa(data: any): void {
 
+    if (data != null || data != undefined) {
+      this.filtro.IdClienteFacturacion = data.Persona;
+      this.filtro.DocumentoFiscal = data.Documento.trim();
+      this.filtro.NombreCompleto = data.NombreCompleto;
+    }
+  }
   coreNuevo(): void {
     this.liquidacionFormMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'NUEVALIQUIDACION', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, ConstanteUI.ACCION_SOLICITADA_NUEVO, 0, {});
-   
+
   }
 
-  async coreBuscar() {
+  coreBuscar() {
     this.bloquearPag = true;
-    console.log("Expediente coreBuscar:", this.filtro);
     this.LiquidacionService.ListarExpediente(this.filtro).then((res) => {
       this.bloquearPag = false;
       var contado = res.length;
@@ -70,7 +115,6 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
         element.num = contado--;
       });
       this.lstExpediente = res;
-      console.log("Expediente coreBuscar listado:", res);
     });
   }
 
@@ -85,11 +129,11 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
   }
 
   coreVer(dto) {
-    this.liquidacionFormMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'VERLIQUIDACION', ''), ConstanteUI.ACCION_SOLICITADA_VER, ConstanteUI.ACCION_SOLICITADA_NUEVO, 0,dto);
+    this.liquidacionFormMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'VERLIQUIDACION', ''), ConstanteUI.ACCION_SOLICITADA_VER, ConstanteUI.ACCION_SOLICITADA_VER, 0, dto);
   }
 
   coreEditar(dto) {
-    this.liquidacionFormMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'EDITARLIQUIDACION', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, ConstanteUI.ACCION_SOLICITADA_NUEVO, 0,dto);
+    this.liquidacionFormMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'EDITARLIQUIDACION', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, ConstanteUI.ACCION_SOLICITADA_EDITAR, 0, dto);
   }
 
   coreInactivar(dto) {
@@ -152,58 +196,13 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
     }
   }
 
-  ngOnInit(): void {
-    try {
-      this.bloquearPag = true;
-      this.tituloListadoAsignar(1, this);
-      this.iniciarComponent()
-      this.listaComboEstado();
-      this.listaComboTipoExpediente();
-      this.listaComboClasificadorMovimiento();
-    } catch (error) {
-      console.error('Hubo un error al iniciar componente: ERROR::' + error);
-    } finally {
-      this.fechaActual();
-      this.bloquearPag = false;
-    }
-  }
+ 
 
-  fechaActual() {
-    var hoy = new Date();
-    var dia = hoy.getDate();
-    var mes = hoy.getMonth() - 1;
-    var anio = hoy.getFullYear();
-    this.filtro.FechaInicio = new Date(`${anio},${mes},${dia}`);
-    this.filtro.FechaFinal = new Date(hoy);
-  }
-
-  listaComboTipoExpediente() {
-    this.lstTipoExpediente = [];
-    this.lstTipoExpediente.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-
-    const lstTipoExpediente: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPLIQ")
-    this.lstTipoExpediente = [...this.lstTipoExpediente, ...lstTipoExpediente.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.Codigo } })]
-  }
-
-  private listaComboEstado() {
-    this.lstEstado = [];
-    this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-
-    const lstEstados: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLIQ")
-    this.lstEstado = [...this.lstEstado, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.Codigo } })]
-  }
-
-  listaComboClasificadorMovimiento(): void {
+  cargaFiltro() {
     const auth: UsuarioAuth = this.getUsuarioAuth();
-
-    this.servicio.Estado = 1;
     this.filtro.ClasificadorMovimiento = auth[0]?.ClasificadorMovimiento;
-    this.lstClasificadorMovimiento.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-
-    this.examenService.serviciopaginado(this.servicio).then((lista) => {
-      sessionStorage.setItem('access_ClasificadorMovimiento', JSON.stringify(lista));
-      this.lstClasificadorMovimiento = [...this.lstClasificadorMovimiento, ...lista.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.ClasificadorMovimiento } })]
-    });
+    this.filtro.FechaInicio = new Date();
+    this.filtro.FechaFinal = new Date();
   }
 
   validarEnterEmpresa(evento) {
@@ -264,7 +263,7 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
   }
 
   verSelectorEmpresa(): void {
-    this.empresaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECEMPRESA', 'BUSCAR'), 'BUSCAR');
+    this.empresaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECTEMPRESA', ConstanteUI.ACCION_SOLICITADA_BUSCAR), ConstanteUI.ACCION_SOLICITADA_BUSCAR);
   }
 
 }
