@@ -56,6 +56,10 @@ export class ConfiguracionContratosComponent extends ComponenteBasePrincipal imp
     private store: Store<AppSatate>) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
 coreMensaje(mensage: MensajeController): void {
     console.log("coreMensaje llegando:", mensage.componente);

@@ -49,6 +49,10 @@ export class CambioComercialComponent extends ComponenteBasePrincipal implements
     private maestrocompaniaMastService: MaestrocompaniaMastService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
 
   ngOnInit(): void {

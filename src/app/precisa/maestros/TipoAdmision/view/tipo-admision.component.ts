@@ -40,6 +40,10 @@ export class TipoAdmisionComponent extends ComponenteBasePrincipal implements On
     private confirmationService: ConfirmationService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.bloquearPag = true;

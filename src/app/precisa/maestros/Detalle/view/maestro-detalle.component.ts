@@ -44,6 +44,10 @@ export class MaestroDetalleComponent extends ComponenteBasePrincipal implements 
     private exportarService: ExportarService,) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
 
   ngOnInit(): void {

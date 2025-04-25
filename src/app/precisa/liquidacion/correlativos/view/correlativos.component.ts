@@ -40,6 +40,10 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
     private maestrocompaniaMastService: MaestrocompaniaMastService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   coreMensaje(mensage: MensajeController): void {
     const dataDevuelta = mensage.resultado;

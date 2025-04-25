@@ -26,6 +26,10 @@ export class MuestraComponent extends ComponenteBasePrincipal implements OnInit,
   loading: boolean;
 
   constructor(private MuestraService: MuestraService) {super(); }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
   }

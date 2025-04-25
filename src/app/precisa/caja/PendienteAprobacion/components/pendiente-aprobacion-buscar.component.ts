@@ -9,6 +9,10 @@ import { UIMantenimientoController } from "../../../../../util/UIMantenimientoCo
   })
   
 export class PendienteAprobacionBuscarComponent extends ComponenteBasePrincipal implements OnInit, OnDestroy, UIMantenimientoController {
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
   verdocumento: boolean = false;
   vernombre: boolean = true;
   acciones: string = ''

@@ -47,6 +47,10 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
     private messageService: MessageService,) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreMensaje(mensage: MensajeController): void {
     if (mensage.componente == "SELECTOR_EMPLEADO") {
       this.coreBuscar();

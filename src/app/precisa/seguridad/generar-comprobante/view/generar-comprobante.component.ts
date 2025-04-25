@@ -16,6 +16,10 @@ export class GenerarComprobanteComponent extends ComponenteBasePrincipal impleme
   constructor() {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
   }

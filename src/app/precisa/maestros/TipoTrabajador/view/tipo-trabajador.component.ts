@@ -39,6 +39,10 @@ export class TipoTrabajadorComponent extends ComponenteBasePrincipal implements 
     private messageService: MessageService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');

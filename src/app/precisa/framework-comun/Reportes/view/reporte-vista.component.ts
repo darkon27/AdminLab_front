@@ -30,7 +30,9 @@ export class ReporteVistaComponent extends ComponenteBasePrincipal implements On
   constructor(
     private toastrService: NbToastrService,
   ) { super(); }
-
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   ngOnInit(): void {
     this.titulo = '';
 

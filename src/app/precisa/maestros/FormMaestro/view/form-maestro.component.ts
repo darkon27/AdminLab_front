@@ -37,6 +37,10 @@ export class FormMaestroComponent extends ComponenteBasePrincipal implements OnI
     private confirmationService: ConfirmationService,
     private router: Router,
   ) { super(); }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
   }

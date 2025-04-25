@@ -46,6 +46,10 @@ export class CorrelativosMantenimientoComponent extends ComponenteBasePrincipal 
     private maestrocompaniaMastService: MaestrocompaniaMastService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
 
   ngOnInit(): void {
     this.cargarSelect();

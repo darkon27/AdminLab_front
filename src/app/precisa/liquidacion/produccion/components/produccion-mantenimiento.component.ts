@@ -12,6 +12,8 @@ import { FiltroTipoOperacion } from "../../../admision/consulta/dominio/filtro/F
 import { ExamenService } from "../../../framework-comun/Examen/servicio/Examen.service";
 import { FiltroServicio } from "../../../framework-comun/Examen/dominio/filtro/FiltroExamen";
 import { EmpresaBuscarComponent } from "../../../framework-comun/Empresa/view/empresa-buscar.component";
+import { PersonaBuscarComponent } from "../../../framework-comun/Persona/components/persona-buscar.component";
+import { AseguradoraBuscarComponent } from "../../../framework-comun/Aseguradora/components/aseguradora-buscar.component";
 
 @Component({
   selector: 'ngx-produccion-mantenimiento',
@@ -21,6 +23,8 @@ import { EmpresaBuscarComponent } from "../../../framework-comun/Empresa/view/em
 export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal implements OnInit {
 
   @ViewChild(EmpresaBuscarComponent, { static: false }) empresaBuscarComponent: EmpresaBuscarComponent;
+  @ViewChild(PersonaBuscarComponent, { static: false }) personaBuscarComponent: PersonaBuscarComponent;
+  @ViewChild(AseguradoraBuscarComponent, { static: false }) aseguradoraBuscarComponent: AseguradoraBuscarComponent;
 
 
   // Listas de combos
@@ -52,13 +56,13 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
     // throw new Error("Method not implemented.");
   }
 
- /**
-   * ***Geampier Santamaría**
-   *      LISTO IMPLEMENTAR:
-   *        - YA SE PUEDE IMPLEMENTAR LA CREACION ( LOS 3 TIPOS DE CORTE )
-   *        - ¿UTILIZAR RXJS?
-   *        - ¿USAR FORMGROUP?
-   */
+  /**
+    * ***Geampier Santamaría**
+    *      LISTO IMPLEMENTAR:
+    *        - YA SE PUEDE IMPLEMENTAR LA CREACION ( LOS 3 TIPOS DE CORTE )
+    *        - ¿UTILIZAR RXJS?
+    *        - ¿USAR FORMGROUP?
+    */
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, data?: any): void {
 
@@ -148,8 +152,8 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
 
     this.lstTipoPaciente.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this._ConsultaAdmisionService.listarcombotipooperacion(filtroData).then((lista) => {
-      console.log("lista",lista)
-      console.log("filtroData",filtroData)
+      console.log("lista", lista)
+      console.log("filtroData", filtroData)
       this.lstTipoPaciente = [...this.lstTipoPaciente, ...lista.map((item) => { return { label: item.Descripcion.toLocaleUpperCase(), value: item.TipoOperacionID } })]
     });
   }
@@ -175,9 +179,9 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
     this.lstTipoAtencion.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
 
     const lstEstados: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOATENCION")
-    this.lstTipoAtencion=[...this.lstTipoAtencion, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.IdCodigo } })]
+    this.lstTipoAtencion = [...this.lstTipoAtencion, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.IdCodigo } })]
   }
- 
+
 
   verSelectorEmpresa(): void {
     this.empresaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECTEMPRESA', 'BUSCAR'), 'BUSCAR');
@@ -199,6 +203,10 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
     switch (mensage.componente.toUpperCase()) {
       case 'SELECTEMPRESA':
         this.obtenerClienteEmpresa(dataDevuelta); return;
+      case 'SELECPACIENTE':
+        this.obtenerPaciente(dataDevuelta); return;
+      case 'SELECASEGURADORA':
+        this.obtenerAseguradora(dataDevuelta); return;
       default:
         break;
     }
@@ -214,4 +222,41 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
     }
   }
 
+  obtenerPaciente(data: any): void {
+
+    if (data != null || data != undefined) {
+      this.produccionForm.IdPaciente = data.Persona;
+      this.produccionForm.documentoPaciente = data.Documento.trim();
+      this.produccionForm.nombreSPaciente = data.NombreCompleto;
+    }
+  }
+
+  obtenerAseguradora(data: any): void {
+    if (data != null || data != undefined) {
+      this.produccionForm.IdAseguradora = data.IdAseguradora;
+      this.produccionForm.nombreSAseguradora = data.NombreEmpresa;
+    }
+  }
+
+  verSelectorPaciente(): void {
+
+    this.personaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECPACIENTE', 'BUSCAR'), 'BUSCAR', 'N');
+  }
+
+  coreLimpiarPaciente(): void {
+    this.produccionForm.IdPaciente = '';
+    this.produccionForm.documentoPaciente = '';
+    this.produccionForm.nombreSPaciente = '';
+  }
+
+  verSelectorAseguradora(): void {
+
+    this.aseguradoraBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECASEGURADORA', 'BUSCAR'), 'BUSCAR');
+  }
+
+  coreLimpiarAseguradora(): void {
+    this.produccionForm.IdAseguradora = '';
+    this.produccionForm.nombreSAseguradora = '';
+  }
+  
 }

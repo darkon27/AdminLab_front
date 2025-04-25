@@ -41,6 +41,10 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
     private confirmationService: ConfirmationService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.bloquearPag = true;

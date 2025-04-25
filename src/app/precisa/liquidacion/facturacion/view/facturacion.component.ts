@@ -60,6 +60,10 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     private maestrocompaniaMastService: MaestrocompaniaMastService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');

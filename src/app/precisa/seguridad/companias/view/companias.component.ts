@@ -36,6 +36,10 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
   ) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.tituloListadoAsignar(1, this)

@@ -73,6 +73,10 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
     private personaService: PersonaService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
 

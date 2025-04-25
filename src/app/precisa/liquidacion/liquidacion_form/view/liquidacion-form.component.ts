@@ -51,6 +51,10 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
     private toastrService: NbToastrService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   ngOnInit(): void {
     try {
       this.bloquearPag = true;

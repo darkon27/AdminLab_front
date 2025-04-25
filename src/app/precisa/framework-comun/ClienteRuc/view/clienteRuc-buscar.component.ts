@@ -44,6 +44,10 @@ export class ClienteRucBuscarComponent extends ComponenteBasePrincipal implement
     private toastrService: NbToastrService,
     protected messageService: MessageService,
   ) { super(); }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
 
   coreBusquedaRapida(filtro: string): void {
     throw new Error("Method not implemented.");

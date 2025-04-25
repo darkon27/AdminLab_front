@@ -27,7 +27,9 @@ export class AprobacionEstadoComponent  extends ComponenteBasePrincipal implemen
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
   }
-
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreNuevo(): void {
     this.aprobacionEstadoMantenimientoComponent.iniciarComponente("NUEVO",this.objetoTitulo.menuSeguridad.titulo)
   }

@@ -29,9 +29,8 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
   bloquearPag: boolean;
   seleccion: any;
   filtroPeriodo: dtoPeriodo = new dtoPeriodo();
-
   lstEstado: SelectItem[] = [];
-
+  btnEliminar:boolean = true;
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -39,6 +38,7 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
     private toastrService: NbToastrService) {
     super();
   }
+  
   ngOnInit(): void {
     try {
       this.bloquearPag = true;
@@ -67,6 +67,8 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
         label: item.Nombre, value: item.Codigo
       }));
       this.lstPeriodo = [optTodos, ...dataPeriodos];
+
+      this.btnEliminar = true;
     });
   }
 
@@ -144,7 +146,9 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
   coreSalir(): void {
     throw new Error('Method not implemented.');
   }
-
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   onRowSelect(event: any) {
     console.log("FILA SELECCIONADA:", event.data);
     this.seleccion = event.data

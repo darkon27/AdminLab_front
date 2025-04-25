@@ -36,6 +36,10 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
     private TipoPagoService: TipoPagoService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');

@@ -38,6 +38,10 @@ export class MedicoComponent extends ComponenteBasePrincipal implements OnInit, 
     private toastrService: NbToastrService,
     private medicoService: MedicoService
   ) { super(); }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnDestroy(): void {
     // this.userInactive.unsubscribe();
@@ -189,7 +193,7 @@ export class MedicoComponent extends ComponenteBasePrincipal implements OnInit, 
 
 
       res.forEach(element => {
-        element.numeromedico = contado++;        
+        element.numeromedico = contado++;
         // this.lstMedico.push(element);
       });
       console.log("data listado:", res);
