@@ -134,9 +134,11 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
 
 
   listarComboEstados() {
+    this.lstEstados = [];
     this.lstEstados.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.lstEstados.push({ label: 'Activo', value: "A" });
-    this.lstEstados.push({ label: 'Inactivo', value: "I" });
+    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+      this.lstEstados.push({ label: i.Nombre, value: i.IdCodigo });
+    });
   }
 
   listaComboTipoDocumento() {
