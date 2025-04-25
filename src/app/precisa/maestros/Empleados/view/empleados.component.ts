@@ -72,6 +72,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
     this.empleadosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_EMPLEADO', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, this.Entydad);
 
   }
+  
   coreGuardar(): void {
     throw new Error('Method not implemented.');
   }
