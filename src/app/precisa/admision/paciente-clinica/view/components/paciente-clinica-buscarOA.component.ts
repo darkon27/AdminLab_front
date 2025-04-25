@@ -256,7 +256,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
 
   comboTipoAtencion() {
     this.lstTipoAtencion.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOATENCION").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOATENCION").forEach(i => {
       this.lstTipoAtencion.push({ label: i.Nombre, value: i.IdCodigo })
     });
     console.log("ConsultaOA lista comboTipoAtencion", this.lstTipoAtencion);
@@ -440,7 +440,8 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
             this.mostrarError(res.mensaje);
           }
         } else {
-          this.mostrarError(res.error.mensaje);
+          console.log(res)
+          this.mostrarError(res.error?.mensaje || res?.mensaje);
         }
       });
   } 

@@ -314,7 +314,7 @@ export class PerfilUsuarioMantenimientoComponent extends ComponenteBasePrincipal
   async cargarEstados(): Promise<boolean> {
     this.lstEstados = [];
     this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
       this.lstEstados.push({ label: i.Descripcion.toUpperCase(), value: i.Codigo })
     });
     console.log("lstEstados:", this.lstEstados);

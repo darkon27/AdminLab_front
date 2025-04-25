@@ -12,6 +12,7 @@ import { dtoPeriodo } from '../model/dtoPeriodo';
 import { filtroProduccion } from '../model/filtro.produccion';
 import { ProduccionService } from '../service/produccion.services';
 import { ConstanteUI } from '../../../../../util/Constantes/Constantes';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'ngx-produccion',
@@ -38,43 +39,39 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
     private toastrService: NbToastrService) {
     super();
   }
+  ngOnInit(): void {
+    try {
+      this.bloquearPag = true;
+      this.tituloListadoAsignar(1, this);
+      this.iniciarComponent();
+      this.cargarSelect();
+    } catch (error) {
+      console.error('Hubo un error al iniciar componente: ERROR::' + error);
+    }
+    finally {
+      this.bloquearPag = false;
+    }
+  }
+
+  cargarSelect(): void {
+    const optTodos = { label: ConstanteAngular.COMBOTODOS, value: null };
+
+    forkJoin({
+      estados: this.obtenerDataMaestro('ESTLIQ'),
+      periodos: this.ProduccionService.ListarPeriodoEmision({ UneuNegocioId: 1 })
+    }
+    ).subscribe(resp => {
+      this.lstEstado = [optTodos, ...resp.estados];
+
+      const dataPeriodos = resp.periodos.map((item: any) => ({
+        label: item.Nombre, value: item.Codigo
+      }));
+      this.lstPeriodo = [optTodos, ...dataPeriodos];
+    });
+  }
 
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
-  }
-
-
-  private async listarPeriodos() {
-    this.lstPeriodo = [];
-    this.filtroPeriodo.UneuNegocioId = 1;
-    this.lstPeriodo.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-
-    const lstPeriodos = await this.ProduccionService.ListarPeriodoEmision({UneuNegocioId: 1});
-    this.lstPeriodo = [...this.lstPeriodo, ...lstPeriodos.map((item) => { return { label: item.Nombre, value: item.Codigo } })]
-  }
-
-  async coreBuscar() {
-    this.bloquearPag = true;
-    console.log("Lote coreBuscar:", this.filtro);
-
-
-    if (this.estaVacio(this.filtro.Periodo)) {
-      this.mensajeValidacion('warning',
-        `¡Completar Campos Obligatorios!`,
-        "Seleccione un periodo",
-        "N_Rpta");
-      this.bloquearPag = false;
-      return;
-    }
-    this.ProduccionService.ListarProduccionGeneral(this.filtro).then((res) => {
-      this.bloquearPag = false;
-      var contado = res.length;
-      res.forEach((element) => {
-        element.num = contado--;
-      });
-      this.lstProduccion = res;
-      console.log("maestro CONTRATO listado:", res);
-    });
   }
 
   mensajeValidacion(icono: SweetAlertIcon, title: any, text: string, tipo: string): boolean {
@@ -101,6 +98,29 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
     }
   }
 
+  async coreBuscar() {
+    this.bloquearPag = true;
+    console.log("Lote coreBuscar:", this.filtro);
+
+
+    if (this.estaVacio(this.filtro.Periodo)) {
+      this.mensajeValidacion('warning',
+        `¡Completar Campos Obligatorios!`,
+        "Seleccione un periodo",
+        "N_Rpta");
+      this.bloquearPag = false;
+      return;
+    }
+    this.ProduccionService.ListarProduccionGeneral(this.filtro).then((res) => {
+      this.bloquearPag = false;
+      var contado = res.length;
+      res.forEach((element) => {
+        element.num = contado--;
+      });
+      this.lstProduccion = res;
+      console.log("maestro CONTRATO listado:", res);
+    });
+  }
 
   coreVer(): void {
     throw new Error('Method not implemented.');
@@ -130,36 +150,5 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
     this.seleccion = event.data
   }
 
-  ngOnInit(): void {
-    try {
-      this.bloquearPag = true;
-      this.tituloListadoAsignar(1, this);
-      this.iniciarComponent();
-      this.listaComboEstado();
-      this.listarPeriodos();
-    } catch (error) {
-      console.error('Hubo un error al iniciar componente: ERROR::' + error);
-    }
-    finally {
-      this.fechaActual();
-      this.bloquearPag = false;
-    }
-  }
 
-  fechaActual() {
-    var hoy = new Date();
-    var dia = hoy.getDate();
-    var mes = hoy.getMonth() - 1;
-    var anio = hoy.getFullYear();
-    // this.filtro.FechaInicio = new Date(`${anio},${mes},${dia}`);
-    // this.filtro.FechaFinal = new Date(hoy);
-  }
-
-  private listaComboEstado() {
-    this.lstEstado = [];
-    this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-
-    const lstEstados: any[] = this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLIQ")
-    this.lstEstado = [...this.lstEstado, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.Codigo } })]
-  }
 }

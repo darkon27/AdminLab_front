@@ -4,7 +4,7 @@ import { DtoMenu } from "./DtoMenu";
 import { ObjetoTitulo } from "./ObjetoTitulo";
 import { UIMantenimientoController } from "./UIMantenimientoController";
 import { MessageService, SelectItem, Message, ConfirmationService } from 'primeng/api';
-import { Subject, Subscriber } from 'rxjs';
+import { of, Subject, Subscriber } from 'rxjs';
 import { MensajeController } from "./MensajeController";
 import { UsuarioAuth } from "../app/precisa/auth/model/usuario";
 import { Miscelaneos } from "../app/precisa/auth/model/miscelaneos";
@@ -16,6 +16,7 @@ import { Router } from "@angular/router";
 import { LoginService } from "../app/precisa/auth/service/login.service";
 import * as CryptoJS from 'crypto-js';
 import { AppConfig } from "../environments/app.config";
+import { Observable } from "rxjs-compat";
 
 
 export const enum accionesGlobal {
@@ -197,7 +198,9 @@ export class ComponenteBasePrincipal {
         let mailValido = false;
         'use strict'; // modo stricto si no es correctamente usado el metodo devolvera HORRORES
 
-        var EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0,9]{1,3}\.[0-9]{1,3}\.[0,9]{1,3}\])|(([a-zA-z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        // var EMAIL_REGEX = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/gm;
+        var EMAIL_REGEX = /^[\w\-.]+@([\w-]+\.)+[\w-]{2,}$/gm;
+
 
         if (email.match(EMAIL_REGEX)) {
             mailValido = true;
@@ -461,6 +464,37 @@ export class ComponenteBasePrincipal {
         return this.lstmiscelaneos = miscelaneosListStorage;
     }
 
+    obtenerDataMaestro(tipoMaestro: string): Observable<any[]> {
+
+        const data: any[] = JSON.parse(sessionStorage.getItem('access_miscelaneos') || '')
+
+        let maestroFormateado: any[] = data.map((d: any) => ({
+            tipo: d.CodigoTabla,
+            value: d.Codigo,
+            IdCodigo: d.IdCodigo,
+            label: d.Nombre.toUpperCase()
+        }))
+            .filter((f) =>
+                f.tipo == tipoMaestro
+            );
+        return of(maestroFormateado);
+    }
+    obtenerDataUsuario(): Observable<any> {
+        const listaComboliente: any = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('access_user')));
+
+        if (listaComboliente?.data?.length > 0) {
+            return listaComboliente.data[0];
+        }
+    }
+
+    obtenerDataSedes(): Observable<any[]> {
+        const listaComboSedes = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('access_sedes')));
+        if (listaComboSedes.length > 0) {
+            return listaComboSedes;
+        }
+    }
+
+
     getIp(): string {
         var ipStorage = JSON.parse(sessionStorage.getItem('access_ip'))
         return ipStorage;
@@ -564,8 +598,8 @@ export class ComponenteBasePrincipal {
                 sessionStorage.removeItem('access_user')
                 sessionStorage.removeItem('access_menu')
                 _router.navigate(['/auth/login'])
-               
-            
+
+
             },
 
             key: "confirm",
@@ -578,7 +612,7 @@ export class ComponenteBasePrincipal {
             sessionStorage.removeItem('access_user')
             sessionStorage.removeItem('access_menu')
             _router.navigate(['/auth/login'])
-          
+
 
         }
     }

@@ -1061,7 +1061,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   comboComboSexo() {
     this.lstSexo = []
     this.lstSexo.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "SEXO").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "SEXO").forEach(i => {
       this.lstSexo.push({ label: i.Nombre, value: i.Codigo })
 
     });
@@ -1070,7 +1070,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   comboComboTipoOrden() {
     this.lstTipoOrden = []
     this.lstTipoOrden.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOORDEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOORDEN").forEach(i => {
       this.lstTipoOrden.push({ label: i.Nombre, value: i.Codigo })
     });
     this.filtro.TipoOrden = "R"
@@ -1322,7 +1322,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   comboCargarTipoAtencion() {
     this.lstTipoAtencion = []
     this.lstTipoAtencion.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOATENCION").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOATENCION").forEach(i => {
       this.lstTipoAtencion.push({ label: i.Nombre, value: i.IdCodigo })
     });
     this.filtro.TipoAtencion = this.getUsuarioAuth().data[0].TipoAtencion != null ? this.getUsuarioAuth().data[0].TipoAtencion : 1;
@@ -2545,6 +2545,14 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   imprimir(dto: Admision) {
+    // Validacion agregada en base a solicitud AD-138
+    const pruebasPendientes: boolean = this.lstListarXAdmision?.filter(f=> f.Estado == 1 || f.Estado == 0 ).length > 0;
+
+    if(pruebasPendientes){
+      this.toastMensaje('Guarde los exámenes para realizar la impresión', 'warning', 3000);
+      return;
+    }
+    
     this.bloquearPag = true;
     var payload = {
       IdReporte: 1,

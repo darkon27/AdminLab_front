@@ -11,28 +11,11 @@
     </p-footer>
 </p-confirmDialog>
 <p-card>
-    <div class="row">
-        <div class="col-sm-4">
-            <h4 class="titulonuevo">Producción</h4>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div class="col-sm-2" style="background-color: transparent;"></div>
-        <div class="col-sm-6" style="background-color: transparent;" aria-orientation="horizontal">
-            <button pButton icon="fa fa-search" type="button" title="Buscar" label="Buscar" class="p-button-secondary"
-                style="margin-bottom: 5px;" (click)="coreBuscar()"></button>
-            <button pButton icon="fa fa-file" type="button" title="Nuevo" label="Nuevo" class="p-button-secondary"
-                style="margin-bottom: 5px;" (click)="coreNuevo()"></button>
-            <!-- <button pButton icon="fa fa-file" type="button" title="Editar" label="Editar" style="margin-bottom: 5px;"
-                class="p-button-secondary" (click)="coreEditar()"></button> -->
-            <button pButton icon="fa fa-download" type="button" title="Exportar" label="Exportar"
-                style="margin-bottom: 5px;" class="p-button-secondary"></button>
-            <button pButton icon="fa fa-trash" type="button" title="Eliminar" label="Eliminar"
-                style="margin-bottom: 5px;" class="p-button-secondary"></button>
-        </div>
-    </div>
-    <br>
+    <nb-card-header>
+        <nav class="fixed">
+            <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+        </nav>
+    </nb-card-header> 
     <p-fieldset legend="Información" (keyup.enter)="coreBuscar()">
         <div class="row">
             <div class="col-sm-4">
@@ -40,20 +23,6 @@
                 <p-dropdown [(ngModel)]="filtro.Periodo" [filter]="true" [options]="lstPeriodo"
                     [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
             </div>
-            <!-- <div class="col-sm-4">
-                <label class="label">Fecha Inicio</label>
-                <p-calendar [monthNavigator]="true" [(ngModel)]="filtro.FechaInicio" [yearNavigator]="true"
-                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2300" [locale]="es"
-                    dateFormat="dd/mm/yy" [showIcon]="true">
-                </p-calendar>
-            </div>
-            <div class="col-sm-4">
-                <label class="label">Fecha Fin</label>
-                <p-calendar [monthNavigator]="true" [(ngModel)]="filtro.FechaFinal" [yearNavigator]="true"
-                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
-                    dateFormat="dd/mm/yy" [showIcon]="true">
-                </p-calendar>
-            </div> -->
         </div>
     </p-fieldset>
     <br>
@@ -68,9 +37,6 @@
                     <th pSortableColumn="num" class="label" ALIGN="center" style="width: 4rem; text-align: center;">
                         Nro<p-sortIcon field="num"></p-sortIcon>
                     </th>
-                    <!-- <th pSortableColumn="Periodo" class="label" ALIGN="center" style="width: 6rem; text-align: center;">
-                        Periodo<p-sortIcon field="Periodo"></p-sortIcon>
-                    </th> -->
                     <th class="label" pSortableColumn="AdmDescripcion" ALIGN="center"
                         style="width: 8rem; text-align: center;">
                         Periodo<p-sortIcon field="AdmDescripcion"></p-sortIcon>

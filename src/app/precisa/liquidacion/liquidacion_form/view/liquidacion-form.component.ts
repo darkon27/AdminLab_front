@@ -181,7 +181,7 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
     this.lstTipoExpediente = [];
     this.lstTipoExpediente.push({ label: ConstanteAngular.COMBOTODOS, value: null });
 
-    const lstTipoExpediente: any[] = this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPLIQ")
+    const lstTipoExpediente: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPLIQ")
     this.lstTipoExpediente = [...this.lstTipoExpediente, ...lstTipoExpediente.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.Codigo } })]
   }
 
@@ -189,7 +189,7 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
 
-    const lstEstados: any[] = this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLIQ")
+    const lstEstados: any[] = this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLIQ")
     this.lstEstado = [...this.lstEstado, ...lstEstados.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.Codigo } })]
   }
 

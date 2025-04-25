@@ -200,7 +200,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
   listaComboTipoComprobante() {
     this.lstTipoComprobante = [];
     this.lstTipoComprobante.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
     console.log("Cobranza Registro cargarComboTipoComprobante", this.lstTipoComprobante);
@@ -271,7 +271,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
   listaComboTipoVenta() {
     this.lstTipoVenta = [];
     this.lstTipoVenta.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPVEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPVEN").forEach(i => {
         this.lstTipoVenta.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
     console.log("Cobranza Registro listaComboTipoVenta", this.lstTipoVenta);
@@ -280,7 +280,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
   listaComboMedioPago() {
     this.lstMedioPago = [];
     this.lstMedioPago.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "MEDPAG").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "MEDPAG").forEach(i => {
       this.lstMedioPago.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
     console.log("Cobranza Registro listaComboMedioPago", this.lstMedioPago);

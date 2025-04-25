@@ -284,7 +284,7 @@ export class EmpresaBuscarComponent extends ComponenteBasePrincipal implements O
   listaComboTipoDocumento() {
 
     this.lstTipoDocumento.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPODOCIDENTID").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPODOCIDENTID").forEach(i => {
       this.lstTipoDocumento.push({ label: i.Nombre, value: i.Codigo })
       this.dto.TipoDocumento = "R"
 

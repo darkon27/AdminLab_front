@@ -11,48 +11,52 @@
 </p-confirmDialog>
 
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
     <ng-template pTemplate="content">
         <p-fieldset legend="Información General">
             <div class="row">
-                <div class="col-sm-4">   
-                    <label for="inputLastName" class="label">Compañia</label>                     
-                    <p-dropdown [(ngModel)]="dto.CompaniaCodigo" [options]="lstCompania"                  
+                <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Compañia</label>
+                    <p-dropdown [(ngModel)]="dto.CompaniaCodigo" [options]="lstCompania" [disabled]="puedeEditar"
                         [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
                 </div>
-                <div class="col-sm-4">                
-                    <label for="inputLastName" class="label">Tipo Comprobante</label>               
-                    <p-dropdown [(ngModel)]="dto.TipoComprobante" [options]="lstTipoComprobante"                  
-                    [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>   
+                <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Tipo Comprobante</label>
+                    <p-dropdown [(ngModel)]="dto.TipoComprobante" [options]="lstTipoComprobante"
+                        [disabled]="puedeEditar" [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
                 </div>
                 <div class="col-sm-4">
                     <label for="inputLastName" class="label">Serie</label>
-                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" [(ngModel)]="dto.Serie" />
+                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" [(ngModel)]="dto.Serie"
+                        [disabled]="puedeEditar" />
                 </div>
-                <div class="col-sm-4">        
+                <div class="col-sm-4">
                     <label for="inputLastName" class="label">Rango Inicial</label>
-                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" [(ngModel)]="dto.CorrelativoDesde" />
+                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" [disabled]="puedeEditar"
+                        [(ngModel)]="dto.CorrelativoDesde" />
                 </div>
                 <div class="col-sm-4">
                     <label for="inputLastName" class="label">Rango Final</label>
-                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" [(ngModel)]="dto.CorrelativoHasta" />
+                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" [disabled]="puedeEditar"
+                        [(ngModel)]="dto.CorrelativoHasta" />
                 </div>
 
                 <div class="col-sm-4">
                     <label for="inputLastName" class="label">Estado</label>
-                    <p-dropdown [options]="lstEstado" [(ngModel)]="dto.Estado"
-                    [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                    <p-dropdown [options]="lstEstado" [(ngModel)]="dto.Estado" [disabled]="puedeEditar"
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
                 </div>
-            </div>       
+            </div>
         </p-fieldset>
         <br>
         <p-fieldset legend="Datos Generales">
-            <ngx-auditoria></ngx-auditoria>
+            <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
+                [modificacionFecha]="fechaModificacion"></ngx-auditoria>
         </p-fieldset>
     </ng-template>
     <ng-template pTemplate="footer">
         <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
-            (click)="saveProduct($event)"></p-button>
+            (click)="coreGuardar()"></p-button>
     </ng-template>
 </p-dialog>
 <p-toast></p-toast>

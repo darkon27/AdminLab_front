@@ -101,7 +101,7 @@ export class ModeloServicioMantenimientoComponent extends ComponenteBasePrincipa
   cargarEstados() {
     this.lstEstados = [];
     this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstados.push({ label: i.Nombre.toUpperCase(), value: i.IdCodigo });
     });
   }

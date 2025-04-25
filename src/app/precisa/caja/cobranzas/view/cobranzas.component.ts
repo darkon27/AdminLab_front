@@ -145,7 +145,7 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
   listaComboEstado() {
     this.lstEstado = [];
     this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTFAC").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTFAC").forEach(i => {
       this.lstEstado.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
     console.log("Cobranza cargarComboEstados", this.lstEstado);
@@ -154,7 +154,7 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
   listaComboTipoComprobante() {
     this.lstEstado = [];
     this.lstTipoComprobante.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
     console.log("Cobranza cargarComboTipoComprobante", this.lstTipoComprobante);

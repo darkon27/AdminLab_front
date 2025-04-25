@@ -2037,7 +2037,7 @@ MensajeListarxAdmision(event){
   comboCargarTipoOrden() {
     this.lstTipoOrden = [];
     this.lstTipoOrden.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOORDEN").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOORDEN").forEach(i => {
       this.lstTipoOrden.push({ label: i.Nombre, value: i.Codigo })
 
     });
@@ -2079,7 +2079,7 @@ MensajeListarxAdmision(event){
   comboCargarTipoAtencion() {
     this.lstTipoAtencion = [];
     this.lstTipoAtencion.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOATENCION").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOATENCION").forEach(i => {
       this.lstTipoAtencion.push({ label: i.Nombre, value: i.IdCodigo })
     });
     this.filtro.TipoAtencion = this.getUsuarioAuth().data[0].TipoAtencion != null ? this.getUsuarioAuth().data[0].TipoAtencion: 1 ;
@@ -2134,7 +2134,7 @@ MensajeListarxAdmision(event){
   comboCargarSexo() {
 		this.lstSexo = [];
 		this.lstSexo.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-		this.getMiscelaneos().filter(x => x.CodigoTabla == "SEXO").forEach(i => {
+		this.getMiscelaneos()?.filter(x => x.CodigoTabla == "SEXO").forEach(i => {
 		  this.lstSexo.push({ label: i.Nombre, value: i.Codigo })
 
 		});

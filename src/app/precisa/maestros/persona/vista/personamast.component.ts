@@ -238,7 +238,7 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
 
   listaComboTipoPersona() {
     this.lstTipoPersona.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOPERSONA").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOPERSONA").forEach(i => {
       this.lstTipoPersona.push({ label: i.Nombre, value: i.Codigo })
     });
   }
@@ -251,7 +251,7 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
 
   listaComboTipoDocumento() {
     this.lstTipoDocumento.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPODOCIDENTID").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPODOCIDENTID").forEach(i => {
       this.lstTipoDocumento.push({ label: i.Nombre, value: i.Codigo })
     });
   }

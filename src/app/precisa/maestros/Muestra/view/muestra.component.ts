@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Table } from 'jspdf-autotable';
+import { ConfirmationService, MenuItem, MessageService, SelectItem } from 'primeng/api';
 import { ComponenteBasePrincipal } from '../../../../../util/ComponenteBasePrincipa';
 import { MensajeController } from '../../../../../util/MensajeController';
 import { UIMantenimientoController } from '../../../../../util/UIMantenimientoController';
+import { ExportarService } from '../../../framework-comun/Exportar/exportar.service';
 import { MuestrasMantenimientoComponent } from './components/muestra-mantenimiento.component';
 import { MuestraModel } from '../model/Muestra';
 import { ConstanteAngular } from '../../../../@theme/ConstanteAngular';

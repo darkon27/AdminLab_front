@@ -558,7 +558,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
 
   listaComboSexo() {
     this.lstSexo.push({ label: ConstanteAngular.COMBOSEXO, value: null });
-    this.getMiscelaneos().filter(x => x.CodigoTabla == "SEXO").forEach(i => {
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "SEXO").forEach(i => {
       this.lstSexo.push({ label: i.Nombre, value: i.Codigo })
     });
   }
