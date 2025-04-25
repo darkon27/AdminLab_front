@@ -1,8 +1,10 @@
 <p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
-<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '1200px', minWidth: '250px'}" [header]="acciones" [position]="position" [maximizable]="true"
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false"
+    [breakpoints]="{'1200px': '70vw', '768px': '90vw'}"
+    [style]="{maxWidth: '800px', width: '100%', minWidth: '300px'}"
+    [header]="acciones" [position]="position" [maximizable]="true"
     [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
@@ -20,7 +22,7 @@
                                     style="width:100%" [(ngModel)]="dtoEmpleado.Documento"
                                     (keydown)="validarTeclaEnterPaciente($event)"
                                     style="width:100%; background-color: rgb(247, 247, 208); height: 30px;"
-                                    [disabled]="editarCampoDocumento" [disabled]="true" />&nbsp;
+                                    [disabled]="editarCampoDocumento" [disabled]="false" />&nbsp;
                                 <input pInputText type="text"  [disabled]="true" 
                                     class="hoverDisabled  size-medium col-8 status-basic shape-rectangle nb-transition"
                                     style="width:100%; height:30px" [(ngModel)]="dtoEmpleado.NombreCompleto" />
@@ -51,9 +53,10 @@
                             </div>
                             <div class="col-sm-6">
                                 <label class="label">Fecha de Fin</label>
-                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" [style]="{'width':'100%'}"
+                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" 
+                                    [inputStyle]="{'width':'80%'}"
                                     yearRange="1901:2200" [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy"
-                                    [yearNavigator]="true" [(ngModel)]="dtoEmpleado.FechaFinContrato"
+                                    [(ngModel)]="dtoEmpleado.FechaFinContrato"
                                     [disabled]="puedeEditar">
                                 </p-calendar>
                             </div>
@@ -71,7 +74,7 @@
                             <div class="col-sm-6">
                                 <label class="label">Cargo</label>
                                 <p-dropdown placeholder="Seleccione" [options]="lstCargo" [disabled]="puedeEditar"
-                                    [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}"
+                                    [inputStyle]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}"
                                     [(ngModel)]="dtoEmpleado.Cargo">
                                 </p-dropdown>
                             </div>
@@ -91,7 +94,7 @@
                                 <div class="p-inputgroup">
                                     <input pInputText type="email" [(ngModel)]="dtoEmpleado.CorreoInterno"
                                         placeholder=""
-                                        [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}"
+                                        [inputStyle]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}"
                                         [disabled]="puedeEditar" />
                                 </div>
                             </div>
@@ -125,7 +128,7 @@
                                 </div>
                                 <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1901:2200"
                                     [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy" [yearNavigator]="true"
-                                    [(ngModel)]="dtoEmpleado.FechaCese" [style]="{'width':'100%'}"
+                                    [(ngModel)]="dtoEmpleado.FechaCese" [inputStyle]="{'width':'100%'}"
                                     [disabled]="puedeEditar">
                                 </p-calendar>
                             </div>
@@ -134,7 +137,7 @@
                                     <label class="label">Estado</label>
                                 </div>
                                 <p-dropdown placeholder="Seleccione" [options]="lstEstados" [disabled]="puedeEditar"
-                                    [style]="{'width':'100%','text-transform': 'uppercase'}"
+                                    [inputStyle]="{'width':'100%','text-transform': 'uppercase'}"
                                     [(ngModel)]="dtoEmpleado.Estado">
                                 </p-dropdown>
                             </div>
