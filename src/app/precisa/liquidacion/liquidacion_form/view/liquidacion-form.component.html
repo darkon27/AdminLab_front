@@ -16,7 +16,7 @@
         <nav class="fixed">
             <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
         </nav>
-    </nb-card-header>    
+    </nb-card-header>
     <p-fieldset legend="Consulta General De Atenciones" (keyup.enter)="coreBuscar()">
         <div class="row">
             <div class="col-sm-4">
@@ -39,22 +39,21 @@
                 <label for="inputLastName" class="label">Cliente</label>
                 <div class="p-inputgroup">
                     <div class="p-inputgroup">
-                        <input pInputText type="text" (keydown)="validarEnterEmpresa($event)"
+                        <input pInputText type="text" id="documentoFiscal" name="documentoFiscal"
                             class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
-                            style="width:70%; height: 30px;" [(ngModel)]="filtro.DocumentoFiscal"
-                            [disabled]="editarCampoEmpresa" />
+                            [disabled]="true" style="width:70%; height: 30px;" [(ngModel)]="filtro.DocumentoFiscal" />
                         &nbsp;
                         <input pInputText type="text"
                             class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
-                            style="width:130%; height: 30px;" [(ngModel)]="filtro.NombreCompleto" [disabled]="true" />
+                            style="width:130%; height: 30px;" [disabled]="true" [(ngModel)]="filtro.NombreCompleto" />
                         <div class="input-group-append">
-                            <button class="btn btn-outline" type="button" id="button-addon2"
-                                style=" height:30px; margin-left:-32px" (click)="limpiarEmpresa()"
-                                [disabled]="editarCampos">x</button>
+                            <button pButton icon="fa fa-times" type="button" title="Limpiar Cliente"
+                                class="p-button-secondary" style="margin-bottom: 5px;" (click)="limpiarEmpresa()"
+                                style=" height:30px; margin-left: 3px; margin-right: 2px;"></button>
+                            <button pButton icon="fa fa-search" class="botonbuscar" type="button"
+                                (click)="verSelectorEmpresa()" title="Buscar Cliente"></button>
                         </div>
                     </div>
-                    <button (click)="verSelectorEmpresa()" pButton icon="fa fa-search" class="botonbuscar" type="button"
-                        title="Buscar Empresa" [disabled]="editarCampos"></button>
                 </div>
             </div>
             <div class="col-sm-4">
@@ -95,43 +94,47 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 8rem; text-align: center;">
+                        style="width: 8rem; text-align: center;">
                         Acción
                     </th>
                     <th pSortableColumn="num" class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 4rem; text-align: center;">
+                        style="width: 4rem; text-align: center;">
                         Nro<p-sortIcon field="num"></p-sortIcon>
                     </th>
                     <th pSortableColumn="CodigoExpediente" class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 5rem; text-align: center;">
+                        style="width: 5rem; text-align: center;">
                         Codigo<p-sortIcon field="CodigoExpediente"></p-sortIcon>
                     </th>
                     <th pSortableColumn="AdmDescripcion" class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 6rem; text-align: center;">
+                        style="width: 6rem; text-align: center;">
                         Tipo Adm<p-sortIcon field="AdmDescripcion"></p-sortIcon>
                     </th>
+                    <th pSortableColumn="DesTipoExpediente" class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                        style="width: 15rem; text-align: center;">
+                        Tipo Liquidación<p-sortIcon field="Nombre"></p-sortIcon>
+                    </th>
                     <th pSortableColumn="Nombre" class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 10rem; text-align: center;">
+                        style="width: 15rem; text-align: center;">
                         Clasificacion<p-sortIcon field="Nombre"></p-sortIcon>
                     </th>
                     <th pSortableColumn="Cliente" class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 12rem; text-align: center;">
+                        style="width: 12rem; text-align: center;">
                         Cliente<p-sortIcon field="Cliente"></p-sortIcon>
                     </th>
                     <th pSortableColumn="FechaInicio" class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 6rem; text-align: center;">
+                        style="width: 6rem; text-align: center;">
                         Fecha<p-sortIcon field="FechaInicio"></p-sortIcon>
                     </th>
                     <th pSortableColumn="Descripcion" class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 20rem; text-align: center;">
+                        style="width: 20rem; text-align: center;">
                         Descripcion<p-sortIcon field="Descripcion"></p-sortIcon>
                     </th>
                     <th pSortableColumn="Monto" class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 6rem; text-align: center;">
+                        style="width: 6rem; text-align: center;">
                         Monto<p-sortIcon field="Monto"></p-sortIcon>
                     </th>
                     <th pSortableColumn="DesEstado" class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                    style="width: 6rem; text-align: center;">
+                        style="width: 6rem; text-align: center;">
                         Estado<p-sortIcon field="DesEstado"></p-sortIcon>
                     </th>
                 </tr>
@@ -139,7 +142,7 @@
             <ng-template pTemplate="body" let-rowData>
                 <tr [pSelectableRow]="rowData">
                     <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
-                         style="width: 8rem; text-align: center;">
+                        style="width: 8rem; text-align: center;">
                         <span class="p-column-title">Acción</span>
                         <table>
                             <tr>
@@ -176,7 +179,11 @@
                         <span class="p-column-title">Tipo Adm</span>
                         {{ rowData.AdmDescripcion |uppercase }}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 10rem;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 15rem;">
+                        <span class="p-column-title">Tipo Liquidación</span>
+                        {{ rowData.DesTipoExpediente |uppercase }}
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 15rem;">
                         <span class="p-column-title">Clasificacion</span>
                         {{ rowData.Nombre |uppercase }}
                     </td>
@@ -203,9 +210,19 @@
                     </td>
                 </tr>
             </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontró información.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Cargando información. Espere por favor...</td>
+                </tr>
+            </ng-template>
         </p-table>
     </p-fieldset>
 </p-card>
-
+<ngx-empresa-buscar></ngx-empresa-buscar>
 <ngx-liquidacion-form-mantenimiento></ngx-liquidacion-form-mantenimiento>
 <p-toast key="bc" [baseZIndex]="4000"></p-toast>

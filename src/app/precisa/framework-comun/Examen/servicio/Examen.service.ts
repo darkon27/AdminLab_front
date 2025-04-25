@@ -27,7 +27,7 @@ export class ExamenService {
 /*     private urladm = `${this.config.getEnv('proxy.precisa')}api/Admision/`;  
     private urlmae = `${this.config.getEnv('proxy.precisa')}api/Maestro/`;   */
 
-    serviciopaginado(servicio: FiltroServicio) {
+    serviciopaginado(servicio: any) {
         return this.config.getHttp().post(`${this.urladm}ListaClasificadorMovimiento`, servicio)        
             .toPromise()
             .then(response => response as DtoTabla[])
