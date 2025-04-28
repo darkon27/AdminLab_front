@@ -306,9 +306,13 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
   }
 
   listarComboEstados() {
-    this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.lstEstados.push({ label: 'Activo', value: "A" });
-    this.lstEstados.push({ label: 'Inactivo', value: "I" });
+    this.lstEstados = [];
+      this.lstEstados.push({ label: ConstanteAngular.COMBOTODOS, value: null });
+      this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
+        console.log("i", i);
+        this.lstEstados.push({ label: i.Nombre, value: i.Codigo });
+      });
+      // console.log(this.getMiscelaneos().filter(x => x.CodigoTabla.includes("ESTLETRAS")));
   }
 
   listaComboCargo() {
