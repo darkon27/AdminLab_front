@@ -5,24 +5,9 @@
   
   <nb-card>
     <nb-card-header>
-      <div class="row">
-        <div class="col-sm-4">
-          <h4 class="titulonuevo">Compañia</h4>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div class="col-sm-2" style="background-color: transparent;"></div>
-        <div class="col-sm-6" style="background-color: transparent;" aria-orientation="horizontal">
-          <button pButton icon="fa fa-search" type="button" title="Buscar" label="Buscar" class="p-button-secondary"
-            (click)="coreBuscar()"></button>
-          <button pButton icon="fa fa-file" type="button" title="Nuevo" label="Nuevo" class="p-button-secondary"
-            (click)="coreNuevo()"></button>
-          <p-splitButton label="Exportar" icon="fa fa-file-pdf" (onClick)="exportExcel()"
-            styleClass="p-button-text p-button-secondary" [model]="ltsExportar">
-          </p-splitButton>
-        </div>
-      </div>
+      <nav class="fixed">
+        <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+      </nav>
     </nb-card-header>
     <nb-card-body>
       <p-fieldset legend="Información Consulta" (keyup.enter)="coreBuscar()">
