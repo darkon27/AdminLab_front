@@ -140,7 +140,7 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
     throw new Error('Method not implemented.');
   }
   coreExportar(): void {
-    throw new Error('Method not implemented.');
+    this.exportExcel();
   }
   coreSalir(): void {
     throw new Error('Method not implemented.');
