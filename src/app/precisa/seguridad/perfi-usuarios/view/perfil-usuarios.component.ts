@@ -116,7 +116,7 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
     throw new Error('Method not implemented.');
   }
   coreExportar(): void {
-    throw new Error('Method not implemented.');
+    this.exportExcel()
   }
   coreSalir(): void {
     this.limpiarFiltro()
