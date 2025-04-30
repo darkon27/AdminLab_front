@@ -61,6 +61,7 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
   async cargarFuncionesIniciales() {
     await this.iniciarComponent();
     await this.cargarEstados();
+    await this.comboCargarTipoAdmision();
   }
 
 
@@ -228,7 +229,7 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
   comboCargarTipoAdmision(){
     this.lstTipoAdmision = [];
     let dto = {      AdmEstado: 1    }
-    this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
+    this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOTODOS, value: null });
     return this.TipoAdmisionService.ListaTipoAdmision(dto).then(resp => {
       console.log("combo tipo admision:", resp);
       resp.forEach(e => {
