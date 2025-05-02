@@ -1,14 +1,14 @@
 <p-blockUI [blocked]="bloquearPag">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
-  </p-blockUI>
-  <p-confirmDialog #c key="confirm2">
+</p-blockUI>
+<p-confirmDialog #c key="confirm2">
     <p-footer>
         <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
             (click)="c.accept()"></button>
         <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded"
             (click)="c.reject()"></button>
     </p-footer>
-  </p-confirmDialog>
+</p-confirmDialog>
 <nb-card>
     <nb-card-header>
         <nav class="fixed">
@@ -19,26 +19,26 @@
         <p-fieldset legend="Información Consulta">
             <div class="row">
                 <div class="col-sm-4">
-          
-                        <label class="label">Código Tabla</label>
-                        <input pInputText type="text" [style]="{'width':'100%'}" [(ngModel)]="filtro.CodigoTabla"
-                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition" />
-                
+
+                    <label class="label">Código Tabla</label>
+                    <input pInputText type="text" [style]="{'width':'100%'}" [(ngModel)]="filtro.CodigoTabla"
+                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition" />
+
                 </div>
                 <div class="col-sm-4">
-     
-                        <label class="label">Nombre</label>
-                        <input pInputText type="text" [style]="{'width':'100%'}" [(ngModel)]="filtro.Nombre"
-                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition" />
-            
+
+                    <label class="label">Nombre</label>
+                    <input pInputText type="text" [style]="{'width':'100%'}" [(ngModel)]="filtro.Nombre"
+                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition" />
+
                 </div>
                 <div class="col-sm-4">
                     <label for="inputLastName" class="label">Estado</label>
-                        <div class="form-group">                           
-                            <p-dropdown placeholder="Lista Base" [options]="lstEstado" [(ngModel)]="filtro.Estado"
-                                [style]="{'height':'35px'}"></p-dropdown>
-                        </div>
-               
+                    <div class="form-group">
+                        <p-dropdown placeholder="Lista Base" [options]="lstEstado" [(ngModel)]="filtro.Estado"
+                            [style]="{'height':'35px'}"></p-dropdown>
+                    </div>
+
                 </div>
             </div>
         </p-fieldset>
@@ -54,7 +54,8 @@
                         </th>
                         <th class="label" pSortableColumn="Nombre">Nombre<p-sortIcon field="Nombre"></p-sortIcon>
                         </th>
-                        <th class="label" pSortableColumn="Descripcion">Descripción<p-sortIcon field="Descripcion"></p-sortIcon>
+                        <th class="label" pSortableColumn="Descripcion">Descripción<p-sortIcon
+                                field="Descripcion"></p-sortIcon>
                         </th>
                         <th class="tablaHeaderEstado label">Estado</th>
                     </tr>
@@ -68,33 +69,32 @@
                                     <th>
                                         <button pButton pRipple type="button" icon="fad fa-pencil-alt"
                                             class="p-button-rounded p-button-text" title="Editar"
-                                            (click)="editProduct(rowData)"></button>
+                                            (click)="coreEditar(rowData)"></button>
                                     </th>
                                     <th>
                                         <button pButton pRipple type="button" icon="fad fa-search"
                                             class="p-button-rounded p-button-text" title="Ver"
-                                            (click)="verProduct(rowData)"></button>
+                                            (click)="coreVer(rowData)"></button>
                                     </th>
                                     <th>
-                                        <button pButton pRipple type="button" icon="fal fa-trash-alt"
+                                        <button pButton pRipple type="button" icon="fal fa-minus"
                                             class="p-button-rounded p-button-text" title="Inactivar"
                                             (click)="invactivarProduct(rowData)"></button>
                                     </th>
                                 </tr>
                             </table>
                         </td>
-                        <td class="tablaColumnaCodigoChico" ALIGN="center" >{{rowData.CodigoTabla}}</td>
-                        <td class="tablaColumnaCodigoChico" ALIGN="center" >
-                            <span>{{rowData.Nombre}}</span>
+                        <td class="tablaColumnaCodigoChico" ALIGN="center">{{rowData.CodigoTabla}}</td>
+                        <td class="tablaColumnaCodigoChico" ALIGN="center">
+                            <span>{{rowData.Nombre | uppercase}}</span>
                         </td>
-                        <td class="tablaColumnaCodigoChico" ALIGN="center" >
-                            <span>{{rowData.Descripcion}}</span>
+                        <td class="tablaColumnaCodigoChico" ALIGN="center">
+                            <span>{{rowData.Descripcion | uppercase}}</span>
                         </td>
 
-                        <td class="tablaColumnaCodigoChico" ALIGN="center" >
+                        <td class="tablaColumnaCodigoChico" ALIGN="center">
                             <span class="p-column-title">Estado</span>
-                            <label *ngIf="rowData.Estado == '1'" class="tablaEstadoActivo">Activo</label>
-                            <label *ngIf="rowData.Estado == '2'" class="tablaEstadoInactivo">Inactivo</label>
+                            <span>{{rowData.EstadoDe | uppercase}}</span>
                         </td>
                     </tr>
                 </ng-template>
