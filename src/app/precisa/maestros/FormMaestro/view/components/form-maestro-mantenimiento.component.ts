@@ -59,7 +59,6 @@ export class FormMaestroMantenimientoComponent extends ComponenteBasePrincipal i
   }
 
   ngOnDestroy(): void {
-    this.maestroDetalle.unsubscribe()
   }
 
 
@@ -216,7 +215,6 @@ export class FormMaestroMantenimientoComponent extends ComponenteBasePrincipal i
       this.bloquearPag = true;
 
       const consultaRepsonse = await this.maestroService.mantenimientoMaestro(valorAccionServicio, this.dto, this.getUsuarioToken());
-     console.log(consultaRepsonse)
       if (consultaRepsonse.success == true) {
         this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
 

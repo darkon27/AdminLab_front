@@ -1,9 +1,5 @@
-<p-blockUI [blocked]="bloquearPag" [baseZIndex]="1001">
-    <img src="assets\img\ZZ5H.gif" style="width: 5%">
-  </p-blockUI>
-
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true"  [baseZIndex]="1000">
+    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
         <br>
@@ -12,32 +8,39 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="inputLastName" class="label">Código</label>
-                        <input pInputText type="text" [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%','text-transform': 'uppercase'}"  [disabled]="puedeEditar" [(ngModel)]="dto.Codigo"    />
+                        <input pInputText type="text"
+                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%','text-transform': 'uppercase'}"
+                            [disabled]="puedeEditar" [(ngModel)]="dto.Codigo" />
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="inputLastName" class="label">Descripción</label>
-                        <input pInputText type="text"  [(ngModel)]="dto.Nombre"   [disabled]="puedeEditar" [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%','text-transform': 'uppercase'}" />
+                        <input pInputText type="text" [(ngModel)]="dto.Nombre" [disabled]="puedeEditar"
+                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%','text-transform': 'uppercase'}" />
                     </div>
                 </div>
             </div>
 
 
-         
+
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                            <label for="inputLastName" class="label">Estado</label>
-                            <p-dropdown [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%','text-transform': 'uppercase'}" [options]="lstEstados" [(ngModel)]="dto.Estado"   [disabled]="puedeEditar">
-                            </p-dropdown>
-                        </div>
+                        <label for="inputLastName" class="label">Estado</label>
+                        <p-dropdown
+                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%','text-transform': 'uppercase'}"
+                            [options]="lstEstados" [(ngModel)]="dto.Estado" [disabled]="puedeEditar">
+                        </p-dropdown>
+                    </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="inputLastName" class="label">Maestro</label>
-                        <p-dropdown [options]="lstTablaMaestro" [filter]="true"  [(ngModel)]="dto.IdTablaMaestro" [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%','text-transform': 'uppercase'}"   [disabled]="puedeEditar">
+                        <p-dropdown [options]="lstTablaMaestro" [filter]="true" [(ngModel)]="dto.IdTablaMaestro"
+                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%','text-transform': 'uppercase'}"
+                            [disabled]="puedeEditar">
                         </p-dropdown>
                     </div>
                 </div>
@@ -47,13 +50,13 @@
         </p-fieldset>
         <br>
 
-        
+
         <p-fieldset legend="Auditoria">
             <div class="col-sm-12">
                 <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
                     [modificacionFecha]="fechaModificacion"></ngx-auditoria>
             </div>
-        </p-fieldset> 
+        </p-fieldset>
     </ng-template>
     <ng-template pTemplate="footer">
         <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
@@ -61,4 +64,8 @@
     </ng-template>
 
 </p-dialog>
-<p-toast  key="bc" [baseZIndex]="2000" ></p-toast>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+    position="top-right"></p-toast>
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
