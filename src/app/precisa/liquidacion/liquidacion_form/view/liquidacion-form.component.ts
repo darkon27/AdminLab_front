@@ -132,11 +132,11 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto) {
+  coreVer(dto): void {
     this.liquidacionFormMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'VERLIQUIDACION', ''), ConstanteUI.ACCION_SOLICITADA_VER, ConstanteUI.ACCION_SOLICITADA_VER, 0, dto);
   }
 
-  coreEditar(dto) {
+  coreEditar(dto): void {
     this.liquidacionFormMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'EDITARLIQUIDACION', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, ConstanteUI.ACCION_SOLICITADA_EDITAR, 0, dto);
   }
 

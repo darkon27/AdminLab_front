@@ -152,12 +152,12 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
     this.perfilesComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_USUARIO', ''), 'NUEVO', '', null);
   }
 
-  coreVer(dto) {
+  coreVer(dto): void {
     console.log("llego coreVer  ", dto);
     this.perfilesComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_USUARIO', ''), 'VER', '', dto);
   }
 
-  coreEditar(dto) {
+  coreEditar(dto): void {
     console.log("llego coreEditar  ", dto);
     this.perfilesComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_USUARIO', ""), "EDITAR", "", dto)
   }

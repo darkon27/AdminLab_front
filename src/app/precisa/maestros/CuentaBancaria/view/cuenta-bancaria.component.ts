@@ -69,11 +69,11 @@ export class CuentaBancariaComponent extends ComponenteBasePrincipal implements 
     throw new Error('Method not implemented.');
   }
 
-  coreEditar(dto){
+  coreEditar(dto): void{
     this.componentMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
 
   }
-  coreVer(dto){
+  coreVer(dto): void{
     console.log(this.objetoTitulo)
     this.componentMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   }

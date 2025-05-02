@@ -63,13 +63,13 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
 
   }
 
-  coreVer(dto) {
+  coreVer(dto): void {
     console.log("llego coreVer  ", dto);
     //this.Entydad = dto;
     this.usuariosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_USUARIO', ''), "VER", "USUARIOS", dto)
   }
 
-  coreEditar(dto) {
+  coreEditar(dto): void {
     console.log("llego coreEditar  ", dto);
     // this.Entydad = dto;
     this.usuariosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_USUARIO', ''), "EDITAR", "USUARIOS", dto)

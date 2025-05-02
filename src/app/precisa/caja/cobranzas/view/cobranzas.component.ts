@@ -70,12 +70,12 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto){
+  coreVer(dto): void{
     console.log("Cobranza coreVer ::",dto)
     this.cobranzasMantenimientoComponent.coreIniciarComponente(new MensajeController(this, 'VER', ''),  dto); 
   } 
   
-  coreEditar(dto){
+  coreEditar(dto): void{
     console.log("Cobranza coreEditar ::",dto);
     this.cobranzasMantenimientoComponent.coreIniciarComponente(new MensajeController(this, 'EDITAR', ''),  dto);
   }

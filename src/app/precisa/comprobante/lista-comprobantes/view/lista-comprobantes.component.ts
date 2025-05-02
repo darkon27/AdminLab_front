@@ -113,11 +113,11 @@ export class ListaComprobantesComponent extends ComponenteBasePrincipal implemen
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto){   
+  coreVer(dto): void{   
     this.listaComprobantesMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   }
 
-  coreEditar(dto){
+  coreEditar(dto): void{
     this.listaComprobantesMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
   }
   

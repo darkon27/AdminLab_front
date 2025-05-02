@@ -111,7 +111,7 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
     }
   }
 
-/*   coreEditar(dto){
+/*   coreEditar(dto): void{
     this.tipoPagoMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
   }
  */

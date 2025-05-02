@@ -51,7 +51,7 @@ export class InsumoComponent  extends ComponenteBasePrincipal implements OnInit,
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto){
+  coreVer(dto): void{
     console.log(this.objetoTitulo)
     this.insumoMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   }
@@ -68,7 +68,7 @@ export class InsumoComponent  extends ComponenteBasePrincipal implements OnInit,
 
   }
 
-  coreEditar(dto){
+  coreEditar(dto): void{
     this.insumoMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
   }
 

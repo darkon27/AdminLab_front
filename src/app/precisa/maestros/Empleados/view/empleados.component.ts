@@ -62,7 +62,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
 
   }
 
-  coreVer(dto) {
+  coreVer(dto): void {
     console.log("llego BtncoreEditar  ", dto);
     this.Entydad = dto;
     this.empleadosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_EMPLEADO', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, this.Entydad);
@@ -70,7 +70,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
 
   }
 
-  coreEditar(dto) {
+  coreEditar(dto): void {
     console.log("llego BtncoreEditar  ", dto);
     this.Entydad = dto;
     this.empleadosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_EMPLEADO', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, this.Entydad);
