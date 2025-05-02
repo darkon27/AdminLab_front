@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { AppConfig } from '../../../../environments/app.config';
 import { API_ROUTESE } from '../../../data/constants/routes/api.routes';
-import { from } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -19,7 +20,7 @@ export class LoginService {
     // private urlma = `${this.config.getEnv('proxy.precisa')}api/Maestro/`;
     // private url2 = `${this.config.getEnv('proxy.precisa')}api/Items`//"http://104.211.62.150/SPRING_RestServer_Olano/api/Items"
 
-    constructor(private config: AppConfig, private http: HttpClient) {
+    constructor(private config: AppConfig, private _http: HttpClient) {
 
     }
 
@@ -69,6 +70,20 @@ export class LoginService {
             .catch(error => error)
     }
 
+    iniciarSesion(usuario: any): Observable<any> {
+        return from(this.config.getEnv('proxy.precisa')).pipe(
+            switchMap(apiUrl => {
+                const url = `${this.url}${apiUrl}api/Maestro/ListaLogin`;
+
+                return this._http.post<any>(url, usuario);
+            }),
+            catchError(error => {
+                console.error(`Error al iniciar sesión. ${error}`);
+                return throwError(error);
+            })
+        )
+    }
+
     usuarioAuth(): any {
         let resultado = null
         resultado = JSON.parse(sessionStorage.getItem('access_user'))
@@ -96,7 +111,7 @@ export class LoginService {
 
     listarSedes(sede: any): Promise<any> {
         console.log("listarSedes", this.urlma);
-          return this.config.getHttp().post(`${this.urlma}ListaSede`, sede)
+        return this.config.getHttp().post(`${this.urlma}ListaSede`, sede)
             .toPromise()
             .then(response => response as any)
             .catch(error => error);
@@ -104,7 +119,7 @@ export class LoginService {
 
     listarSedesMaestro(sede: any) {
         console.log("listarSedesMaestro", this.urlma);
-          return this.config.getHttp().post(`${this.urlma}ListaSede`, sede)
+        return this.config.getHttp().post(`${this.urlma}ListaSede`, sede)
             .toPromise()
             .then(response => response as any)
             .catch(error => error);
@@ -119,7 +134,7 @@ export class LoginService {
     }
 
     listarMenu(usuario: any, token: string) {
-        const headers = new HttpHeaders().set("Authorization", token)      
+        const headers = new HttpHeaders().set("Authorization", token)
         return this.config.getHttp().post(`${this.urlseg}ListarMenu`, usuario, { headers: headers })
             .toPromise()
             .then(response => response)
@@ -140,7 +155,7 @@ export class LoginService {
             .catch(error => error)
     }
 
- 
+
 
 
 }
