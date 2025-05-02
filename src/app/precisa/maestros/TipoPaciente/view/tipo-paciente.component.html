@@ -1,22 +1,19 @@
 <p-blockUI [blocked]="bloquearPag">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
+<p-confirmDialog #c key="confirm2">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
 <nb-card>
     <nb-card-header>
         <nav class="fixed">
             <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
         </nav>
-        <div class="row">
-            <div class="col-sm-2">
-                <h4 class="titulonuevo"></h4>
-            </div>
-            <div class="col-sm-10" style="background-color: transparent;">
-                <div>
-
-                </div>
-
-            </div>
-        </div>
     </nb-card-header>
 
 
