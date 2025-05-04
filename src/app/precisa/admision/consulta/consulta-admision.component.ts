@@ -721,45 +721,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
 
         });
       }
-
-
     }
-
-    // buscarporplaca(){
-    //   this.bloquearPagina();
-    //   if (this.estaVacio(this.dto.dw_mtunidad.numeroplaca)) {
-    //     this.dto.dw_mtunidad.numeroplaca = null;
-    //   }
-
-    //   this.mtTallercitaService.validarPersonaPorPlaca(this.dto.dw_mtunidad.numeroplaca).then(
-    //     obj => {
-    //       if (obj != null) {
-    //         console.log("buscar por placa:", obj);
-    //         this.dto.idcliente = obj.dw_infocliente.persona;
-    //         this.dto.dw_infocliente.nombrepersonadesc = obj.dw_infocliente.nombrepersonadesc;
-    //         this.dto.dw_infocliente.documentodni = obj.dw_infocliente.documentodni;
-    //         this.dto.dw_infocliente.tipodocumentodnidesc = obj.dw_infocliente.tipodocumentodnidesc;
-    //         this.dto.dw_infocliente.telefonopers = obj.dw_infocliente.telefonopers;
-    //         this.dto.dw_infocliente.direccionpers = obj.dw_infocliente.direccionpers;
-    //         this.dto.dw_mtunidad.numeroplaca = obj.dw_mtunidad.numeroplaca;
-    //         this.dto.dw_mtunidad.descripcionunidad = obj.dw_mtunidad.descripcionunidad;
-    //         this.dto.dw_mtunidad.marcaunidad = obj.dw_mtunidad.marcaunidad;
-    //         this.dto.dw_mtunidad.modelodescripcion = obj.dw_mtunidad.modelodescripcion;
-    //         this.dto.dw_mtunidad.nroasientos = obj.dw_mtunidad.nroasientos;
-    //         this.dto.dw_mtunidad.modeloanio = obj.dw_mtunidad.modeloanio
-    //         this.dto.dw_mtunidad.distancia = obj.dw_mtunidad.distancia;
-    //         this.dto.dw_mtunidad.numerochasis = obj.dw_mtunidad.numerochasis;
-
-    //         this.dto.idunidad = obj.dw_mtunidad.idunidad;
-
-    //       } else {
-    //         this.mostrarMensajeError('No se encontro al Cliente.');
-    //       }
-    //       this.desbloquearPagina();
-    //     }
-    //   );
-
-    // }
   }
 
   limpiarPersona() {

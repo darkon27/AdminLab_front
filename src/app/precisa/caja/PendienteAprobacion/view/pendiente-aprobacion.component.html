@@ -42,18 +42,55 @@
                 </div> 
 
                 <div class="col-sm-4">
-                    <label for="inputOrdAten" class="label">Clasificador</label>
+                    <label for="inputOrdAten" class="label">Servicio</label>
                     <p-dropdown [(ngModel)]="filtro.ClasificadorMovimiento" [filter]="true" [options]="lstClasificadorMovimiento"                  
                         [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
                 </div>   
+                <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Sede</label>
+                    <p-dropdown placeholder="--Seleccione--" value="" [options]="lstSede" [(ngModel)]="filtro.IdSede"
+                      [filter]="true">
+                    </p-dropdown>
+                  </div>
 
                 <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Aprobador</label>
+                    <div class="p-inputgroup">
+                        <div class="p-inputgroup">
+                            <input pInputText type="text" (keydown)="validarEnterPaciente($event)"
+                                class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                style="width:70%; height: 30px;" [(ngModel)]="filtro.DocumentoFiscal"
+                                [disabled]="editarCampoEmpresa" />
+                            &nbsp;
+                            <input pInputText type="text"
+                                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                                style="width:130%; height: 30px;" [(ngModel)]="filtro.NombreCompleto"
+                                [disabled]="true" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline" type="button" id="button-addon2"
+                                    style=" height:30px; margin-left:-32px" (click)="limpiarPaciente()"
+                                    [disabled]="editarCampos">x</button>
+                            </div>
+                        </div>    
+                        <button (click)="verSelectorPaciente()" pButton icon="fa fa-search" class="botonbuscar"
+                            type="button" title="Buscar Empresa" [disabled]="editarCampos"></button>                  
+                    </div>
+                </div> 
+                <div class="col-sm-4">
+                    <label for="inputOrdAten" class="label">Tipo Admisión </label>
+                    <p-dropdown [(ngModel)]="filtro.IdSede" [filter]="true" [options]="lstTipoAdmision"                  
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                </div>   
+                <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Tipo Paciente</label>
+                    <p-dropdown [options]="lstTipoPaciente" [(ngModel)]="filtro.IdSede" [filter]="true"></p-dropdown>
+                  </div>
+                  <div class="col-sm-4">
                     <label for="inputLastName" class="label">Nro Peticion</label>
                     <p-inputNumber mode="decimal" [style]="{'width':'100%'}"  [(ngModel)]="filtro.NroPeticion"
                      [minFractionDigits]="0" [maxFractionDigits]="0">
                     </p-inputNumber>
-            </div>
-           
+                </div>
                 <div class="col-sm-4">
                     <label class="label">Fecha Inicio</label>
                     <p-calendar [monthNavigator]="true" [(ngModel)]="filtro.FechaInicio" [yearNavigator]="true"

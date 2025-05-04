@@ -17,6 +17,9 @@ import { ConsultaAdmisionService } from '../../../admision/consulta/servicio/con
 import { TipoAdmisionService } from '../../../maestros/TipoAdmision/services/TipoAdmision.services';
 import { dtoExpediente } from '../../../liquidacion/liquidacion_form/model/dtoExpediente';
 import Swal from 'sweetalert2';
+import { convertDateStringsToDates } from '../../../framework/funciones/dateutils';
+import { LoginService } from '../../../auth/service/login.service';
+import { FiltroTipoOperacion } from '../../../admision/consulta/dominio/filtro/FiltroConsultaAdmision';
 
 @Component({
   selector: 'ngx-pendiente-aprobacion',
@@ -50,8 +53,8 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
     private LiquidacionService: LiquidacionService,
     private examenService: ExamenService,
     private consultaAdmisionService: ConsultaAdmisionService,
-    private TipoAdmisionService: TipoAdmisionService, 
-    private confirmationService: ConfirmationService,
+    private loginService: LoginService, 
+    private tipoAdmisionService: TipoAdmisionService,
     private toastrService: NbToastrService) {
     super();
   }
@@ -65,8 +68,11 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
     this.tituloListadoAsignar(1, this);
     this.iniciarComponent()
     const p3 = this.listaComboClasificadorMovimiento();
- 
-    Promise.all([p3]).then(resp => {
+    const p1 = this.ListarTipoAdmision();
+    const p2 = this.comboCargarSedes();
+    const p4 = this.comboCargarTipoPaciente();
+    
+    Promise.all([p1,p2,p3]).then(resp => {
       this.fechaActual();
       this.bloquearPag = false;
     });
@@ -81,7 +87,6 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
      console.log("::Click modal:::");
    // this.PendienteAprobacionBuscarComponent.coreIniciarComponenteDetalle(new MensajeController(this, 'NUEVO', ''), 'NUEVO',);
   }
-
 
 
   coreEditar(){
@@ -145,6 +150,14 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
     console.log("fechaActual creacion", this.filtro.FechaInicio);
   }
 
+  private ListarTipoAdmision() {
+    this.lstTipoAdmision = [];
+    const objtipoAdmision = { Estado: 1 };
+    this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
+    this.tipoAdmisionService.ListaTipoAdmision(objtipoAdmision).then((lista) => {
+      this.lstTipoAdmision = [...this.lstTipoAdmision, ...lista.map((item) => { return { label: item.AdmDescripcion.toLocaleUpperCase(), value: item.TipoAdmisionId } })]
+    });
+  }
 
   listaComboClasificadorMovimiento(): Promise<number> {
     this.Auth = this.getUsuarioAuth();
@@ -162,9 +175,43 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
     });
   }
 
+  private comboCargarTipoPaciente() {
+    this.lstTipoPaciente = [];
+    const filtroData: FiltroTipoOperacion = { TipEstado: 1, TIPOADMISIONID: 3, };
+    this.lstTipoPaciente.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
+    this.consultaAdmisionService.listarcombotipooperacion(filtroData).then((lista) => {
+    this.lstTipoPaciente = [...this.lstTipoPaciente, ...lista.map((item) => { return { label: item.Descripcion.toLocaleUpperCase(), value: item.TipoOperacionID } })]
+    });
+  }
+
+  comboCargarSedes(): Promise<number> {
+    this.Auth = this.getUsuarioAuth();
+    var prueba = this.Auth.data;
+
+    let Objsedes = { IdEmpresa: 75300, SedEstado: 1 }
+    this.lstSede.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
+    var listaCombosedes = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('access_sedes')));
+    if (this.lstSede != null) {
+      listaCombosedes.forEach(e => {
+        this.lstSede.push({ label: e.SedDescripcion, value: e.IdSede });
+        this.filtro.IdSede = prueba[0].IdSede
+      });
+    }
+    else {
+      return this.loginService.listarSedes(Objsedes).then(
+        sedes => {
+          if (sedes.length > 0) {
+            sedes.forEach(obj => this.lstSede.push({ label: obj.SedDescripcion, value: obj.IdSede }));
+            this.filtro.IdSede = prueba[0].IdSede
+            console.log("Consulta Admision comboCargarSedes", sedes)
+          }
+          return 1
+        }
+      )
+    }
+  }
  
  validarEnterPaciente(evento) { 
-
   if (evento.key == "Enter" || evento.key == "Tab") {
       this.bloquearPag = true;
       if (this.filtro.DocumentoFiscal == null) {
