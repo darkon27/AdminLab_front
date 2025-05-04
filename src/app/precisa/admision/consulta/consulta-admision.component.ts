@@ -81,6 +81,10 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
     private toastrService: NbToastrService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnDestroy(): void {
     // this.userInactive.unsubscribe();

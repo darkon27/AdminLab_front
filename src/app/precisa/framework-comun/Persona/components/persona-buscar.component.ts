@@ -55,6 +55,10 @@ export class PersonaBuscarComponent extends ComponenteBasePrincipal implements O
     private toastrService: NbToastrService,
     protected messageService: MessageService,
   ) { super(); }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
 
   coreBuscar(): void {
     throw new Error("Method not implemented.");
@@ -234,7 +238,7 @@ export class PersonaBuscarComponent extends ComponenteBasePrincipal implements O
     this.mensajeController = msj;
     this.dialog = true;
     this.limpiarBuscador();
-    this.titulo = 'PACIENTE';
+    this.titulo = 'EMPLEADOS';
     this.vEsEmpleado = EsEmpleado;
     this.acciones = `${this.titulo}: ${accionform}`;
     this.filtro = new FiltroPersona();

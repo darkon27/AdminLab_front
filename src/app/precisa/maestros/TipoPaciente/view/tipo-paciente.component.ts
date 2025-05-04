@@ -10,6 +10,7 @@ import { TipoAdmisionService } from '../../TipoAdmision/services/TipoAdmision.se
 import { tipoPaciente } from '../model/TipoPaciente';
 import { TipoPacienteService } from '../services/TipoPaciente.Services';
 import { TipoPacienteMantenimientoComponent } from './components/tipo-paciente-mantenimiento.component';
+import { ConstanteUI } from '../../../../../util/Constantes/Constantes';
 
 @Component({
   selector: 'ngx-tipo-paciente',
@@ -28,17 +29,21 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
   validarAccion: string;
   acciones: string = ''
   position: string = 'top'
-  titulo: string; 
+  titulo: string;
   registroSeleccionado: any;
   loading: boolean;
 
   constructor(
     private messageService: MessageService,
-    private exportarService: ExportarService,    
+    private exportarService: ExportarService,
     private TipoAdmisionService: TipoAdmisionService,
     private TipoPacienteService: TipoPacienteService,
     private confirmationService: ConfirmationService,) {
     super();
+  }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
   }
 
   ngOnInit(): void {
@@ -57,17 +62,14 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
   async cargarFuncionesIniciales() {
     await this.iniciarComponent();
     await this.cargarEstados();
+    await this.comboCargarTipoAdmision();
   }
 
 
-  coreMensaje(mensage: MensajeController): void {
-    if (mensage.componente == "SELECTOR_SEDES") {
-      this.coreBuscar();
-    }
-  }
+
 
   exportExcel() {
-  
+
   }
 
   exportPdf() {
@@ -117,17 +119,32 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
     }
 
   }
-  
+
+  coreMensaje(mensage: MensajeController): void {
+    const dataDevuelta = mensage.resultado;
+
+    switch (mensage.componente.toUpperCase()) {
+      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'PACIENTE':
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'PACIENTE':
+        this.coreBuscar();
+        break;
+      default:
+        break;
+    }
+
+  }
+
+
   coreNuevo(): void {
-    this.tipoPacienteMantenimientoomponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_MODELO', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo);
+    this.tipoPacienteMantenimientoomponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'PACIENTE', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
 
-  coreEditar(row) {
-    this.tipoPacienteMantenimientoomponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_MODELO', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, row);
+  coreEditar(dto): void {
+    this.tipoPacienteMantenimientoomponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'PACIENTE', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
   }
 
-  coreVer(row) {
-    this.tipoPacienteMantenimientoomponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_MODELO', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, row);
+  coreVer(dto): void {
+    this.tipoPacienteMantenimientoomponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'PACIENTE', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
   }
 
   coreinactivar(row) {
@@ -155,14 +172,14 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
     }
     this.bloquearPag = true;
     this.TipoPacienteService.ListaTipoPaciente(this.filtro).then((res) => {
-        this.bloquearPag = false;
-        var contado = 1;
-        res.forEach(element => {
-          element.num = contado++;
-        });
-        this.lst = res;
-        console.log("coreBuscar listado:", res);
+      this.bloquearPag = false;
+      var contado = 1;
+      res.forEach(element => {
+        element.num = contado++;
       });
+      this.lst = res;
+      console.log("coreBuscar listado:", res);
+    });
   }
 
   coreGuardar(): void {
@@ -189,8 +206,8 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
         fechaCreacion = dd + "/" + mm + "/" + yyyy;
 
         let itemExportar: IModeloServicio = {
-          NRO:    contador.toString(),
-          FECHA:  fechaCreacion,
+          NRO: contador.toString(),
+          FECHA: fechaCreacion,
           COMPAÑIA: "PRECISA",
           DESCRIPCION: e.AdmDescripcion?.toUpperCase() || '',
           ESTADO: e.ESTADOdesc.toString()
@@ -218,13 +235,13 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
     this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstado.push({ label: i.Nombre, value: i.IdCodigo });
     });
-    this.filtro.Estado=1;
+    this.filtro.Estado = 1;
   }
 
-  comboCargarTipoAdmision(){
+  comboCargarTipoAdmision() {
     this.lstTipoAdmision = [];
-    let dto = {      AdmEstado: 1    }
-    this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
+    let dto = { AdmEstado: 1 }
+    this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOTODOS, value: null });
     return this.TipoAdmisionService.ListaTipoAdmision(dto).then(resp => {
       console.log("combo tipo admision:", resp);
       resp.forEach(e => {

@@ -26,6 +26,10 @@ export class InsumoComponent  extends ComponenteBasePrincipal implements OnInit,
     private toastrService: NbToastrService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
   }
@@ -47,7 +51,7 @@ export class InsumoComponent  extends ComponenteBasePrincipal implements OnInit,
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto){
+  coreVer(dto): void{
     console.log(this.objetoTitulo)
     this.insumoMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   }
@@ -64,7 +68,7 @@ export class InsumoComponent  extends ComponenteBasePrincipal implements OnInit,
 
   }
 
-  coreEditar(dto){
+  coreEditar(dto): void{
     this.insumoMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
   }
 

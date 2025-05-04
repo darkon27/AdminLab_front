@@ -12,7 +12,7 @@ import { MaestrocompaniaMastService } from '../../../seguridad/companias/servici
 import { CorrelativosMantenimientoComponent } from '../components/correlativos-mantenimiento.component';
 import { dtoCorrelativo } from '../model/dtoCorrelativo';
 import { filtroCorrelativo } from '../model/filtro.Correlativo';
-import { CorrelativoService } from '../service/correlativo.Services';
+import { CorrelativoService } from '../service/correlativo.Service';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -40,21 +40,35 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
     private maestrocompaniaMastService: MaestrocompaniaMastService) {
     super();
   }
-
-  coreMensaje(mensage: MensajeController): void {
+  btnEliminar?: boolean;
+  coreEliminar(): void {
     throw new Error('Method not implemented.');
   }
 
+  coreMensaje(mensage: MensajeController): void {
+    const dataDevuelta = mensage.resultado;
+
+    switch (mensage.componente.toUpperCase()) {
+      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'CORRELATIVO':
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'CORRELATIVO':
+        this.coreBuscar();
+        break;
+      default:
+        break;
+    }
+
+  }
+
   coreNuevo(): void {
-    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO, ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
+    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'CORRELATIVO', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
 
-  coreEditar(dto) {
-    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR, ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
+  coreEditar(dto): void {
+    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'CORRELATIVO', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
   }
 
-  coreVer(dto) {
-    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER, ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
+  coreVer(dto): void {
+    this.correlativosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'CORRELATIVO', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
   }
 
   coreBuscar(): void {
@@ -101,6 +115,7 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
             res => {
               if (res.success) {
                 this.toastMensaje(`El Registro Nro. ${Entity.Serie} fue inactivado`, 'success', 2000);
+                this.coreBuscar();
                 this.dialog = false;
               } else {
                 Swal.fire({

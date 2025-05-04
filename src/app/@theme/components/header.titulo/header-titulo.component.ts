@@ -20,11 +20,11 @@ export class HeaderTituloComponent implements OnInit, OnDestroy {
   public readonly materialTheme$: Observable<boolean>;
   userPictureOnly: boolean = false;
   user: any;
-  urlAyuda: string;                    
-  tipoExportar: string;    
+  urlAyuda: string;
+  tipoExportar: string;
   @Input() objTitulo = new ObjetoTitulo();
   @Input() tipoExp = '';
-  
+
   themes = [
     {
       value: 'default',
@@ -54,7 +54,7 @@ export class HeaderTituloComponent implements OnInit, OnDestroy {
 
   currentTheme = 'material-light';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
   public constructor(
     private sidebarService: NbSidebarService,
@@ -117,19 +117,22 @@ export class HeaderTituloComponent implements OnInit, OnDestroy {
 
   nuevo() {
     this.objTitulo.componente.coreNuevo();
-}
+  }
 
-recargar(){
-  this.objTitulo.componente.coreSalir();
-}
+  recargar() {
+    this.objTitulo.componente.coreSalir();
+  }
 
-buscar(){
-  this.objTitulo.componente.coreBuscar();
-}
+  buscar() {
+    this.objTitulo.componente.coreBuscar();
+  }
 
-Exportar(){
-  this.objTitulo.componente.coreExportar();
-}
+  Exportar() {
+    this.objTitulo.componente.coreExportar();
+  }
+  Eliminar() {
+    this.objTitulo.componente.coreEliminar();
+  }
 
   navigateHome() {
     this.menuService.navigateHome();

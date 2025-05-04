@@ -34,6 +34,10 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
     private toastrService: NbToastrService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   coreMensaje(mensage: MensajeController): void {
 
@@ -80,11 +84,11 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto){
+  coreVer(dto): void{
     this.examenListaMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   }
 
-  coreEditar(dto){
+  coreEditar(dto): void{
     this.examenListaMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
   }
 

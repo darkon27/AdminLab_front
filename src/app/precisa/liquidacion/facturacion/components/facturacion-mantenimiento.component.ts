@@ -70,6 +70,10 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
     private maestrocompaniaMastService: MaestrocompaniaMastService) {
     super();
   } 
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
 
   ngOnDestroy(): void {
     // this.userInactive.unsubscribe();

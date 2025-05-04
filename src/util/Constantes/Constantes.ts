@@ -14,6 +14,8 @@ export class ConstanteUI {
 
  /** desde la ventana de listado se desea anular un registro en forma logica**/
  public static ACCION_SOLICITADA_ANULAR = "ANULAR";
+ /** desde la ventana de listado se desea anular un registro en forma logica**/
+ public static ACCION_SOLICITADA_BUSCAR = "BUSCAR";
 
  /** desde la ventana de listado se desea eliminar fisicamente un registro **/
  public static ACCION_SOLICITADA_ELIMINAR = "ELIMINAR";

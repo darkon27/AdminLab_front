@@ -46,6 +46,10 @@ export class ExamenAsignarHomologacionComponent extends ComponenteBasePrincipal 
     super();
     this.ngOnDestroy();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
 
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, dtoEditExamen?: any): void {

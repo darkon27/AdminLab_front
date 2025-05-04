@@ -51,6 +51,10 @@ export class EmpresaBuscarComponent extends ComponenteBasePrincipal implements O
     private toastrService: NbToastrService,
     protected messageService: MessageService,
   ) { super(); }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
 
   coreBuscar(): void {
     throw new Error("Method not implemented.");

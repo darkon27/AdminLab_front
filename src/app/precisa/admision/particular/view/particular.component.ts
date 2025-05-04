@@ -127,6 +127,10 @@ export class ParticularComponent extends ComponenteBasePrincipal implements OnIn
   ) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnDestroy(): void {
     //this.userInactive.unsubscribe();

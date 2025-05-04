@@ -153,7 +153,7 @@ export class LoginComponent implements OnInit {
               // Si todas las funciones críticas tuvieron éxito
               setTimeout(() => {
                 window.location.reload();
-              }, 100);
+              }, 2000);
   
             } else {
               console.log("login ops:::::", res);

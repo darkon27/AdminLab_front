@@ -54,6 +54,10 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
     ) {
     super();
   } 
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
 
 
   ngOnDestroy(): void {

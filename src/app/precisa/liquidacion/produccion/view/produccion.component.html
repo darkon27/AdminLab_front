@@ -19,7 +19,7 @@
     <p-fieldset legend="Información" (keyup.enter)="coreBuscar()">
         <div class="row">
             <div class="col-sm-4">
-                <label for="inputOrdAten" class="label">Periodo</label>
+                <label for="inputOrdAten" class="label">Periodo <span style="color: red;">*</span> </label>
                 <p-dropdown [(ngModel)]="filtro.Periodo" [filter]="true" [options]="lstPeriodo"
                     [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
             </div>

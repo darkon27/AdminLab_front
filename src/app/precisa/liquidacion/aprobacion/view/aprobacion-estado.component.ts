@@ -27,7 +27,9 @@ export class AprobacionEstadoComponent  extends ComponenteBasePrincipal implemen
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
   }
-
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreNuevo(): void {
     this.aprobacionEstadoMantenimientoComponent.iniciarComponente("NUEVO",this.objetoTitulo.menuSeguridad.titulo)
   }
@@ -44,7 +46,7 @@ export class AprobacionEstadoComponent  extends ComponenteBasePrincipal implemen
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto){
+  coreVer(dto): void{
     console.log(this.objetoTitulo)
     this.aprobacionEstadoMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   } 
@@ -60,7 +62,7 @@ export class AprobacionEstadoComponent  extends ComponenteBasePrincipal implemen
 
   }
 
-  coreEditar(dto){
+  coreEditar(dto): void{
     this.aprobacionEstadoMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
   }
 

@@ -306,9 +306,13 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
   }
 
   listarComboEstados() {
-    this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.lstEstados.push({ label: 'Activo', value: "A" });
-    this.lstEstados.push({ label: 'Inactivo', value: "I" });
+    this.lstEstados = [];
+      this.lstEstados.push({ label: ConstanteAngular.COMBOTODOS, value: null });
+      this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
+        console.log("i", i);
+        this.lstEstados.push({ label: i.Nombre, value: i.Codigo });
+      });
+      // console.log(this.getMiscelaneos().filter(x => x.CodigoTabla.includes("ESTLETRAS")));
   }
 
   listaComboCargo() {
@@ -334,7 +338,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
     if (this.dtoEmpleado == null) { this.messageShow('warn', 'Advertencia', 'Ingrese todos los campos.'); return; }
     if (this.dtoEmpleado.Documento == null || this.dtoEmpleado.Documento.length < 8) { this.messageShow('warn', 'Advertencia', 'El Documento no existe o es vacio.'); return; }
     if (this.dtoEmpleado.CompaniaSocio == null) { this.messageShow('warn', 'Advertencia', 'Seleccione una compañia.'); return; }
-    if (this.dtoEmpleado.Cargo == null) { this.messageShow('warn', 'Advertencia', 'Seleccione un cargo.'); return; }
+    // if (this.dtoEmpleado.Cargo == null) { this.messageShow('warn', 'Advertencia', 'Seleccione un cargo.'); return; }
     if (this.dtoEmpleado.Telefono == null || this.dtoEmpleado.Telefono == '') { this.messageShow('warn', 'Advertencia', 'Ingrese un número de teléfono.'); return; }
     if (this.dtoEmpleado.CorreoInterno == null || this.dtoEmpleado.CorreoInterno == '') { this.messageShow('warn', 'Advertencia', 'Ingrese un correo.'); return; }
     //Validar si el elemento es un correo
@@ -350,13 +354,13 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
 
       case 'NUEVO':
 
-        if (this.dtoPersona.EsEmpleado != 'S') {
-          this.messageShow('warn', 'Advertencia', 'La persona no es de tipo empleado.');
-          this.bloquearPag = false;
-          return;
-        }
+        // if (this.dtoPersona.EsEmpleado != 'S') {
+        //   this.messageShow('warn', 'Advertencia', 'La persona no es de tipo empleado.');
+        //   this.bloquearPag = false;
+        //   return;
+        // }
 
-        this.dtoPersona.EsEmpleado = 'S';
+        // this.dtoPersona.EsEmpleado = 'S';
         /**AUDITORIA */
         // persona
         this.dtoPersona.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario;
@@ -371,7 +375,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
         this.dtoEmpleado.Telefono = this.dtoEmpleado.Telefono.trim();
 
 
-        //this.dtoPersona.UltimaFechaModif = new Date();
+        this.dtoPersona.UltimaFechaModif = new Date();
         console.log("this.dtoPersona", this.dtoPersona);
         console.log("this.dtoEmpleado", this.dtoEmpleado);
 
@@ -423,8 +427,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
         }
         break
       default:
-        this.dialog = false;
-        this.bloquearPag = false;
+        this.messageShow('error', '', 'Error al guardar el empleado 2.');
         return;
     }
   }

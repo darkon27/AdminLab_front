@@ -56,6 +56,10 @@ export class ConfiguracionContratosComponent extends ComponenteBasePrincipal imp
     private store: Store<AppSatate>) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
 coreMensaje(mensage: MensajeController): void {
     console.log("coreMensaje llegando:", mensage.componente);
@@ -72,12 +76,12 @@ coreNuevo(): void {
     this.configuracionContratosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_NUEVO', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo, this.Entydad)
   }
 
-coreVer(dto) {
+coreVer(dto): void {
     console.log("llego coreVer  ", dto);
     this.configuracionContratosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_VER', ''), "VER", "CONTRATO", dto)
   }
 
-coreEditar(dto) {
+coreEditar(dto): void {
     console.log("llego coreEditar  ", dto);
     this.configuracionContratosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_EDITAR', ''), "EDITAR", "CONTRATO", dto)
   }

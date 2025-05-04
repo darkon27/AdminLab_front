@@ -25,6 +25,10 @@ export class ExamenPatologicoComponent extends ComponenteBasePrincipal implement
     super();
 
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnDestroy(): void {
     // this.userInactive.unsubscribe();
@@ -62,14 +66,14 @@ export class ExamenPatologicoComponent extends ComponenteBasePrincipal implement
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto) {
+  coreVer(dto): void {
     console.log(this.objetoTitulo)
     this.examenPatologicoMantenimientoComponent.iniciarComponente("VER", this.objetoTitulo.menuSeguridad.titulo)
   }
 
 
 
-  coreEditar(dto) {
+  coreEditar(dto): void {
     this.examenPatologicoMantenimientoComponent.iniciarComponente("EDITAR", this.objetoTitulo.menuSeguridad.titulo)
   }
 }

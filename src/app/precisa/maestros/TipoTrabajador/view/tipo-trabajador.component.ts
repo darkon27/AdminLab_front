@@ -39,6 +39,10 @@ export class TipoTrabajadorComponent extends ComponenteBasePrincipal implements 
     private messageService: MessageService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
@@ -80,12 +84,12 @@ export class TipoTrabajadorComponent extends ComponenteBasePrincipal implements 
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto) {
+  coreVer(dto): void {
     console.log("btn coreVer:");
     this.tipoTrabajadorMantenimientoComponent.iniciarComponente("VER", this.objetoTitulo.menuSeguridad.titulo,dto);
   }
 
-  coreEditar(dto) {
+  coreEditar(dto): void {
     console.log("btn coreEditar:");
     this.tipoTrabajadorMantenimientoComponent.iniciarComponente("EDITAR", this.objetoTitulo.menuSeguridad.titulo,dto)
   }

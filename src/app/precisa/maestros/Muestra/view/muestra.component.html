@@ -8,67 +8,113 @@
                 <h4 class="titulonuevo"></h4>
             </div>
             <div class="col-sm-10" style="background-color: transparent;">
-                <div> 
+                <div>
+
+                    <!-- <nb-card class="col-sm-6 fondocard" style="padding: 2px; margin-bottom: -10px; margin-top: -10px;">
+                    <div class="row col-sm-12">
+                        <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/buscaroa.ico" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Buscar</label> </button> 
+                        <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/NUEVO.png" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Nuevo</label></button> 
+                   <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/ico_editar.ico" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Editar</label></button> 
+                   <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/ico_imprimir.ico" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Ver</label></button> 
+                   <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/ico5.ico" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Copiar</label></button>
+                   <button style="color: #2B4E64; padding: 0px;" class="col-sm-2 button btn"><img src="assets/img/inactivar.png" width="40%" style="filter: drop-shadow(5px 5px 7px #444);"><br><label style="font-size: 12px;font-weight: bold">Inactivar</label></button>
+    
+    
                 </div>
+                </nb-card>     -->
+                </div>
+
             </div>
         </div>
     </nb-card-header>
+    <!-- <p-divider align="left" [ngStyle]="{'padding-left': '15px','padding-right': '15px'}">
+        <div class="p-d-inline-flex p-ai-center">
+            <i class="pi pi-bars p-mr-2"></i>
+            <b>&nbsp;Muestra</b>
+        </div>
+      </p-divider> -->
+
     <nb-card-body>
         <p-fieldset legend="Información Consulta">
             <div class="row" style="padding: 10px;">
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="inputLastName" class="label">Nombre</label>
-                        <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
+                        <input pInputText type="text" placeholder="" [(ngModel)]="filtro.Nombre" [style]="{'width':'100%'}" (keypress)="defaultBuscar($event)"  />
                     </div>
+
                 </div>
                 <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Estado</label>
-                        <p-dropdown placeholder="Estado"></p-dropdown>
-                    </div>
-                </div>
+                    <label for="inputLastName" class="label">Estado</label>
+                    <p-dropdown [options]="lstEstado" [(ngModel)]="filtro.Estado"
+                      [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                  </div>
             </div>
         </p-fieldset>
         <br>
         <p-fieldset legend="Detalle">
-            <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="tipousuario" [responsive]="true"
-                [sortOrder]="-1" sortField="tipousuario"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-                [showCurrentPageReport]="true">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="tipousuario">Nro<p-sortIcon field="tipousuario"> </p-sortIcon>
-                        </th>
-                        <th pSortableColumn="Perfil">Descripción<p-sortIcon field="Perfil"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="VaEstado">Tapa<p-sortIcon field="VaEstado"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="VaEstado">Cantidad<p-sortIcon field="VaEstado"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="VaEstado">Estado<p-sortIcon field="VaEstado">
-                            </p-sortIcon>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-asignarPerfil>
-                    <tr>
+            <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstMuestra"
+            [responsive]="true" [sortOrder]="1" sortField="num"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+            <ng-template pTemplate="header">
+                <tr>
+                <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
+                <th pSortableColumn="IdMuestra" style="text-align: center;">Nro<p-sortIcon field="IdMuestra"> </p-sortIcon>
+                </th>
 
-                        <td>{{asignarPerfil.tipousuario}}</td>
+                <th pSortableColumn="Nombre" style="text-align: center;">Nombre<p-sortIcon field="Nombre"></p-sortIcon>
+                </th>
 
-                        <td>{{asignarPerfil.Perfil}}</td>
+                <th pSortableColumn="Observacion" style="text-align: center;">Tapa<p-sortIcon field="Observacion"></p-sortIcon>
+                </th>
+                <th pSortableColumn="Cantidad" style="text-align: center;">Cantidad<p-sortIcon field="Cantidad"></p-sortIcon>
+                </th>
+                <th pSortableColumn="Estado" style="text-align: center;">Estado<p-sortIcon field="Estado">
+                    </p-sortIcon>
+                </th>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="body" let-rowData>
+                
+                <tr>
+                <td class="tablaColumnaAccion3" style="text-align: center;">
+                    <span class="p-column-title">Acción</span>
+                    <table>
+                      <tr>
+                    <th>
+                      <button pButton pRipple type="button" icon="fad fa-pencil-alt" title="Editar" 
+                        class="p-button-rounded p-button-text" (click)="coreEditar(rowData)"></button>
+                    </th>
+                    <th>
+                      <button pButton pRipple type="button" icon="fad fa-search" (click)="coreVer(rowData)"
+                        class="p-button-rounded p-button-text" title="Ver"></button>
+                    </th>
+                    <th>
+                      <button pButton pRipple type="button" icon="fal fa-trash-alt"title="Inactivar"
+                        class="p-button-rounded p-button-text" (click)="coreinactivar(rowData)"></button>
+                      </th>            
+                    <th>
+                      <button pButton pRipple type="button" icon="fad fa-external-link" title="Asignar"
+                        class="p-button-rounded p-button-text" (click)="coreAsignar(rowData)"></button>
+                    </th> 
+                      </tr>
+                    </table>
+                  </td>
+                  
+                <td style="text-align: center;">{{rowData.IdMuestra}}</td>
 
-                        <td>
-                            <span>{{asignarPerfil.VaEstado}}</span>
-                        </td>
-                        <td>
-                            <p-dropdown appendTo="body" [options]="perfilesAsignar" [filter]="true"
-                                placeholder="Asignar Perfil">
-                            </p-dropdown>
-                        </td>
+                <td style="text-align: center;">{{rowData.Nombre}}</td>
 
-                    </tr>
-                </ng-template>
+                <td style="text-align: center;">{{rowData.Observacion}}</td>
+
+                <td style="text-align: center;">{{rowData.Cantidad}}</td>
+
+                <td style="text-align: center;">{{rowData.ESTADOdesc}}</td>
+
+                </tr>
+            </ng-template>
             </p-table>
         </p-fieldset>
     </nb-card-body>

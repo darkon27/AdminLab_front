@@ -12,24 +12,10 @@
 </p-confirmDialog>
 <nb-card fixed>
     <nb-card-header>
-        <div class="row">
-            <div class="col-sm-4">
-                <h4 class="titulonuevo">Perfil de Usuario</h4>
-            </div>
-            <br>
-            <br>
-            <br>
-            <div class="col-sm-2" style="background-color: transparent;"></div>
-            <div class="col-sm-6" style="background-color: transparent;" aria-orientation="horizontal">
-                <button pButton icon="fa fa-search" type="button" title="Buscar" label="Buscar"
-                    class="p-button-secondary" (click)="coreBuscar()"></button>
-                <button pButton icon="fa fa-file" type="button" title="Nuevo" label="Nuevo" class="p-button-secondary"
-                    (click)="coreNuevo()"></button>
-                <p-splitButton label="Exportar" icon="fa fa-file-pdf" (onClick)="exportExcel()"
-                    styleClass="p-button-text p-button-secondary" [model]="ltsExportar"></p-splitButton>
-            </div>
-        </div>
-    </nb-card-header>
+        <nav class="fixed">
+          <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+        </nav>
+      </nb-card-header>
     <nb-card-body>
         <p-fieldset legend="Información Consulta" (keyup.enter)="coreBuscar()">
             <div class="row">
@@ -63,9 +49,6 @@
                 scrollHeight="300px">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th class="tablaHeaderCheckBox">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
                         <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
                         <th pSortableColumn="num" class="label" ALIGN="center" style="width: 3rem;  ">Nro <p-sortIcon
                                 field="num"> </p-sortIcon>
@@ -82,9 +65,6 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData>
                     <tr>
-                        <td class="tablaColumnaCheckBox">
-                            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-                        </td>
                         <td class="tablaColumnaAccion3">
                             <span class="p-column-title">Acción</span>
                             <table>
@@ -101,7 +81,7 @@
                                     </th>
                                     <th>
                                         <button pButton pRipple type="button" icon="fad fa-minus-circle"
-                                            *ngIf="rowData.Estado == 'A' ||rowData.desestado == 'A'" (click)="coreinactivar(rowData)"
+                                            [disabled]="rowData.desestado != 'A'" (click)="coreinactivar(rowData)"
                                             class="p-button-rounded p-button-text" title="Inactivar"></button>
                                     </th>
                                 </tr>

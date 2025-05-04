@@ -26,6 +26,10 @@ export class ConfigurarCorreoComponent extends ComponenteBasePrincipal implement
     private toastrService: NbToastrService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
   }
@@ -46,11 +50,11 @@ export class ConfigurarCorreoComponent extends ComponenteBasePrincipal implement
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto){
+  coreVer(dto): void{
    
     this.configurarCorreoMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   }
-  coreEditar(dto){
+  coreEditar(dto): void{
     this.configurarCorreoMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
   }
   

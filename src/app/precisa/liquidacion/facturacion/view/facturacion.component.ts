@@ -60,6 +60,10 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     private maestrocompaniaMastService: MaestrocompaniaMastService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
@@ -94,7 +98,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto){
+  coreVer(dto): void{
     console.log(this.objetoTitulo)
     this.facturacionMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo,dto)
   }
@@ -128,7 +132,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     console.log("fechaActual FechaEmision", this.filtro.FechaEmision);
   }
 
-  coreEditar(dto){
+  coreEditar(dto): void{
     this.facturacionMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo,dto)
   }
 

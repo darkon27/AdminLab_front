@@ -36,6 +36,10 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
     private TipoPagoService: TipoPagoService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
@@ -107,7 +111,7 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
     }
   }
 
-/*   coreEditar(dto){
+/*   coreEditar(dto): void{
     this.tipoPagoMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
   }
  */

@@ -47,6 +47,10 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
     private messageService: MessageService,) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreMensaje(mensage: MensajeController): void {
     if (mensage.componente == "SELECTOR_EMPLEADO") {
       this.coreBuscar();
@@ -58,7 +62,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
 
   }
 
-  coreVer(dto) {
+  coreVer(dto): void {
     console.log("llego BtncoreEditar  ", dto);
     this.Entydad = dto;
     this.empleadosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_EMPLEADO', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, this.Entydad);
@@ -66,12 +70,13 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
 
   }
 
-  coreEditar(dto) {
+  coreEditar(dto): void {
     console.log("llego BtncoreEditar  ", dto);
     this.Entydad = dto;
     this.empleadosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_EMPLEADO', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, this.Entydad);
 
   }
+  
   coreGuardar(): void {
     throw new Error('Method not implemented.');
   }
@@ -134,9 +139,12 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
 
 
   listarComboEstados() {
-    this.lstEstados.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-    this.lstEstados.push({ label: 'Activo', value: "A" });
-    this.lstEstados.push({ label: 'Inactivo', value: "I" });
+    this.lstEstados = [];
+      this.lstEstados.push({ label: ConstanteAngular.COMBOTODOS, value: null });
+      this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
+        //console.log("i", i);
+        this.lstEstados.push({ label: i.Nombre, value: i.Codigo });
+      });
   }
 
   listaComboTipoDocumento() {

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { AppConfig } from "../../../../../environments/app.config";
 import { API_ROUTESE } from "../../../../data/constants/routes/api.routes";
 import { dtoCorrelativo } from "../model/dtoCorrelativo";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,12 @@ export class CorrelativoService {
   }
 
   MantenimientoCorrelativos(codigo: number, data: dtoCorrelativo, token: string) {
+    console.log(data)
     const headers = new HttpHeaders().set("Authorization", token)
-    return this.config.getHttp().post(`${this.urlfa}MantenimientoCorrelativos/${codigo}`, data, { headers: headers })
-      .toPromise()
+    return this.config.getHttp().post(`${this.urlfa}MantenimientoCorrelativos/${codigo}`, data).toPromise()
       .then(response => response)
       .catch(error => error)
+
   }
 
 }

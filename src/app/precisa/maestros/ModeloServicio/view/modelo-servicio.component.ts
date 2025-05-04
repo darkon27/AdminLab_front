@@ -41,6 +41,10 @@ export class ModeloServicioComponent extends ComponenteBasePrincipal implements 
     private consultaAdmisionService: ConsultaAdmisionService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.bloquearPag = true;

@@ -1,21 +1,21 @@
+<p-blockUI [blocked]="bloquearPag">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-confirmDialog #c key="confirm2">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
 <nb-card>
     <nb-card-header>
         <nav class="fixed">
             <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
         </nav>
-        <div class="row">
-            <div class="col-sm-2">
-                <h4 class="titulonuevo"></h4>
-            </div>
-            <div class="col-sm-10" style="background-color: transparent;">
-                <div>
-
-                </div>
-
-            </div>
-        </div>
     </nb-card-header>
-  
+
 
 
     <nb-card-body>
@@ -24,59 +24,107 @@
                 <div class="col-sm-3">
                     <label for="inputLastName" class="label">Tipo Admision</label>
                     <p-dropdown [options]="lstTipoAdmision" [(ngModel)]="filtro.TipoAdmisionId"
-                      [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
-                  </div>
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                </div>
                 <div class="col-sm-3">
                     <label for="inputOrdAten" class="label">Codigo</label>
-                    <input pInputText type="text" placeholder="" style="width:100%; height: 30px; text-transform: uppercase;"
-                      [(ngModel)]="filtro.Codigo" (keypress)="defaultBuscar($event)" />
-                  </div>
+                    <input pInputText type="text" placeholder=""
+                        style="width:100%; height: 30px; text-transform: uppercase;" [(ngModel)]="filtro.Codigo"
+                        (keypress)="defaultBuscar($event)" />
+                </div>
 
-                  <div class="col-sm-3">
+                <div class="col-sm-3">
                     <label for="inputOrdAten" class="label">Descripción</label>
-                    <input pInputText type="text" placeholder="" style="width:100%; height: 30px; text-transform: uppercase;"
-                      [(ngModel)]="filtro.Descripcion" (keypress)="defaultBuscar($event)" />
-                  </div>
-                  <div class="col-sm-3">
+                    <input pInputText type="text" placeholder=""
+                        style="width:100%; height: 30px; text-transform: uppercase;" [(ngModel)]="filtro.Descripcion"
+                        (keypress)="defaultBuscar($event)" />
+                </div>
+                <div class="col-sm-3">
                     <label for="inputLastName" class="label">Estado</label>
                     <p-dropdown [options]="lstEstado" [(ngModel)]="filtro.Estado"
-                      [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
-                  </div>
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                </div>
             </div>
         </p-fieldset>
         <br>
         <p-fieldset legend="Detalle">
-            <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lst"
-            [responsive]="true" [sortOrder]="1" sortField="num"
-            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-            [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
-            <ng-template pTemplate="header">    
+            <p-table id="contenido" #dt [rows]="25" [paginator]="true" [rowHover]="true" [responsive]="true "
+                [style]="{ width: '100%'}" [sortOrder]="1" sortField="num" [value]="lst" selectionMode="single"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                [rowsPerPageOptions]="[25,50,100]" [showCurrentPageReport]="true" [scrollable]="true"
+                scrollHeight="300px">
+                <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="tipousuario">Nro<p-sortIcon field="tipousuario"> </p-sortIcon>
+                        <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
+                        <th pSortableColumn="num" class="label" ALIGN="center" style="width: 4rem; text-align: center;">
+                            Nro<p-sortIcon field="num"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="Perfil">Tipo Admisión<p-sortIcon field="Perfil"></p-sortIcon>
+                        <th class="label" pSortableColumn="AdmDescripcion" ALIGN="center"
+                            style="width: 8rem; text-align: center;">
+                            Tipo admisión<p-sortIcon field="AdmDescripcion"></p-sortIcon>
                         </th>
-
-                        <th pSortableColumn="VaEstado">Código<p-sortIcon field="VaEstado"></p-sortIcon>
+                        <th class="label" pSortableColumn="UnidadNegocio" ALIGN="center"
+                            style="width: 10rem; text-align: center;">
+                            Código<p-sortIcon field="UnidadNegocio"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="VaEstado">Descripción<p-sortIcon field="VaEstado"></p-sortIcon>
+                        <th class="label" pSortableColumn="Cliente" ALIGN="center"
+                            style="width: 15rem; text-align: center;">
+                            Descripción<p-sortIcon field="Cliente"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="VaEstado">Estado<p-sortIcon field="VaEstado">
-                            </p-sortIcon>
+                        <th pSortableColumn="Sede" class="label" ALIGN="center"
+                            style="width: 8rem; text-align: center;">
+                            Estado<p-sortIcon field="Sede"></p-sortIcon>
                         </th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-asignarPerfil>
-                    <tr>
-                        <td>{{asignarPerfil.tipousuario}}</td>
-                        <td>{{asignarPerfil.Perfil}}</td>
-                        <td>
-                            <span>{{asignarPerfil.VaEstado}}</span>
+                <ng-template pTemplate="body" let-rowData>
+                    <tr [pSelectableRow]="rowData">
+                        <td class="tablaColumnaAccion3">
+                            <span class="p-column-title">Acciones</span>
+                            <table>
+                                <tr>
+                                    <th>
+                                        <button pButton pRipple type="button" icon="fad fa-pencil-alt"
+                                            class="p-button-rounded p-button-text" title="Editar"
+                                            (click)="coreEditar(rowData)"></button>
+                                    </th>
+                                    <th>
+                                        <button pButton pRipple type="button" icon="fad fa-search"
+                                            (click)="coreVer(rowData)" class="p-button-rounded p-button-text"
+                                            title="Ver"></button>
+                                    </th>
+                                    <th>
+                                        <button pButton pRipple type="button" icon="fad fa-minus-circle"
+                                            [disabled]="rowData.Estado != 1" (click)="coreinactivar(rowData)"
+                                            class="p-button-rounded p-button-text" title="Inactivar"></button>
+                                    </th>
+                                </tr>
+                            </table>
                         </td>
-                        <td>
-                            <p-dropdown appendTo="body" [options]="perfilesAsignar" [filter]="true"
-                                placeholder="Asignar Perfil">
-                            </p-dropdown>
+                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                            style="width: 4rem; text-align: center;">
+                            <span class="p-column-title">Nro</span>
+                            {{ rowData.num }}
+                        </td>
+                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                            style="width: 8rem; text-align: center;">
+                            <span class="p-column-title">Tipo admisión</span>
+                            {{rowData.AdmDescripcion | uppercase}}
+                        </td>
+
+                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 10rem;">
+                            <span class="p-column-title">Código</span>
+                            <span>{{rowData.Codigo}}</span>
+                        </td>
+
+                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 15rem;">
+                            <span class="p-column-title">Descripción</span>
+                            <span>{{rowData.Descripcion}}</span>
+                        </td>
+
+                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
+                            <span class="p-column-title">Estado</span>
+                            <span>{{rowData.ESTADOdesc |uppercase}}</span>
                         </td>
                     </tr>
                 </ng-template>

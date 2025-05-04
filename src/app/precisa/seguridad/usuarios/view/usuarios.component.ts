@@ -43,6 +43,10 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
     private store: Store<AppSatate>) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   coreMensaje(mensage: MensajeController): void {
     console.log("coreMensaje llegando:", mensage.componente);
@@ -59,13 +63,13 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
 
   }
 
-  coreVer(dto) {
+  coreVer(dto): void {
     console.log("llego coreVer  ", dto);
     //this.Entydad = dto;
     this.usuariosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_USUARIO', ''), "VER", "USUARIOS", dto)
   }
 
-  coreEditar(dto) {
+  coreEditar(dto): void {
     console.log("llego coreEditar  ", dto);
     // this.Entydad = dto;
     this.usuariosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_USUARIO', ''), "EDITAR", "USUARIOS", dto)
@@ -136,7 +140,7 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
     throw new Error('Method not implemented.');
   }
   coreExportar(): void {
-    throw new Error('Method not implemented.');
+    this.exportExcel();
   }
   coreSalir(): void {
     throw new Error('Method not implemented.');

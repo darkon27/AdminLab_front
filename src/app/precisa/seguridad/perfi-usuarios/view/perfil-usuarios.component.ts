@@ -46,6 +46,10 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
     private messageService: MessageService,) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   coreMensaje(mensage: MensajeController): void {
     console.log("coreMensaje llegando:", mensage.componente);
@@ -112,7 +116,7 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
     throw new Error('Method not implemented.');
   }
   coreExportar(): void {
-    throw new Error('Method not implemented.');
+    this.exportExcel()
   }
   coreSalir(): void {
     this.limpiarFiltro()
@@ -148,12 +152,12 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
     this.perfilesComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_USUARIO', ''), 'NUEVO', '', null);
   }
 
-  coreVer(dto) {
+  coreVer(dto): void {
     console.log("llego coreVer  ", dto);
     this.perfilesComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_USUARIO', ''), 'VER', '', dto);
   }
 
-  coreEditar(dto) {
+  coreEditar(dto): void {
     console.log("llego coreEditar  ", dto);
     this.perfilesComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_USUARIO', ""), "EDITAR", "", dto)
   }

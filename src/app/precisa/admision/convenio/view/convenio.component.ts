@@ -135,6 +135,10 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
 
     );
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnDestroy(): void {
     // this.dataInactive.unsubscribe();

@@ -69,7 +69,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
 
     /**PARAMETROS */
     this.bloquearPag = true;
-   // this.btnCerrar();
+    // this.btnCerrar();
     this.mensajeController = msj;
     this.validarform = accion;
     this.acciones = `${titulo}: ${accion}`;
@@ -92,7 +92,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
     //await this.cargarSedesAgregar();
     //await this.listarSedes();
     Promise.all([p1, p2, p3, p4]).then(
-      f => {  
+      f => {
         setTimeout(() => {
           this.bloquearPag = false;
         }, 100);
@@ -201,45 +201,45 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
 
   coreGuardar() {
 
-    console.log("coreGuardar",  this.DtoUsuario);
-    if (this.estaVacio(this.DtoUsuario.Usuario)) { 
-      this.messageShow('warn', 'Advertencia', 'Seleccione una persona válida'); 
-      return; 
+    console.log("coreGuardar", this.DtoUsuario);
+    if (this.estaVacio(this.DtoUsuario.Usuario)) {
+      this.messageShow('warn', 'Advertencia', 'Seleccione una persona válida');
+      return;
     }
-    if (this.estaVacio(this.DtoUsuario.Clave)) { 
-      this.messageShow('warn', 'Advertencia', 'Ingrese una clave válida'); 
-      return; 
+    if (this.estaVacio(this.DtoUsuario.Clave)) {
+      this.messageShow('warn', 'Advertencia', 'Ingrese una clave válida');
+      return;
     }
-    if (this.DtoUsuario.Clave != this.DtoUsuario.ClaveNueva) { 
-      this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'Las contraseñas no coinciden' }); 
-      return; 
+    if (this.DtoUsuario.Clave != this.DtoUsuario.ClaveNueva) {
+      this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'Las contraseñas no coinciden' });
+      return;
     }
-    if (this.estaVacio(this.DtoUsuario.correo_empresa)) { 
-      this.messageShow('warn', 'Advertencia', 'Ingrese un correo válido'); 
-      return; 
+    if (this.estaVacio(this.DtoUsuario.correo_empresa)) {
+      this.messageShow('warn', 'Advertencia', 'Ingrese un correo válido');
+      return;
     }
     if (!this.estaVacio(this.DtoUsuario.correo_empresa)) {
-      if (!this.validarCorreo(this.DtoUsuario.correo_empresa)) { 
-        this.messageShow('warn', 'Advertencia', 'Ingrese un correo valido.'); 
-        return; 
+      if (!this.validarCorreo(this.DtoUsuario.correo_empresa)) {
+        this.messageShow('warn', 'Advertencia', 'Ingrese un correo valido.');
+        return;
       }
     }
-    if (this.estaVacio(this.DtoUsuario.Perfil)) { 
-      this.messageShow('warn', 'Advertencia', 'Seleccione un perfil válido'); 
-      return; 
+    if (this.estaVacio(this.DtoUsuario.Perfil)) {
+      this.messageShow('warn', 'Advertencia', 'Seleccione un perfil válido');
+      return;
     }
-    if (this.estaVacio(this.DtoUsuario.TipoUsuario.toString())) { 
-      this.messageShow('warn', 'Advertencia', 'Seleccione un tipo de usuario válido'); 
-      return; 
+    if (this.estaVacio(this.DtoUsuario.TipoUsuario.toString())) {
+      this.messageShow('warn', 'Advertencia', 'Seleccione un tipo de usuario válido');
+      return;
     }
-    if (this.estaVacio(this.DtoUsuario.Estado)) { 
-      this.messageShow('warn', 'Advertencia', 'Seleccione un estado válido'); 
-      return; 
+    if (this.estaVacio(this.DtoUsuario.Estado)) {
+      this.messageShow('warn', 'Advertencia', 'Seleccione un estado válido');
+      return;
     }
-  
+
     // Asegurar que las sedes seleccionadas se añadan al DTO
-    this.DtoUsuario.SedesPerfil = this.lstSede; 
-    console.log("coreGuarda this.validarform",  this.validarform);
+    this.DtoUsuario.SedesPerfil = this.lstSede;
+    console.log("coreGuarda this.validarform", this.validarform);
     this.bloquearPag = true;
     switch (this.validarform) {
       case ConstanteUI.ACCION_SOLICITADA_NUEVO:
@@ -254,7 +254,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
             this.DtoUsuario.UltimoUsuario = null;
             this.DtoUsuario.FechaCreacion = new Date();
             this.DtoUsuario.UltimaFechaModif = null;
-            console.log("mantenimientoUsuarioMast NUEVO",  this.DtoUsuario);
+            console.log("mantenimientoUsuarioMast NUEVO", this.DtoUsuario);
             console.log("Contenido de lstSede:", this.lstSede);
             const respNuevo = await this.UsuarioService.mantenimientoUsuarioMast(ConstanteUI.SERVICIO_SOLICITUD_NUEVO, this.DtoUsuario, this.getUsuarioToken());
             if (respNuevo != null) {
@@ -284,22 +284,25 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
           }
         });
         break;
-  
+
       case ConstanteUI.ACCION_SOLICITADA_EDITAR:
-        console.log("mantenimientoUsuarioMast EDITAR",  this.DtoUsuario);
+
+        console.log("mantenimientoUsuarioMast EDITAR", this.DtoUsuario);
         console.log("Contenido de lstSede:", this.lstSede);
         this.DtoUsuario.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario;
         this.DtoUsuario.UltimaFechaModif = new Date();
-  
+
         this.confirmationService.confirm({
           header: "Confirmación",
           icon: "fa fa-question-circle",
           message: "¿Desea Modificar el registro ? ",
           key: "UsuaDialog",
           accept: async () => {
+            this.bloquearPag = true;
+
             this.DtoUsuario.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario;
             const respEditar = await this.UsuarioService.mantenimientoUsuarioMast(ConstanteUI.SERVICIO_SOLICITUD_EDITAR, this.DtoUsuario, this.getUsuarioToken());
-  
+            40859200
             if (respEditar != null) {
               if (respEditar.success) {
                 let dto = {
@@ -307,7 +310,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
                   valor: 1,
                   mensaje: "Se envia MantenimientoUsuarioSede",
                   data: [...this.lstSede]  // Clonamos la lista para evitar problemas
-                };            
+                };
                 console.log("daMantenimientoUsuarioSedea", dto);
                 const respNuevoSede = await this.UsuarioService.MantenimientoUsuarioSede(1, dto, this.getUsuarioToken());
                 this.messageShow('success', 'Success', this.getMensajeActualizado());
@@ -337,6 +340,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
 
 
   listarComboEstados() {
+    this.lstEstados = [];
     this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
       this.lstEstados.push({ label: i.Nombre, value: i.Codigo })
@@ -344,6 +348,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
   }
 
   listarComboTipoUsuario() {
+    this.lstTipoUsuario = [];
     this.lstTipoUsuario.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.getMiscelaneos().filter(x => x.CodigoTabla == "TIPOUSUARIO").forEach(i => {
       this.lstTipoUsuario.push({ label: i.Nombre, value: i.Codigo })
@@ -354,6 +359,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
     let dto = {
       ESTADO: "A"
     }
+    this.lstPerfil = [];
     this.lstPerfil.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.UsuarioService.listarComboPerfil(dto).then(res => {
       console.log("Mant Usuario cargarPerfiles::", res);
@@ -369,6 +375,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
     let dto = {
       Usuario: Usuario
     }
+    this.lstSede = [];
     this.UsuarioService.ListaUsuarioSede(dto).then((res) => {
       var contado = 1;
       res.forEach(element => {
@@ -396,55 +403,55 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
     // Buscar la sede seleccionada por su ID
     let sedeSeleccionada = this.lstSedecombo.find(sede => sede.value == this.DtoUsuario.IdSede);
 
-  
+
     if (!sedeSeleccionada) {  // Verificar si la sede fue encontrada
       this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'Sede no encontrada.' });
       return;
     }
-  
+
     // Verificar si ya fue agregada
     if (this.lstSede.some(sede => sede.IdSede == sedeSeleccionada.value)) {
       this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'La sede ya está en la lista.' });
       return;
     }
-  
+
     // Agregar la sede seleccionada a la lista
     this.lstSede.push({
       num: this.lstSede.length + 1,
       IdSede: sedeSeleccionada.value,
       SedDescripcion: sedeSeleccionada.label,
       Usuario: this.DtoUsuario.Usuario,
-      UsuarioCreacion : this.getUsuarioAuth().data[0].Usuario,
-      FechaCreacion : new Date()
+      UsuarioCreacion: this.getUsuarioAuth().data[0].Usuario,
+      FechaCreacion: new Date()
     });
 
   }
-  
-  confirmBox(){  
-    Swal.fire({  
+
+  confirmBox() {
+    Swal.fire({
       position: 'top-end',
-      title: 'Are you sure want to remove?',  
-      text: 'You will not be able to recover this file!',  
-      icon: 'warning',  
-      showCancelButton: true,  
-      confirmButtonText: 'Yes, delete it!',  
-      cancelButtonText: 'No, keep it'  
-    }).then((result) => {  
-      if (result.value) {  
-        Swal.fire(  
-          'Deleted!',  
-          'Your imaginary file has been deleted.',  
-          'success'  
-        )  
-      } else if (result.dismiss === Swal.DismissReason.cancel) {  
-        Swal.fire(  
-          'Cancelled',  
-          'Your imaginary file is safe :)',  
-          'error'  
-        )  
-      }  
-    })  
-  } 
+      title: 'Are you sure want to remove?',
+      text: 'You will not be able to recover this file!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Your imaginary file has been deleted.',
+          'success'
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  }
 
   eliminarSede(sede: any): void {
     this.bloquearPag = true;
@@ -461,32 +468,32 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
       cancelButtonColor: '#ffc72f',
       cancelButtonText: '¡No, Cancelar!',
       confirmButtonText: '¡Si, Anular!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-            this.lstSede = this.lstSede.filter(s => s.num != sede.num);
-            let num: number = 1;
-            this.lstSede.forEach(s => {
-              s.num = num++;
-            });
-            console.log("eliminarSede:", sede);
-        }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.lstSede = this.lstSede.filter(s => s.num != sede.num);
+        let num: number = 1;
+        this.lstSede.forEach(s => {
+          s.num = num++;
+        });
+        console.log("eliminarSede:", sede);
+      }
     })
   }
 
 
-  listarSedes(): Promise<number> {   
-      let OBJsedes = { IdEmpresa: 75300, SedEstado: 1 }   
-      this.lstSedecombo.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });   
-        return this.loginService.listarSedes(OBJsedes).then(
-          sedes => {
-            if (sedes.length > 0) {
-              sedes.forEach(obj => this.lstSedecombo.push({ label: obj.SedDescripcion, value: obj.IdSede }));
-              console.log(" combolistarSedesCargarSedes", this.lstSedecombo);
-            }
-            return 1
-          }
-        )     
-    }
+  listarSedes(): Promise<number> {
+    let OBJsedes = { IdEmpresa: 75300, SedEstado: 1 }
+    this.lstSedecombo.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
+    return this.loginService.listarSedes(OBJsedes).then(
+      sedes => {
+        if (sedes.length > 0) {
+          sedes.forEach(obj => this.lstSedecombo.push({ label: obj.SedDescripcion, value: obj.IdSede }));
+          console.log(" combolistarSedesCargarSedes", this.lstSedecombo);
+        }
+        return 1
+      }
+    )
+  }
 
   async coreMensaje(mensage: MensajeController) {
     console.log("data llegando mensage:", mensage);
@@ -502,11 +509,11 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
     }
 
     let filtrarEmpleado: filtroEmpleadoMast = new filtroEmpleadoMast();
-    filtrarEmpleado.Documento = mensage.resultado.Documento;
+    filtrarEmpleado.Documento = mensage.resultado.Documento.trim();
     console.log("filtrarEmpleado", filtrarEmpleado);
     let empleado = await this.empleadoMastService.listarEmpleadoMast(filtrarEmpleado);
     console.log("empleado", empleado[0]);
-    console.log("empleado.Estado", empleado[0].Estado);
+    console.log("empleado.Estado", empleado[0].Estado.trim());
 
     if (empleado[0].Estado != "A") {
       this.messageService.add({
@@ -519,11 +526,11 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
     }
 
     if (mensage.componente == "SELECPACIENTE") {
-      this.DtoUsuario.Usuario = mensage.resultado.Documento;
-      this.DtoUsuario.NombreCompleto = mensage.resultado.NombreCompleto;
+      this.DtoUsuario.Usuario = mensage.resultado.Documento.trim();
+      this.DtoUsuario.NombreCompleto = mensage.resultado.NombreCompleto.trim();
       this.DtoUsuario.Persona = mensage.resultado.Persona;
-      this.DtoUsuario.correo_empresa = empleado[0].CorreoInterno.trimEnd();
-      this.EsEmpleado = mensage.resultado.EsEmpleado;
+      this.DtoUsuario.correo_empresa = empleado[0]?.CorreoInterno?.trim();
+      this.EsEmpleado = mensage.resultado.EsEmpleado.trim();
 
     }
   }

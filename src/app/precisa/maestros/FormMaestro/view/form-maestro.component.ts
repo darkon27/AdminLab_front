@@ -12,6 +12,8 @@ import { Maestro } from '../model/maestro';
 import { UsuarioAuth } from '../../../auth/model/usuario';
 import Swal from 'sweetalert2';
 import { MensajeController } from '../../../../../util/MensajeController';
+import { ConstanteAngular } from '../../../../@theme/ConstanteAngular';
+import { ConstanteUI } from '../../../../../util/Constantes/Constantes';
 
 @Component({
   selector: 'ngx-form-maestro',
@@ -27,7 +29,7 @@ export class FormMaestroComponent extends ComponenteBasePrincipal implements OnI
   usuarioAuth: UsuarioAuth = new UsuarioAuth();
   @Input() bloquear = false;
   @ViewChild(Table) dt: Table;
-  @ViewChild(FormMaestroMantenimientoComponent, { static: false }) maestroComponent: FormMaestroMantenimientoComponent;
+  @ViewChild(FormMaestroMantenimientoComponent, { static: false }) formMaestroMantenimientoComponent: FormMaestroMantenimientoComponent;
 
 
   constructor(
@@ -37,13 +39,25 @@ export class FormMaestroComponent extends ComponenteBasePrincipal implements OnI
     private confirmationService: ConfirmationService,
     private router: Router,
   ) { super(); }
-  coreMensaje(mensage: MensajeController): void {
+  btnEliminar?: boolean;
+  coreEliminar(): void {
     throw new Error('Method not implemented.');
   }
+  coreMensaje(mensage: MensajeController): void {
+    const dataDevuelta = mensage.resultado;
 
-  coreNuevo(): void {
-    this.openNew();
+    switch (mensage.componente.toUpperCase()) {
+      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'MAESTRO':
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'MAESTRO':
+        this.coreBuscar();
+        break;
+      default:
+        break;
+    }
+
   }
+
+
 
   coreBuscar(): void {
     this.dataTableComponent.first = 10;
@@ -58,6 +72,19 @@ export class FormMaestroComponent extends ComponenteBasePrincipal implements OnI
   }
   coreSalir(): void {
     throw new Error('Method not implemented.');
+  }
+
+
+  coreNuevo(): void {
+    this.formMaestroMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'MAESTRO', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
+  }
+
+  coreEditar(dto): void {
+    this.formMaestroMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'MAESTRO', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
+  }
+
+  coreVer(dto): void {
+    this.formMaestroMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'MAESTRO', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
   }
 
   ngOnInit(): void {
@@ -82,10 +109,12 @@ export class FormMaestroComponent extends ComponenteBasePrincipal implements OnI
   }
 
   cargarEstados() {
-    this.lstEstado.push({ label: "Seleccione", value: null });
 
-    this.lstEstado.push({ label: 'Activo', value: 1 });
-    this.lstEstado.push({ label: 'Inactivo', value: 2 });
+    this.lstEstado = [];
+    this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+      this.lstEstado.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
+    });
   }
 
 
@@ -111,18 +140,18 @@ export class FormMaestroComponent extends ComponenteBasePrincipal implements OnI
   //   return this.usuarioAuth = userStorage;
   // }
 
-  openNew() {
-    this.maestroComponent.iniciarComponente('NUEVO')
-  }
+  // openNew() {
+  //   this.formMaestroMantenimientoComponent.iniciarComponente('NUEVO')
+  // }
 
-  editProduct(product: Maestro) {
-    this.maestroComponent.iniciarComponente('EDITAR', product)
-  }
+  // editProduct(product: Maestro) {
+  //   this.formMaestroMantenimientoComponent.iniciarComponente('EDITAR', product)
+  // }
 
-  verProduct(product: Maestro) {
-    this.maestroComponent.iniciarComponente('VER', product)
-    console.log("ver:::: rowdata" + product)
-  }
+  // verProduct(product: Maestro) {
+  //   this.formMaestroMantenimientoComponent.iniciarComponente('VER', product)
+  //   console.log("ver:::: rowdata" + product)
+  // }
 
   invactivarProduct(product: Maestro) {
     this.confirmationService.confirm({

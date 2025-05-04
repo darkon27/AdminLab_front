@@ -40,6 +40,10 @@ export class PersonaPasswordResetComponent extends ComponenteBasePrincipal imple
     protected messageService: MessageService,
     private toastrService: NbToastrService,
   ) { super(); }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
   coreBuscar(): void {
     throw new Error("Method not implemented.");
   }

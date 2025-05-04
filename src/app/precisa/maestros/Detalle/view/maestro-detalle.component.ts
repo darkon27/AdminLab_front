@@ -14,6 +14,7 @@ import { MaestrodetalleService } from '../servicio/maestrodetalle.service';
 import { IMaestroDetalle } from '../dominio/dto/imaestrodetalle';
 import { Dtomaestrodetalle } from '../dominio/dto/Dtomaestrodetalle';
 import { ExportarService } from '../../../framework-comun/Exportar/exportar.service';
+import { ConstanteUI } from '../../../../../util/Constantes/Constantes';
 
 
 @Component({
@@ -43,6 +44,10 @@ export class MaestroDetalleComponent extends ComponenteBasePrincipal implements 
     private toastrService: NbToastrService,
     private exportarService: ExportarService,) {
     super();
+  }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
   }
 
 
@@ -80,20 +85,42 @@ export class MaestroDetalleComponent extends ComponenteBasePrincipal implements 
   }
 
   coreMensaje(mensage: MensajeController): void {
-    if (mensage.componente == "SELECTOR_DETALLE") {
-      this.coreBuscar();
+    const dataDevuelta = mensage.resultado;
+
+    switch (mensage.componente.toUpperCase()) {
+      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'DETALLE':
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'DETALLE':
+        this.coreBuscar();
+        break;
+      default:
+        break;
     }
+
   }
 
+
+
   coreNuevo(): void {
-    this.maestroDetalleMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_DETALLE', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo);
+    this.maestroDetalleMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'DETALLE', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
-  coreEditar(row) {
-    this.maestroDetalleMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_DETALLE', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, row)
+
+  coreEditar(dto): void {
+    this.maestroDetalleMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'DETALLE', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
   }
-  coreVer(row) {
-    this.maestroDetalleMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_DETALLE', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, row)
+
+  coreVer(dto): void {
+    this.maestroDetalleMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'DETALLE', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, dto);
   }
+
+  // coreNuevo(): void {
+  //   this.maestroDetalleMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_DETALLE', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo);
+  // }
+  // coreEditar(row) {
+  //   this.maestroDetalleMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_DETALLE', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, row)
+  // }
+  // coreVer(row) {
+  //   this.maestroDetalleMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_DETALLE', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, row)
+  // }
 
   coreBuscar(): void {
 
@@ -190,7 +217,7 @@ export class MaestroDetalleComponent extends ComponenteBasePrincipal implements 
         if (e.FechaCreacion != null || e.FechaCreacion != undefined) {
           let fechaInicio = new Date(e.FechaCreacion);
           let dd = ("0" + fechaInicio.getDate()).slice(-2);
-          let mm = ("0" + (fechaInicio.getMonth() + 1)).slice(-2); 
+          let mm = ("0" + (fechaInicio.getMonth() + 1)).slice(-2);
           let yyyy = fechaInicio.getFullYear()
           fechaCreacion = dd + "/" + mm + "/" + yyyy;
         } else {
@@ -267,7 +294,6 @@ export class MaestroDetalleComponent extends ComponenteBasePrincipal implements 
       res => {
         this.lstTablaMaestro = [];
         this.lstTablaMaestro.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-        console.log("TABLA MAESTRO:", res);
         res.forEach(element => {
           this.lstTablaMaestro.push({ label: element.Nombre, value: element.IdTablaMaestro });
         });

@@ -38,6 +38,10 @@ export class ExamenPerfilComponent extends ComponenteBasePrincipal implements  U
     super();
     this.ngOnDestroy();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
 
   coreMensaje(mensage: MensajeController): void {}
   coreNuevo(): void {throw new Error("Method not implemented.");}

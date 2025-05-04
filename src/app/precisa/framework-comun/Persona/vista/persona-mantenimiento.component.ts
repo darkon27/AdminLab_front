@@ -109,7 +109,9 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   ngOnDestroy(): void {
 
   }
-
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   ngOnInit(): void {
 
     this.titulo = '';

@@ -48,6 +48,10 @@ export class MedicoBuscarComponent extends ComponenteBasePrincipal implements On
     private toastrService: NbToastrService,
     protected messageService: MessageService,
   ) { super(); }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
+  }
 
   coreBusquedaRapida(filtro: string): void {
     throw new Error("Method not implemented.");

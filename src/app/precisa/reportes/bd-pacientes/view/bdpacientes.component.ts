@@ -25,6 +25,10 @@ export class BdPacientesComponent extends ComponenteBasePrincipal  implements On
     private toastrService: NbToastrService) {
     super();
   }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error('Method not implemented.');
+  }
   coreMensaje(mensage: MensajeController): void {
     throw new Error('Method not implemented.');
   }
@@ -45,7 +49,7 @@ export class BdPacientesComponent extends ComponenteBasePrincipal  implements On
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto){
+  coreVer(dto): void{
     this.bdPacientesMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   }
 
@@ -60,7 +64,7 @@ export class BdPacientesComponent extends ComponenteBasePrincipal  implements On
     this.dto.push(dw)
 
   }
-  coreEditar(dto){
+  coreEditar(dto): void{
     this.bdPacientesMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
   }
 

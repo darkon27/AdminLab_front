@@ -10,8 +10,9 @@ import { FiltroCompaniamast } from "../../../seguridad/companias/dominio/filtro/
 import { MaestrocompaniaMastService } from "../../../seguridad/companias/servicio/maestrocompania-mast.service";
 import { dtoCorrelativo } from "../model/dtoCorrelativo";
 import { filtroCorrelativo } from "../model/filtro.Correlativo";
-import { CorrelativoService } from "../service/correlativo.Services";
-import { forkJoin } from "rxjs";
+import { CorrelativoService } from "../service/correlativo.Service";
+import { forkJoin, of } from "rxjs";
+import { catchError, finalize, tap } from "rxjs/operators";
 
 
 
@@ -41,8 +42,13 @@ export class CorrelativosMantenimientoComponent extends ComponenteBasePrincipal 
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private CorrelativoService: CorrelativoService,
+    private _MessageService: MessageService,
     private maestrocompaniaMastService: MaestrocompaniaMastService) {
     super();
+  }
+  btnEliminar?: boolean;
+  coreEliminar(): void {
+    throw new Error("Method not implemented.");
   }
 
   ngOnInit(): void {
@@ -63,15 +69,17 @@ export class CorrelativosMantenimientoComponent extends ComponenteBasePrincipal 
       this.lstEstado = [...resp.estados];
       this.lstTipoComprobante = [...resp.tipoComprobantes];
 
-      const dataCompania = resp.companias.map((ele: any) => ({
+      const dataCompania = resp.companias?.map((ele: any) => ({
         label: ele.DescripcionCorta?.trim()?.toUpperCase() || "", value: `${ele.CompaniaCodigo?.trim() || ""}00`, title: ele.Persona || ""
       }));
       this.lstCompania = [...dataCompania];
+
     });
   }
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, data?: any): void {
     this.bloquearPag = true;
+    this.mensajeController = mensaje;
     this.cargarAcciones(accionform, titulo, data)
     this.bloquearPag = false;
   }
@@ -83,7 +91,12 @@ export class CorrelativosMantenimientoComponent extends ComponenteBasePrincipal 
 
     switch (accion) {
       case ConstanteUI.ACCION_SOLICITADA_NUEVO:
+        this.dto = new dtoCorrelativo();
         this.dto.Estado = "A";
+        this.dto.CompaniaCodigo = "00000000";
+        this.dto.TipoComprobante = "BV";
+        this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+        this.dto.FechaCreacion = new Date();
         this.puedeEditar = false;
 
         this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
@@ -98,6 +111,8 @@ export class CorrelativosMantenimientoComponent extends ComponenteBasePrincipal 
         this.fechaCreacion = new Date(rowdata.FechaCreacion);
         this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
 
+        this.dto.UltimoUsuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+        this.dto.UltimaFechaModif = new Date();
         break;
 
       case ConstanteUI.ACCION_SOLICITADA_VER:
@@ -116,16 +131,40 @@ export class CorrelativosMantenimientoComponent extends ComponenteBasePrincipal 
 
   }
 
-  coreGuardar(): void {
-    let valorAccionServicio: number = this.accionRealizar == ConstanteUI.ACCION_SOLICITADA_NUEVO ? 1 : 2;
+  async coreGuardar() {
+    try {
 
-    console.log(this.dto)
-    // this.CorrelativoService.MantenimientoCorrelativos(valorAccionServicio, this.dto, this.getUsuarioToken()).then();
 
+      let valorAccionServicio: number = this.accionRealizar == ConstanteUI.ACCION_SOLICITADA_NUEVO ? 1 : 2;
+      this.bloquearPag = true;
+
+      const consultaRepsonse = await this.CorrelativoService.MantenimientoCorrelativos(valorAccionServicio, this.dto, this.getUsuarioToken());
+      if (consultaRepsonse.success == true) {
+        this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
+
+        this.mensajeController.resultado = consultaRepsonse;
+        this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+        this.dialog = false;
+
+      } else {
+        this.MensajeToastComun('notification', 'warn', 'Advertencia', consultaRepsonse.mensaje);
+      }
+    }
+    catch (error) {
+      console.error(error)
+      this.MensajeToastComun('notification', 'error', 'Error', 'Se generó un error. Pongase en contacto con los administradores.');
+      this.bloquearPag = false;
+    } finally {
+      this.bloquearPag = false;
+    }
   }
 
   ngOnDestroy(): void {
     // this.userInactive.unsubscribe();
+  }
+  MensajeToastComun(key: string, tipo: string, titulo: string, dsc: string): void {
+    this._MessageService.clear();
+    this._MessageService.add({ key: key, severity: tipo, summary: titulo, detail: dsc });
   }
 
   coreNuevo(): void {
