@@ -82,7 +82,7 @@ export class HeaderComponent extends ComponenteBasePrincipal implements OnInit, 
     let user = JSON.parse(sessionStorage.getItem('access_user'))
     this.usuario = user.data[0].NombreCompleto.toUpperCase();
     //this.usuario = this.usuario.toUpperCase();
-    //console.log("menu usuario", user)
+    ////console.log(, user)
     this.usuario = this.usuario;
 
     const { xl } = this.breakpointService.getBreakpointsMap();
