@@ -188,7 +188,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
           this.combosedecliente(rowdata.IdCliente, rowdata.IdSede);
         }
         this.HabilitarCampos(rowdata.TIPOADMISIONID);
-        console.log("iniciarComponente this.Entydad::", this.contratoForm.value);
+        //console.log("iniciarComponente this.Entydad::", this.contratoForm.value);
         break;
     }
 
@@ -198,10 +198,10 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
 
   async cargarAcciones(accion: string, titulo) {
     this.acciones = `${titulo}: ${accion}`;
-    console.log("carga busqueda c2")
+    //console.log("carga busqueda c2")
     this.dialog = true;
     this.puedeEditar = false;
-    console.log("cargarAcciones::", this.acciones);
+    //console.log("cargarAcciones::", this.acciones);
     //  await this.cargarComboListaBase();
     //  await this.comboCargarSedes();
   }
@@ -222,7 +222,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
     miscelaneos.forEach(i => {
       this.lstFormula.push({ label: i.Nombre, value: parseInt(i.Codigo.trim(), 10) });
     });
-    console.log("cargarComboFormula::", this.lstFormula); // Para verificar que los datos cargan correctamente
+    //console.log("cargarComboFormula::", this.lstFormula); // Para verificar que los datos cargan correctamente
   }
 
   cargarComboMoneda() {
@@ -230,7 +230,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
     this.lstMoneda = [];
     // this.lstMoneda.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.MaestrodetalleService.ListarMoneda(dto).then(res => {
-      console.log("cargarComboMoneda::", res);
+      //console.log("cargarComboMoneda::", res);
       res.forEach(ele => {
         this.lstMoneda.push({ label: ele.DescripcionCorta.trim(), value: ele.MonedaCodigo });
       });
@@ -242,7 +242,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
     this.lstListaBase = [];
     // this.lstListaBase.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.listabaseServices.ListadoBase(dto).then(res => {
-      console.log("cargarComboListaBase::", res);
+      //console.log("cargarComboListaBase::", res);
       res.forEach(ele => {
         this.lstListaBase.push({ label: ele.Nombre.trim(), value: ele.IdListaBase });
       });
@@ -254,7 +254,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
     this.lstTipoAdmision = [];
     // this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.TipoAdmisionService.ListaTipoAdmision(dto).then(res => {
-      console.log("cargarTipoAdmision::", res);
+      //console.log("cargarTipoAdmision::", res);
       res.forEach(ele => {
         this.lstTipoAdmision.push({ label: ele.AdmDescripcion.trim(), value: ele.TipoAdmisionId });
       });
@@ -270,7 +270,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
       this.contratoForm.get('TIPOADMISIONID').setValue(event.value);
       // this.Entydad.TIPOADMISIONID = event.value;
       this.cargarTipoPaciente();
-      console.log("selectedTipoAdmision::", event.value);
+      //console.log("selectedTipoAdmision::", event.value);
       this.HabilitarCampos(tipoAdmisionSeleccionado);
     }
   }
@@ -327,13 +327,13 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
     // this.lstTipoPaciente.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
 
     this.TipoPacienteService.ListaTipoPaciente(dto).then(res => {
-      console.log("cargarTipoPaciente::", res); // Verifica la respuesta
+      //console.log("cargarTipoPaciente::", res); // Verifica la respuesta
 
       res.forEach(ele => {
         this.lstTipoPaciente.push({ label: ele.Descripcion.trim(), value: ele.TipoPacienteId });
       });
 
-      console.log("lstTipoPaciente::", this.lstTipoPaciente); // Verifica que los datos se están añadiendo
+      //console.log("lstTipoPaciente::", this.lstTipoPaciente); // Verifica que los datos se están añadiendo
     });
   }
 
@@ -367,7 +367,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
         resp.forEach(obj => this.lstsedeCliente.push({ label: obj.SedDescripcion, value: obj.IdSedeCliente }));
         this.contratoForm.get('IdSedeCliente').setValue(resp[0].IdSedeCliente);
         // this.Entydad.IdSedeCliente = resp[0].IdSedeCliente;
-        console.log("combosedecliente", this.lstsedeCliente);
+        //console.log("combosedecliente", this.lstsedeCliente);
       });
   }
 
@@ -428,7 +428,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
 
   coreGuardar(): void {
 
-    console.log("coreGuardar", this.contratoForm.value);
+    //console.log("coreGuardar", this.contratoForm.value);
     if (this.estaVacio(this.contratoForm.get('TIPOADMISIONID').value)) {
       this.messageShow('warn', 'Advertencia', 'Seleccione tipo Admisión');
       return;
@@ -442,7 +442,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
     }
 
     // Asegurar que las sedes seleccionadas se añadan al DTO
-    console.log("coreGuarda this.validarform", this.validarform);
+    //console.log("coreGuarda this.validarform", this.validarform);
     this.bloquearPag = true;
     switch (this.validarform) {
       case ConstanteUI.ACCION_SOLICITADA_NUEVO:
@@ -526,7 +526,7 @@ export class ConfiguracionContratosMantenimientoComponent extends ComponenteBase
 
   async coreMensaje(mensage: MensajeController) {
     if (mensage.componente == "SELECCLIENTE") {
-      console.log("SELECCLIENTE", mensage.resultado);
+      //console.log("SELECCLIENTE", mensage.resultado);
 
       this.contratoForm.get('RucEmpresa').setValue(mensage.resultado.Documento);
       this.contratoForm.get('empresa').setValue(mensage.resultado.empresa);

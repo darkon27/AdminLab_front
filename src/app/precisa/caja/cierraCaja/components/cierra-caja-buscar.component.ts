@@ -31,7 +31,7 @@ export class CierraCajaBuscarComponent extends ComponenteBasePrincipal implement
   }
 
   checknombre(pa:any){
-    console.log("entro",pa);
+    //console.log("entro",pa);
     this.vernombre = true;
     this.verdocumento = false;
 

@@ -99,7 +99,7 @@ export class TipoCambioComponent extends ComponenteBasePrincipal  implements OnI
         row.fechaModificacion = new Date();
         this.ParametrosService.mantenimientoParametros(2, row, this.getUsuarioToken()).then(
           res => {
-            console.log("res", res);
+            //console.log("res", res);
             if (res != null) {
               this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Anulado con éxito.' });
               this.coreBuscar();
@@ -122,23 +122,23 @@ export class TipoCambioComponent extends ComponenteBasePrincipal  implements OnI
   }
   
   coreVer(event: any) {
-    console.log("llego BtncoreVer  ", event);
+    //console.log("llego BtncoreVer  ", event);
     this.Entydad = event;
-    console.log("llego Entydad  ", this.Entydad);
+    //console.log("llego Entydad  ", this.Entydad);
     this.tipoCambioMantenimientoComponent.cargarAcciones(new MensajeController(this, 'SELECTOR_PARAMETROS', ''), "VER", ConstanteUI.ACCION_SOLICITADA_VER, this.Entydad);
   }
 
   coreEditar(event: any) {
-    console.log("llego BtncoreEditar  ", event);
+    //console.log("llego BtncoreEditar  ", event);
     this.Entydad = event;
     this.tipoCambioMantenimientoComponent.cargarAcciones(new MensajeController(this, 'SELECTOR_PARAMETROS', ''), "EDITAR", ConstanteUI.ACCION_SOLICITADA_EDITAR, this.Entydad)
   }
 
   onRowSelect(event: any) {
-    console.log("seleccion onRowSelect:", event);
+    //console.log("seleccion onRowSelect:", event);
   }
   coreBuscar(): void {
-    console.log("llego coreBuscar");
+    //console.log("llego coreBuscar");
 
     if (this.filtro.AplicacionCodigo == "") {
       this.filtro.AplicacionCodigo = null;
@@ -149,7 +149,7 @@ export class TipoCambioComponent extends ComponenteBasePrincipal  implements OnI
     if (this.filtro.Estado == "") {
       this.filtro.Estado = null;
     }
-    console.log("llego filtro", this.filtro);
+    //console.log("llego filtro", this.filtro);
     this.bloquearPag = true;
 
     this.ParametrosService.listarParametros(this.filtro).then((res) => {
@@ -158,7 +158,7 @@ export class TipoCambioComponent extends ComponenteBasePrincipal  implements OnI
         element.num = contado++;
         element.CompaniaCodigo = element.CompaniaCodigo.trim();
       });
-      console.log("consulta listarParametros:", res);
+      //console.log("consulta listarParametros:", res);
       this.lstparametros = res;
       setTimeout(() => {
         this.bloquearPag = false;
@@ -167,7 +167,7 @@ export class TipoCambioComponent extends ComponenteBasePrincipal  implements OnI
   }
 
   coreInvactivar(event: any) {
-    console.log("llego coreInvactivar", event);
+    //console.log("llego coreInvactivar", event);
     Swal.fire({
       title: 'Importante',
       text: "¿Seguro que desea anular el registro?",
@@ -184,7 +184,7 @@ export class TipoCambioComponent extends ComponenteBasePrincipal  implements OnI
         event.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario;
         this.ParametrosService.mantenimientoParametros(3, event, this.getUsuarioToken()).then(
           res => {
-            console.log("entro el servicio", res);
+            //console.log("entro el servicio", res);
             if (res.success == true) {
               this.toastMensaje('Se Anuló el registro con éxito.', 'success', 2000);
               setTimeout(() => {
@@ -332,14 +332,14 @@ export class TipoCambioComponent extends ComponenteBasePrincipal  implements OnI
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
       this.lstEstado.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("llego cargarEstados", this.lstEstado);
+    //console.log("llego cargarEstados", this.lstEstado);
     this.filtro.Estado = "A";
   }
   cargarCombocompania(): Promise<number> {
     this.FiltroCompan.estado = "A";
     this.lstCompania.push({ label: ConstanteAngular.COMBOTODOS, value: null });
     return this.maestrocompaniaMastService.listarCompaniaMast(this.FiltroCompan).then(res => {
-      console.log("listarCompaniaMast", res);
+      //console.log("listarCompaniaMast", res);
       res.forEach(ele => {
         //  this.lstCompania.push({ label: ele.DescripcionCorta.trim(), value: ele.Persona });
         this.lstCompania.push({ label: ele.DescripcionCorta.trim().toUpperCase(), value: ele.CompaniaCodigo.trim(), title: ele.Persona });

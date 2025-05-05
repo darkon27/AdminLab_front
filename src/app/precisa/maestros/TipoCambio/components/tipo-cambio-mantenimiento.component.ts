@@ -80,7 +80,7 @@ export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal im
   }
 
   async cargarAcciones(msj: MensajeController, accion: string, titulo: string, Entydad?: Parametros) {
-    console.log("dsad",accion);
+    //console.log("dsad",accion);
     /**PARAMETROS */
     this.mensajeController = msj;
     this.validarAccion = accion;
@@ -155,7 +155,7 @@ export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal im
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
       this.lstEstados.push({ label: i.Nombre.trim().toUpperCase(), value: i.Codigo.trim() });
     });
-    console.log("lstEstados",this.lstEstados);
+    //console.log("lstEstados",this.lstEstados);
     
   }
 
@@ -164,7 +164,7 @@ export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal im
     this.lstCompania.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.filtrocompa.estado = "A";
     return this.maestrocompaniaMastService.listarCompaniaMast(this.filtrocompa).then(res => {
-      console.log("company", res);
+      //console.log("company", res);
       res.forEach(ele => {
         this.lstCompania.push({ label: ele.DescripcionCorta.trim().toUpperCase(), value: ele.CompaniaCodigo.trim() });
       });

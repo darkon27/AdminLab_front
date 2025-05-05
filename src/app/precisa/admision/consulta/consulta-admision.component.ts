@@ -129,7 +129,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
       this.filtro.OrdenAtencion = null;
     }
     this.dataTableComponent.first = 0;
-    console.log("data filtro", this.filtro)
+    //console.log("data filtro", this.filtro)
     this.grillaCargarDatos({ first: this.dataTableComponent.first });
     //  this.bloquearPag = false;
   }
@@ -191,7 +191,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
 
   coreMensaje(mensage: MensajeController): void {
     if (mensage.componente == "SELECPACIENTE") {
-      console.log("data del seleccionar", mensage);
+      //console.log("data del seleccionar", mensage);
       this.filtro.Documento = mensage.resultado.Documento;
       this.filtro.NombreCompleto = mensage.resultado.NombreCompleto;
       this.filtro.Persona = mensage.resultado.Persona;
@@ -216,7 +216,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
       res.forEach(element => {
         element.numeroAdmision = contado++;
       });
-      console.log("consulta Admision grillaCargarDatos:", res);
+      //console.log("consulta Admision grillaCargarDatos:", res);
       res
       this.lstConsultaAdmision = res;
       setTimeout(() => {
@@ -233,7 +233,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
     var anio = hoy.getFullYear();
     this.filtro.FechaCreacion = new Date(`${anio},${mes},${dia}`);
     this.filtro.FechaAdmision = new Date(`${anio},${mes},${dia}`);
-    console.log("Consulta Admision fecha creacion", this.filtro.FechaCreacion)
+    //console.log("Consulta Admision fecha creacion", this.filtro.FechaCreacion)
   }
 
 
@@ -256,7 +256,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
           if (sedes.length > 0) {
             sedes.forEach(obj => this.lstsedes.push({ label: obj.SedDescripcion, value: obj.IdSede }));
             this.filtro.IdSede = prueba[0].IdSede
-            console.log("Consulta Admision comboCargarSedes", sedes)
+            //console.log("Consulta Admision comboCargarSedes", sedes)
           }
           return 1
         }
@@ -273,7 +273,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
       resp.forEach(e => {
         this.lstservicio.push({ label: e.Nombre, value: e.ClasificadorMovimiento });
       });
-      console.log("Consulta Admision comboCargarServicios", resp)
+      //console.log("Consulta Admision comboCargarServicios", resp)
       this.filtro.ClasificadorMovimiento = prueba[0].ClasificadorMovimiento
       return 1;
     });
@@ -300,7 +300,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
       var usuario = this.Auth.data;
 
       this.personaService.listarUsuarioWeb(IdPersona).then(resp => {
-        console.log("resp", resp)
+        //console.log("resp", resp)
         if (resp[0].estadoActualizacion == 1) {
           _parametros = {
             success: 1,
@@ -331,7 +331,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
           }
           if (validar == 1) {
             return this.consultaAdmisionService.sendCorreo(_parametros).then(resp => {
-              console.log("correo", resp)
+              //console.log("correo", resp)
               setTimeout(() => {
                 this.bloquearPag = false;
               }, 300);
@@ -378,13 +378,13 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
           return this.consultaAdmisionService.listarXadmision(idAdmision).then((res) => {
 
             this.filtro2 = res.Admision;
-            console.log("data del filtro", this.filtro2);
+            //console.log("data del filtro", this.filtro2);
             // this.bscPersona = res.Admision
-            // console.log("valor pasando", this.bscPersona)
+            // //console.log("valor pasando", this.bscPersona)
             res.list_AdmisionServicio.forEach(element => {
               this.lstListarXAdmision.push(element);
             });
-            console.log("data de la lista ", this.lstListarXAdmision);
+            //console.log("data de la lista ", this.lstListarXAdmision);
             this.AnularAdmision(this.filtro2, this.lstListarXAdmision);
           });
 
@@ -407,8 +407,8 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
   }
 
   AnularAdmision(admision: FiltroConsultaAdmision, lista: DtoPacienteClinica[]) {
-    console.log("data del anular detalle", admision)
-    console.log("data del anular lista", lista)
+    //console.log("data del anular detalle", admision)
+    //console.log("data del anular lista", lista)
 
     Swal.fire({
       title: 'Importante',
@@ -428,8 +428,8 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
         // )
         this.bloquearPag = true;
         var serv = lista;
-        console.log("Registro seleccionado anular", serv)
-        console.log("Cabecera del anular admision", admision)
+        //console.log("Registro seleccionado anular", serv)
+        //console.log("Cabecera del anular admision", admision)
         this.dtofinal.Admision.TipoDocumento = admision.TipoDocumento;
         this.dtofinal.Admision.Documento = admision.Documento;
         this.dtofinal.Admision.NombreCompleto = admision.NombreCompleto;
@@ -467,7 +467,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
         this.dtofinal.Admision.DesEstado = admision.DesEstado;
         this.dtofinal.Admision.TIPOADMISIONID = admision.TIPOADMISIONID;; //admision.TIPOADMISIONID;
         this.dtofinal.Admision.FlatAprobacion = admision.FlatAprobacion;
-        console.log("llegando toda cabecera", this.dtofinal.Admision)
+        //console.log("llegando toda cabecera", this.dtofinal.Admision)
         serv.forEach(element => {
           var dtoAdmClini = new DtoAdmisionclinicaDetalle();
 
@@ -486,15 +486,15 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
           dtoAdmClini.IpCreacion = element.IpCreacion;
           dtoAdmClini.IpModificacion = this.getIp();
           this.dtofinal.list_AdmisionServicio.push(dtoAdmClini);
-          console.log("llegando toda la lista", this.dtofinal.list_AdmisionServicio)
+          //console.log("llegando toda la lista", this.dtofinal.list_AdmisionServicio)
         });
 
         this.dtofinal.IndicadorWS = 0;
-        console.log("dto a anular admision:", this.dtofinal);
+        //console.log("dto a anular admision:", this.dtofinal);
         this.pacienteClinicaService.mantenimientoAdmisionClinica(3, this.dtofinal, this.getUsuarioToken()).then(
           res => {
             this.toastMensaje('Se Anuló el registro con éxito.', 'success', 2000)
-            console.log("entro el servicio", res)
+            //console.log("entro el servicio", res)
 
             // Swal.fire({
             //   position: 'top-end',
@@ -519,7 +519,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
   comboCargarTipoAdmision(): Promise<number> {
     this.lsttipoadmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.consultaAdmisionService.listarcombotipoadmision(this.tipoadmision).then(resp => {
-      console.log("combo tipo admision:", resp);
+      //console.log("combo tipo admision:", resp);
       resp.forEach(e => {
         this.lsttipoadmision.push({ label: e.AdmDescripcion, value: e.TipoAdmisionId });
       });
@@ -577,7 +577,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
           NroPeticion: this.registroSeleccionado.NroPeticion
         }
         this.consultaAdmisionService.printListadoReporte(payload).then(resp => {
-          console.log("prin", resp)
+          //console.log("prin", resp)
 
           this.verReporteModal = true
 
@@ -627,7 +627,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
           NroPeticion: this.registroSeleccionado.NroPeticion
         }
         this.consultaAdmisionService.printListadoReporte(payload).then(resp => {
-          console.log("prin", resp)
+          //console.log("prin", resp)
 
           this.verReporteModal = true
 
@@ -677,8 +677,8 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
 
   propios(event: any) {
 
-    console.log("data propios", event);
-    console.log("data propios", this.esPropios);
+    //console.log("data propios", event);
+    //console.log("data propios", this.esPropios);
   }
 
   validarPropios() {
@@ -726,6 +726,45 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
         });
       }
     }
+<<<<<<< Updated upstream
+=======
+
+    // buscarporplaca(){
+    //   this.bloquearPagina();
+    //   if (this.estaVacio(this.dto.dw_mtunidad.numeroplaca)) {
+    //     this.dto.dw_mtunidad.numeroplaca = null;
+    //   }
+
+    //   this.mtTallercitaService.validarPersonaPorPlaca(this.dto.dw_mtunidad.numeroplaca).then(
+    //     obj => {
+    //       if (obj != null) {
+    //         //console.log("buscar por placa:", obj);
+    //         this.dto.idcliente = obj.dw_infocliente.persona;
+    //         this.dto.dw_infocliente.nombrepersonadesc = obj.dw_infocliente.nombrepersonadesc;
+    //         this.dto.dw_infocliente.documentodni = obj.dw_infocliente.documentodni;
+    //         this.dto.dw_infocliente.tipodocumentodnidesc = obj.dw_infocliente.tipodocumentodnidesc;
+    //         this.dto.dw_infocliente.telefonopers = obj.dw_infocliente.telefonopers;
+    //         this.dto.dw_infocliente.direccionpers = obj.dw_infocliente.direccionpers;
+    //         this.dto.dw_mtunidad.numeroplaca = obj.dw_mtunidad.numeroplaca;
+    //         this.dto.dw_mtunidad.descripcionunidad = obj.dw_mtunidad.descripcionunidad;
+    //         this.dto.dw_mtunidad.marcaunidad = obj.dw_mtunidad.marcaunidad;
+    //         this.dto.dw_mtunidad.modelodescripcion = obj.dw_mtunidad.modelodescripcion;
+    //         this.dto.dw_mtunidad.nroasientos = obj.dw_mtunidad.nroasientos;
+    //         this.dto.dw_mtunidad.modeloanio = obj.dw_mtunidad.modeloanio
+    //         this.dto.dw_mtunidad.distancia = obj.dw_mtunidad.distancia;
+    //         this.dto.dw_mtunidad.numerochasis = obj.dw_mtunidad.numerochasis;
+
+    //         this.dto.idunidad = obj.dw_mtunidad.idunidad;
+
+    //       } else {
+    //         this.mostrarMensajeError('No se encontro al Cliente.');
+    //       }
+    //       this.desbloquearPagina();
+    //     }
+    //   );
+
+    // }
+>>>>>>> Stashed changes
   }
 
   limpiarPersona() {
@@ -747,8 +786,8 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
 
 
   onRowSelect(event: any) {
-    console.log("seleccion:", event);
-    console.log("seleccion variable:", this.registroSeleccionado);
+    //console.log("seleccion:", event);
+    //console.log("seleccion variable:", this.registroSeleccionado);
 
   }
 
@@ -793,7 +832,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
 
             } else {
               this.router.navigate(["precisa/admision/co_admisionclinica", this.ACCIONES.EDITAR, JSON.stringify(dto)], { skipLocationChange: true });
-              console.log("DTO DEL EDITAR 1 :::", dto);
+              //console.log("DTO DEL EDITAR 1 :::", dto);
             }
             break;
           case 2:
@@ -806,12 +845,12 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
 
             } else {
               this.router.navigate(["precisa/admision/co_admisionconvenio", this.ACCIONES.EDITAR, JSON.stringify(dto)], { skipLocationChange: true });
-              console.log("DTO DEL EDITAR 2 :::", dto);
+              //console.log("DTO DEL EDITAR 2 :::", dto);
             }
             // this.router.navigate(["precisa/admision/co_admisionconvenio", this.ACCIONES.EDITAR, JSON.stringify(dto)], { skipLocationChange: true });
             // if (this.registroSeleccionado.Estado == 1) { // TIENE QUE SER == SOLO CAMBIARLO PARA PRUEBAS
             //   this.router.navigate(["precisa/admision/co_admisionconvenio", this.ACCIONES.EDITAR, JSON.stringify(dto)], { skipLocationChange: true });
-            //   console.log("DTO DEL EDITAR CO:::", dto);
+            //   //console.log("DTO DEL EDITAR CO:::", dto);
             // } else {
             //   Swal.fire({
             //     icon: 'warning',
@@ -824,7 +863,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
           default:
             if (this.registroSeleccionado.Estado == 1) { // TIENE QUE SER == SOLO CAMBIARLO PARA PRUEBAS
               this.router.navigate(["precisa/admision/co_admisionparticular", this.ACCIONES.EDITAR, JSON.stringify(dto)], { skipLocationChange: true });
-              console.log("CO defaul:::", dto);
+              //console.log("CO defaul:::", dto);
             } else {
               Swal.fire({
                 icon: 'warning',
@@ -849,7 +888,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
 
   coreCambiarContrasenia(dto: Admision): void {
     dto = this.registroSeleccionado;
-    console.log("CAMBIAR PASSWORD", dto);
+    //console.log("CAMBIAR PASSWORD", dto);
     if (dto == null || dto == undefined) {
       Swal.fire({
         icon: 'warning',
@@ -875,12 +914,12 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
     this.dtoPersona.Documento = dto.Documento;
     this.dtoPersona.PasswordWeb = generarpsd()
     this.dtoPersona.ClasificadorMovimiento = dto.ClasificadorMovimiento;
-    console.log("Consulta coreCambiarContrasenia 1 :::", this.dtoPersona);
+    //console.log("Consulta coreCambiarContrasenia 1 :::", this.dtoPersona);
     this.personaService.mantenimientoUsuarioWeb(2, this.dtoPersona, this.getUsuarioToken()).then(
       res => {
         if (res.success) {
           alert("Se ha cambiado su contraseña")
-          console.log("Consulta mantenimientoUsuarioWeb 1 :::", res);
+          //console.log("Consulta mantenimientoUsuarioWeb 1 :::", res);
           this.Correo(dto);
           this.grillaCargarDatos({ first: 0 });
 
@@ -904,7 +943,7 @@ export class ConsultaAdmisionComponent extends ComponenteBasePrincipal implement
       return;
     } else {
       this.verConsultaDetalle();
-      console.log("Entro a doble clic");
+      //console.log("Entro a doble clic");
       this.registroSeleccionado = null;
     }
   }

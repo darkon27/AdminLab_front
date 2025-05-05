@@ -70,7 +70,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
   }
 
   saveData() {  //prueba validar med del value esto si se puede borar
-    console.log("save data", this.validarMed.value);
+    //console.log("save data", this.validarMed.value);
   }
 
   ValidarMedico() {
@@ -148,14 +148,14 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
 
   coreIniciarComponente(mensaje: MensajeController): void {
     this.mensajeController = mensaje;
-    console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
+    //console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
     this.verMantMedico = true;
     this.titulo = 'MEDICO';
     this.acciones = `${this.titulo}: ${this.mensajeController.tipo}`;
   }
 
   auditoria(filtro?: any, accion?: string) {
-    console.log("Med auditoria", filtro)
+    //console.log("Med auditoria", filtro)
     if (accion == "NUEVO" || this.estaVacio(filtro.UsuarioCreacion)) {
       this.fechaCreacion = new Date();
       this.usuario = this.Auth[0].NombreCompleto;
@@ -163,7 +163,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
     } else {
       if (this.esNumero(filtro.UsuarioCreacion.trim())) {
 
-        console.log("filtro", filtro)
+        //console.log("filtro", filtro)
         // var dtopersona   filtro.UsuarioCreacion.trim(),
         let Documento = {
           Documento: filtro.UsuarioCreacion.trim(),
@@ -172,7 +172,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
           UneuNegocioId: "-1"
         }
         return this.personaService.listaPersonaUsuario(Documento).then((res) => {  
-          console.log("Med Nombre auditoria", res)
+          //console.log("Med Nombre auditoria", res)
           if(res.length>0){
             this.usuario = res[0].NombreCompleto;
             this.fechaCreacion = new Date(filtro.FechaCreacion);
@@ -182,7 +182,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
             } else {
               this.fechaModificacion = new Date(filtro.FechaModificacion);
             }
-            console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
+            //console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
           }
         })
       } else {
@@ -210,7 +210,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
   }
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, dtoEditMedico?: any): void {
-    console.log("Medico coreIniciarComponentemantenimiento", accionform);
+    //console.log("Medico coreIniciarComponentemantenimiento", accionform);
     sessionStorage.setItem('filtrosMedico', JSON.stringify(dtoEditMedico));
     this.auditoria(dtoEditMedico, accionform);
     this.verMantMedico = true;
@@ -221,7 +221,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
 
     if (accionform == "NUEVO") {
       this.dto = new dtoMedico();
-      console.log("DTO MAL:", this.dto);
+      //console.log("DTO MAL:", this.dto);
       this.editarCampos = false;
       this.verLabelId = false;
       this.ocultarLabelId = true;
@@ -274,7 +274,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
               this.dto.TipoDocumento = "D";
               this.dto.IpCreacion = this.getIp();
               this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario;
-              console.log("data del dto medico", this.dto);
+              //console.log("data del dto medico", this.dto);
               this.medicoService.mantenimientoMaestro(1, this.dto, this.getUsuarioToken()).then(
                 res => {
 
@@ -343,7 +343,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
               this.dto.UsuarioModificacion = this.getUsuarioAuth().data[0].Usuario;
               this.medicoService.mantenimientoMaestro(2, this.dto, this.getUsuarioToken()).then(
                 res => {
-                  console.log("res", res)
+                  //console.log("res", res)
                   if (res.success) {
                     this.verMantMedico = false;
                     this.makeToast(this.getMensajeActualizado(this.dto.MedicoId))
@@ -412,7 +412,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
             this.dto.TipoDocumento = "D";
             this.medicoService.mantenimientoMaestro(1, this.dto, this.getUsuarioToken()).then(
               res => {
-                console.log("data del res medico", res);
+                //console.log("data del res medico", res);
                 if (res.success) {
                   this.makeToast(this.getMensajeGrabado(res.data.MedicoId));
                   this.verMantMedico = false;
@@ -475,7 +475,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
             this.dto.TipoDocumento = "D";
             this.medicoService.mantenimientoMaestro(2, this.dto, this.getUsuarioToken()).then(
               res => {
-                console.log("res", res)
+                //console.log("res", res)
                 if (res.success) {
                   this.verMantMedico = false;
                   this.makeToast(this.getMensajeActualizado(this.dto.MedicoId))
@@ -577,7 +577,7 @@ export class MedicoMantenimientoComponent extends ComponenteBasePrincipal implem
         lstComboprocedencia.forEach(e => {
         this.lstespecialidad.push({ label: e.Nombre, value: e.IdEspecialidad });   
         });
-        console.log("Medico Mant lstespecialidad:",  this.lstespecialidad);
+        //console.log("Medico Mant lstespecialidad:",  this.lstespecialidad);
       } 
   }
 

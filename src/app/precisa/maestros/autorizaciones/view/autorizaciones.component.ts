@@ -91,7 +91,7 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
         element.num = contado++;
       });
       this.lstModelo = res;
-      console.log("coreBuscar listado:", res);
+      //console.log("coreBuscar listado:", res);
     });
   }
 
@@ -183,7 +183,7 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
         dtoInactivar.UltimaFechaModif = new Date();
         dtoInactivar.IpModificacion = this.getIp();
         dtoInactivar.Estado = 2;
-        console.log("llego coreinactivar  ", dtoInactivar);
+        //console.log("llego coreinactivar  ", dtoInactivar);
         const respInactivar = await this.AutorizacionService.MantenimientoAutorizacion(ConstanteUI.SERVICIO_SOLICITUD_INACTIVAR, dtoInactivar, this.getUsuarioToken());
         if (respInactivar != null) {
           if (respInactivar.success) {
@@ -274,7 +274,7 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
 
 
   getPersonaServicio(documento: any, validator: number) {
-    console.log("mensaje documento", documento);
+    //console.log("mensaje documento", documento);
     let dto = {
       Documento: documento.trim(),
       tipopersona: "P",
@@ -283,7 +283,7 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
     }
 
     return this.personaService.listaPersonaUsuario(dto).then((res) => {
-      console.log("mensaje del res", res);
+      //console.log("mensaje del res", res);
       this.bloquearPag = false;
       if (res.length > 0) {
         if (validator == 1) {
@@ -306,7 +306,7 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
           this.filtro.IdPaciente = res[0].Persona;
         }
       } else {
-        console.log("entroo nadaaa");
+        //console.log("entroo nadaaa");
         this.toastMensaje('Documento no encontrado, revise bien los parametros', 'warning', 3000)
         this.filtro.DocPaciente = null;
       }

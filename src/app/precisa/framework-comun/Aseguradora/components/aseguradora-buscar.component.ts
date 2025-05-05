@@ -127,7 +127,7 @@ export class AseguradoraBuscarComponent extends ComponenteBasePrincipal implemen
   }
   coreMensaje(mensage: MensajeController): void {
     // if(mensage.componente == "TIPREGPERSONA") {
-    //   console.log("data del seleccionar",mensage);
+    //   //console.log("data del seleccionar",mensage);
     //   this.filtro.Documento=mensage.resultado.Documento;
     //   this.filtro.NombreCompleto=mensage.resultado.NombreCompleto;
     //   this.filtro.FechaNacimiento=mensage.resultado.FechaNacimiento;
@@ -235,7 +235,7 @@ export class AseguradoraBuscarComponent extends ComponenteBasePrincipal implemen
     // if (accion == "NUEVO") {
     this.cargarAcciones(accion, titulo)
     this.coreIniciarComponente
-    console.log("entra?:");
+    //console.log("entra?:");
 
     // else{
     //   this.cargarAcciones(accion,titulo)

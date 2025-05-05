@@ -69,7 +69,7 @@ export class ExamenComponent extends ComponenteBasePrincipal implements OnInit, 
    */
 
   coreNuevo(): void {
-    console.log(this.objetoTitulo.menuSeguridad.titulo);
+    //console.log(this.objetoTitulo.menuSeguridad.titulo);
 
     this.examenMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'NUEVOEXAMEN', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo, 1);
   }
@@ -184,7 +184,7 @@ export class ExamenComponent extends ComponenteBasePrincipal implements OnInit, 
   // }
 
   coreInactivar(row: any): void {
-    console.log("coreInactivar row", row);
+    //console.log("coreInactivar row", row);
     Swal.fire({
       title: '¡Mensaje!',
       text: `¡Desea inactivar Codigo: ${row.CodigoComponente} ?!`,
@@ -225,7 +225,7 @@ export class ExamenComponent extends ComponenteBasePrincipal implements OnInit, 
   }
 
   onRowSelect(event: any) {
-    console.log("Lista Exa onRowSelect:", this.registroSeleccionado);
+    //console.log("Lista Exa onRowSelect:", this.registroSeleccionado);
   }
 
   ngOnInit(): void {
@@ -261,8 +261,8 @@ export class ExamenComponent extends ComponenteBasePrincipal implements OnInit, 
         // this.filtro.ClasificadorMovimiento = service[0].ClasificadorMovimiento
       });
       this.filtro.ClasificadorMovimiento = service[0].ClasificadorMovimiento;
-      console.log("Examen combo servicio resp", resp);
-      console.log("Examen combo servicio", service[0]);
+      //console.log("Examen combo servicio resp", resp);
+      //console.log("Examen combo servicio", service[0]);
       return 1;
     });
   }
@@ -285,7 +285,7 @@ export class ExamenComponent extends ComponenteBasePrincipal implements OnInit, 
         this.lstClasificacion.push({ label: e.Nombre.toUpperCase(), value: e.IdClasificacion });
       });
     });
-    console.log("Examen comboCargarClasificacion", this.lstClasificacion);
+    //console.log("Examen comboCargarClasificacion", this.lstClasificacion);
   }
 
 
@@ -298,13 +298,13 @@ export class ExamenComponent extends ComponenteBasePrincipal implements OnInit, 
 
   grillaCargarDatos(event: LazyLoadEvent) {
     this.bloquearPag = true;
-    console.log("Lista Examen grillaCargarDatos", this.filtro);
+    //console.log("Lista Examen grillaCargarDatos", this.filtro);
     this.examenService.listarexamenmaestro(this.filtro).then((res) => {
       var contado = 1;
       res.forEach(element => {
         element.numeroExamen = contado++;
       });
-      console.log("Lista Examen grillaCargarDatos", res);
+      //console.log("Lista Examen grillaCargarDatos", res);
       this.bloquearPag = false;
       this.lstexamen = res;
     });

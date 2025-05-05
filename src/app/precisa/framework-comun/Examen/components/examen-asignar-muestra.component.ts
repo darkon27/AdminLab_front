@@ -43,7 +43,7 @@ export class ExamenAsignarMuestraComponent extends ComponenteBasePrincipal {
       this.titulo = `${titulo}: ${accionform}`;
       this.dialog = true;
       this.puedeEditar = false;
-      console.log("this.mensajeController",       this.mensajeController);
+      //console.log("this.mensajeController",       this.mensajeController);
 
       this.bloquearPag = true;
       let objMuestra = {
@@ -54,24 +54,24 @@ export class ExamenAsignarMuestraComponent extends ComponenteBasePrincipal {
        res.forEach(element => {
          element.numeroExamen = contado++;
        });
-        console.log("Lista Muestra grillaCargarDatos", res);
+        //console.log("Lista Muestra grillaCargarDatos", res);
        this.bloquearPag = false;
        this.lstexamen = res;
      });
 
-     console.log("objet dtoEditExamen ", dtoEditExamen);
+     //console.log("objet dtoEditExamen ", dtoEditExamen);
      let objExaMuetra = {
        Componente: dtoEditExamen.CodigoComponente,
        Estado: 1
      }
-     console.log("Lista objExaMuetra", objExaMuetra);
+     //console.log("Lista objExaMuetra", objExaMuetra);
       this.ExamenService.listadocomponentemuestra(objExaMuetra).then((resMue) => {
          var cont = 1;
          resMue.forEach(element => {
            element.numeroExamen = cont++;
          });
          this.lstmuestra = resMue;
-         console.log("Lista lstmuestra", resMue);
+         //console.log("Lista lstmuestra", resMue);
        });
 
     });

@@ -125,11 +125,11 @@ export class FormMaestroComponent extends ComponenteBasePrincipal implements OnI
     // this.filtro.paginacion.paginacionListaResultado = [];
 
     // this.filtro.paginacion.paginacionRegistroInicio = event.first;          
-    // console.log("filtros llegando:",this.filtro);
+    // //console.log("filtros llegando:",this.filtro);
     this.maestroService.listarMaestro(this.filtro).then(
       res => {
         this.lstMaestros = res;
-        console.log("res", res);
+        //console.log("res", res);
         // this.desbloquearPagina();
       }
     )
@@ -150,7 +150,7 @@ export class FormMaestroComponent extends ComponenteBasePrincipal implements OnI
 
   // verProduct(product: Maestro) {
   //   this.formMaestroMantenimientoComponent.iniciarComponente('VER', product)
-  //   console.log("ver:::: rowdata" + product)
+  //   //console.log("ver:::: rowdata" + product)
   // }
 
   invactivarProduct(product: Maestro) {

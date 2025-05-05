@@ -67,7 +67,7 @@ export class ExamenPatologicoComponent extends ComponenteBasePrincipal implement
   }
 
   coreVer(dto): void {
-    console.log(this.objetoTitulo)
+    //console.log(this.objetoTitulo)
     this.examenPatologicoMantenimientoComponent.iniciarComponente("VER", this.objetoTitulo.menuSeguridad.titulo)
   }
 

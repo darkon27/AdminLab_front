@@ -135,7 +135,7 @@ export class MaestroDetalleComponent extends ComponenteBasePrincipal implements 
         element.num = contado++;
       });
       this.lstMaestroDetalle = res;
-      console.log("maestro listado:", res);
+      //console.log("maestro listado:", res);
     });
 
   }
@@ -251,7 +251,7 @@ export class MaestroDetalleComponent extends ComponenteBasePrincipal implements 
     throw new Error('Method not implemented.');
   }
   coreExportar(): void {
-    console.log("exportar:", this.lstSeleccionadomultiple);
+    //console.log("exportar:", this.lstSeleccionadomultiple);
   }
   coreSalir(): void {
     throw new Error('Method not implemented.');

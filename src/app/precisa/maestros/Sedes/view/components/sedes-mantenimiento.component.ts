@@ -61,7 +61,7 @@ export class SedesMantenimientoComponent extends ComponenteBasePrincipal impleme
         this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
         this.fechaCreacion = new Date();
       } else if (this.validarform == "EDITAR") {
-        console.log("EDITAR FILA :", rowdata);
+        //console.log("EDITAR FILA :", rowdata);
         this.filtro.IdSede = rowdata.IdSede;
         this.bloquearPag = true;
         this.maestroSucursalService.ListaSede(this.filtro).then((res) => {
@@ -74,7 +74,7 @@ export class SedesMantenimientoComponent extends ComponenteBasePrincipal impleme
         });
 
       } else if (this.validarform == "VER") {
-        console.log("VER FILA :", rowdata);
+        //console.log("VER FILA :", rowdata);
         this.filtro.IdSede = rowdata.IdSede;
         this.bloquearPag = true;
         let fechaM: string;
@@ -127,7 +127,7 @@ export class SedesMantenimientoComponent extends ComponenteBasePrincipal impleme
         res => {
           this.bloquearPag = false;
           this.dialog = false;
-          console.log("registrado:", res);
+          //console.log("registrado:", res);
           if (res != null) {
             if (res.mensaje == "Created") {
               this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se registró con éxito.' });
@@ -148,7 +148,7 @@ export class SedesMantenimientoComponent extends ComponenteBasePrincipal impleme
         res => {
           this.bloquearPag = false;
           if (res != null) {
-            console.log("registrado:", res);
+            //console.log("registrado:", res);
             if (res.mensaje == "Ok") {
               this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se actualizó con éxito.' });
               this.mensajeController.resultado = res;
@@ -176,7 +176,7 @@ export class SedesMantenimientoComponent extends ComponenteBasePrincipal impleme
     this.lstCompania.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.filtrocompa.estado = "A";
     return this.maestrocompaniaMastService.listarCompaniaMast(this.filtrocompa).then(res => {
-      console.log("company", res);
+      //console.log("company", res);
       res.forEach(ele => {
         this.lstCompania.push({ label: ele.DescripcionCorta.trim(), value: ele.Persona });
       });

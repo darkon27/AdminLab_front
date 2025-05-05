@@ -53,7 +53,7 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
         this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
         this.fechaCreacion = new Date();
       } else if (this.validarform == "EDITAR") {
-        console.log("EDITAR FILA :", rowdata);
+        //console.log("EDITAR FILA :", rowdata);
         this.filtro.IdListaBase = rowdata.IdListaBase;
         this.bloquearPag = true;
         this.listabaseServices.ListadoBase(this.filtro).then((res) => {
@@ -61,7 +61,7 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
           this.dto = res[0];
           if (res[0].FechaValidezInicio != null) {this.dto.FechaValidezInicio = new Date(res[0].FechaValidezInicio); }
           if (res[0].FechaValidezFin != null) {this.dto.FechaValidezFin = new Date(res[0].FechaValidezFin); }
-          console.log("EDITAR this.dto :",   this.dto );
+          //console.log("EDITAR this.dto :",   this.dto );
           this.puedeEditar = false;
           this.fechaModificacion = new Date();
           this.fechaCreacion = new Date(res[0].FechaCreacion);
@@ -69,7 +69,7 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
         });
 
       } else if (this.validarform == "VER") {
-        console.log("VER FILA :", rowdata);
+        //console.log("VER FILA :", rowdata);
         this.filtro.IdListaBase = rowdata.IdListaBase;
         this.bloquearPag = true;
         this.listabaseServices.ListadoBase(this.filtro).then((res) => {
@@ -102,7 +102,7 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
     this.lstMoneda = [];
     this.lstMoneda.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.MaestrodetalleService.ListarMoneda(dto).then(res => {
-    console.log("cargarComboMoneda::", res);
+    //console.log("cargarComboMoneda::", res);
         res.forEach(ele => {
             this.lstMoneda.push({ label: ele.DescripcionCorta.trim(), value: ele.MonedaCodigo });
         });
@@ -121,7 +121,7 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
         res => {
           this.bloquearPag = false;
           this.dialog = false;
-          console.log("registrado:", res);
+          //console.log("registrado:", res);
           if (res != null) {
             if (res.mensaje == "Created") {
               this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se registró con éxito.' });
@@ -142,7 +142,7 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
         res => {
           this.bloquearPag = false;
           if (res != null) {
-            console.log("registrado:", res);
+            //console.log("registrado:", res);
             if (res.mensaje == "Ok") {
               this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se actualizó con éxito.' });
               this.mensajeController.resultado = res;

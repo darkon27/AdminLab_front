@@ -44,7 +44,7 @@ export class AtencionParticularesComponent extends ComponenteBasePrincipal imple
 
   corePago(): void {
     this.openPago();
-    console.log("::Click modal:::");
+    //console.log("::Click modal:::");
   }
 
   openPago() {

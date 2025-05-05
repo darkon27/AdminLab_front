@@ -52,7 +52,7 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
   }
 
   coreMensaje(mensage: MensajeController): void {
-    console.log("coreMensaje llegando:", mensage.componente);
+    //console.log("coreMensaje llegando:", mensage.componente);
     if (mensage.componente == "SELECTOR_USUARIO") {
       this.coreBuscar();
     }
@@ -94,7 +94,7 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
       this.filtro.estado = null;
     }
 
-    console.log("llego filtro", this.filtro);
+    //console.log("llego filtro", this.filtro);
     this.bloquearPag = true;
 
     this.perfilUserService.listarPerfilMaster(this.filtro).then((res) => {
@@ -107,7 +107,7 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
       setTimeout(() => {
         this.bloquearPag = false;
       }, 500);
-      console.log("consulta listarPerfilMaster:", this.lstPerfil);
+      //console.log("consulta listarPerfilMaster:", this.lstPerfil);
     });
 
   }
@@ -129,13 +129,13 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
   }
 
   onRowUnselect(event: any) {
-    console.log("seleccion:", event);
-    console.log("seleccion variable:", this.registroSeleccionado);
+    //console.log("seleccion:", event);
+    //console.log("seleccion variable:", this.registroSeleccionado);
   }
 
   onRowSelect(event: any) {
-    console.log("seleccion:", event);
-    console.log("seleccion variable:", this.registroSeleccionado);
+    //console.log("seleccion:", event);
+    //console.log("seleccion variable:", this.registroSeleccionado);
   }
 
   /*
@@ -153,12 +153,12 @@ export class PerfilUsuariosComponent extends ComponenteBasePrincipal implements 
   }
 
   coreVer(dto): void {
-    console.log("llego coreVer  ", dto);
+    //console.log("llego coreVer  ", dto);
     this.perfilesComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_USUARIO', ''), 'VER', '', dto);
   }
 
   coreEditar(dto): void {
-    console.log("llego coreEditar  ", dto);
+    //console.log("llego coreEditar  ", dto);
     this.perfilesComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_USUARIO', ""), "EDITAR", "", dto)
   }
   async coreinactivar(dtoInactivar) {

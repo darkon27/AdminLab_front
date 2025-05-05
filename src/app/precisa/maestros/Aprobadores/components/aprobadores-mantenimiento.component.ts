@@ -48,7 +48,7 @@ export class AprobadoresMantenimientoComponent extends ComponenteBasePrincipal i
 
 
   iniciarComponenteMaestro(msj: MensajeController, accion: string, titulo, rowdata?: any): void {
-    console.log("EDITAR MensajeController :",  msj );
+    //console.log("EDITAR MensajeController :",  msj );
     this.mensajeController = msj;
     this.validarform = accion;
     this.acciones = `${titulo}: ${accion}`;
@@ -62,13 +62,13 @@ export class AprobadoresMantenimientoComponent extends ComponenteBasePrincipal i
         this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
         this.fechaCreacion = new Date();
       } else if (this.validarform == "EDITAR") {
-        console.log("EDITAR FILA :", rowdata);
+        //console.log("EDITAR FILA :", rowdata);
  
         this.bloquearPag = true;
         this.AprobadoresService.ListarAprobadores(this.dto).then((res) => {
           this.bloquearPag = false;
           this.dto = res[0];
-          console.log("EDITAR this.dto :",   this.dto );
+          //console.log("EDITAR this.dto :",   this.dto );
           this.puedeEditar = false;
           this.fechaModificacion = new Date();
           this.fechaCreacion = new Date(res[0].FechaCreacion);
@@ -76,7 +76,7 @@ export class AprobadoresMantenimientoComponent extends ComponenteBasePrincipal i
         });
 
       } else if (this.validarform == "VER") {
-        console.log("VER FILA :", rowdata);
+        //console.log("VER FILA :", rowdata);
         this.bloquearPag = true;
         this.AprobadoresService.ListarAprobadores(this.dto).then((res) => {
           this.bloquearPag = false;

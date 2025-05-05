@@ -136,7 +136,7 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
 
     this.lstClasificadorNegocio.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.examenService.serviciopaginado(objFiltro).then((lista) => {
-      console.log(lista)
+      //console.log(lista)
       this.lstClasificadorNegocio = [...this.lstClasificadorNegocio, ...lista.map((item) => { return { label: item.Nombre.toLocaleUpperCase(), value: item.ClasificadorMovimiento } })]
     });
   }
@@ -152,8 +152,8 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
 
     this.lstTipoPaciente.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this._ConsultaAdmisionService.listarcombotipooperacion(filtroData).then((lista) => {
-      console.log("lista", lista)
-      console.log("filtroData", filtroData)
+      //console.log("lista", lista)
+      //console.log("filtroData", filtroData)
       this.lstTipoPaciente = [...this.lstTipoPaciente, ...lista.map((item) => { return { label: item.Descripcion.toLocaleUpperCase(), value: item.TipoOperacionID } })]
     });
   }

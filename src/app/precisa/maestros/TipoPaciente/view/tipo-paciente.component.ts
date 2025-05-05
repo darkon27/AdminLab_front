@@ -178,7 +178,7 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
         element.num = contado++;
       });
       this.lst = res;
-      console.log("coreBuscar listado:", res);
+      //console.log("coreBuscar listado:", res);
     });
   }
 
@@ -243,7 +243,7 @@ export class TipoPacienteComponent extends ComponenteBasePrincipal implements On
     let dto = { AdmEstado: 1 }
     this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOTODOS, value: null });
     return this.TipoAdmisionService.ListaTipoAdmision(dto).then(resp => {
-      console.log("combo tipo admision:", resp);
+      //console.log("combo tipo admision:", resp);
       resp.forEach(e => {
         this.lstTipoAdmision.push({ label: e.AdmDescripcion, value: e.TipoAdmisionId });
       });

@@ -81,7 +81,7 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
   }
 
   coreSalir(): void {
-    console.log("coreSalir ::",  this.mensajeController );
+    //console.log("coreSalir ::",  this.mensajeController );
     this.editarCampos = false;
     this.verConsultaDetalle = false;
   }
@@ -103,20 +103,20 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
     if (accionform == "DETALLE") 
     {
         this.mensajeController = mensaje;
-        console.log("1 :: DETALLE ENTRO coreIniciarComponenteDetalle", this.mensajeController);
+        //console.log("1 :: DETALLE ENTRO coreIniciarComponenteDetalle", this.mensajeController);
         this.titulo = 'DETALLE DE ADMISION';
         this.acciones = this.titulo + ":" + accionform;
         dtoConsultaDet.IdAdmision = this.mensajeController.componenteDestino.seleccion.IdAdmision;
         this.dtoExpediente = this.mensajeController.componenteDestino.seleccion;
         this.temFlagAdelanto = this.mensajeController.componenteDestino.seleccion.FlagAdelanto;
         this.temFlagCortesia = this.mensajeController.componenteDestino.seleccion.FlagCortesia;
-        console.log("dtoExpediente  ::", this.dtoExpediente);
+        //console.log("dtoExpediente  ::", this.dtoExpediente);
         this.ListadoAdmisionConstancia(dtoConsultaDet);
     }
   }
 
   ListadoAdmisionConstancia(detalleconsulta: FiltroConsultaAdmision) {
-    console.log("2 :: DETALLE ENTRO ListadoAdmisionConstancia", detalleconsulta);
+    //console.log("2 :: DETALLE ENTRO ListadoAdmisionConstancia", detalleconsulta);
     this.bloquearPag = true;
     return this.consultaAdmisionService.ListadoConstancia(detalleconsulta).then(res => {
   
@@ -124,7 +124,7 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
       if (res.length > 0) 
       {
         this.filtro = res[0]; 
-        console.log("3 :: ListadoConstancia ::",this.filtro);
+        //console.log("3 :: ListadoConstancia ::",this.filtro);
         var contado = 1;
         var total = 0;
         var cantidadExamenes = 0;
@@ -140,7 +140,7 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
         });
 
         this.lstListarDet  = res;
-        console.log(" this.lstListarDet :: ",  this.lstListarDet);
+        //console.log(" this.lstListarDet :: ",  this.lstListarDet);
         this.cantidad = cantidadExamenes;
         this.lastYearTotal = total;    
       }
@@ -212,11 +212,11 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
 
     this.LiquidacionService.MantenimientoExpediente(3, this.modal, this.getUsuarioToken()).then(
       res => {
-        console.log("res guardado:", res);
+        //console.log("res guardado:", res);
         if (res.success) {
           this.makeToast(this.getMensajeGrabado(this.modal.cabecera.CodigoExpediente));
           this.verConsultaDetalle = false;
-          console.log("entro:",this.mensajeController.resultado)
+          //console.log("entro:",this.mensajeController.resultado)
           let dtoAdmision = {
             IdAdmision: this.filtro.IdAdmision,
             Estado: 3,
@@ -227,10 +227,10 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
           
           this.consultaAdmisionService.MantenimientoAdmision(3, dtoAdmision, this.getUsuarioToken()).then(
             trres => {         
-              console.log("MantenimientoTransaccion  ::",  trres.success);
+              //console.log("MantenimientoTransaccion  ::",  trres.success);
             })    
           this.mensajeController.resultado = res;
-          console.log("res enviando:", res);
+          //console.log("res enviando:", res);
           this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
         }
         else {
@@ -294,11 +294,11 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
 
     this.LiquidacionService.MantenimientoExpediente(2, this.modal, this.getUsuarioToken()).then(
       res => {
-        console.log("res guardado:", res);
+        //console.log("res guardado:", res);
         if (res.success) {
           this.makeToast(this.getMensajeGrabado(this.modal.cabecera.CodigoExpediente));
           this.verConsultaDetalle = false;
-          console.log("entro:",this.mensajeController.resultado)
+          //console.log("entro:",this.mensajeController.resultado)
           let dtoTransaccion = {
             IdAdmision: this.filtro.IdAdmision,
             IdClienteFacturacion: 0,
@@ -309,7 +309,7 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
           
           this.consultaAdmisionService.MantenimientoTransaccion(1, dtoTransaccion, this.getUsuarioToken()).then(
             trres => {         
-              console.log("MantenimientoTransaccion  ::",  trres.success);
+              //console.log("MantenimientoTransaccion  ::",  trres.success);
             })
 
             let dtoHomologacionCliente = {
@@ -322,13 +322,13 @@ export class PendienteAprobacionDetalleComponent extends ComponenteBasePrincipal
 
             this.ComprobanteService.MantenimientoHomologacionCliente(1, dtoHomologacionCliente, this.getUsuarioToken()).then(
               comres => {
-                console.log("MantenimientoHomologacionCliente  ::",  comres.success);
+                //console.log("MantenimientoHomologacionCliente  ::",  comres.success);
               })
 
             
 
           this.mensajeController.resultado = res;
-          console.log("res enviando:", res);
+          //console.log("res enviando:", res);
           this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
         }
         else {

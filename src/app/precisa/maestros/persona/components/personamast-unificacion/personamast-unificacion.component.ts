@@ -88,7 +88,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
   }
 
   async cargarAcciones(msj: MensajeController, accion: string, titulo: string, Entydad?: any) {
-    console.log("cargarAcciones Ingreso", accion);
+    //console.log("cargarAcciones Ingreso", accion);
     this.limpiarBuscador();
     /**PARAMETROS */
     this.mensajeController = msj;
@@ -114,7 +114,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
   }
 
   limpiarBuscador() {
-    console.log("limpiarBuscador");
+    //console.log("limpiarBuscador");
     this.filtro = new FiltroConsultaAdmision();
     this.filtroUnificado = new FiltroConsultaAdmision();
     this.lstUnificacion = [];
@@ -135,7 +135,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
       return;
     }
 
-    console.log("data filtro", this.filtro);
+    //console.log("data filtro", this.filtro);
     this.bloquearPag = true;
     this.consultaAdmisionService.listarpaginado(this.filtro).then((res) => {
       var contado = 1;
@@ -143,7 +143,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
         element.num = contado++;
       });
       this.lstAdmision = res;
-      console.log("consulta Admision grillaCargarDatos:", res);
+      //console.log("consulta Admision grillaCargarDatos:", res);
       setTimeout(() => {
         this.bloquearPag = false;
       }, 100);
@@ -151,11 +151,11 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
   }
 
   onRowSelect(event: any) {
-    console.log("onRowSelect:", event);
+    //console.log("onRowSelect:", event);
   }
 
   isRowSelectable(event: any) {
-    console.log("isRowSelectable:", event);
+    //console.log("isRowSelectable:", event);
   }
 
   ondobleRowDblclick(rowData: any) {
@@ -170,14 +170,14 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
 
   coreMensaje(mensage: MensajeController): void {
     if (mensage.componente == "SELECPACIENTE") {
-      console.log("coreMensaje data SELECPACIENTE", mensage);
+      //console.log("coreMensaje data SELECPACIENTE", mensage);
       this.filtro.Documento = mensage.resultado.Documento;
       this.filtro.NombreCompleto = mensage.resultado.NombreCompleto;
       this.filtro.Persona = mensage.resultado.Persona;
       this.editarCampoDocumento = true;
     }
     else if (mensage.componente == "SELECUNIFICACION") {
-      console.log("coreMensaje data SELECUNIFICACION", mensage);
+      //console.log("coreMensaje data SELECUNIFICACION", mensage);
       this.filtroUnificado.Documento = mensage.resultado.Documento;
       this.filtroUnificado.NombreCompleto = mensage.resultado.NombreCompleto;
       this.filtroUnificado.Persona = mensage.resultado.Persona;
@@ -187,7 +187,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
 
   coreEnviarUnificacion() {
     this.bloquearPag = true;
-    console.log("coreEnviarUnificacion stSelec", this.lstSeleccionadomultiple);
+    //console.log("coreEnviarUnificacion stSelec", this.lstSeleccionadomultiple);
     if (this.esListaVacia(this.lstSeleccionadomultiple)) {
       this.mostrarMensaje('Debe haber registro en el listado', 'warn');
       this.bloquearPag = false;
@@ -210,14 +210,14 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
 
   coreWQuitarUnificacion() {
     this.bloquearPag = true;
-    console.log("coreWQuitarUnificacion", this.lstSeleccionadoUnificacion);
+    //console.log("coreWQuitarUnificacion", this.lstSeleccionadoUnificacion);
     if (this.esListaVacia(this.lstSeleccionadoUnificacion)) {
       this.mostrarMensaje('Debe haber registro en el listado', 'warn');
       this.bloquearPag = false;
       return;
     }
 
-    console.log("llego 1");
+    //console.log("llego 1");
     if (this.esListaVacia(this.lstUnificacion)) {
       this.mostrarMensaje('Debe haber registro en el listado', 'warn');
       this.bloquearPag = false;
@@ -255,7 +255,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
         this.bloquearPag = true;
         let Documento = { Documento: this.filtro.Documento.trim() }
         this.personaService.listarpaginado(Documento).then((res) => {
-          console.log("validarTeclaEnter ", res);
+          //console.log("validarTeclaEnter ", res);
           this.bscPersona = res;
           this.filtro.NombreCompleto = res[0].NombreCompleto;
           this.filtro.Persona = res[0].Persona;
@@ -319,14 +319,14 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
 
   coreBuscarUnificacion(): void {
     this.bloquearPag = true;
-    console.log("coreWQuitarUnificacion", this.lstUnificacion);
+    //console.log("coreWQuitarUnificacion", this.lstUnificacion);
     if (this.esListaVacia(this.lstUnificacion)) {
       this.mostrarMensaje('Debe haber registro en el listado de Unificación', 'info');
       this.bloquearPag = false;
       return;
     }
 
-    console.log("data filtro", this.filtroUnificado);
+    //console.log("data filtro", this.filtroUnificado);
 
     this.bloquearPag = true;
     this.consultaAdmisionService.listarpaginado(this.filtroUnificado).then((res) => {
@@ -335,7 +335,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
         element.numeroAdmision = contado++;
       });
       this.lstUnificacion = res;
-      console.log("consulta Admision grillaCargarDatos:", res);
+      //console.log("consulta Admision grillaCargarDatos:", res);
       setTimeout(() => {
         this.bloquearPag = false;
       }, 100);
@@ -361,7 +361,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
     });
 
     if (valor == 0) {
-      console.log("ValidateUnificar ", valor);
+      //console.log("ValidateUnificar ", valor);
       salida = "Debe seleccionar las peticion(es) para proceder con la unificación.";
     }
 
@@ -372,7 +372,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
   coreGuardarUnificacion() {
 
     var validar = this.ValidateUnificar();
-    console.log("llegando ", validar);
+    //console.log("llegando ", validar);
     this.dialog = false;
     if (validar.length > 0) {
       Swal.fire({
@@ -416,7 +416,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
           this.consultaAdmisionService.MantenimientoUnificarAtencionPaciente(1, lstUnificacion, this.getUsuarioToken()).then(
             res => {
               this.bloquearPag = true;
-              console.log("MantenimientoUnificarAtencionPaciente ::", res);
+              //console.log("MantenimientoUnificarAtencionPaciente ::", res);
               this.bloquearPag = false;
               if (res.success == true) {
                 this.loading = true;
@@ -429,7 +429,7 @@ export class PersonamastUnificacionComponent extends ComponenteBasePrincipal imp
                   product.Persona = this.filtro.Persona
                   product.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario
                   product.UltimaFechaModif = new Date();
-                  console.log(this.filtro);
+                  //console.log(this.filtro);
                   return this.personaService.mantenimientoMaestro(3, product, this.getUsuarioToken()).then(
                     res => {
                       if (res.success) {

@@ -95,7 +95,7 @@ export class AseguradoraMantenimientoComponent extends ComponenteBasePrincipal i
 
   coreIniciarComponente(mensaje: MensajeController): void {
     this.mensajeController = mensaje;
-    console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
+    //console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
     this.verMantAseguradora = true;
     this.titulo = 'ASEGURADORA';
     this.acciones = `${this.titulo}: ${this.mensajeController.tipo}`;

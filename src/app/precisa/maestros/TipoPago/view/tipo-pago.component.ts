@@ -62,7 +62,7 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
         element.num = contado++;
       });
       this.lst = res;
-      console.log("coreBuscar listado:", res);
+      //console.log("coreBuscar listado:", res);
     });
   }
 

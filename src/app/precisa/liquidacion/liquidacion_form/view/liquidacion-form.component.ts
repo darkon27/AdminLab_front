@@ -172,14 +172,14 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
                   } */
 
           let Entity: ExpedienteModal = new ExpedienteModal();
-          // console.log("coreInactivar  dto ::",  dto);
+          // //console.log("coreInactivar  dto ::",  dto);
           Entity.success = true;
           Entity.valor = 1;
           Entity.cabecera.IdExpediente = dto.IdExpediente;
           Entity.cabecera.UneuNegocioId = this.getUsuarioAuth().data[0].UneuNegocioId;
           Entity.cabecera.UsuarioModificacion = this.getUsuarioAuth().data[0].Usuario;
           Entity.cabecera.FechaModificacion = new Date(hoy);
-          console.log("coreInactivar  this.Entity ::", Entity);
+          //console.log("coreInactivar  this.Entity ::", Entity);
 
           return this.LiquidacionService.MantenimientoExpediente(3, Entity, this.getUsuarioToken()).then(
             res => {
@@ -231,7 +231,7 @@ export class LiquidacionFormComponent extends ComponenteBasePrincipal implements
 
         this.personaService.listarpaginado(this.filtro).then((res) => {
 
-          console.log("enter empresa", res);
+          //console.log("enter empresa", res);
           if (res.length > 0) {
             this.filtro.NombreCompleto = res[0].NombreCompleto;
             this.filtro.IdClienteFacturacion = res[0].Persona;

@@ -76,7 +76,7 @@ export class SedesComponent extends ComponenteBasePrincipal implements OnInit, U
   }
 
   coreCompartir(row) {
-    console.log("coreCompartir:", row);
+    //console.log("coreCompartir:", row);
     this.SedescompartidaComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_SEDES', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo,  row);
   }
 
@@ -221,7 +221,7 @@ export class SedesComponent extends ComponenteBasePrincipal implements OnInit, U
         element.num = contado++;
       });
       this.lstSucursaltb = res;
-      console.log("maestro coreBuscar listado:", res);
+      //console.log("maestro coreBuscar listado:", res);
     });
   }
 
@@ -255,7 +255,7 @@ export class SedesComponent extends ComponenteBasePrincipal implements OnInit, U
     this.lstCompania.push({ label: ConstanteAngular.COMBOTODOS, value: null });
     this.filtrocompa.estado = "A";
     return this.maestrocompaniaMastService.listarCompaniaMast(this.filtrocompa).then(res => {
-      console.log("company", res);
+      //console.log("company", res);
       res.forEach(ele => {
         this.lstCompania.push({ label: ele.DescripcionCorta.trim(), value: ele.Persona });
       });

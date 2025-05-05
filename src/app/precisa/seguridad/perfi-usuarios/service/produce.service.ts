@@ -39,7 +39,7 @@ export class PerfilUserService {
   
     mantenimientoPerfi(codigo: number, dto: Perfil, token: string) {
           const headers = new HttpHeaders().set("Authorization", token);
-          console.log("mantenimientoPerfi", codigo, headers);
+          //console.log("mantenimientoPerfi", codigo, headers);
           return this.config.getHttp().post(`${this.urlseg}MantenimientoPerfil/` + codigo, dto, { headers: headers })
             .toPromise()
             .then(response => response)

@@ -47,8 +47,8 @@ export class LoginComponent implements OnInit {
     const url = document.location.host;
     sessionStorage.clear();
     localStorage.clear();
-    console.log("Login ngOnInit urldomain ::", urldomain);
-    console.log("Login ngOnInit url ::", url);
+    //console.log("Login ngOnInit urldomain ::", urldomain);
+    //console.log("Login ngOnInit url ::", url);
     sessionStorage.setItem('access_url', JSON.stringify(url));
     this.loginForm = this.formBuilder.group({
       usuario: ['', [Validators.required, Validators.maxLength(50)]],
@@ -56,14 +56,12 @@ export class LoginComponent implements OnInit {
       idSede: ['', Validators.required]
     })
     this.cargarServicios();
-    console.log("this.loginService.url;", this.loginService.url);
+    //console.log("this.loginService.url;", this.loginService.url);
 
   }
 
   prueba() {
-    this.loginService.prueba().then(
-      res => console.log(res)
-    )
+    
   }
 
   get usuarioField() {
@@ -88,7 +86,7 @@ export class LoginComponent implements OnInit {
         }
       });
   
-      console.log("datos", this.loginForm.value);
+      //console.log("datos", this.loginForm.value);
   
       return this.loginService.login2(this.loginForm.value).then(
         async res => {
@@ -112,14 +110,14 @@ export class LoginComponent implements OnInit {
               // Manejar cada promesa individualmente
               try {
                 await this.listarMiscelaneos();
-                console.log('Miscelaneos cargados correctamente.');
+                //console.log('Miscelaneos cargados correctamente.');
               } catch (error) {
                 console.error('Error al cargar miscelaneos:', error);
               }
   
               try {
                 await this.listarCargarProcendia();
-                console.log('Procedencia cargada correctamente.');
+                //console.log('Procedencia cargada correctamente.');
               } catch (error) {
                 console.error('Error al cargar procedencia:', error);
               }
@@ -128,10 +126,10 @@ export class LoginComponent implements OnInit {
                 await this.listarMenu(usuario);
                 var listaEntyOperacion = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('access_menu')));
                 if (!this.esListaVacia(listaEntyOperacion)) {                
-                  console.log('Menú cargado correctamente.');
+                  //console.log('Menú cargado correctamente.');
                 }else{
                   /*    this.listarMenu(usuario);
-                        console.log('Menú cargado dos veces.'); */
+                        //console.log('Menú cargado dos veces.'); */
                 }        
               } catch (error) {
                 console.error('Error al cargar el menú:', error);
@@ -145,7 +143,7 @@ export class LoginComponent implements OnInit {
   
               try {
                 await this.mostrarIP();
-                console.log('IP mostrada correctamente.');
+                //console.log('IP mostrada correctamente.');
               } catch (error) {
                 console.error('Error al mostrar la IP:', error);
               }
@@ -156,7 +154,7 @@ export class LoginComponent implements OnInit {
               }, 2000);
   
             } else {
-              console.log("login ops:::::", res);
+              //console.log("login ops:::::", res);
               Swal.fire({
                 icon: 'warning',
                 title: '¡Mensaje!',
@@ -185,11 +183,11 @@ export class LoginComponent implements OnInit {
   async listarCargarProcendia() {
     const procedencia = { Estado: 1 }
     const responseProcedencia: any[] = await this.loginService.listarEspecialidad(procedencia);
-    console.log('Obt procedencia')
+    //console.log('Obt procedencia')
     if (responseProcedencia != null || responseProcedencia != undefined) {
       sessionStorage.setItem('access_Procendencia', JSON.stringify(responseProcedencia));
     } else {
-      console.log("Error: Miscelaneos - procedencia", JSON.stringify(responseProcedencia));
+      //console.log("Error: Miscelaneos - procedencia", JSON.stringify(responseProcedencia));
     }
 
   }
@@ -198,11 +196,11 @@ export class LoginComponent implements OnInit {
     let miscelaneos = { IdTablaMaestro: 0, IdCodigo: 0, Estado: 1 }
     this.loginService.listarMiscelaneos(miscelaneos).then(response => {
       Swal.close();
-      console.log('Obt Micelaneos')
+      //console.log('Obt Micelaneos')
       if (response) {
         sessionStorage.setItem('access_miscelaneos', JSON.stringify(response));
       } else {
-        console.log("Error: Miscelaneos", JSON.stringify(response));
+        //console.log("Error: Miscelaneos", JSON.stringify(response));
       }
     })
   }
@@ -210,12 +208,12 @@ export class LoginComponent implements OnInit {
   mostrarIP() {
     var IP
     this.loginService.mostrarIp(IP).then((res) => {
-      console.log("MOSTANDO IP", res)
+      //console.log("MOSTANDO IP", res)
 
       if (res) {
         sessionStorage.setItem('access_ip', JSON.stringify(res));
       } else {
-        console.log("Error: IP", JSON.stringify(res));
+        //console.log("Error: IP", JSON.stringify(res));
       }
 
     });
@@ -225,7 +223,7 @@ export class LoginComponent implements OnInit {
     this.loginService.listarMenu(usuario, this.loginService.usuarioGetToken()).then(response => {
       Swal.close()
       if (response) {
-        console.log("menu lleno:", JSON.stringify(response));
+        //console.log("menu lleno:", JSON.stringify(response));
         sessionStorage.setItem('access_menu', JSON.stringify(response));
 
       } else {
@@ -273,8 +271,8 @@ export class LoginComponent implements OnInit {
   listarSedes(): Promise<number> {
     this.msjCargaSedes = 'Obteniendo sedes...';
     let sedes = { IdEmpresa: 75300, SedEstado: 1 }
-    console.log("Login listarSedes ::", this.loginForm);
-    console.log("Login listarSedes ::", this.sedes);
+    //console.log("Login listarSedes ::", this.loginForm);
+    //console.log("Login listarSedes ::", this.sedes);
     return this.loginService.listarSedes(sedes).then(
       sedes => {
         if (sedes.length > 0) {

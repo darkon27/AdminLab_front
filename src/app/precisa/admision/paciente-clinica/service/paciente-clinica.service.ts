@@ -37,9 +37,9 @@ export class PacienteClinicaService {
             "      </ConsultaOAFerrer>\r\n" +
             "   </soap:Body>\r\n" +
             "</soap:Envelope>"
-        console.log("BODY aqui:", body);
-        console.log("url:", this.urlWSSanna);
-        console.log("heder:", headers);
+        //console.log("BODY aqui:", body);
+        //console.log("url:", this.urlWSSanna);
+        //console.log("heder:", headers);
         return this.config.getHttp().post(this.urlWSSanna, body, { headers: headers })
             .toPromise()
             .then(response => response)
@@ -87,7 +87,7 @@ export class PacienteClinicaService {
 
     ValidarComponentePerfil(codigo: number, Admision: any, token: string) {
         const headers = new HttpHeaders().set("Authorization", token)
-        console.log("REPITIENDO N VECES", headers)
+        //console.log("REPITIENDO N VECES", headers)
         return this.config.getHttp().post(`${this.urladm}ValidarComponentePerfil/` + codigo, Admision, { headers: headers })
             .toPromise()
             .then(response => response)
@@ -96,7 +96,7 @@ export class PacienteClinicaService {
 
     mantenimientoAdmisionClinica(codigo: number, Admision: any, token: string) {     
         const headers = new HttpHeaders().set("Authorization", token)
-        console.log("REPITIENDO N VECES", headers)
+        //console.log("REPITIENDO N VECES", headers)
         return this.config.getHttp().post(`${this.urladm}RegistrarAdmision/` + codigo, Admision, { headers: headers })
             .toPromise()
             .then(response => response)

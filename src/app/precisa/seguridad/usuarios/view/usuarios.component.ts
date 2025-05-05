@@ -49,7 +49,7 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   coreMensaje(mensage: MensajeController): void {
-    console.log("coreMensaje llegando:", mensage.componente);
+    //console.log("coreMensaje llegando:", mensage.componente);
     if (mensage.componente == "SELECTOR_USUARIO") {
       this.filtro = new filtroUsuario();
       this.coreBuscar();
@@ -64,13 +64,13 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   coreVer(dto): void {
-    console.log("llego coreVer  ", dto);
+    //console.log("llego coreVer  ", dto);
     //this.Entydad = dto;
     this.usuariosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_USUARIO', ''), "VER", "USUARIOS", dto)
   }
 
   coreEditar(dto): void {
-    console.log("llego coreEditar  ", dto);
+    //console.log("llego coreEditar  ", dto);
     // this.Entydad = dto;
     this.usuariosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_USUARIO', ''), "EDITAR", "USUARIOS", dto)
   }
@@ -120,7 +120,7 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
     if (this.filtro.Estado == "") {
       this.filtro.Estado = null;
     }
-    console.log("llego filtro", this.filtro);
+    //console.log("llego filtro", this.filtro);
     this.bloquearPag = true;
 
     this.UsuarioService.listarUsuarioMast(this.filtro).then((res) => {
@@ -128,7 +128,7 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
       res.forEach(element => {
         element.num = contado++;
       });
-      console.log("consulta coreBuscar:", res);
+      //console.log("consulta coreBuscar:", res);
       this.lstUsuarios = res;
       setTimeout(() => {
         this.bloquearPag = false;
@@ -147,7 +147,7 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   onRowSelect(event: any) {
-    console.log("seleccion onRowSelect:", event);
+    //console.log("seleccion onRowSelect:", event);
   }
 
   validarTeclaEnter(evento) {
@@ -198,7 +198,7 @@ export class UsuariosComponent extends ComponenteBasePrincipal implements OnInit
       ESTADO: "A"
     }
     return this.UsuarioService.listarComboPerfil(dto).then(res => {
-      console.log("Mant Usuario cargarPerfiles::", res);
+      //console.log("Mant Usuario cargarPerfiles::", res);
       res.forEach(ele => {
         this.lstPerfil.push({ label: ele.Descripcion.trim(), value: ele.Codigo.trim() });
       });

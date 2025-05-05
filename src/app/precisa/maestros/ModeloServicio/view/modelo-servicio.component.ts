@@ -167,7 +167,7 @@ export class ModeloServicioComponent extends ComponenteBasePrincipal implements 
           element.num = contado++;
         });
         this.lstModeloServicio = res;
-        console.log("coreBuscar listado:", res);
+        //console.log("coreBuscar listado:", res);
       });
   }
 
@@ -232,7 +232,7 @@ export class ModeloServicioComponent extends ComponenteBasePrincipal implements 
     this.tipoadmision.AdmEstado=1;
     this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.consultaAdmisionService.listarcombotipoadmision(this.tipoadmision).then(resp => {
-      console.log("combo tipo admision:", resp);
+      //console.log("combo tipo admision:", resp);
       resp.forEach(e => {
         this.lstTipoAdmision.push({ label: e.AdmDescripcion, value: e.TipoAdmisionId });
       });

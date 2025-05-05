@@ -129,7 +129,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
     var anio = hoy.getFullYear();
     this.filtro.FechaPago = new Date(`${anio},${mes},${dia}`);
     this.filtro.FechaIngreso = new Date(hoy);
-    console.log("Cobranza registro fecha", this.filtro.FechaPago);
+    //console.log("Cobranza registro fecha", this.filtro.FechaPago);
   }
 
 
@@ -154,7 +154,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
     this.dto  = new ModalCobranza();
 
     this.mensajeController = mensaje;
-    console.log("Cobranza registro coreIniciarComponente mensajeController", this.mensajeController);
+    //console.log("Cobranza registro coreIniciarComponente mensajeController", this.mensajeController);
     this.verCajapago = true;
     if(this.mensajeController.componente=="NUEVO"){
       this.titulo = '';
@@ -170,7 +170,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
       this.titulo = '';
       this.acciones = `Registro: Cobranza ` + this.mensajeController.componente;
       this.lstDetalle   = new Array();
-      console.log("Cobranza registro coreIniciarComponente rowdata", rowdata);
+      //console.log("Cobranza registro coreIniciarComponente rowdata", rowdata);
       this.filtro=rowdata;
       this.filtro.FechaEmision = new Date(rowdata.FechaEmision);
       this.filtro.FechaVencimiento = new Date(rowdata.FechaVencimiento);
@@ -183,7 +183,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
 
   coreListarDetalle(): void {
     this.bloquearPag = true;
-    console.log("Cobranza coreListarDetalle:", this.filtro); 
+    //console.log("Cobranza coreListarDetalle:", this.filtro); 
     this.filtroCobran.IdCobranza=  this.filtro.IdCobranza;
     this.CobranzaService.ListarCobranzaDetalle(this.filtroCobran).then((res) => {
       this.bloquearPag = false;
@@ -192,7 +192,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
         element.num = contado--;
       });
       this.lstDetalle = res;
-      console.log("Cobranza coreListarDetalle :", res);
+      //console.log("Cobranza coreListarDetalle :", res);
     });
   }
 
@@ -203,11 +203,11 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Cobranza Registro cargarComboTipoComprobante", this.lstTipoComprobante);
+    //console.log("Cobranza Registro cargarComboTipoComprobante", this.lstTipoComprobante);
   }
 
   selectedItemTipoComprobante(event){
-    console.log("Cobranza selectedItemTipoComprobante", event);
+    //console.log("Cobranza selectedItemTipoComprobante", event);
     if (this.filtro.TipoComprobante == null){
       this.lstSerie.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     }else{
@@ -231,7 +231,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
       resp.forEach(e => {
         this.lstSerie.push({ label: e.Serie, value: e.Serie});
       });
-      console.log("Cobranza reg ListarSucursalSerie", resp);
+      //console.log("Cobranza reg ListarSucursalSerie", resp);
       return 1;
     });
   }
@@ -240,14 +240,14 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
   ListarBanco() {
     this.lstBanco = [];
     let filtroBanco = {       Estado:  "A"      };
-    console.log("Cobranza Registro Filtro", filtroBanco);
+    //console.log("Cobranza Registro Filtro", filtroBanco);
     this.lstBanco.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.ComprobanteService.ListarBanco(filtroBanco).then(resp => {
       resp.forEach(e => {
         this.lstBanco.push({ label: e.DescripcionCorta, value: e.DescripcionCorta.trim()});
       });
       sessionStorage.setItem('SessionBanco', JSON.stringify(resp));   
-      console.log("Cobranza Registro ListarBanco", resp);
+      //console.log("Cobranza Registro ListarBanco", resp);
       return 1;
     });
   }
@@ -258,7 +258,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
     this.lstTipoPago.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.ComprobanteService.ListarTipoPago(filtroPeriodo)
       .then((res) => {
-        console.log("Cobranza Registro ListarTipoPago", res);
+        //console.log("Cobranza Registro ListarTipoPago", res);
         res.forEach((ele) => {
             this.lstTipoPago.push({ label: ele.Nombre.trim(), value: ele.Nombre.trim() });          
         });
@@ -274,7 +274,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPVEN").forEach(i => {
         this.lstTipoVenta.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Cobranza Registro listaComboTipoVenta", this.lstTipoVenta);
+    //console.log("Cobranza Registro listaComboTipoVenta", this.lstTipoVenta);
   }
 
   listaComboMedioPago() {
@@ -283,7 +283,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "MEDPAG").forEach(i => {
       this.lstMedioPago.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Cobranza Registro listaComboMedioPago", this.lstMedioPago);
+    //console.log("Cobranza Registro listaComboMedioPago", this.lstMedioPago);
   }
 
   ListarMoneda(): Promise<number> {
@@ -296,7 +296,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
         this.lstMonedadet.push({ label: e.DescripcionCorta, value: e.DescripcionCorta });        
       });
       sessionStorage.setItem('SessionMoneda', JSON.stringify(resp));   
-      console.log("Cobranza Registro filtroMoneda", resp);
+      //console.log("Cobranza Registro filtroMoneda", resp);
       return 1;
     });
   }
@@ -319,7 +319,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
         this.filtroComp.SerieComprobante = this.filtro.SerieComprobante;
         this.filtroComp.NumeroComprobante = this.filtro.Numero;    
         this.filtroComp.Estado = 3;
-        console.log("Cobranza coreBuscar:", this.filtroComp);
+        //console.log("Cobranza coreBuscar:", this.filtroComp);
         this.ComprobanteService.ListarComprobante(this.filtroComp).then((res) => {
           this.bloquearPag = false;
           res.forEach((element) => {
@@ -334,7 +334,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
               }
           });
           this.lstComprobante = res;  
-          console.log("Cobranza reg coreBuscar:", this.filtro);
+          //console.log("Cobranza reg coreBuscar:", this.filtro);
         });
       }
   }
@@ -346,7 +346,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
     this.filtroComp.SerieComprobante = this.filtro.SerieComprobante;
     this.filtroComp.NumeroComprobante = this.filtro.Numero;    
     this.filtroComp.Estado = 3;
-    console.log("Cobranza coreBuscar:", this.filtroComp);
+    //console.log("Cobranza coreBuscar:", this.filtroComp);
      this.ComprobanteService.ListarComprobante(this.filtroComp).then((res) => {
         this.bloquearPag = false;
         res.forEach((element) => {
@@ -362,7 +362,7 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
         
         });
       this.lstComprobante = res;
-      console.log("Cobranza reg coreBuscar:", this.filtro);
+      //console.log("Cobranza reg coreBuscar:", this.filtro);
    
     });
   }
@@ -391,29 +391,29 @@ export class CobranzasMantenimientoComponent extends ComponenteBasePrincipal imp
     objdet.FechaCreacion = new Date();
     this.lstDetalle.push(objdet);
     this.lstDetalle = [...this.lstDetalle];
-    console.log("Cobranza Registro Filtro", this.lstDetalle);
+    //console.log("Cobranza Registro Filtro", this.lstDetalle);
   } 
 
 
   coreEditar(rowData: dtoCobranzadetalle) {
     this.clonedProducts[rowData.Secuencial] = {...rowData};
-    console.log("Cobranza Registro coreEditar rowData", this.clonedProducts);
-    console.log("Cobranza Registro coreEditar lstBanco", this.lstBanco);
+    //console.log("Cobranza Registro coreEditar rowData", this.clonedProducts);
+    //console.log("Cobranza Registro coreEditar lstBanco", this.lstBanco);
   }
 
 onRowEditInit(product: dtoCobranzadetalle) {
-  console.log("Cobranza Reg onRowEditInit :: ", product);
+  //console.log("Cobranza Reg onRowEditInit :: ", product);
     this.clonedProducts[product.LoteTarjeta as string] = { ...product };
 }
 
 onRowEditSave(product: dtoCobranzadetalle) {
-  console.log("Cobranza Reg onRowEditSave Inicio:: ", product);
+  //console.log("Cobranza Reg onRowEditSave Inicio:: ", product);
   var listaComboPago = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('SessionTipoPago')));    
   var listaComboMoneda = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('SessionMoneda')));    
   var listaComboBanco = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('SessionBanco')));    
-  console.log("Reg onRowEditSave listaComboPago:: ", listaComboPago);
-  console.log("Reg onRowEditSave listaComboMoneda:: ", listaComboMoneda);
-  console.log("Reg onRowEditSave listaComboBanco:: ", listaComboBanco);
+  //console.log("Reg onRowEditSave listaComboPago:: ", listaComboPago);
+  //console.log("Reg onRowEditSave listaComboMoneda:: ", listaComboMoneda);
+  //console.log("Reg onRowEditSave listaComboBanco:: ", listaComboBanco);
   
   for (let element of listaComboPago) {
       if (element.hasOwnProperty("Nombre")) {
@@ -441,7 +441,7 @@ onRowEditSave(product: dtoCobranzadetalle) {
 
 
 
-    console.log("Cobranza Reg onRowEditSave Asignado:: ", product);
+    //console.log("Cobranza Reg onRowEditSave Asignado:: ", product);
     if (product.Monto > 0) {
         delete this.clonedProducts[product.LoteTarjeta as string];
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product is updated' });
@@ -459,7 +459,7 @@ onRowEditCancel(product: dtoCobranzadetalle, index: number) {
   keydownMonto(evento): void {  
   
     if (evento.key == "Enter" || evento.key == "Tab") {
-      console.log("Cobranza Reg keydownMonto :: ", evento);
+      //console.log("Cobranza Reg keydownMonto :: ", evento);
         this.bloquearPag = true;
         var subtotal = 0
         this.lstDetalle.forEach(e => {
@@ -477,8 +477,8 @@ onRowEditCancel(product: dtoCobranzadetalle, index: number) {
         });
 
         this.filtro.CalTotal = subtotal;
-        //console.log("Cobranza Reg keydownMonto evento ::", evento.value);    
-        console.log("Cobranza Reg keydownMonto lstDetalle::", this.lstDetalle);  
+        ////console.log("Cobranza Reg keydownMonto evento ::", evento.value);    
+        //console.log("Cobranza Reg keydownMonto lstDetalle::", this.lstDetalle);  
         this.bloquearPag = false;
       }
   }
@@ -489,8 +489,8 @@ onRowEditCancel(product: dtoCobranzadetalle, index: number) {
 
   coreGuardar(): void {
     this.bloquearPag = true;
-   // console.log("Cobranza Reg coreGuardar filtro::", this.filtro);  
-   // console.log("Cobranza Reg coreGuardar lstDetalle::", this.lstDetalle);  
+   // //console.log("Cobranza Reg coreGuardar filtro::", this.filtro);  
+   // //console.log("Cobranza Reg coreGuardar lstDetalle::", this.lstDetalle);  
 
     this.dto.cabecera = this.filtro;
     this.dto.cabecera.Monto =  this.filtro.MontoTotal;
@@ -516,7 +516,7 @@ onRowEditCancel(product: dtoCobranzadetalle, index: number) {
       return;
     }
 
-    console.log("Cobranza Reg coreGuardar ::", this.dto);
+    //console.log("Cobranza Reg coreGuardar ::", this.dto);
 
     Swal.fire({
       icon: 'warning',
@@ -532,7 +532,7 @@ onRowEditCancel(product: dtoCobranzadetalle, index: number) {
         this.dto.cabecera.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario;
         this.dto.cabecera.FechaCreacion = new Date();
         this.messageShow('success', 'Success', this.getMensajeGuardado());
-        console.log("Cobranza Reg coreGuardar ::", this.dto);
+        //console.log("Cobranza Reg coreGuardar ::", this.dto);
         this.ServicioRegistrar();
 
       } else {
@@ -551,13 +551,13 @@ onRowEditCancel(product: dtoCobranzadetalle, index: number) {
 
     this.CobranzaService.MantenimientoCobranza(1, this.dto, this.getUsuarioToken()).then(
       res => {
-        console.log("res guardado:", res);
+        //console.log("res guardado:", res);
         if (res.success) {
           this.makeToast(this.getMensajeGrabado(this.dto.cabecera.NumeroCobranza));
           this.verCajapago = false;
-          console.log("entro:",this.mensajeController.resultado)
+          //console.log("entro:",this.mensajeController.resultado)
           this.mensajeController.resultado = res;
-          console.log("res enviando:", res);
+          //console.log("res enviando:", res);
           this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
         }
         else {

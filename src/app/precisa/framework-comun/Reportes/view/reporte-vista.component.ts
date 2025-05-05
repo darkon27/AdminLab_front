@@ -82,7 +82,7 @@ export class ReporteVistaComponent extends ComponenteBasePrincipal implements On
 
   coreIniciarComponente(mensaje: MensajeController): void {
     this.mensajeController = mensaje;
-    console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
+    //console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
     this.verReporteModal = true;
     this.titulo = '';
     this.acciones = `${this.titulo}: ${this.mensajeController.tipo}`;
@@ -90,28 +90,28 @@ export class ReporteVistaComponent extends ComponenteBasePrincipal implements On
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, reporte: any): void {
     this.mensajeController = mensaje;
-    console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
+    //console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
     this.verReporteModal = true;
     this.titulo = '';
     this.acciones = `${this.titulo}: ${accionform}`;
     this.validarAccion = accionform;
-    console.log(":: reporte", reporte)
+    //console.log(":: reporte", reporte)
     // this.viewReporte = reporte
-    //console.log("this.viewReporte", this.viewReporte)
+    ////console.log("this.viewReporte", this.viewReporte)
     this.pdfViewerContrato = new PdfJsViewerComponent;
 
     // var blob = new Blob([reporte], { type: 'application/pdf' })
     var blob = new Blob([reporte])
-    console.log("blob", blob)
+    //console.log("blob", blob)
     const link = window.URL.createObjectURL(blob);
-    console.log("link", link)
+    //console.log("link", link)
 
-    console.log("::::: var pdfViewerContrato", this.pdfViewerContrato)
+    //console.log("::::: var pdfViewerContrato", this.pdfViewerContrato)
     //this.pdfViewerContrato = pdfViewerContrato
     this.pdfViewerContrato.pdfSrc = link;
     this.pdfViewerContrato.refresh();
 
-    // console.log("After setter  this.pdfViewerContrato", this.pdfViewerContrato)
+    // //console.log("After setter  this.pdfViewerContrato", this.pdfViewerContrato)
 
 
     // if (accionform == "NUEVO") {

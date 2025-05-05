@@ -144,7 +144,7 @@ export class ConsultaAdmisionService {
   MantenimientoUnificarAtencionPaciente(codigo: number, Unificar: any, token: string) {
     // mantenimientoAdmisionClinica(codigo: number, Admision: DtoAdmisionprueba, token: string) {
     const headers = new HttpHeaders().set("Authorization", token)
-    console.log("REPITIENDO N VECES", headers)
+    //console.log("REPITIENDO N VECES", headers)
     return this.config.getHttp().post(`${this.urladm}MantenimientoUnificarAtencionPaciente/` + codigo, Unificar, { headers: headers })
         .toPromise()
         .then(response => response)
@@ -181,8 +181,8 @@ export class ConsultaAdmisionService {
       "   </soapenv:Body>\r\n" +
       "</soapenv:Envelope>"
 
-    console.log("heder:", headers);
-    console.log("BODY aqui:", body);
+    //console.log("heder:", headers);
+    //console.log("BODY aqui:", body);
     return this.config.getHttp().post(`${this.urlReporte}WServiceReporte.asmx?op=ListadoImpresion`, body, { headers: headers })
       .toPromise()
       .then(response => response)
@@ -192,7 +192,7 @@ export class ConsultaAdmisionService {
   MantenimientoTransaccion(codigo: number, Transaccion: any, token: string) {
     // mantenimientoAdmisionClinica(codigo: number, Admision: DtoAdmisionprueba, token: string) {
     const headers = new HttpHeaders().set("Authorization", token)
-    console.log("REPITIENDO N VECES", headers)
+    //console.log("REPITIENDO N VECES", headers)
     return this.config.getHttp().post(`${this.urladm}MantenimientoTransaccion/` + codigo, Transaccion, { headers: headers })
         .toPromise()
         .then(response => response)
@@ -202,7 +202,7 @@ export class ConsultaAdmisionService {
   MantenimientoAdmision(codigo: number, Admision: any, token: string) {
     // mantenimientoAdmisionClinica(codigo: number, Admision: DtoAdmisionprueba, token: string) {
     const headers = new HttpHeaders().set("Authorization", token)
-    console.log("REPITIENDO N VECES", headers)
+    //console.log("REPITIENDO N VECES", headers)
     return this.config.getHttp().post(`${this.urladm}MantenimientoAdmision/` + codigo, Admision, { headers: headers })
         .toPromise()
         .then(response => response)
@@ -212,7 +212,7 @@ export class ConsultaAdmisionService {
   MantenimientoAdmisionDetalle(codigo: number, AdmisionDetalle: any, token: string) {
     // mantenimientoAdmisionClinica(codigo: number, Admision: DtoAdmisionprueba, token: string) {
     const headers = new HttpHeaders().set("Authorization", token)
-    console.log("REPITIENDO N VECES", headers)
+    //console.log("REPITIENDO N VECES", headers)
     return this.config.getHttp().post(`${this.urladm}MantenimientoAdmisionDetalle/` + codigo, AdmisionDetalle, { headers: headers })
         .toPromise()
         .then(response => response)

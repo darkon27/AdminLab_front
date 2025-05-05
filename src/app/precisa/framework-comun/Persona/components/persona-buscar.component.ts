@@ -127,7 +127,7 @@ export class PersonaBuscarComponent extends ComponenteBasePrincipal implements O
 
   coreMensaje(mensage: MensajeController): void {
     // if(mensage.componente == "TIPREGPERSONA") {
-    //   console.log("data del seleccionar",mensage);
+    //   //console.log("data del seleccionar",mensage);
     //   this.filtro.Documento=mensage.resultado.Documento;
     //   this.filtro.NombreCompleto=mensage.resultado.NombreCompleto;
     //   this.filtro.FechaNacimiento=mensage.resultado.FechaNacimiento;
@@ -150,7 +150,7 @@ export class PersonaBuscarComponent extends ComponenteBasePrincipal implements O
     }
     this.mensajeController.resultado = dto;
     this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-    console.log("data del persona", dto)
+    //console.log("data del persona", dto)
     this.coreSalir();
     this.limpiarBuscador();
   }
@@ -167,7 +167,7 @@ export class PersonaBuscarComponent extends ComponenteBasePrincipal implements O
 
   validarTeclaEnter(event) {
     if (event.key == "Enter") {
-       console.log("Buscar Enter", event)
+       //console.log("Buscar Enter", event)
       this.coreBuscare();
     }
   }
@@ -181,10 +181,10 @@ export class PersonaBuscarComponent extends ComponenteBasePrincipal implements O
   esRUCesDNIValido(event) {
     if (this.selectedTipoDocumento == "R" || this.selectedTipoDocumento == "D") {
       let key;
-      console.log("event", event)
+      //console.log("event", event)
       if (event.type === 'paste') {
         key = event.clipboardData.getData('text/plain');
-       // console.log("key if", key)
+       // //console.log("key if", key)
       } else {
         key = event.keyCode;
         key = String.fromCharCode(key);
@@ -205,10 +205,10 @@ export class PersonaBuscarComponent extends ComponenteBasePrincipal implements O
       this.dto.TipoPersona = "N";
       this.dto.Estado = "A";
       this.dto.EsEmpleado = this.vEsEmpleado;
-      console.log("Buscar Persona grillaCargarDatos :: ",this.dto);
+      //console.log("Buscar Persona grillaCargarDatos :: ",this.dto);
       this.personaService.listarpaginado(this.dto).then((res) => { 
       var contado = 1;
-      console.log("Buscar listado:", res);
+      //console.log("Buscar listado:", res);
       this.lstPersona = res;
       if (!this.esListaVacia(this.lstPersona)){
         res.forEach(element => {
@@ -282,7 +282,7 @@ export class PersonaBuscarComponent extends ComponenteBasePrincipal implements O
       const env:Object[] = [rowData];
         this.mensajeController.resultado = rowData;
         this.coreSalir();
-        console.log(" this.mensajeController:",  this.mensajeController);
+        //console.log(" this.mensajeController:",  this.mensajeController);
         this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
     }
 }

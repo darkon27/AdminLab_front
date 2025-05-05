@@ -111,7 +111,7 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
   }
 
   coreHomologar(): void {
-    console.log("coreHomologar");
+    //console.log("coreHomologar");
     this.personamastunificacionComponent.cargarAcciones(new MensajeController(this, 'TIPMAPERSONA', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo);
   }
 
@@ -221,7 +221,7 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
 
     this.bloquearPag = true;
     this.personaService.listarpaginado(this.filtro).then((res) => {
-      console.log("res:", res);
+      //console.log("res:", res);
       this.bloquearPag = false;
       if (!this.esListaVacia(res)) {
         var contado = 1;
@@ -279,8 +279,8 @@ export class PersonamastComponent extends ComponenteBasePrincipal implements OnI
   }
 
   onRowSelect(event: any) {
-    console.log("seleccion:", event);
-    console.log("Persona onRowSelect:", this.registroSeleccionado);
+    //console.log("seleccion:", event);
+    //console.log("Persona onRowSelect:", this.registroSeleccionado);
   }
 
 }

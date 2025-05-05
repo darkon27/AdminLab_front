@@ -63,7 +63,7 @@ export class AseguradoraComponent extends ComponenteBasePrincipal implements OnI
   ngOnInit(): void {
     this.bloquearPag = true;
     const p4 = this.tituloListadoAsignar(1, this);
-    console.log("aseguradora ngOnInit:");
+    //console.log("aseguradora ngOnInit:");
     Promise.all([p4]).then(
       f => {
         setTimeout(() => {

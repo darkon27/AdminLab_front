@@ -87,7 +87,7 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
   }
 
   coreSeleccionar(dto: any): void {
-    console.log("coreSeleccionar", this.dto);
+    //console.log("coreSeleccionar", this.dto);
     this.mensajeController.resultado = dto;
     this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
     this.coreSalir();
@@ -95,7 +95,7 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
 
   coreIniciarComponente(mensaje: MensajeController): void {
     this.mensajeController = mensaje;
-    console.log("DETALLE ENTRO coreIniciarComponente", this.mensajeController);
+    //console.log("DETALLE ENTRO coreIniciarComponente", this.mensajeController);
     this.verConsultaDetalle = true;
     this.acciones = `${this.titulo}: ${this.mensajeController.tipo}`;
   }
@@ -104,13 +104,13 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
     this.filtro = new ConsultaDetalleAdmision();
     this.validarIdAdmision = 0;
     this.mensajeController = mensaje;
-    console.log("1 :: DETALLE ENTRO coreIniciarComponenteDetalle", this.mensajeController);
+    //console.log("1 :: DETALLE ENTRO coreIniciarComponenteDetalle", this.mensajeController);
     this.verConsultaDetalle = true;
     this.titulo = 'DETALLE DE ADMISION';
     this.acciones = this.titulo + ":" + accionform;
     this.validarAccion = accionform;
-    console.log("validar admision:", this.validarIdAdmision);
-    console.log("id admision:", dtoConsultaDet.IdAdmision);
+    //console.log("validar admision:", this.validarIdAdmision);
+    //console.log("id admision:", dtoConsultaDet.IdAdmision);
 
     if (this.validarIdAdmision != dtoConsultaDet.IdAdmision) {
       if (accionform == "DETALLE") {
@@ -126,11 +126,11 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
     this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
     this.fechaCreacion = new Date();
     this.fechaModificacion = new Date();
-    console.log("mostrar auditoria comparacion", this.getUsuarioAuth().data[0].Usuario, filtro.UsuarioCreacion, filtro.UsuarioModificacion)
+    //console.log("mostrar auditoria comparacion", this.getUsuarioAuth().data[0].Usuario, filtro.UsuarioCreacion, filtro.UsuarioModificacion)
     if (this.estaVacio(filtro.UsuarioModificacion)) {
-      console.log("UsuarioModificacion Vacío")
+      //console.log("UsuarioModificacion Vacío")
       if (filtro.UsuarioCreacion == this.getUsuarioAuth().data[0].Usuario) {
-        console.log("UsuarioCreacion Igual a UsuarioLogeado")
+        //console.log("UsuarioCreacion Igual a UsuarioLogeado")
         this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
         this.fechaCreacion = new Date(filtro.FechaCreacion);
         if (this.esFechaVacia(filtro.FechaModificacion)) {
@@ -139,7 +139,7 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
           this.fechaModificacion = new Date(filtro.FechaModificacion);
         }
       } else {
-        console.log("Traer Usuario Creado Nuevo")
+        //console.log("Traer Usuario Creado Nuevo")
         let dto = {
           Documento: filtro.UsuarioCreacion.trim(),
           tipopersona: "USU",
@@ -154,13 +154,13 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
           } else {
             this.fechaModificacion = new Date(filtro.FechaModificacion);
           }
-          console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
+          //console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
         })
       }
     } else {
-      console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
+      //console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
       if (filtro.UsuarioModificacion == this.getUsuarioAuth().data[0].Usuario) {
-        console.log("Usuario Modificado Igual a Usuario Logeado")
+        //console.log("Usuario Modificado Igual a Usuario Logeado")
         this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
         this.fechaCreacion = new Date(filtro.FechaCreacion);
         if (this.esFechaVacia(filtro.FechaModificacion)) {
@@ -169,8 +169,8 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
           this.fechaModificacion = new Date(filtro.FechaModificacion);
         }
       } else {
-        console.log("Traer Usuario Modificado Nuevo")
-        console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
+        //console.log("Traer Usuario Modificado Nuevo")
+        //console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
         let dto = {
           Documento: filtro.UsuarioModificacion.trim(),
           tipopersona: "ID",
@@ -185,7 +185,7 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
           } else {
             this.fechaModificacion = new Date(filtro.FechaModificacion);
           }
-          console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
+          //console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
         })
       }
     }
@@ -193,7 +193,7 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
 
 
   ListadoAdmisionConstancia(detalleconsulta: Admision) {
-    console.log("2 :: DETALLE ENTRO ListadoAdmisionConstancia", detalleconsulta);
+    //console.log("2 :: DETALLE ENTRO ListadoAdmisionConstancia", detalleconsulta);
     var filtroConsAdmision = new FiltroConsultaAdmision;
     filtroConsAdmision.IdAdmision = detalleconsulta.IdAdmision;
     filtroConsAdmision.NroPeticion = detalleconsulta.NroPeticion;
@@ -212,21 +212,21 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
 
     this.bloquearPag = true;
     return this.consultaAdmisionService.listarDetalleAdmision(filtroConsAdmision).then(res => {
-      console.log("3 :: listarDetalleAdmision ::", res[0]);
+      //console.log("3 :: listarDetalleAdmision ::", res[0]);
       this.bloquearPag = false;
       if (res.length > 0) {
         this.filtro = res[0];
         this.filtro.Cama = detalleconsulta.Cama;
         this.dto.IdSede = detalleconsulta.IdSede;
-        console.log("TIPOADMISIONID", res[0].TIPOADMISIONID);
+        //console.log("TIPOADMISIONID", res[0].TIPOADMISIONID);
         if(res[0].TIPOADMISIONID==2){
          // this.filtro.Contrato = detalleconsulta.Contrato;
         }else{
           this.filtro.Contrato = "";
         } 
         let fechaNacimiento = new Date(detalleconsulta.fechanacimiento);
-        console.log("fechaaaaaa", fechaNacimiento);
-        console.log("3 :: this.filtro ::", this.filtro);
+        //console.log("fechaaaaaa", fechaNacimiento);
+        //console.log("3 :: this.filtro ::", this.filtro);
         this.filtro.FechaNacimiento = detalleconsulta.fechanacimiento;
         this.CalcularAnios()
         this.validarIdAdmision = detalleconsulta.IdAdmision;
@@ -263,13 +263,13 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
 
   verSelectorPaciente() {
     if (this.filtro != null) {
-      //   console.log("Consulta Detalle verSelectorPaciente filtro", this.filtro);
+      //   //console.log("Consulta Detalle verSelectorPaciente filtro", this.filtro);
       this.getPersonaServicio(this.filtro);
     }
   }
 
   getPersonaServicio(bscAdmision: any) {
-    console.log("Consulta Detalle getPersonaServicio ::", this.filtro);
+    //console.log("Consulta Detalle getPersonaServicio ::", this.filtro);
     let dto = {
       tipopersona: "ID",
       SoloBeneficiarios: this.filtro.Persona,
@@ -277,7 +277,7 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
       UneuNegocioId: "0"
     }
     return this.personaService.listaPersonaUsuario(dto).then((res) => {
-      console.log("Consulta Detalle del res ::", res);
+      //console.log("Consulta Detalle del res ::", res);
       this.bloquearPag = false;
       if (res.length > 0) {
         this.bscPersona = null;
@@ -285,7 +285,7 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
         this.personaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'TIPMAPERSONA', ''), "VER", 1, this.bscPersona);
 
       } else {
-        console.log("entroo nadaaa");
+        //console.log("entroo nadaaa");
         //this.toastMensaje('Documento no encontrado, revise bien los parametros', 'warning', 3000)
         this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Orden de Atención.', life: 900 });
         this.filtro.Documento = null;
@@ -312,7 +312,7 @@ export class ConsultaDetalleComponent extends ComponenteBasePrincipal implements
           if (sedes.length > 0) {
             sedes.forEach(obj => this.lstsedes.push({ label: obj.SedDescripcion, value: obj.IdSede }));
             this.filtro.IdSede = this.Auth[0].IdSede
-            console.log("Consulta Detalle comboCargarSedes", sedes)
+            //console.log("Consulta Detalle comboCargarSedes", sedes)
           }
           return 1
         }

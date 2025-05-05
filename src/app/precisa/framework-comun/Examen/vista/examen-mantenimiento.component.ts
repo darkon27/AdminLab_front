@@ -56,7 +56,7 @@ export class ExamenMantenimientoComponent extends ComponenteBasePrincipal {
     this.servicio         = new FiltroServicio();
   }
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, dtoEditExamen?: any): void {
-    console.log("Mant Exa Inicio ngOnInit");
+    //console.log("Mant Exa Inicio ngOnInit");
     const p1 = this.comboCargarServicios();
     const p2 = this.listaComboEstado();
     const p3 = this.comboCargarClasificacion();
@@ -78,7 +78,7 @@ export class ExamenMantenimientoComponent extends ComponenteBasePrincipal {
       case 'EDITAR':
 
         this.filtro = dtoEditExamen;
-        console.log("Mant persona dto llegando:", this.filtro);
+        //console.log("Mant persona dto llegando:", this.filtro);
         break;
       case 'VER':
 
@@ -99,7 +99,7 @@ export class ExamenMantenimientoComponent extends ComponenteBasePrincipal {
       resp.forEach(e => {
         this.lstServicio.push({ label: e.Nombre.toUpperCase(), value: e.ClasificadorMovimiento });
       });
-      console.log("Mant Exa combo servicio resp", resp);
+      //console.log("Mant Exa combo servicio resp", resp);
     });
   }
   listaComboEstado() {
@@ -132,7 +132,7 @@ export class ExamenMantenimientoComponent extends ComponenteBasePrincipal {
     this.lstCentroCosto.push({ label: '2002', value: '2006' });
     this.lstCentroCosto.push({ label: '2001', value: '2022' });
     this.lstCentroCosto.push({ label: '600401', value: '600401' });
-    console.log("Mant Exa lstCentroCosto", this.lstCentroCosto);
+    //console.log("Mant Exa lstCentroCosto", this.lstCentroCosto);
   }
   listaComboVenta() {
     this.lstVenta = [];
@@ -141,7 +141,7 @@ export class ExamenMantenimientoComponent extends ComponenteBasePrincipal {
     this.lstVenta.push({ label: '159', value: '159' });
     this.lstVenta.push({ label: '160', value: '160' });
     this.lstVenta.push({ label: '158', value: '158' });
-    console.log("Mant Exa listaComboVenta", this.lstVenta);
+    //console.log("Mant Exa listaComboVenta", this.lstVenta);
   }
   comboCargarClasificacion() {
     let clasificador = { Estado: 1 }
@@ -152,7 +152,7 @@ export class ExamenMantenimientoComponent extends ComponenteBasePrincipal {
         this.lstClasificacion.push({ label: e.Nombre.toUpperCase(), value: e.IdClasificacion });
       });
     });
-    console.log("Mant Exa comboCargarClasificacion", this.lstClasificacion);
+    //console.log("Mant Exa comboCargarClasificacion", this.lstClasificacion);
   }
 
   coreGuardar(){

@@ -215,7 +215,7 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
         element.num = contado++;
       });
       this.lstlistabase = res;
-      console.log("coreBuscar listado:", res);
+      //console.log("coreBuscar listado:", res);
     });
   }
 

@@ -57,21 +57,21 @@ export class ExamenPerfilComponent extends ComponenteBasePrincipal implements  U
       this.titulo = `${titulo}: ${accionform}`;
       this.dialog = true;
       this.puedeEditar = false;
-      console.log("this.mensajeController",       this.mensajeController);
+      //console.log("this.mensajeController",       this.mensajeController);
 
       let objExaPerfil = {
         CodigoComponente: dtoEditExamen.CodigoComponente,
         Estado: 1
       }
 
-      console.log("Lista objExaHomo", objExaPerfil);
+      //console.log("Lista objExaHomo", objExaPerfil);
        this.ExamenService.ListadoComponentePerfil(objExaPerfil).then((resMue) => {
           var cont = 1;
           resMue.forEach(element => {
             element.numeroExamen = cont++;
           });
           this.lstperfil = resMue;
-          console.log("Lista lsthomologacion", resMue);
+          //console.log("Lista lsthomologacion", resMue);
         });
     }); 
     

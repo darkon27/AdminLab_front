@@ -67,7 +67,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
   async iniciarComponente(msj: MensajeController, accion: string, titulo, _dtoEmpleado?: EmpleadoMast) {
     this.mensajeController = msj;
     this.bloquearPag = true;
-    console.log("iniciarComponente ::", accion, _dtoEmpleado);
+    //console.log("iniciarComponente ::", accion, _dtoEmpleado);
     if (accion) {
       this.dialog = true;
       this.validarAccion = accion;
@@ -75,7 +75,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
     }
 
     const prueba = await this.EmpleadoMastService.PRUEBA(null);
-    console.log("prueba", prueba);
+    //console.log("prueba", prueba);
 
     this.bloquearPag = false;
   }
@@ -103,8 +103,8 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
         this.fechaModificacion = undefined;
         //this.fechaModificacion = new Date();
 
-        console.log("cargarAcciones NUEVO ::", this.validarAccion);
-        console.log("Entydad NUEVO ::", _dtoEmpleado);
+        //console.log("cargarAcciones NUEVO ::", this.validarAccion);
+        //console.log("Entydad NUEVO ::", _dtoEmpleado);
         this.dtoEmpleado = new EmpleadoMast();
         this.dtoEmpleado.Documento = "";
         this.dtoEmpleado.NombreCompleto = "";
@@ -117,7 +117,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
         this.isEditarPersona = true;
         this.dtoEmpleado = new EmpleadoMast();
 
-        console.log("cargarAcciones EDITAR ::", this.validarAccion);
+        //console.log("cargarAcciones EDITAR ::", this.validarAccion);
 
         //Volver a buscar a empleado
         this.bloquearPag = true;
@@ -161,7 +161,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
         this.isEditarPersona = true;
         this.dtoEmpleado = new EmpleadoMast();
         this.puedeEditar = true;
-        console.log("cargarAcciones EDITAR ::", this.validarAccion);
+        //console.log("cargarAcciones EDITAR ::", this.validarAccion);
         this.dtoEmpleado = _dtoEmpleado;
         bscPersona = {
           tipopersona: "ID",
@@ -198,7 +198,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
   }
 
   validarTeclaEnterPaciente(evento) {
-    console.log("validarTeclaEnterPaciente ::", evento);
+    //console.log("validarTeclaEnterPaciente ::", evento);
     if (evento.key == "Enter") {
       if (this.dtoEmpleado.Documento == null) {
         this.toastMensaje('Ingrese un Nro. de documento', 'warning', 3000);
@@ -221,7 +221,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
 
   getPersonaServicio(bscPersona: any) {
     return this.personaService.listaPersonaUsuario(bscPersona).then((res) => {
-      console.log("Consulta Detalle del res ::", res);
+      //console.log("Consulta Detalle del res ::", res);
       this.bloquearPag = false;
       if (res.length > 0) {
         bscPersona = null;
@@ -234,7 +234,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
         this.dtoEmpleado.Direccion = bscPersona.Direccion;
         //  this.personaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'TIPMAPERSONA', ''), "VER", 1, bscPersona);
       } else {
-        console.log("entroo nadaaa");
+        //console.log("entroo nadaaa");
         //this.toastMensaje('Documento no encontrado, revise bien los parametros', 'warning', 3000);
       }
     }).catch(error => error);
@@ -265,9 +265,9 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
 
     let filtrarEmpleado: filtroEmpleadoMast = new filtroEmpleadoMast();
     filtrarEmpleado.Documento = mensage.resultado.Documento;
-    console.log("filtrarEmpleado", filtrarEmpleado);
+    //console.log("filtrarEmpleado", filtrarEmpleado);
     let empleado = await this.EmpleadoMastService.listarEmpleadoMast(filtrarEmpleado);
-    console.log("empleado", empleado);
+    //console.log("empleado", empleado);
 
     if (empleado.length != 0) {
       if (empleado[0] != null || empleado != undefined) {
@@ -283,7 +283,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
 
 
     if (mensage.componente == "SELECPACIENTE") {
-      console.log("data del seleccionar", mensage);
+      //console.log("data del seleccionar", mensage);
       this.dtoEmpleado.Documento = mensage.resultado.Documento;
       this.dtoEmpleado.NombreCompleto = mensage.resultado.NombreCompleto;
       this.dtoEmpleado.IdEmpleado = mensage.resultado.Persona;
@@ -309,10 +309,10 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
     this.lstEstados = [];
       this.lstEstados.push({ label: ConstanteAngular.COMBOTODOS, value: null });
       this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
-        console.log("i", i);
+        //console.log("i", i);
         this.lstEstados.push({ label: i.Nombre, value: i.Codigo });
       });
-      // console.log(this.getMiscelaneos().filter(x => x.CodigoTabla.includes("ESTLETRAS")));
+      // //console.log(this.getMiscelaneos().filter(x => x.CodigoTabla.includes("ESTLETRAS")));
   }
 
   listaComboCargo() {
@@ -326,7 +326,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
     this.filtrocompa.estado = "A";
     this.lstCompania.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.maestrocompaniaMastService.listarCompaniaMast(this.filtrocompa).then(res => {
-      console.log("company", res);
+      //console.log("company", res);
       res.forEach(ele => {
         this.lstCompania.push({ label: ele.DescripcionCorta.trim(), value: ele.CompaniaCodigo.trim() });
       });
@@ -348,7 +348,7 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
     if (this.dtoEmpleado.FechaInicioContrato == null || this.dtoEmpleado.FechaInicioContrato.toDateString() == '') { this.messageShow('warn', 'Advertencia', 'Ingrese una fecha de Inicio.'); return; }
 
     this.bloquearPag = true;
-    console.log("this.dtoEmpleado", this.dtoEmpleado);
+    //console.log("this.dtoEmpleado", this.dtoEmpleado);
 
     switch (this.validarAccion) {
 
@@ -376,12 +376,12 @@ export class EmpleadosMantenimientoComponent extends ComponenteBasePrincipal imp
 
 
         this.dtoPersona.UltimaFechaModif = new Date();
-        console.log("this.dtoPersona", this.dtoPersona);
-        console.log("this.dtoEmpleado", this.dtoEmpleado);
+        //console.log("this.dtoPersona", this.dtoPersona);
+        //console.log("this.dtoEmpleado", this.dtoEmpleado);
 
         this.personaService.mantenimientoMaestro(ConstanteUI.SERVICIO_SOLICITUD_EDITAR, this.dtoPersona, this.getUsuarioToken()).then(
           async res => {
-            console.log("res", res);
+            //console.log("res", res);
 
             if (res.success) {
               this.bloquearPag = false;

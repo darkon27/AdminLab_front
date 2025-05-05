@@ -27,7 +27,7 @@ export class TipoTrabajadorMantenimientoComponent extends ComponenteBasePrincipa
 
       this.nombreruta=fileTmp.data
       //data: "C:\\ARCHIVO\\SERVER\\BDO\\201701"
-      console.log("Nuevo Ruta:",accion,fileTmp);
+      //console.log("Nuevo Ruta:",accion,fileTmp);
     }
   }
 
@@ -41,7 +41,7 @@ export class TipoTrabajadorMantenimientoComponent extends ComponenteBasePrincipa
 
 
 exportar(event: any) {
-  console.log("btn exportar:", event);
+  //console.log("btn exportar:", event);
     if (event.target.files && event.target.files[0]) {
       this.file = <File>event.target.files[0];
       if (this.file.size > 1048576) {
@@ -52,7 +52,7 @@ exportar(event: any) {
         })
         return
       }
-      console.log("FILE:", this.file)
+      //console.log("FILE:", this.file)
       this.nombrearchivo = this.file.name;
       const reader = new FileReader();
       reader.readAsDataURL(this.file);
@@ -61,7 +61,7 @@ exportar(event: any) {
 
 
 subirArchivo(fs: any) {
-  console.log("Ruta:",this.fileTmp);
+  //console.log("Ruta:",this.fileTmp);
   if (this.fileTmp == null) {
     Swal.fire({
       icon: 'warning',
@@ -77,7 +77,7 @@ subirArchivo(fs: any) {
         })
       } else {
         fs.click();
-        console.log("nombre archivo:", fs);
+        //console.log("nombre archivo:", fs);
       }
   }   
 }

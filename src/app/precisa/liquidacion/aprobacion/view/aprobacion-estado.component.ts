@@ -47,7 +47,7 @@ export class AprobacionEstadoComponent  extends ComponenteBasePrincipal implemen
   }
 
   coreVer(dto): void{
-    console.log(this.objetoTitulo)
+    //console.log(this.objetoTitulo)
     this.aprobacionEstadoMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   } 
   ngOnInit(): void {

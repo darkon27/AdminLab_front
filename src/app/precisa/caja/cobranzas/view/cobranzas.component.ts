@@ -71,12 +71,12 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
   }
 
   coreVer(dto): void{
-    console.log("Cobranza coreVer ::",dto)
+    //console.log("Cobranza coreVer ::",dto)
     this.cobranzasMantenimientoComponent.coreIniciarComponente(new MensajeController(this, 'VER', ''),  dto); 
   } 
   
   coreEditar(dto): void{
-    console.log("Cobranza coreEditar ::",dto);
+    //console.log("Cobranza coreEditar ::",dto);
     this.cobranzasMantenimientoComponent.coreIniciarComponente(new MensajeController(this, 'EDITAR', ''),  dto);
   }
 
@@ -92,7 +92,7 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
 
   coreBuscar(): void {
     this.bloquearPag = true;
-    console.log("Cobranza coreBuscar:", this.filtro);
+    //console.log("Cobranza coreBuscar:", this.filtro);
     this.CobranzaService.ListarCobranza(this.filtro).then((res) => {
       this.bloquearPag = false;
       var contado = res.length;
@@ -100,7 +100,7 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
         element.num = contado--;
       });
       this.lstCobranza = res;
-      console.log("Cobranza coreBuscar listado:", res);
+      //console.log("Cobranza coreBuscar listado:", res);
     });
   }
 
@@ -143,7 +143,7 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
     var anio = hoy.getFullYear();
     this.filtro.FechaIngreso = new Date(`${anio},${mes},${dia}`);
     this.filtro.FechaPago = new Date(hoy);
-    console.log("Cobranza FechaPago", this.filtro.FechaIngreso);
+    //console.log("Cobranza FechaPago", this.filtro.FechaIngreso);
   }
 
   listaComboEstado() {
@@ -152,7 +152,7 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTFAC").forEach(i => {
       this.lstEstado.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Cobranza cargarComboEstados", this.lstEstado);
+    //console.log("Cobranza cargarComboEstados", this.lstEstado);
   }
 
   listaComboTipoComprobante() {
@@ -161,14 +161,14 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Cobranza cargarComboTipoComprobante", this.lstTipoComprobante);
+    //console.log("Cobranza cargarComboTipoComprobante", this.lstTipoComprobante);
   }
 
   listaCombocompania(): Promise<number> {
     this.FiltroCompan.estado = "A";
     this.lstCompania.push({ label: ConstanteAngular.COMBOTODOS, value: null });
     return this.maestrocompaniaMastService.listarCompaniaMast(this.FiltroCompan).then(res => {
-      console.log("Cobranza listarCompaniaMast", res);
+      //console.log("Cobranza listarCompaniaMast", res);
       res.forEach(ele => {
         //  this.lstCompania.push({ label: ele.DescripcionCorta.trim(), value: ele.Persona });
         this.lstCompania.push({ label: ele.DescripcionCorta.trim().toUpperCase(), value: ele.CompaniaCodigo.trim(), title: ele.Persona });
@@ -187,7 +187,7 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
         this.lstClasificadorMovimiento.push({ label: e.Nombre, value: e.ClasificadorMovimiento });
       });
       this.filtro.ClasificadorMovimiento = service[0].ClasificadorMovimiento;
-      console.log("Cobranza listaComboClasificadorMovimiento", resp);
+      //console.log("Cobranza listaComboClasificadorMovimiento", resp);
       return 1;
     });
   }
@@ -200,7 +200,7 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
       resp.forEach(e => {
         this.lstSede.push({ label: e.DescripcionLocal, value: e.Sucursal });
       });
-      console.log("Cobranza listarSucursal", resp);
+      //console.log("Cobranza listarSucursal", resp);
       return 1;
     });
   }
@@ -227,7 +227,7 @@ export class CobranzasComponent extends ComponenteBasePrincipal implements OnIni
 
         this.personaService.listarpaginado(this.filtro).then((res) => {
 
-          console.log("Cobranza empresa", res)
+          //console.log("Cobranza empresa", res)
           if (res.length > 0) {
 
             this.filtro.NombreCliente = res[0].NombreCompleto;

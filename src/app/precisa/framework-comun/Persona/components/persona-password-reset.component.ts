@@ -114,7 +114,7 @@ export class PersonaPasswordResetComponent extends ComponenteBasePrincipal imple
 
     this.cargarAcciones(accion, titulo)
     this.coreIniciarComponente
-    console.log("entra?:");
+    //console.log("entra?:");
 
     // else{
     //   this.cargarAcciones(accion,titulo)
@@ -128,14 +128,14 @@ export class PersonaPasswordResetComponent extends ComponenteBasePrincipal imple
 
   coreIniciarComponentePassword(mensaje: MensajeController, accionform: string, dtoEditPersona?: any): void {
     this.mensajeController = mensaje;
-    console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
+    //console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
     this.dialog = true;
     this.titulo = 'PERSONA';
     this.acciones = `${this.titulo}: ${accionform}`;
     this.validarAccion = accionform;
     if (accionform == "PASSWORD") {
       this.dto = dtoEditPersona;
-      console.log("datos recibiendo", this.dto);
+      //console.log("datos recibiendo", this.dto);
       this.grillaCargarDatos({ first: 0 });
     }
 
@@ -145,9 +145,9 @@ export class PersonaPasswordResetComponent extends ComponenteBasePrincipal imple
 
     let IdPersona = { IdPersona: this.dto.Persona }
     // this.filtro.Persona = this.dto.Persona;
-    console.log("datos de la grilla persona", IdPersona)
+    //console.log("datos de la grilla persona", IdPersona)
     return this.personaService.listarUsuarioWeb(IdPersona).then((res) => {
-      console.log("data listado:", res);
+      //console.log("data listado:", res);
       this.lstPersona = res;
     });
   }

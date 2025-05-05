@@ -68,7 +68,7 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
         element.num = contado++;
       });  
       this.lstListaBaseComponente = res;
-      console.log("coreBuscar ListadoBaseComponente:", res);
+      //console.log("coreBuscar ListadoBaseComponente:", res);
     });
   }
 
@@ -94,7 +94,7 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
 
   ngOnInit(): void {
     this.bloquearPag = true;
-    console.log("ngOnInit::");
+    //console.log("ngOnInit::");
     const p4 = this.tituloListadoAsignar(1, this);
     Promise.all([p4]).then(
       f => {
@@ -110,7 +110,7 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
     await this.iniciarComponent();
     await this.cargarComboEstados();
     await this.cargarComboListaBase();
-    console.log("cargarFuncionesIniciales::");
+    //console.log("cargarFuncionesIniciales::");
   }
 
 
@@ -128,7 +128,7 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
     this.lstListaBase = [];
     this.lstListaBase.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.listabaseServices.ListadoBase(dto).then(res => {
-    console.log("cargarComboListaBase::", res);
+    //console.log("cargarComboListaBase::", res);
         res.forEach(ele => {
             this.lstListaBase.push({ label: ele.Nombre.trim(), value: ele.IdListaBase });
         });

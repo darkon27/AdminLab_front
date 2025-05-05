@@ -63,7 +63,7 @@ export class MuestraComponent extends ComponenteBasePrincipal implements OnInit,
     if (!this.estaVacio(this.filtro.Nombre)) {
       this.filtro.Nombre = this.filtro.Nombre.trim();
     }
-    console.log("Filtro enviado:", this.filtro); // Verifica el contenido del filtro
+    //console.log("Filtro enviado:", this.filtro); // Verifica el contenido del filtro
     this.bloquearPag = true;
     this.MuestraService.ListadoMuestra(this.filtro).then((res) => {
         this.bloquearPag = false;
@@ -72,7 +72,7 @@ export class MuestraComponent extends ComponenteBasePrincipal implements OnInit,
           element.num = contado++;
         });
         this.lstMuestra = res;
-        console.log("coreBuscar listado:", res); // Verifica la respuesta del servicio
+        //console.log("coreBuscar listado:", res); // Verifica la respuesta del servicio
       });
   } 
 

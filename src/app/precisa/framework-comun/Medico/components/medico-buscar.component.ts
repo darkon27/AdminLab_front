@@ -141,7 +141,7 @@ export class MedicoBuscarComponent extends ComponenteBasePrincipal implements On
 
   coreMensaje(mensage: MensajeController): void {
     // if(mensage.componente == "TIPREGPERSONA") {
-    //   console.log("data del seleccionar",mensage);
+    //   //console.log("data del seleccionar",mensage);
     //   this.filtro.Documento=mensage.resultado.Documento;
     //   this.filtro.NombreCompleto=mensage.resultado.NombreCompleto;
     //   this.filtro.FechaNacimiento=mensage.resultado.FechaNacimiento;
@@ -190,7 +190,7 @@ export class MedicoBuscarComponent extends ComponenteBasePrincipal implements On
        });
       this.loading = false;
       this.lstMedico = res;
-      console.log("data listado:", res);
+      //console.log("data listado:", res);
 
     });
 
@@ -212,7 +212,7 @@ export class MedicoBuscarComponent extends ComponenteBasePrincipal implements On
   iniciarComponente(accion: string, titulo) {
     this.cargarAcciones(accion, titulo)
     this.coreIniciarComponente
-    console.log("entra?:");
+    //console.log("entra?:");
   }
 
   coreIniciarComponente(msj: MensajeController, accionform: string) {
@@ -240,7 +240,7 @@ export class MedicoBuscarComponent extends ComponenteBasePrincipal implements On
     } else {
         this.mensajeController.resultado = rowData;
         this.coreSalir();
-        console.log(" this.mensajeController:",  this.mensajeController);
+        //console.log(" this.mensajeController:",  this.mensajeController);
         this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
     }
 }

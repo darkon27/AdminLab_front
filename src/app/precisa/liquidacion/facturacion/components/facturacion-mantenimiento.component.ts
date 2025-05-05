@@ -128,14 +128,14 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
           this.dto = new dtoComprobante();
           this.fechaActual();
         }else{
-        console.log("Facturacion Reg iniciarComponente", dto);
+        //console.log("Facturacion Reg iniciarComponente", dto);
         this.filtro = new filtroComprobante();
         let ObjComprobante = { IdComprobante:  dto.IdComprobante };
         this.ComprobanteService.ListarComprobante(ObjComprobante).then(resp => {
             resp.forEach((element) => {
               this.dto = element;
             });
-            console.log("ListarComprobante ::",   this.dto);
+            //console.log("ListarComprobante ::",   this.dto);
             this.listaComprobanteDetalle(this.dto);
             
             if (!this.esFechaVacia(dto.FechaEmision)) {
@@ -196,7 +196,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
     var anio = hoy.getFullYear();
     this.filtro.FechaEmision = new Date(`${anio},${mes},${dia}`);
     this.filtro.FechaVencimiento = new Date(hoy);
-    console.log("Facturacion fecha creacion", this.filtro.FechaEmision);
+    //console.log("Facturacion fecha creacion", this.filtro.FechaEmision);
   }
 
   listaComboEstado() {
@@ -205,7 +205,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTFAC").forEach(i => {
       this.lstEstado.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Facturacion cargarComboEstados", this.lstEstado);
+    //console.log("Facturacion cargarComboEstados", this.lstEstado);
   }
 
   listaComboTipoComprobante() {
@@ -214,7 +214,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Facturacion cargarComboTipoComprobante", this.lstTipoComprobante);
+    //console.log("Facturacion cargarComboTipoComprobante", this.lstTipoComprobante);
   }
 
   listaComboTipoConcepto() {
@@ -223,7 +223,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "CPTOFACTURACION").forEach(i => {
       this.lstTipoConcepto.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Facturacion listaComboTipoConcepto", this.lstTipoConcepto);
+    //console.log("Facturacion listaComboTipoConcepto", this.lstTipoConcepto);
   }
   
   listaComboTipoVenta() {
@@ -232,7 +232,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPVEN").forEach(i => {
       this.lstTipoVenta.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Facturacion listaComboTipoVenta", this.lstTipoVenta);
+    //console.log("Facturacion listaComboTipoVenta", this.lstTipoVenta);
   }
 
   listaComboTipoImpuesto() {
@@ -241,7 +241,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOIMPUESTO").forEach(i => {
       this.lstTipoImpuesto.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Facturacion listaComboTipoImpuesto", this.lstTipoImpuesto);
+    //console.log("Facturacion listaComboTipoImpuesto", this.lstTipoImpuesto);
   }
 
   listaComboMedioPago() {
@@ -250,7 +250,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "MEDPAG").forEach(i => {
       this.lstFormaPago.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Facturacion listaComboMedioPago", this.lstFormaPago);
+    //console.log("Facturacion listaComboMedioPago", this.lstFormaPago);
   }
 
   listaCombocompania(): Promise<number> {
@@ -262,7 +262,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
         //  this.lstCompania.push({ label: ele.DescripcionCorta.trim(), value: ele.Persona });
         this.lstCompania.push({ label: ele.DescripcionCorta.trim().toUpperCase(), value: ele.CompaniaCodigo.trim()+"00", title: ele.Persona });
       });
-      console.log("Facturacion listarCompaniaMast",  this.lstCompania);
+      //console.log("Facturacion listarCompaniaMast",  this.lstCompania);
       return 1;
     });
   }
@@ -278,7 +278,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
         this.lstClasificadorMovimiento.push({ label: e.Nombre, value: e.ClasificadorMovimiento });
       });
       this.filtro.ClasificadorMovimiento = service[0].ClasificadorMovimiento;
-      console.log("Facturacion listaComboClasificadorMovimiento", resp);
+      //console.log("Facturacion listaComboClasificadorMovimiento", resp);
       return 1;
     });
   }
@@ -292,7 +292,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
       resp.forEach(e => {
         this.lstSede.push({ label: e.DescripcionLocal, value: e.Sucursal });
       });
-      console.log("Facturacion listarSucursal", resp);
+      //console.log("Facturacion listarSucursal", resp);
       return 1;
     });
   }
@@ -306,7 +306,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
       resp.forEach(e => {
         this.lstMoneda.push({ label: e.DescripcionCorta, value: e.MonedaCodigo });
       });
-      console.log("Facturacion filtroMoneda", resp);
+      //console.log("Facturacion filtroMoneda", resp);
       return 1;
     });
   }
@@ -320,7 +320,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
  
   
   selectedItemCompania(event){
-    console.log("Facturacion selectedItemCompania", event);
+    //console.log("Facturacion selectedItemCompania", event);
     if (this.filtro.TipoComprobante == null){
       this.lstSerie.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     }else{
@@ -330,7 +330,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
   }
 
   selectedItemTipoComprobante(event){
-    console.log("Facturacion selectedItemTipoComprobante", event);
+    //console.log("Facturacion selectedItemTipoComprobante", event);
     if (this.filtro.TipoComprobante == null){
       this.lstSerie.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     }else{
@@ -348,13 +348,13 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
           Sucursal: this.filtro.Sucursal,
           TipoComprobante: this.filtro.TipoComprobante
       };
-      console.log("Facturacion filtroSerie ::", filtroSerie);
+      //console.log("Facturacion filtroSerie ::", filtroSerie);
     this.lstSerie.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.ComprobanteService.ListarSucursalCompSerie(filtroSerie).then(resp => {
       resp.forEach(e => {
         this.lstSerie.push({ label: e.Serie, value: e.Serie.trim()});
       });
-      console.log("Facturacion ListarSucursalSerie", resp);
+      //console.log("Facturacion ListarSucursalSerie", resp);
       return 1;
     });
   }
@@ -368,7 +368,7 @@ export class FacturacionMantenimientoComponent extends ComponenteBasePrincipal i
         element.num = contado--;
       });
       this.lstComprobanteDetalle = resp;
-      console.log("Facturacion listaComprobanteDetalle", resp);
+      //console.log("Facturacion listaComprobanteDetalle", resp);
     });
   }
 

@@ -74,7 +74,7 @@ export class CuentaBancariaComponent extends ComponenteBasePrincipal implements 
 
   }
   coreVer(dto): void{
-    console.log(this.objetoTitulo)
+    //console.log(this.objetoTitulo)
     this.componentMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   }
 

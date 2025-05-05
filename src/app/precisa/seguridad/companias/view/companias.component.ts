@@ -66,7 +66,7 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
   }
 
   coreMensaje(mensage: MensajeController): void {
-    console.log("entro company listado:", mensage.componente);
+    //console.log("entro company listado:", mensage.componente);
     if (mensage.componente == "SELECTOR_COMPANY") {
       this.coreBuscar();
     }
@@ -90,7 +90,7 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
     filtroImg.Tabla = 'COMPANY';
     filtroImg.IdTabla = row.Persona;
     const imagenEnviar: Image = await this.getImagenes(filtroImg);
-    console.log('TRAIDAAAA', imagenEnviar);
+    //console.log('TRAIDAAAA', imagenEnviar);
     if (imagenEnviar != undefined && imagenEnviar.Contenido != undefined) {
       this.lotesImagenComponent.iniciarComponenteMaestro(new MensajeController(this, "SELECTOR_LOTE", ""), "VER",
         this.objetoTitulo.menuSeguridad.titulo, [imagenEnviar]);
@@ -109,7 +109,7 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
         element.num = contado++;
       });
       this.lstCompaniatb = res;
-      console.log("maestro CompaniaMast listado:", res);
+      //console.log("maestro CompaniaMast listado:", res);
     });
   }
 
@@ -286,7 +286,7 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
     }
     const imagenes: Image[] = await this.maestrocompaniaMastService.MantenimientoFileVer(filtroImg, this.getUsuarioToken());
 
-    console.log("WAKANDA FOREVER", imagenes);
+    //console.log("WAKANDA FOREVER", imagenes);
     return imagenes[0];
   }
 

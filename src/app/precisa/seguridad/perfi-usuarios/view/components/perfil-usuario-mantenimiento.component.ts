@@ -63,7 +63,7 @@ export class PerfilUsuarioMantenimientoComponent extends ComponenteBasePrincipal
 
   /*    VALIDATORS    */
   buildForm() {
-    console.log("buildForm", this.form);
+    //console.log("buildForm", this.form);
   }
   async iniciarComponenteMaestro(msj: MensajeController, accion: string, titulo, rowdata?: any,) {
 
@@ -138,7 +138,7 @@ export class PerfilUsuarioMantenimientoComponent extends ComponenteBasePrincipal
     this.filtro.estado = "A";
     this.filtro.perfil = "WEBMASTER";
     this.ProductService.listarPerfilMaster(this.filtro).then(async (res) => {
-      console.log("res[0].ListaPaginas", res[0].ListaPaginas);
+      //console.log("res[0].ListaPaginas", res[0].ListaPaginas);
 
       this.perfiles = res[0].ListaPaginas;
       this.bloquearPag = false;
@@ -176,13 +176,13 @@ export class PerfilUsuarioMantenimientoComponent extends ComponenteBasePrincipal
           this.dto = await respPerfilEditar[0];
           this.dto.estado = this.dto.desestado;
           this.perfilesAsignados = this.dto.ListaPaginas;
-          console.log(" this.perfilesAsignados:", this.perfilesAsignados);
+          //console.log(" this.perfilesAsignados:", this.perfilesAsignados);
 
           this.fechaCreacion = new Date(product.FechaCreacion);
 
           break;
       }
-      console.log("rowdata", product);
+      //console.log("rowdata", product);
 
       // if (product.UltimaFechaModif == null || product.UltimaFechaModif == undefined) {
       //   this.fechaModificacion = undefined;
@@ -197,7 +197,7 @@ export class PerfilUsuarioMantenimientoComponent extends ComponenteBasePrincipal
     this.filtro.perfil = "WEBMASTER";
     this.ProductService.listarPerfilMaster(this.filtro).then((res) => {
       this.perfiles = res[0].ListaPaginas;
-      console.log("EDITAR WEBMASTER", res[0]);
+      //console.log("EDITAR WEBMASTER", res[0]);
 
     });
   }
@@ -242,7 +242,7 @@ export class PerfilUsuarioMantenimientoComponent extends ComponenteBasePrincipal
     event.preventDefault();
     /**CONVERSIÓN DE ARBOL EN JSON */
     this.dto.ListaPaginas = this.stringify(this.perfilesAsignados);
-    console.log(" WEBMASTER", this.dto.ListaPaginas);
+    //console.log(" WEBMASTER", this.dto.ListaPaginas);
 
     this.bloquearPag = true;
     switch (this.action) {
@@ -253,17 +253,17 @@ export class PerfilUsuarioMantenimientoComponent extends ComponenteBasePrincipal
         this.dto.FechaCreacion = new Date();
         this.dto.UltimaFechaModif = null;
 
-        console.log("saveProduct NUEVO", this.dto)
+        //console.log("saveProduct NUEVO", this.dto)
         this.perfilUserService.mantenimientoPerfi(ConstanteUI.SERVICIO_SOLICITUD_NUEVO, this.dto, this.getUsuarioToken()).
           then((res) => {
-            console.log("res", res);
+            //console.log("res", res);
             if (res.success) {
               this.mensajeController.resultado = '';
               this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
               // this.makeToast(this.getMensajeGrabado(this.dto.perfil.toUpperCase()));
               this.messageShow('success', 'success', this.getMensajeGuardado());
             } else {
-              console.log(res);
+              //console.log(res);
               this.mensajeController.resultado = res;
               this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
               this.messageShow('error', 'error', this.getMensajeErrorGuardado());
@@ -278,12 +278,12 @@ export class PerfilUsuarioMantenimientoComponent extends ComponenteBasePrincipal
         this.dto.ultimousuario = this.getUsuarioAuth().data[0].Documento;
         this.dto.UltimaFechaModif = new Date();
 
-        console.log("saveProduct EDITAR", this.dto)
+        //console.log("saveProduct EDITAR", this.dto)
         this.perfilUserService.mantenimientoPerfi(ConstanteUI.SERVICIO_SOLICITUD_EDITAR, this.dto, this.getUsuarioToken()).then(
           res => {
             this.dialog = false;
 
-            console.log("registrado:", res);
+            //console.log("registrado:", res);
             if (res.success) {
               this.mensajeController.resultado = '';
               this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
@@ -317,13 +317,13 @@ export class PerfilUsuarioMantenimientoComponent extends ComponenteBasePrincipal
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
       this.lstEstados.push({ label: i.Descripcion.toUpperCase(), value: i.Codigo })
     });
-    console.log("lstEstados:", this.lstEstados);
+    //console.log("lstEstados:", this.lstEstados);
     return true;
   }
 
   nodeSelect(event) {
     this.perfilesAsignados = null;
-    console.log(event.node);
+    //console.log(event.node);
     this.perfilesAsignados = event.node;
   }
 

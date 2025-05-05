@@ -624,22 +624,22 @@ export class ComponenteBasePrincipal {
             Clave: CryptoJS.AES.decrypt(this.getUsuarioAuth().encPass, atob(this.getUsuarioAuth().encCon)).toString(CryptoJS.enc.Utf8),
             IdSede: this.getUsuarioAuth().data[0].IdSede
         }
-        console.log("login", login)
+        //console.log("login", login)
         return loginService.login2(login).then(
             res => {
                 if (res.success) {
-                    // console.log("Token del RES", res.tokem);
-                    console.log("Token del antes", this.getUsuarioToken());
+                    // //console.log("Token del RES", res.tokem);
+                    //console.log("Token del antes", this.getUsuarioToken());
 
                     sessionStorage.setItem('access_user_token', JSON.stringify(res.tokem));
-                    console.log("tokem despues", this.getUsuarioToken())
+                    //console.log("tokem despues", this.getUsuarioToken())
                     // this.getUsuarioAuth().tokem = res.tokem;
-                    // console.log("Token del RES", res.tokem);
-                    // console.log("Token del antes reemplazado por el RES", this.getUsuarioToken());
+                    // //console.log("Token del RES", res.tokem);
+                    // //console.log("Token del antes reemplazado por el RES", this.getUsuarioToken());
 
 
                 } else {
-                    // console.log("login ops:::::Usuario y/o clave incorrectos", res);
+                    // //console.log("login ops:::::Usuario y/o clave incorrectos", res);
 
                 }
             }

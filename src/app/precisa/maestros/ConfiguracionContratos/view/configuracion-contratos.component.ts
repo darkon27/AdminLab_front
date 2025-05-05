@@ -62,7 +62,7 @@ export class ConfiguracionContratosComponent extends ComponenteBasePrincipal imp
   }
 
 coreMensaje(mensage: MensajeController): void {
-    console.log("coreMensaje llegando:", mensage.componente);
+    //console.log("coreMensaje llegando:", mensage.componente);
     if (mensage.componente == "SELECEMPRESA") {
       this.filtro.empresa = mensage.resultado.NombreCompleto;
       this.filtro.RucEmpresa = mensage.resultado.Documento;
@@ -77,12 +77,12 @@ coreNuevo(): void {
   }
 
 coreVer(dto): void {
-    console.log("llego coreVer  ", dto);
+    //console.log("llego coreVer  ", dto);
     this.configuracionContratosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_VER', ''), "VER", "CONTRATO", dto)
   }
 
 coreEditar(dto): void {
-    console.log("llego coreEditar  ", dto);
+    //console.log("llego coreEditar  ", dto);
     this.configuracionContratosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_EDITAR', ''), "EDITAR", "CONTRATO", dto)
   }
 
@@ -99,7 +99,7 @@ async coreinactivar(dtoInactivar) {
         dtoInactivar.UltimaFechaModif = new Date();
         dtoInactivar.IpModificacion = this.getIp();
         dtoInactivar.TipEstado = 2;
-        console.log("llego coreinactivar  ", dtoInactivar);
+        //console.log("llego coreinactivar  ", dtoInactivar);
         const respInactivar = await this.TipoOperacionService.MantenimientoTipoOperacion(ConstanteUI.SERVICIO_SOLICITUD_INACTIVAR, dtoInactivar, this.getUsuarioToken());
         if (respInactivar != null) {
           if (respInactivar.success) {
@@ -133,7 +133,7 @@ verSelectorEmpresa(): void {
           Estado: "A"
         }
         this.personaService.listarpaginado(dto).then((res) => {
-          console.log("enter empresa", res)
+          //console.log("enter empresa", res)
           if (res.length > 0) {
             this.filtro.empresa = res[0].NombreCompleto;
             this.filtro.Persona = res[0].Persona;
@@ -176,7 +176,7 @@ coreBuscar(): void {
       res.forEach(element => {
         element.num = contado++;
       });
-      console.log("consulta coreBuscar:", res);
+      //console.log("consulta coreBuscar:", res);
       this.lstTipoOperacion = res;
       setTimeout(() => {
         this.bloquearPag = false;
@@ -243,7 +243,7 @@ coreSalir(): void {
 
 
 onRowSelect(event: any) {
-    console.log("seleccion onRowSelect:", event);
+    //console.log("seleccion onRowSelect:", event);
   }
 
 
@@ -319,7 +319,7 @@ cargarTipoAdmision() {
       this.lstTipoAdmision = [];
       this.lstTipoAdmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
       this.TipoAdmisionService.ListaTipoAdmision(dto).then(res => {
-      console.log("Consulta Tipo Operacion cargarTipoAdmision::", res);
+      //console.log("Consulta Tipo Operacion cargarTipoAdmision::", res);
       res.forEach(ele => {
           this.lstTipoAdmision.push({ label: ele.AdmDescripcion.trim(), value: ele.TipoAdmisionId });
       });
@@ -332,7 +332,7 @@ selectedTipoAdmision(event) {
     if (this.filtro.TipoAdmisionId != null) {   
       this.filtro.TipoAdmisionId  = event.value;
       this.cargarTipoPaciente();
-      console.log("Consulta Tipo Operacion selectedTipoAdmision::", event.value);
+      //console.log("Consulta Tipo Operacion selectedTipoAdmision::", event.value);
     }
   }
 
@@ -342,7 +342,7 @@ cargarTipoPaciente() {
     this.lstTipoPaciente = [];
     this.lstTipoPaciente.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.TipoPacienteService.ListaTipoPaciente(dto).then(res => {
-      console.log("Consulta Tipo Operacion cargarTipoPaciente::", res);
+      //console.log("Consulta Tipo Operacion cargarTipoPaciente::", res);
       res.forEach(ele => {
         this.lstTipoPaciente.push({ label: ele.Descripcion.trim(), value: ele.TipoPacienteId });
       });

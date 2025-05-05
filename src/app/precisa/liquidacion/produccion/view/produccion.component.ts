@@ -102,7 +102,7 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
 
   async coreBuscar() {
     this.bloquearPag = true;
-    console.log("Lote coreBuscar:", this.filtro);
+    //console.log("Lote coreBuscar:", this.filtro);
 
 
     if (this.estaVacio(this.filtro.Periodo)) {
@@ -120,7 +120,7 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
         element.num = contado--;
       });
       this.lstProduccion = res;
-      console.log("maestro CONTRATO listado:", res);
+      //console.log("maestro CONTRATO listado:", res);
     });
   }
 
@@ -147,10 +147,10 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
     throw new Error('Method not implemented.');
   }
   coreEliminar(): void {
-    console.log(33)
+    //console.log(33)
   }
   onRowSelect(event: any) {
-    console.log("FILA SELECCIONADA:", event.data);
+    //console.log("FILA SELECCIONADA:", event.data);
     this.seleccion = event.data
   }
 

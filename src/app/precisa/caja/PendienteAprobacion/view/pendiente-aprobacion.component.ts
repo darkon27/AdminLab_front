@@ -83,12 +83,12 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
   }
 
   coreDetalle(): void {
-    console.log("::Click modal:::");
+    //console.log("::Click modal:::");
   }
 
 
   coreNuevo(): void {
-     console.log("::Click modal:::");
+     //console.log("::Click modal:::");
    // this.PendienteAprobacionBuscarComponent.coreIniciarComponenteDetalle(new MensajeController(this, 'NUEVO', ''), 'NUEVO',);
   }
 
@@ -111,8 +111,8 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
   }
 
   onRowSelect(event: any) {
-    console.log("seleccion:", event);
-    console.log("seleccion variable:", this.seleccion);
+    //console.log("seleccion:", event);
+    //console.log("seleccion variable:", this.seleccion);
 
   }
 
@@ -120,7 +120,7 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
     this.bloquearPag = true;
     this.filtro.Estado=1;
     this.filtro.TipoExpediente=3;
-    console.log("Expediente coreBuscar:", this.filtro);
+    //console.log("Expediente coreBuscar:", this.filtro);
     this.LiquidacionService.ListarExpedienteParticulares(this.filtro).then((res) => {
       this.bloquearPag = false;
       var contado = res.length;
@@ -128,7 +128,7 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
         element.num = contado--;
       });
       this.lstExpediente = res;
-      console.log("Expediente coreBuscar listado:", res);
+      //console.log("Expediente coreBuscar listado:", res);
     });
   }
 
@@ -151,7 +151,7 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
     var anio = hoy.getFullYear();
     this.filtro.FechaInicio =  new Date(`${anio},${mes},${dia}`);
     this.filtro.FechaFinal = new Date(hoy);
-    console.log("fechaActual creacion", this.filtro.FechaInicio);
+    //console.log("fechaActual creacion", this.filtro.FechaInicio);
   }
 
   private ListarTipoAdmision() {
@@ -174,7 +174,7 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
         this.lstClasificadorMovimiento.push({ label: e.Nombre, value: e.ClasificadorMovimiento });
       });
       this.filtro.ClasificadorMovimiento = service[0].ClasificadorMovimiento;
-      console.log("Liq listaComboClasificadorMovimiento", resp);
+      //console.log("Liq listaComboClasificadorMovimiento", resp);
       return 1;
     });
   }
@@ -239,7 +239,7 @@ export class PendienteAprobacionComponent extends ComponenteBasePrincipal implem
       }
 
       this.personaService.listarpaginado(dtoPersona).then((res) => {
-        console.log("enter Paciente", res)
+        //console.log("enter Paciente", res)
         if (res.length > 0) 
         {
           this.filtro.NombreCompleto = res[0].NombreCompleto;

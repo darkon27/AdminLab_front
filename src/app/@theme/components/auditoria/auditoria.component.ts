@@ -31,7 +31,7 @@ export class AuditoriaComponent extends ComponenteBasePrincipal implements OnIni
 
   ngOnInit(): void {
     this.date3 = new Date()
-   // console.log("entrandooo", this.creacionUsuario, this.creacionFecha, this.modificacionFecha);
+   // //console.log("entrandooo", this.creacionUsuario, this.creacionFecha, this.modificacionFecha);
 
   }
 

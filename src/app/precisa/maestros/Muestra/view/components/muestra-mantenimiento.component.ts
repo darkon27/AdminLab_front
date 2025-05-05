@@ -61,7 +61,7 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
   }
 
   iniciarComponenteMaestro(msj: MensajeController, accion: string, titulo, rowdata?: any): void {
-      console.log("EDITAR MensajeController :",  msj );
+      //console.log("EDITAR MensajeController :",  msj );
       this.mensajeController = msj;
       this.validarform = accion;
       this.acciones = `${titulo}: ${accion}`;
@@ -76,13 +76,13 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
           this.fechaCreacion = new Date();
         } else if (this.validarform == "EDITAR") {
-          console.log("EDITAR FILA :", rowdata);
+          //console.log("EDITAR FILA :", rowdata);
           this.filtro.IdMuestra = rowdata.IdMuestra;
           this.bloquearPag = true;
           this.MuestraService.ListadoMuestra(this.filtro).then((res) => {
             this.bloquearPag = false;
             this.dto = res[0];
-            console.log("EDITAR this.dto :",   this.dto );
+            //console.log("EDITAR this.dto :",   this.dto );
             this.puedeEditar = false;
             this.fechaModificacion = new Date();
             this.fechaCreacion = new Date(res[0].FechaCreacion);
@@ -93,7 +93,7 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
           });
   
         } else if (this.validarform == "VER") {
-          console.log("VER FILA :", rowdata);
+          //console.log("VER FILA :", rowdata);
           this.filtro.IdMuestra = rowdata.IdMuestra;
           this.bloquearPag = true;
           this.MuestraService.ListadoMuestra(this.filtro).then((res) => {
@@ -128,7 +128,7 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
       this.tipoadmision.AdmEstado=1;
       this.lsttipoadmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
       return this.consultaAdmisionService.listarcombotipoadmision(this.tipoadmision).then(resp => {
-        console.log("combo tipo admision:", resp);
+        //console.log("combo tipo admision:", resp);
         resp.forEach(e => {
           this.lsttipoadmision.push({ label: e.AdmDescripcion, value: e.TipoAdmisionId });
         });
@@ -148,7 +148,7 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
           res => {
             this.bloquearPag = false;
             this.dialog = false;
-            console.log("registrado:", res);
+            //console.log("registrado:", res);
             if (res != null) {
               if (res.mensaje == "Created") {
                 this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se registró con éxito.' });
@@ -169,7 +169,7 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
           res => {
             this.bloquearPag = false;
             if (res != null) {
-              console.log("registrado:", res);
+              //console.log("registrado:", res);
               if (res.mensaje == "Ok") {
                 this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se actualizó con éxito.' });
                 this.mensajeController.resultado = res;

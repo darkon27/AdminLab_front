@@ -126,7 +126,7 @@ export class ClienteRucBuscarComponent extends ComponenteBasePrincipal implement
       });
 
       this.listClienteRuc = res;
-      console.log("data listado:", res);
+      //console.log("data listado:", res);
 
     });
 
@@ -139,7 +139,7 @@ export class ClienteRucBuscarComponent extends ComponenteBasePrincipal implement
     // if (accion == "NUEVO") {
     this.cargarAcciones(accion, titulo)
     this.coreIniciarComponente
-    console.log("entra?:");
+    //console.log("entra?:");
 
     // else{
     //   this.cargarAcciones(accion,titulo)
@@ -180,7 +180,7 @@ export class ClienteRucBuscarComponent extends ComponenteBasePrincipal implement
     } else {
         this.mensajeController.resultado = rowData;
         this.coreSalir();
-        console.log(" this.mensajeController:",  this.mensajeController);
+        //console.log(" this.mensajeController:",  this.mensajeController);
         this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
     }
 }

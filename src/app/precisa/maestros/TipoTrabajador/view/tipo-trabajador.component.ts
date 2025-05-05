@@ -57,7 +57,7 @@ export class TipoTrabajadorComponent extends ComponenteBasePrincipal implements 
       })
       return;
     }
-    this.tipoTrabajadorMantenimientoComponent.iniciarComponente("NUEVO", this.objetoTitulo.menuSeguridad.titulo,this.fileTmp)
+    this.tipoTrabajadorMantenimientoComponent.iniciarComponente("NUEVO", this.objetoTitulo.menuSeguridad.titulo, this.fileTmp)
   }
 
   coreBuscar(): void {
@@ -69,7 +69,7 @@ export class TipoTrabajadorComponent extends ComponenteBasePrincipal implements 
   }
 
   coreExportar(): void {
-    console.log("btn coreExportar:");
+    //console.log("btn coreExportar:");
     if (this.fileTmp == null) {
       Swal.fire({
         icon: 'warning',
@@ -78,20 +78,20 @@ export class TipoTrabajadorComponent extends ComponenteBasePrincipal implements 
       })
       return;
     }
-    this.tipoTrabajadorMantenimientoComponent.iniciarComponente("Exportar", this.objetoTitulo.menuSeguridad.titulo,this.fileTmp);
+    this.tipoTrabajadorMantenimientoComponent.iniciarComponente("Exportar", this.objetoTitulo.menuSeguridad.titulo, this.fileTmp);
   }
   coreSalir(): void {
     throw new Error('Method not implemented.');
   }
 
   coreVer(dto): void {
-    console.log("btn coreVer:");
-    this.tipoTrabajadorMantenimientoComponent.iniciarComponente("VER", this.objetoTitulo.menuSeguridad.titulo,dto);
+    //console.log("btn coreVer:");
+    this.tipoTrabajadorMantenimientoComponent.iniciarComponente("VER", this.objetoTitulo.menuSeguridad.titulo, dto);
   }
 
   coreEditar(dto): void {
-    console.log("btn coreEditar:");
-    this.tipoTrabajadorMantenimientoComponent.iniciarComponente("EDITAR", this.objetoTitulo.menuSeguridad.titulo,dto)
+    //console.log("btn coreEditar:");
+    this.tipoTrabajadorMantenimientoComponent.iniciarComponente("EDITAR", this.objetoTitulo.menuSeguridad.titulo, dto)
   }
 
   ngOnInit(): void {
@@ -107,19 +107,19 @@ export class TipoTrabajadorComponent extends ComponenteBasePrincipal implements 
     this.bloquearPag = false;
 
 
-    let ObjRuta = { Nombre: "C:\\ARCHIVO\\SERVER\\"}
+    let ObjRuta = { Nombre: "C:\\ARCHIVO\\SERVER\\" }
     this.nodeService.listarFiles(ObjRuta).then(response => {
       Swal.close()
       if (response) {
-      var  xdtoFile = response;
-      this.files2 = xdtoFile.data;
-      console.log("Error: Miscelaneos", xdtoFile);
+        var xdtoFile = response;
+        this.files2 = xdtoFile.data;
+        //console.log("Error: Miscelaneos", xdtoFile);
       } else {
-        console.log("Error: Miscelaneos", JSON.stringify(response));
+        //console.log("Error: Miscelaneos", JSON.stringify(response));
       }
     })
 
-   // this.nodeService.getFiles().then(files => this.files1 = files);
+    // this.nodeService.getFiles().then(files => this.files1 = files);
     //this.nodeService.getFiles().then(files => this.files2 = files);
 
     this.files3 = [{
@@ -135,12 +135,12 @@ export class TipoTrabajadorComponent extends ComponenteBasePrincipal implements 
       data: "Storage Folder",
       expandedIcon: "pi pi-folder-open",
       collapsedIcon: "pi pi-folder"
-    } ];
+    }];
   }
 
 
   subirArchivo(fs: any) {
-    console.log("Ruta:",this.fileTmp);
+    //console.log("Ruta:",this.fileTmp);
     if (this.fileTmp == null) {
       Swal.fire({
         icon: 'warning',
@@ -148,22 +148,22 @@ export class TipoTrabajadorComponent extends ComponenteBasePrincipal implements 
         text: `Debe seleccionar una Ruta`
       })
     } else {
-        if (this.fileTmp.children == null) {
-          Swal.fire({
-            icon: 'warning',
-            title: '¡Mensaje!',
-            text: `Debe seleccionar una Carpeta`
-          })
-        } else {
-          fs.click();
-          console.log("nombre archivo:", fs);
-        }
-    }   
+      if (this.fileTmp.children == null) {
+        Swal.fire({
+          icon: 'warning',
+          title: '¡Mensaje!',
+          text: `Debe seleccionar una Carpeta`
+        })
+      } else {
+        fs.click();
+        //console.log("nombre archivo:", fs);
+      }
+    }
   }
 
 
-exportar(event: any) {
-  console.log("btn exportar:", event);
+  exportar(event: any) {
+    //console.log("btn exportar:", event);
     if (event.target.files && event.target.files[0]) {
       this.file = <File>event.target.files[0];
       if (this.file.size > 1048576) {
@@ -174,37 +174,37 @@ exportar(event: any) {
         })
         return
       }
-      console.log("FILE:", this.file)
+      //console.log("FILE:", this.file)
       this.nombrearchivo = this.file.name;
       const reader = new FileReader();
       reader.readAsDataURL(this.file);
     }
-}
+  }
 
 
   nodeSelect(event) {
     this.fileTmp = null;
-    console.log(event.node);
-    this.fileTmp=event.node;
+    //console.log(event.node);
+    this.fileTmp = event.node;
   }
 
-  getFile($event : any):void {
-    console.log($event.target.files);
-    const[ file ]=$event.target.files;
-    this.fileTmp=
-      {
-      fileRaw:file,
-      fileName:file.name
-      }
-      console.log($event.target.files);
-}
+  getFile($event: any): void {
+    //console.log($event.target.files);
+    const [file] = $event.target.files;
+    this.fileTmp =
+    {
+      fileRaw: file,
+      fileName: file.name
+    }
+    //console.log($event.target.files);
+  }
 
 
-sendFile():void {
-const body = new FormData();
-body.append('myFile',this.fileTmp.fileRaw,this.fileTmp.fileName);
-this.nodeService.sendPost(body).subscribe(res => console.log(res)) 
-}
+  sendFile(): void {
+    const body = new FormData();
+    body.append('myFile', this.fileTmp.fileRaw, this.fileTmp.fileName);
+    // this.nodeService.sendPost(body).subscribe(res => console.error(res))
+  }
 
 
 

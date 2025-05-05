@@ -124,7 +124,7 @@ export class EmpresaBuscarComponent extends ComponenteBasePrincipal implements O
 
   coreMensaje(mensage: MensajeController): void {
     // if(mensage.componente == "TIPREGPERSONA") {
-    //   console.log("data del seleccionar",mensage);
+    //   //console.log("data del seleccionar",mensage);
     //   this.filtro.Documento=mensage.resultado.Documento;
     //   this.filtro.NombreCompleto=mensage.resultado.NombreCompleto;
     //   this.filtro.FechaNacimiento=mensage.resultado.FechaNacimiento;
@@ -148,7 +148,7 @@ export class EmpresaBuscarComponent extends ComponenteBasePrincipal implements O
     }
     this.mensajeController.resultado = dto;
     this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-    console.log("data del persona", dto)
+    //console.log("data del persona", dto)
     this.coreSalir();
    
   }
@@ -160,7 +160,7 @@ export class EmpresaBuscarComponent extends ComponenteBasePrincipal implements O
     } else {
         this.mensajeController.resultado = rowData;
         this.coreSalir();
-        console.log(" this.mensajeController:",  this.mensajeController);
+        //console.log(" this.mensajeController:",  this.mensajeController);
         this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
     }
 }
@@ -195,7 +195,7 @@ export class EmpresaBuscarComponent extends ComponenteBasePrincipal implements O
 
   grillaCargarDatos(event: LazyLoadEvent) {
     this.loading = true;
-    console.log("entrooo:::::");   
+    //console.log("entrooo:::::");   
     this.dto.TipoDocumento = "R";
     this.dto.Estado = "A";
     this.personaService.listarpaginado(this.dto).then((res) => {
@@ -205,7 +205,7 @@ export class EmpresaBuscarComponent extends ComponenteBasePrincipal implements O
       });
       this.loading = false;
       this.lstPersona = res;
-      console.log("data listado:", res);
+      //console.log("data listado:", res);
 
     });
 
@@ -264,7 +264,7 @@ export class EmpresaBuscarComponent extends ComponenteBasePrincipal implements O
   // }
 
   checknombre(hola: any) {
-    console.log("entro", hola);
+    //console.log("entro", hola);
     this.vernombre = true;
     this.verdocumento = false;   
     this.dto.Documento = null;

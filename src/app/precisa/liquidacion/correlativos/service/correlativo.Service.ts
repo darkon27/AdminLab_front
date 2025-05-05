@@ -24,7 +24,7 @@ export class CorrelativoService {
   }
 
   MantenimientoCorrelativos(codigo: number, data: dtoCorrelativo, token: string) {
-    console.log(data)
+    //console.log(data)
     const headers = new HttpHeaders().set("Authorization", token)
     return this.config.getHttp().post(`${this.urlfa}MantenimientoCorrelativos/${codigo}`, data).toPromise()
       .then(response => response)

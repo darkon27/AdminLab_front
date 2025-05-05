@@ -62,9 +62,9 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
 
     ngOnInit(): void {
         const p2 = this.comboCargarServicios();
-        console.log("Busqueda Examen  coreIniciar::", p2)
+        //console.log("Busqueda Examen  coreIniciar::", p2)
         Promise.all([p2]).then(resp => {
-            console.log("Busqueda Examen  ngOnInit::", p2)
+            //console.log("Busqueda Examen  ngOnInit::", p2)
         });
     }
 
@@ -80,14 +80,14 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
     }
 
     async coreIniciarComponenteBuscar(mensaje: MensajeController, accionform: string, page: number, dtoEditExamen?: any): Promise<void> {
-        console.log("Busqueda Examen  coreIniciarComponenteBuscar::", page)
+        //console.log("Busqueda Examen  coreIniciarComponenteBuscar::", page)
         this.limpiarExamen();
         this.dialog = true;
         this.mensajeController = mensaje;
         this.titulo = 'EXAMEN';
         this.acciones = `${this.titulo}: ${accionform}`;
         this.validarAccion = accionform;
-        console.log("Busqueda Examen  coreIniciar::", page)
+        //console.log("Busqueda Examen  coreIniciar::", page)
         if (accionform == "BUSCAR") {
             if (page == 1) {
                 this.page1 = true
@@ -101,7 +101,7 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
                 this.comboPerfil(dtoEditExamen.TipoOperacionID);
                 this.filtroexamen.TipoOperacionID = dtoEditExamen.tipoOperacionId;
             } else if (page == 2) {
-                console.log("dtoEditExamen::", dtoEditExamen)
+                //console.log("dtoEditExamen::", dtoEditExamen)
                 this.page1 = false
                 this.page2 = true
                 this.pageCliente1 = true
@@ -113,7 +113,7 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
                 this.comboPerfil(dtoEditExamen.TipoOperacionID)
                 this.filtroexamen.TipoOperacionID = dtoEditExamen.tipoOperacionId;
             } else if (page == 3) {
-                console.log("dtoEditExamen::", dtoEditExamen)
+                //console.log("dtoEditExamen::", dtoEditExamen)
                 this.page1 = true
                 this.page2 = false
                 this.pageCliente1 = false
@@ -138,7 +138,7 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
                 this.lstcliente.push({ label: e.empresa, value: e.Persona });
                 this.filtroexamen.empresa = listaComboliente[0].Persona;
             });
-            console.log("Buscar Examen combo cliente Temp", listaComboliente);
+            //console.log("Buscar Examen combo cliente Temp", listaComboliente);
         }
         else if (page == 3) {
             this.lstcliente = [];
@@ -176,14 +176,14 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
             resp.forEach(e => {
                 this.lstServicio.push({ label: e.Nombre, value: e.ClasificadorMovimiento });
             });
-            console.log("Busqueda Examen comboCargarServicios::", resp);
+            //console.log("Busqueda Examen comboCargarServicios::", resp);
             return 1;
         });
     }
 
 
     comboCargarTipoOperacion(page: number = 0, tipoOperacionId: number = 0): Promise<number> {
-        console.log("Busqueda Examen ::", page);
+        //console.log("Busqueda Examen ::", page);
         if (page == 2) {
             this.Auth = this.getUsuarioAuth();
             var operation = this.Auth.data;
@@ -195,7 +195,7 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
                     this.lstTipoOperacion.push({ label: e.MosDescripcion, value: e.TipoOperacionId });
                 });
                 this.filtroexamen.TipoOperacionID = tipoOperacionId;
-                console.log("Busqueda Examen comboCargarTipoOperacion::", resp);
+                //console.log("Busqueda Examen comboCargarTipoOperacion::", resp);
                 return 1;
             });
         } else if (page == 2) {
@@ -207,8 +207,8 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
                     this.lstTipoOperacion.push({ label: e.Descripcion, value: e.TipoOperacionID });
                 });
                 this.filtroexamen.TipoOperacionID = tipoOperacionId;
-                console.log("Busqueda Examen comboCargarTipoOperacion ::", resp);
-                console.log("Busqueda Examen TopoOperacionID", this.filtroexamen.TipoOperacionID);
+                //console.log("Busqueda Examen comboCargarTipoOperacion ::", resp);
+                //console.log("Busqueda Examen TopoOperacionID", this.filtroexamen.TipoOperacionID);
                 return 1;
 
             });
@@ -225,12 +225,12 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
         }  
         this.lstTipoOperacion.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
         return this.consultaAdmisionService.listarModeloServicio(filtro).then(resp => {
-            console.log('re',resp);
+            //console.log('re',resp);
             (resp)
             resp.forEach(e => {
                 this.lstTipoOperacion.push({ label: e.MosDescripcion, value: e.TipoOperacionId });
             });
-            console.log("Busqueda Examen  comboPerfil", resp)
+            //console.log("Busqueda Examen  comboPerfil", resp)
             this.filtroexamen.ModeloServicioId = resp[0].ModeloServicioId;
             this.filtroexamen.TipoOperacionID = tipoOperacionId;
             return 1;
@@ -265,10 +265,10 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
         this.filtroexamen.Estado = 1;
         // this.filtroexamen.TipoOperacionID = 340;
         // this.filtroexamen.ModeloServicioId = 215;
-        console.log("cabecera", this.filtroexamen);
+        //console.log("cabecera", this.filtroexamen);
         this.examenService.examenpaginado(this.filtroexamen).then((res) => {
             // this.filtro.paginacion = res;
-            console.log("table res examen ::", res)
+            //console.log("table res examen ::", res)
             var contado = 1;
             res.forEach(element => {
                 element.numeroExamen = contado++;
@@ -295,7 +295,7 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
           const env:Object[] = [rowData];
             this.mensajeController.resultado = env;
             this.coreSalir();
-            console.log(" this.mensajeController:",  this.mensajeController);
+            //console.log(" this.mensajeController:",  this.mensajeController);
             this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
         }
     }
@@ -314,13 +314,13 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
 
     coreSeleccionar(dto: any) {
         dto = this.registroSeleccionado;
-        console.log("seleccion variable:", dto);
+        //console.log("seleccion variable:", dto);
         if (dto === null) {
             this.mostrarMensajeInfo('Debe seleccionar un registro');
             return;
         } else {
             this.mensajeController.resultado = dto;
-            console.log("coreSeleccionar",this.mensajeController);
+            //console.log("coreSeleccionar",this.mensajeController);
             
             this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
 
@@ -359,17 +359,17 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
     checkboxSeleccionar() {
 
         //   var checkboxes = document.querySelectorAll("input[type = 'checkbox']");
-        //   console.log(checkboxes)
+        //   //console.log(checkboxes)
         //   function checkAll(myCheckbox){
         //       if(myCheckbox.checked == true){
-        //           console.log("checkbox true")
+        //           //console.log("checkbox true")
         //           checkboxes.forEach(function(checkbox){
         //             this.checkbox.checked = true;
         //           });
         //       }
         //       else{
         //           checkboxes.forEach(function(checkbox){
-        //             console.log("checkbox false")
+        //             //console.log("checkbox false")
         //               this.checkbox.checked = false;
         //           })
         //       }
@@ -383,7 +383,7 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
     //     var select: any = true;
     //     const numeroExamen = $event.target.value;
     //     const isChecked = $event.target.checked;
-    //     console.log(numeroExamen, isChecked);
+    //     //console.log(numeroExamen, isChecked);
 
     //     this.lstexamen = this.lstexamen.map((d) => {
 
@@ -404,7 +404,7 @@ export class ExamenBuscarComponent extends ComponenteBasePrincipal implements On
     //             return d;
     //         }
 
-    //         console.log(d);
+    //         //console.log(d);
     //         return d;
 
     //     });

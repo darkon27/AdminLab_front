@@ -206,7 +206,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         var usuario = this.Auth;
 
         this.personaService.listarUsuarioWeb(IdPersona).then(resp => {
-          console.log("resp", resp)
+          //console.log("resp", resp)
           if (resp[0].estadoActualizacion == 1) {
             _parametros = {
               success: 1,
@@ -221,7 +221,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
 
 
             return this.consultaAdmisionService.sendCorreo(_parametros).then(resp => {
-              console.log("correo", resp)
+              //console.log("correo", resp)
               setTimeout(() => {
                 this.bloquearPag = false;
               }, 300);
@@ -261,7 +261,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
 
   coreIniciarComponente(mensaje: MensajeController): void {
     this.mensajeController = mensaje;
-    console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
+    //console.log("ENTRO NUEVO COMPONENTE", this.mensajeController);
     this.verMantPersona = true;
     this.titulo = 'PERSONA';
     this.acciones = `${this.titulo}: ${this.mensajeController.tipo}`;
@@ -273,16 +273,16 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
       this.fechaCreacion = new Date();
       this.fechaModificacion = new Date();
     } else {
-      console.log("mostrar auditoria comparacion Inicio", this.getUsuarioAuth().data[0].Usuario, filtro);
+      //console.log("mostrar auditoria comparacion Inicio", this.getUsuarioAuth().data[0].Usuario, filtro);
       if (this.estaVacio(filtro.UltimoUsuario)) {
-        console.log("UsuarioCreacion Igual a UsuarioLogeado");
+        //console.log("UsuarioCreacion Igual a UsuarioLogeado");
         this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
         this.fechaCreacion = new Date();
         this.fechaModificacion = new Date();
       } else {
-        console.log("VAlidar Usuario Lleno", this.getUsuarioAuth().data[0].Usuario, filtro.UltimoUsuario);
+        //console.log("VAlidar Usuario Lleno", this.getUsuarioAuth().data[0].Usuario, filtro.UltimoUsuario);
         if (filtro.UltimoUsuario == this.getUsuarioAuth().data[0].Usuario) {
-          console.log("Usuario Logeado")
+          //console.log("Usuario Logeado")
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
           if (this.esFechaVacia(filtro.UltimaFechaModif)) {
             this.fechaModificacion = new Date();
@@ -294,7 +294,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
           }
         }
         else {
-          console.log("Usuario Rest", filtro.UltimoUsuario, filtro.UltimaFechaModif);
+          //console.log("Usuario Rest", filtro.UltimoUsuario, filtro.UltimaFechaModif);
           let dto = {
             Documento: filtro.UltimoUsuario.trim(),
             tipopersona: "USU",
@@ -309,12 +309,12 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
             } else {
               this.fechaModificacion = new Date(filtro.UltimaFechaModif);
             }
-            console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion);
+            //console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion);
           })
         }
       }
     }
-    console.log("mostrar auditoria comparacion Final", this.getUsuarioAuth().data[0].Usuario);
+    //console.log("mostrar auditoria comparacion Final", this.getUsuarioAuth().data[0].Usuario);
   }
 
   mostrarCamposEditar(dtoEditPersona) {
@@ -348,9 +348,9 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, page: number, dtoEditPersona?: any): void {
     this.mensajeController = mensaje;
-    console.log("Mant dtoEditPersona :", dtoEditPersona);
-    console.log("Mant persona accionform :", accionform);
-    console.log("Mant persona mensajeController:", this.mensajeController);
+    //console.log("Mant dtoEditPersona :", dtoEditPersona);
+    //console.log("Mant persona accionform :", accionform);
+    //console.log("Mant persona mensajeController:", this.mensajeController);
     this.listarComboDepartamento();
     this.dto = new dtoPersona();
     this.verMantPersona = true;
@@ -383,9 +383,9 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
       const p2 = this.listarComboProvincia(dtoEditPersona.DEPARTAMENTO);
       const p3 = this.listarComboDistrito(dtoEditPersona.DEPARTAMENTO + dtoEditPersona.PROVINCIA);
       Promise.all([p1, p2, p3]).then((resp) => {
-        console.log("DEPARTAMENTO:", this.lstDepartamento);
-        console.log("PROVINCIA:", this.lstProvincia);
-        console.log("DISTRITO:", this.lstDistrito);
+        //console.log("DEPARTAMENTO:", this.lstDepartamento);
+        //console.log("PROVINCIA:", this.lstProvincia);
+        //console.log("DISTRITO:", this.lstDistrito);
         this.dto = dtoEditPersona;
         if (this.dto.TipoPersona == "J") {
           this.editarTipoDocumento = true;
@@ -408,7 +408,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         }
         this.validarflagABooleanCampos(dtoEditPersona);
         this.CalcularAnios();
-        console.log("Mant persona dto llegando:", this.dto);
+        //console.log("Mant persona dto llegando:", this.dto);
       });
 
     } else if (accionform == "VER") {
@@ -432,7 +432,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         this.validarflagABooleanCampos(dtoEditPersona);
         this.editarTipoDocumento = true;
         this.disabledTipoPerso = true;
-        console.log("Mant persona dto llegando:", this.dto);
+        //console.log("Mant persona dto llegando:", this.dto);
       });
     }
   }
@@ -445,13 +445,13 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
       this.validarmaxtexto = 11;
       this.validarmintexto = 11;
       this.editarTipoDocumento = true;
-      console.log("selectedItemTipoPersona:", this.dto);
+      //console.log("selectedItemTipoPersona:", this.dto);
     } else if (this.dto.TipoPersona == "N") {
       this.verpersonajuridica = false;
       this.dto.TipoDocumento = "D";
       this.verrucmodi = false;
       this.editarTipoDocumento = false;
-      console.log("selectedItemTipoPersona:", this.dto);
+      //console.log("selectedItemTipoPersona:", this.dto);
     }
   }
 
@@ -468,7 +468,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   }
 
   editarPersona(persona: any) {
-    console.log("persona editarPersona", persona);
+    //console.log("persona editarPersona", persona);
     // if (this.dto.TipoPersona == "J") {
     //   if(this.dto.IndicadorRetencion=="true"){
     //     this.dto.IndicadorRetencion="1";
@@ -486,7 +486,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
           this.makeToast(this.getMensajeActualizado(persona.Persona))
           this.verMantPersona = false;
           this.mensajeController.resultado = persona.Persona;
-          console.log("editarPersona   this.mensajeController:", this.mensajeController);
+          //console.log("editarPersona   this.mensajeController:", this.mensajeController);
           this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
           this.bscPersonaCopia = this.dto;
         }
@@ -538,16 +538,16 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
 
   ServicioRegistrarPersona() {
     this.dto.NombreCompleto = `${this.dto.ApellidoPaterno} ${this.dto.ApellidoMaterno}, ${this.dto.Nombres}`
-    console.log("ServicioRegistrarPersona dto a guardar:", this.dto);
+    //console.log("ServicioRegistrarPersona dto a guardar:", this.dto);
     this.personaService.mantenimientoMaestro(1, this.dto, this.getUsuarioToken()).then(
       res => {
-        console.log("res guardado:", res);
+        //console.log("res guardado:", res);
         if (res.success) {
           this.makeToast(this.getMensajeGrabado(this.dto.Documento));
           this.verMantPersona = false;
-          console.log("entro:", this.mensajeController.resultado)
+          //console.log("entro:", this.mensajeController.resultado)
           this.mensajeController.resultado = res;
-          console.log("res enviando:", res);
+          //console.log("res enviando:", res);
           this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
         }
         else {
@@ -600,11 +600,11 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
     //this.dto.NombreCompleto = this.dto.Nombres;
     this.dto.NombreCompleto = `${this.dto.Nombres}`
     if (this.dto.IndicadorRetencion == " true") {
-      console.log("Verdadero", this.dto.IndicadorRetencion)
+      //console.log("Verdadero", this.dto.IndicadorRetencion)
       this.dto.IndicadorRetencion = "1";
     }
     else {
-      console.log("Falso", this.dto.IndicadorRetencion)
+      //console.log("Falso", this.dto.IndicadorRetencion)
       this.dto.IndicadorRetencion = "0";
     }
 
@@ -612,12 +612,12 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
       this.dto.DiaVencimiento = 0;
     }
 
-    console.log("DTO INSERTANDO: ", this.dto);
-    console.log("TOKEN: ", this.getUsuarioToken());
+    //console.log("DTO INSERTANDO: ", this.dto);
+    //console.log("TOKEN: ", this.getUsuarioToken());
     this.personaService.mantenimientoMaestro(1, this.dto, this.getUsuarioToken()).then(
       res => {
-        console.log("mantenimiento res", res)
-        console.log("mantenimiento this.dto")
+        //console.log("mantenimiento res", res)
+        //console.log("mantenimiento this.dto")
         if (res.success) {
           this.makeToast(this.getMensajeGrabado(this.dto.Documento));
           this.verMantPersona = false;
@@ -752,7 +752,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
           this.dto.DiaVencimiento = 0;
         }
       }
-      console.log("persona EDITAR", this.validarAccion);
+      //console.log("persona EDITAR", this.validarAccion);
       if (this.dto.TipoPersona == "J") {
 
         if (!this.validarCamposFormulario()) {
@@ -771,7 +771,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
             }).then((result) => {
               if (result.isConfirmed) {
                 this.dto.NombreCompleto = this.dto.Nombres;
-                console.log("dto a guardar:", this.dto);
+                //console.log("dto a guardar:", this.dto);
                 this.editarPersona(this.dto);
               } else {
                 this.verMantPersona = true;
@@ -789,7 +789,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         }
 
       } else {
-        console.log("guardar dto sss:", this.dto);
+        //console.log("guardar dto sss:", this.dto);
         // this.validarCamposFormulario();
         if (!this.validarCamposFormulario()) {
           var userUltimo = this.getUsuarioAuth().data[0].Documento;
@@ -840,31 +840,31 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
       if (this.validarIsNullCheckTipoPersona()) {
         this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Selecionar Tipo de Persona.', life: 700 });
         validar = true;
-        console.log("VALIDA a validarCamposFormulario: 1");
+        //console.log("VALIDA a validarCamposFormulario: 1");
       }
 
       if (this.estaVacio(this.dto.Nombres)) {
         this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar la Razón Social.', life: 700 });
         validar = true;
-        console.log("VALIDA a Nombres: 2");
+        //console.log("VALIDA a Nombres: 2");
       }
 
       if (this.esFechaVacia(this.dto.FechaNacimiento)) {
         this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Fecha de Nacimiento.', life: 700 });
         validar = true;
-        console.log("VALIDA a FechaNacimiento: 2");
+        //console.log("VALIDA a FechaNacimiento: 2");
       }
 
       if (this.estaVacio(this.dto.Documento)) {
         this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar N° Documento.', life: 700 });
         validar = true;
-        console.log("VALIDA a Documento: 4");
+        //console.log("VALIDA a Documento: 4");
       }
 
       if (this.dto.Documento.trim().length != 11) {
         this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'El Ruc debe tener 11 caracteres.', life: 700 });
         validar = true;
-        console.log("VALIDA a length: 5");
+        //console.log("VALIDA a length: 5");
       }
 
 
@@ -872,22 +872,22 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         this.myDireccion.nativeElement.focus();
         this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Dirección.', life: 700 });
         validar = true;
-        console.log("VALIDA a Direccion: 6");
+        //console.log("VALIDA a Direccion: 6");
       }
 
       if (this.estaVacio(this.dto.Estado)) {
         this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Estado.', life: 700 });
         validar = true;
-        console.log("VALIDA a Estado: 7");
+        //console.log("VALIDA a Estado: 7");
       }
 
       if (this.estaVacio(this.dto.Telefono)) {
         this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe Ingresar Telefono.', life: 700 });
         validar = true;
-        console.log("VALIDA a Telefono: 8");
+        //console.log("VALIDA a Telefono: 8");
       }
 
-      console.log("VALIDA a validarCamposFormulario:", validar);
+      //console.log("VALIDA a validarCamposFormulario:", validar);
 
     } else if (this.dto.TipoPersona == "N") {
 
@@ -997,13 +997,13 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   }
 
   entrando(evento) {
-    console.log(this.dto.Documento);
-    console.log(evento);
+    //console.log(this.dto.Documento);
+    //console.log(evento);
     let key02
     if (this.dto.TipoDocumento == "R" || this.dto.TipoDocumento == "D") {
       key02 = evento.keyCode;
       key02 = String.fromCharCode(key02);
-      console.log("key else 02", key02)
+      //console.log("key else 02", key02)
       const regex = /[A-Z]|\./;
       if (regex.test(this.dto.Documento)) {
         this.dto.Documento = null;
@@ -1012,7 +1012,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
     if (this.dto.TipoDocumento == "X" || this.dto.TipoDocumento == "P") {
       key02 = evento.keyCode;
       key02 = String.fromCharCode(key02);
-      console.log("key else 02", key02)
+      //console.log("key else 02", key02)
       const regex = /[^a-zA-Z0-9 ]/;
       if (regex.test(this.dto.Documento)) {
         this.dto.Documento = null;
@@ -1025,24 +1025,24 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   //   if (event.type === 'paste') {
   //     const clipboardEvent = event as ClipboardEvent;
   //     key = clipboardEvent.clipboardData?.getData('text/plain') || '';
-  //     console.log("key paste:", key);
+  //     //console.log("key paste:", key);
   //   } else {
   //     const keyboardEvent = event as KeyboardEvent;
   //     key = keyboardEvent.key; 
-  //     console.log("key press:", key);
+  //     //console.log("key press:", key);
   //   }
 
   //   if (this.dto.TipoDocumento === "R" || this.dto.TipoDocumento === "D") {
   //     const regex = /^[0-9]$/; // Solo permite números
   //     if (!regex.test(key)) {
   //       event.preventDefault(); 
-  //       console.log("Número no permitido:", key);
+  //       //console.log("Número no permitido:", key);
   //     }
   //   } else if (this.dto.TipoDocumento === "X" || this.dto.TipoDocumento === "P") {
   //     const regex = /^[a-zA-Z0-9]$/; // Solo permite alfanuméricos
   //     if (!regex.test(key)) {
   //       event.preventDefault(); 
-  //       console.log("Caracter no permitido:", key);
+  //       //console.log("Caracter no permitido:", key);
   //     }
   //   }
   // }
@@ -1054,7 +1054,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
       let key;
       if (event.type === 'paste') {
         key = event.clipboardData.getData('text/plain');
-        console.log("key if", key)
+        //console.log("key if", key)
       } else {
         key = event.keyCode;
         key = String.fromCharCode(key);
@@ -1064,13 +1064,13 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         event.returnValue = false;
         if (event.preventDefault) {
           event.preventDefault();
-          console.log("event.prevent", event.preventDefault());
+          //console.log("event.prevent", event.preventDefault());
         }
       }
     }
     if (this.dto.TipoDocumento == "X" || this.dto.TipoDocumento == "P") {
       let key;
-      console.log("event", event)
+      //console.log("event", event)
       if (event.type === 'paste') {
         key = event.clipboardData.getData('text/plain');
       } else {
@@ -1111,7 +1111,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
 
   selectedItemTipoDocumento(event) {
     this.selectedTipoDocuemento = event.value;
-    console.log("COMBO TIPO DOCUMENTO", this.selectedTipoDocuemento);
+    //console.log("COMBO TIPO DOCUMENTO", this.selectedTipoDocuemento);
     /*     
         D	D.N.I.
         R	RUC / NIT
@@ -1248,7 +1248,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
        this.validarmaxtexto = 8;
        this.validarmintexto = 8;
      } */
-    console.log("validartext", this.validarmaxtexto)
+    //console.log("validartext", this.validarmaxtexto)
   }
 
   opcionTipoDocumento() {
@@ -1299,7 +1299,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
         break;
 
     }
-    console.log("validartext", this.validarmaxtexto)
+    //console.log("validartext", this.validarmaxtexto)
   }
 
   selectedItemFechaNacimiento(event) {
@@ -1358,7 +1358,7 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   }
 
   selectedItemDepartamento(event) {
-    console.log("event departamento", event);
+    //console.log("event departamento", event);
     this.selectedDepartamento = event.value;
     this.lstProvincia = []
     this.lstDistrito = []
@@ -1402,9 +1402,9 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
     this.lstDistrito = [];
     this.lstDistrito.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     let distrito = { Num: 3, Codigo: codigo }
-    console.log("::: distrito payload", distrito)
+    //console.log("::: distrito payload", distrito)
     return this.personaService.listarUbigeo(distrito).then(res => {
-      console.log("::: distrito response", res)
+      //console.log("::: distrito response", res)
       res.forEach(e => {
         this.lstDistrito.push({ label: e.Nombre, value: e.Codigo });
       });
@@ -1451,10 +1451,10 @@ export class PersonaMantenimientoComponent extends ComponenteBasePrincipal imple
   validarIsNullCheckTipoPersona(): boolean {
     if (this.dto.EsCliente == 'N' && this.dto.EsProveedor == 'N' &&
       this.dto.EsEmpleado == 'N' && this.dto.EsOtro == 'N') {
-      console.log("entro validar true");
+      //console.log("entro validar true");
       return true;
     } else {
-      console.log("entro validar false");
+      //console.log("entro validar false");
       return false;
     }
 

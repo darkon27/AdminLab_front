@@ -46,7 +46,7 @@ export class ExamenMantenimientoComponentVista extends ComponenteBasePrincipal i
     await this.comboCargarServicios();
     this.cargarAcciones(accion, titulo)
     this.examen={..._examen};
-    console.log("iniciarComponente examen", this.examen); 
+    //console.log("iniciarComponente examen", this.examen); 
     this.examen.IdClasificacion = _examen.IdClasificacion;
     this.examen.IdUnidadMedida = _examen.IdUnidadMedida;
     this.grillaCargarDatosPerfil(this.examen.CodigoComponente);
@@ -77,7 +77,7 @@ export class ExamenMantenimientoComponentVista extends ComponenteBasePrincipal i
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIEMPO").forEach(i => {
       this.lstTiempo.push({ label: i.Nombre.toUpperCase(), value: i.IdCodigo})
     });
-    console.log("listaComboTiempo", this.lstTiempo);   
+    //console.log("listaComboTiempo", this.lstTiempo);   
   }
 
   listaComboSexo() {
@@ -96,7 +96,7 @@ export class ExamenMantenimientoComponentVista extends ComponenteBasePrincipal i
       resp.forEach(e => {
         this.lstClasificacion.push({ label: e.Nombre.toUpperCase(), value: e.IdClasificacion});
       });
-      console.log("Examen comboCargarClasificacion", this.lstClasificacion);
+      //console.log("Examen comboCargarClasificacion", this.lstClasificacion);
       return 1;
     });
  
@@ -118,14 +118,14 @@ export class ExamenMantenimientoComponentVista extends ComponenteBasePrincipal i
 
   grillaCargarDatosPerfil(codigoComponente: string) {
     let Perfil = { codigoComponente: codigoComponente}
-    console.log("Lista Perfil", Perfil);    
+    //console.log("Lista Perfil", Perfil);    
     this.lstPerfil = [];
     this.examenService.ListadoComponentePerfil(Perfil).then((res) => {
       var contado = 1;
       res.forEach(element => {
         element.codigoComponente = contado++;
       });
-      console.log("Lista Examen grillaCargarDatosPerfil", res);
+      //console.log("Lista Examen grillaCargarDatosPerfil", res);
       /* this.bloquearPag = false; */
       this.lstPerfil = res;
     });
@@ -134,14 +134,14 @@ export class ExamenMantenimientoComponentVista extends ComponenteBasePrincipal i
 
   grillaCargarDatosHomologacion(codigoComponente: string) {
     let Homologacion = { codigoComponente: codigoComponente}
-    console.log("Lista Homologacion", Homologacion);    
+    //console.log("Lista Homologacion", Homologacion);    
     this.lstHomologacion = [];
     this.examenService.ListadoComponenteHomologacion(Homologacion).then((res) => {
       var contado = 1;
       res.forEach(element => {
         element.codigoComponente = contado++;
       });
-      console.log("Lista Examen grillaCargarDatosHomologacion", res);
+      //console.log("Lista Examen grillaCargarDatosHomologacion", res);
       /* this.bloquearPag = false; */
       this.lstHomologacion = res;
     });
@@ -152,14 +152,14 @@ export class ExamenMantenimientoComponentVista extends ComponenteBasePrincipal i
       Componente: codigoComponente,
       Estado: 1
     }
-    console.log("Lista objExaMuetra", objExaMuetra);
+    //console.log("Lista objExaMuetra", objExaMuetra);
      this.examenService.listadocomponentemuestra(objExaMuetra).then((resMue) => {
         var cont = 1;
         resMue.forEach(element => {
           element.numeroExamen = cont++;
         });
         this.lstMuestra = resMue;
-        console.log("Lista lstmuestra", resMue);
+        //console.log("Lista lstmuestra", resMue);
       });
   }
 

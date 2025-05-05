@@ -192,7 +192,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   async coreMensaje(mensage: MensajeController) {
-    console.log("Convenio DATA coreMensaje", mensage);
+    //console.log("Convenio DATA coreMensaje", mensage);
     if (mensage.componente == "SELECPACIENTE") {
       this.bscPersona = mensage.resultado;
       this.filtro.Documento = mensage.resultado.Documento;
@@ -354,17 +354,17 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
           text: `Registro Seleccionado sin datos`
         })
       }
-      console.log("DATA VIAJANDO TIPMAPERSONANUEVO ", mensage.resultado.data);
+      //console.log("DATA VIAJANDO TIPMAPERSONANUEVO ", mensage.resultado.data);
     }
     else if (mensage.componente == 'TIPMAPERSONAEDITAR') {
-      console.log("TIPMAPERSONAEDITAR VIAJANDO ", mensage.resultado.data);
-      console.log("TIPMAPERSONAEDITAR filtro", this.filtro);
-      console.log("TIPMAPERSONAEDITAR bscPersona", this.bscPersona);
+      //console.log("TIPMAPERSONAEDITAR VIAJANDO ", mensage.resultado.data);
+      //console.log("TIPMAPERSONAEDITAR filtro", this.filtro);
+      //console.log("TIPMAPERSONAEDITAR bscPersona", this.bscPersona);
       this.MostrarEmpresa(mensage.resultado, 1);
     }
     else if (mensage.componente == 'TIPREGMEDICO') {
-      console.log("data llegando medico", mensage.componente);
-      console.log("data llegando medico", mensage.resultado);
+      //console.log("data llegando medico", mensage.componente);
+      //console.log("data llegando medico", mensage.resultado);
       if (mensage.resultado != null) {
         this.bloquearPag = true;
         this.filtro.CMP = mensage.resultado.data.CMP;
@@ -384,7 +384,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       }
     }
     else if (mensage.componente == 'TIPREGEMPRESA') {
-      console.log("data llegando mensaje", mensage.resultado);
+      //console.log("data llegando mensaje", mensage.resultado);
       if (mensage.resultado != null) {
         this.bloquearPag = true;
         this.filtro2.Documento = mensage.resultado.data.Documento;
@@ -430,7 +430,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
         this.filtro.ApellidoPaterno = res[0].ApellidoPaterno;
         this.filtro.ApellidoMaterno = res[0].ApellidoMaterno;
         this.filtro.Telefono = res[0].Telefono;
-        console.log("el Telefono es: ", this.filtro.Telefono);
+        //console.log("el Telefono es: ", this.filtro.Telefono);
         this.filtro.Comentario = res[0].Comentario;
         this.bscPersona = null
         this.bscPersona = res[0];
@@ -559,7 +559,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
         return;
       }
 
-      console.log("ValidarGuardar TipoAtencion", this.filtro);
+      //console.log("ValidarGuardar TipoAtencion", this.filtro);
       if (this.filtro.TipoAtencion == 1 || this.filtro.TipoAtencion == 4) {
         if (this.estaVacio(this.filtro.CorreoElectronico) == true) {
           this.mensajeValidacion('warning',
@@ -570,7 +570,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
         }
 
         if (this.esNumeroVacio(this.filtro.Telefono) == true) {
-          console.log("ValidarGuardar Telefono", this.filtro);
+          //console.log("ValidarGuardar Telefono", this.filtro);
           this.mensajeValidacion('warning',
             `¡Completar Campos Obligatorios!`,
             "Atención Ambulatorio o Domicilio :  Datos del teléfono y correo son obligaciones",
@@ -721,7 +721,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   GuardarAdmision(admision: DtoPacienteClinica) {
     let _dtofinal = new TraerXAdmisionServicio();
     var serv = this.registroSeleccionado;
-    console.log("GuardarAdmision Inicial serv :", serv);
+    //console.log("GuardarAdmision Inicial serv :", serv);
     var indicaRegis = 0;
     if (admision == null) {
     }
@@ -794,7 +794,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       });
       this.dtofinal.IndicadorWS = 0;
 
-      console.log("dto a modificar:", this.dtofinal);
+      //console.log("dto a modificar:", this.dtofinal);
       this.bloquearPag = true;
       this.pacienteClinicaService.ValidarComponentePerfil(1, this.dtofinal, this.getUsuarioToken()).then((res) => {
         this.bloquearPag = false;
@@ -802,7 +802,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
           this.pacienteClinicaService.mantenimientoAdmisionClinica(2, this.dtofinal, this.getUsuarioToken()).then(
             async res => {
               this.bloquearPag = false;
-              console.log("mantenimientoAdmisionClinica res:", res);
+              //console.log("mantenimientoAdmisionClinica res:", res);
               if (this.estaVacio(res.mensaje)) {
                 this.toastMensaje('Se actualizó el registro con éxito.', 'success', 2000);
                 this.auditoria(res.Admision, 2);
@@ -906,7 +906,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
         _dtofinal.list_AdmisionServicio.push(dtoAdmClini);
       });
       _dtofinal.IndicadorWS = 0;
-      console.log("Insertar DTO", _dtofinal);
+      //console.log("Insertar DTO", _dtofinal);
       this.bloquearPag = true;
       this.pacienteClinicaService.ValidarComponentePerfil(1, _dtofinal, this.getUsuarioToken()).then((res) => {
         this.bloquearPag = false;
@@ -914,14 +914,14 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
           this.pacienteClinicaService.mantenimientoAdmisionClinica(1, _dtofinal, this.getUsuarioToken()).then(
             async res => {
               this.bloquearPag = false;
-              console.log("mantenimientoAdmisionClinica res:", res);
+              //console.log("mantenimientoAdmisionClinica res:", res);
               if (res.valor == 1) {
                 this.toastMensaje(`${res.mensaje}`, 'success', 3000);
               } else {
                 this.toastMensaje(`${res.mensaje}`, 'warning', 3000);
               }
               this.auditoria(res.Admision, 2);
-              console.log("res  ELSE::: ", res)
+              //console.log("res  ELSE::: ", res)
               if (res.list_AdmisionServicio[0].hasOwnProperty("CodigoComponente")) {
                 this.lstListarXAdmision = [];
                 for (let examenParaAgregar of res.list_AdmisionServicio) {
@@ -1004,7 +1004,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
 
 
   MultiPersona(txbscPersona) {
-    console.log("multipersona filtro", txbscPersona);
+    //console.log("multipersona filtro", txbscPersona);
     /**
      * autor: Geampier Smc
      * tipo: cambios
@@ -1089,7 +1089,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
     operacionFiltro.TipEstado = 1;
     operacionFiltro.TipoOperacionID = TipoOperacionID;
     return this.consultaAdmisionService.listarcombotipooperacion(operacionFiltro).then(resp => {
-      console.log(resp)
+      //console.log(resp)
       var filtroClienteRuc = new FiltroCliente()
       this.Auth = this.getUsuarioAuth();
       var usuario = this.Auth.data;
@@ -1118,13 +1118,13 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   selectedItemTipoContrato(event) {
     var value = event.value; //event.originalEvent.srcElement.innerText;
     this.editarComboTipPac = false;
-    console.log("metodo selectedItemTipoContrato =", value);
+    //console.log("metodo selectedItemTipoContrato =", value);
     var listaEntyOperacion = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('EntyOperacion')));
     if (!this.esListaVacia(listaEntyOperacion)) {
       listaEntyOperacion.forEach(e => {
         if (e.TipoOperacionID == event.value) {
           this.IdConsentimiento = e.FlaCon;
-          console.log("IdConsentimiento", this.IdConsentimiento);
+          //console.log("IdConsentimiento", this.IdConsentimiento);
         }
       });
     }
@@ -1255,7 +1255,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
             });
           }
 
-        }).catch(error => console.log(error))
+        }).catch(error => console.error(error))
     } else {
       this.setComentarioContrato(value);
       this.comboCargarTipoPaciente(value);
@@ -1263,7 +1263,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   comboCargarTipoPaciente(TipoOperacionID: number): Promise<number> {
-    console.log("Convenio comboCargarTipoPaciente ::", TipoOperacionID);
+    //console.log("Convenio comboCargarTipoPaciente ::", TipoOperacionID);
     var operacionFiltro = new FiltroTipoOperacion();
     this.Auth = this.getUsuarioAuth();
     var usuario = this.Auth.data;
@@ -1281,11 +1281,11 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
           this.lstTipoPaciente.push({ label: e.Descripcion, value: e.TipoPacienteId });
         });
         sessionStorage.setItem('EntyOperacion', JSON.stringify(resp));
-        console.log("CargarTipoPaciente listarcombotipooperacion", resp);
+        //console.log("CargarTipoPaciente listarcombotipooperacion", resp);
         this.filtro.TipoPacienteId = resp[0].TipoPacienteId;
         this.seleccionarItemTipoPacienteTemp = resp[0].TipoPacienteId;
         this.IdConsentimiento = resp[0].FlaCon;
-        console.log("IdConsentimiento", this.IdConsentimiento);
+        //console.log("IdConsentimiento", this.IdConsentimiento);
         if (this.IdConsentimiento == 1) {
 
           this.listarConsentimientoXdocumento(this.filtro.Documento);
@@ -1306,7 +1306,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       resp.forEach(e => {
         this.lstServicio.push({ label: e.Nombre, value: e.ClasificadorMovimiento });
       });
-      console.log("Convenio comboCargarServicios", resp);
+      //console.log("Convenio comboCargarServicios", resp);
       this.filtro.ClasificadorMovimiento = service[0].ClasificadorMovimiento;
       return 1;
     });
@@ -1340,7 +1340,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       lstComboprocedencia.forEach(e => {
         this.lstprocedencia.push({ label: e.Nombre, value: e.IdEspecialidad });
       });
-      console.log("Clinica combo CargarProcendia", this.lstprocedencia);
+      //console.log("Clinica combo CargarProcendia", this.lstprocedencia);
       this.filtro.IdEspecialidad = 0;
     }
   }
@@ -1352,7 +1352,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
 
     return this.consultaAdmisionService.listarXadmision(idAdmision).then((res) => {
       this.loading = true;
-      console.log("Convenio grillaCargarDatos", res);
+      //console.log("Convenio grillaCargarDatos", res);
       this.filtro.TipoAtencion = res.Admision.TipoAtencion;
       this.filtro.ObservacionAlta = res.Admision.ObservacionAlta;
       this.contarExamenes = res.list_AdmisionServicio.length;
@@ -1425,11 +1425,11 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   MostrarEmpresaAseguradora(tempfiltro: Admision) {
-    console.log("id empresa", tempfiltro.IdEmpresaPaciente);
+    //console.log("id empresa", tempfiltro.IdEmpresaPaciente);
     var dtopersona = new dtoPersona();
     dtopersona.Persona = tempfiltro.IdEmpresaPaciente;
     return this.personaService.listarXPersona(dtopersona).then((res) => {
-      console.log("res empresa", res);
+      //console.log("res empresa", res);
       this.filtro2.Documento = res[0].Documento;
       this.filtro2.NombreCompleto = res[0].NombreCompleto;
       this.comboCargarSedeEmpresa(res[0].Persona);
@@ -1471,11 +1471,11 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
         this.filtro.Persona = res[0].Persona;
         this.filtro.Edad = res[0].Edad;
         this.filtro.FechaNacimiento = new Date(res[0].FechaNacimiento);
-        console.log("MostrarPersona habilita guardar", documento);
+        //console.log("MostrarPersona habilita guardar", documento);
         this.disableBtnGuardar = true;
         this.CalcularAnios();
         this.bloquearPag = false;
-        console.log("LLAMANDO PERSONA?", this.bscPersona);
+        //console.log("LLAMANDO PERSONA?", this.bscPersona);
       } else {
         this.filtro.Documento = null;
         this.bloquearPag = false;
@@ -1609,7 +1609,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
             if (this.admision != null) {
 
               this.filtro.ClasificadorMovimiento = this.admision.ClasificadorMovimiento;
-              console.log("COMBO SERVICIO DESDE ADMISION", this.admision.ClasificadorMovimiento);
+              //console.log("COMBO SERVICIO DESDE ADMISION", this.admision.ClasificadorMovimiento);
             }
             else {
               this.filtro.ClasificadorMovimiento = this.seleccionarItemServicioTemp;
@@ -1624,7 +1624,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
 
   EditarAdmision(tempfiltro: Admision) {
 
-    console.log("Convenio EditarAdmision", tempfiltro)
+    //console.log("Convenio EditarAdmision", tempfiltro)
     this.bloquearPag = true;
     this.MostrarPersona(tempfiltro.Documento);
     this.editarCampoDocumento = true;
@@ -1734,7 +1734,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
         this.bloquearPag = true;
         this.MostrarPersona(this.filtro.Documento).then((x) => {
           if (!this.esListaVacia(this.bscPersona)) {
-            console.log("Clinica listarConsentimientoXdocumento IdConsentimiento ", this.IdConsentimiento);
+            //console.log("Clinica listarConsentimientoXdocumento IdConsentimiento ", this.IdConsentimiento);
             if (this.IdConsentimiento == 1) {
               this.listarConsentimientoXdocumento(this.filtro.Documento);
             }
@@ -1811,15 +1811,15 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
         this.lstContrato.push({ label: e.CodigoContrato, value: e.TipoOperacionID });
         this.lstComentarioContrato.push({ label: e.Observacion, value: e.TipoOperacionID })
       });
-      console.log("Convenio comboCargarContrato::", resp[0]);
+      //console.log("Convenio comboCargarContrato::", resp[0]);
       if (!codeExecute) {
         if (this.esNumeroVacio(this.tipoOperacionIdTemp)) {
-          console.log("llego TipoOperacionID::", resp[0].TipoOperacionID);
+          //console.log("llego TipoOperacionID::", resp[0].TipoOperacionID);
           this.filtro.TipoOperacionID = resp[0].TipoOperacionID;
           this.filtro.ComentarioContrato = resp[0].ComentarioContrato;
           this.listaPerfil();
         } else {
-          console.log("llego tipoOperacionIdTemp::", this.tipoOperacionIdTemp);
+          //console.log("llego tipoOperacionIdTemp::", this.tipoOperacionIdTemp);
           this.filtro.TipoOperacionID = this.tipoOperacionIdTemp;
         }
         this.validarExistLstListarXAdmision(this.filtro.TipoOperacionID);
@@ -1837,7 +1837,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
 
   async ValidarQuitarDetallePrueba() {
     this.bloquearPag = true;
-    console.log("ValidarQuitarDetallePrueba::", this.registroSeleccionado)
+    //console.log("ValidarQuitarDetallePrueba::", this.registroSeleccionado)
     let lstConIdAdmision: DtoPacienteClinica[] = [];
     let lstSinIdAdmision: DtoPacienteClinica[] = [];
     this.loading = true;
@@ -1890,7 +1890,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       let isElimino = await this.QuitarDetallePrueba(lstConIdAdmision);
       if (isElimino) {
         for (let ele of lstConIdAdmision) { this.lstListarXAdmision = this.lstListarXAdmision.filter((e) => e.Descripcion != ele.Descripcion); }
-      } console.log("ss", this.lstListarXAdmision);
+      } //console.log("ss", this.lstListarXAdmision);
     }
 
     await this.calculoDePruebasIgv();
@@ -1902,7 +1902,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   async QuitarDetallePrueba(listaEliminar: DtoPacienteClinica[]): Promise<boolean> {
     let lstEliminar: DtoPacienteClinica[] = listaEliminar;
     var validar: boolean = true;
-    console.log("QuitarDetallePrueba del registro seleccionado", lstEliminar)
+    //console.log("QuitarDetallePrueba del registro seleccionado", lstEliminar)
 
     for (let element of lstEliminar) {
       // 1 representa al estado pendiende de un examen
@@ -1994,7 +1994,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   Correo(admision: DtoPacienteClinica) {
-    console.log("correo admision ::", admision);
+    //console.log("correo admision ::", admision);
     if (this.esListaVacia(admision)) {
       Swal.fire({
         icon: 'warning',
@@ -2023,7 +2023,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       var usuario = this.Auth.data;
 
       this.personaService.listarUsuarioWeb(IdPersona).then(resp => {
-        console.log("resp", resp)
+        //console.log("resp", resp)
         if (resp[0].estadoActualizacion == 1) {
           _parametros = {
             success: 1,
@@ -2038,7 +2038,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
           var validar = 1;
 
           if (this.estaVacio(_parametros.str_pTo)) {
-            console.log("correo", _parametros.str_pTo);
+            //console.log("correo", _parametros.str_pTo);
             setTimeout(() => {
               this.bloquearPag = false;
             }, 300);
@@ -2046,7 +2046,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
             validar = 2;
           } else {
             if (!this.esEmailValido(_parametros.str_pTo)) {
-              console.log("correo", _parametros.str_pTo);
+              //console.log("correo", _parametros.str_pTo);
               setTimeout(() => {
                 this.bloquearPag = false;
               }, 300);
@@ -2056,7 +2056,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
           }
           if (validar == 1) {
             return this.consultaAdmisionService.sendCorreo(_parametros).then(resp => {
-              console.log("correo", resp)
+              //console.log("correo", resp)
               setTimeout(() => {
                 this.bloquearPag = false;
               }, 300);
@@ -2085,7 +2085,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
     var anular = this.registroSeleccionado;
     var validado = 0;
     this.lstAnularAdmisionDetalle = [];
-    console.log("AnularDetallePrueba del registro seleccionado", anular)
+    //console.log("AnularDetallePrueba del registro seleccionado", anular)
     anular.forEach(element => {
       if (element.hasOwnProperty("IdAdmision")) {
         if (element.Estado == 1 || element.Estado == 2) {
@@ -2106,7 +2106,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
           dtoAdmClini.IpCreacion = element.IpCreacion;
           dtoAdmClini.IpModificacion = this.getIp();
           this.lstAnularAdmisionDetalle.push(dtoAdmClini);
-          console.log("llegando toda la lista", this.dtofinal.list_AdmisionServicio)
+          //console.log("llegando toda la lista", this.dtofinal.list_AdmisionServicio)
         } else {
           validado = 1
 
@@ -2216,8 +2216,8 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       }).then((result) => {
         if (result.isConfirmed) {
           var serv = this.lstListarXAdmision;
-          console.log("Registro seleccionado anular", serv)
-          console.log("Cabecera del anular admision", tempfiltro)
+          //console.log("Registro seleccionado anular", serv)
+          //console.log("Cabecera del anular admision", tempfiltro)
           this.dtofinal.Admision.TipoDocumento = tempfiltro.TipoDocumento;
           this.dtofinal.Admision.Documento = tempfiltro.Documento;
           this.dtofinal.Admision.NombreCompleto = tempfiltro.NombreCompleto;
@@ -2253,7 +2253,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
           this.dtofinal.Admision.DesEstado = tempfiltro.DesEstado;
           this.dtofinal.Admision.TIPOADMISIONID = tempfiltro.TIPOADMISIONID; //admision.TIPOADMISIONID;
           this.dtofinal.Admision.FlatAprobacion = tempfiltro.FlatAprobacion;
-          console.log("llegando toda cabecera", this.dtofinal.Admision)
+          //console.log("llegando toda cabecera", this.dtofinal.Admision)
           serv.forEach(element => {
             var dtoAdmClini = new DtoAdmisionclinicaDetalle();
             dtoAdmClini.IdAdmServicio = element.IdAdmServicio;
@@ -2274,24 +2274,24 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
           });
 
           this.dtofinal.IndicadorWS = 0;
-          console.log("dto a anular admision:", this.dtofinal);
+          //console.log("dto a anular admision:", this.dtofinal);
           this.bloquearPag = true;
           this.pacienteClinicaService.mantenimientoAdmisionClinica(3, this.dtofinal, this.getUsuarioToken()).then(
             res => {
               this.bloquearPag = false;
-              console.log("entro el servicio")
+              //console.log("entro el servicio")
               this.auditoria(res.Admision, 2);
               this.toastMensaje('Se Anuló el registro con éxito.', 'success', 2000)
               if (res.list_AdmisionServicio != null) {
                 this.loading = true;
-                console.log("res al guardar admision TODO", res);
+                //console.log("res al guardar admision TODO", res);
                 this.lastYearTotal = 0;
                 this.contado = 1;
                 this.lstListarXAdmision = [];
                 var totala = 0;
                 var cantidadExamenes = 0;
                 res.list_AdmisionServicio.forEach(element => {
-                  console.log("valor de e", element)
+                  //console.log("valor de e", element)
                   var ExamenConIgv = element.ValorEmpresa * this.getUsuarioAuth().data[0].Igv;
                   element.Valor = element.ValorEmpresa;
                   cantidadExamenes += element.Cantidad;
@@ -2302,7 +2302,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
                 });
                 this.lastYearTotal = totala;
                 this.cantidad = cantidadExamenes;
-                console.log("valor de la tabla", this.lstListarXAdmision)
+                //console.log("valor de la tabla", this.lstListarXAdmision)
                 this.loading = false;
               } else {
                 Swal.fire({
@@ -2451,7 +2451,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
     }
     this.consultaAdmisionService.listarModeloServicio(filtro).then(resp => {
       if (!this.esListaVacia(resp)) {
-        console.log("Clinica listaPerfil", resp[0].ModeloServicioId);
+        //console.log("Clinica listaPerfil", resp[0].ModeloServicioId);
         this.modeloSevicioId = resp[0].ModeloServicioId;
       }
     });
@@ -2479,7 +2479,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       this.examen.ModeloServicioId = this.modeloSevicioId;
       this.examen.CodigoComponente = this.filtro.CodigoComponente.trim();
       this.examen.ClasificadorMovimiento = this.filtro.ClasificadorMovimiento;
-      console.log("filtro validarTeclaEnterExamen", this.filtro);
+      //console.log("filtro validarTeclaEnterExamen", this.filtro);
       this.examenService.examenpaginado(this.examen).then(async (res) => {
 
         this.loading = true;
@@ -2564,7 +2564,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       NroPeticion: this.filtro.NroPeticion
     }
     this.consultaAdmisionService.printListadoReporte(payload).then(resp => {
-      console.log("prin", resp)
+      //console.log("prin", resp)
 
       this.verReporteModal = true
 
@@ -2613,11 +2613,11 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
       this.fechaModificacion = new Date();
     }
     else {
-      console.log("mostrar auditoria comparacion", this.getUsuarioAuth().data[0].Usuario, filtro.UsuarioCreacion, filtro.UsuarioModificacion)
+      //console.log("mostrar auditoria comparacion", this.getUsuarioAuth().data[0].Usuario, filtro.UsuarioCreacion, filtro.UsuarioModificacion)
       if (this.estaVacio(filtro.UsuarioModificacion)) {
-        console.log("UsuarioModificacion Vacío")
+        //console.log("UsuarioModificacion Vacío")
         if (filtro.UsuarioCreacion == this.getUsuarioAuth().data[0].Usuario) {
-          console.log("UsuarioCreacion Igual a UsuarioLogeado")
+          //console.log("UsuarioCreacion Igual a UsuarioLogeado")
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
           this.fechaCreacion = new Date(filtro.FechaCreacion);
           if (this.esFechaVacia(filtro.FechaModificacion)) {
@@ -2626,7 +2626,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
             this.fechaModificacion = new Date(filtro.FechaModificacion);
           }
         } else {
-          console.log("Traer Usuario Creado Nuevo")
+          //console.log("Traer Usuario Creado Nuevo")
           let dto = {
             Documento: filtro.UsuarioCreacion.trim(),
             tipopersona: "USU",
@@ -2641,13 +2641,13 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
             } else {
               this.fechaModificacion = new Date(filtro.FechaModificacion);
             }
-            console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
+            //console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
           })
         }
       } else {
-        console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
+        //console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
         if (filtro.UsuarioModificacion == this.getUsuarioAuth().data[0].Usuario) {
-          console.log("Usuario Modificado Igual a Usuario Logeado")
+          //console.log("Usuario Modificado Igual a Usuario Logeado")
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
           this.fechaCreacion = new Date(filtro.FechaCreacion);
           if (this.esFechaVacia(filtro.FechaModificacion)) {
@@ -2656,8 +2656,8 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
             this.fechaModificacion = new Date(filtro.FechaModificacion);
           }
         } else {
-          console.log("Traer Usuario Modificado Nuevo")
-          console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
+          //console.log("Traer Usuario Modificado Nuevo")
+          //console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
           let dto = {
             Documento: filtro.UsuarioModificacion.trim(),
             tipopersona: "ID",
@@ -2672,7 +2672,7 @@ export class ConvenioComponent extends ComponenteBasePrincipal implements OnInit
             } else {
               this.fechaModificacion = new Date(filtro.FechaModificacion);
             }
-            console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
+            //console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
           })
         }
       }

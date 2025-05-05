@@ -31,7 +31,7 @@ export class ComprobanteParticularBuscarComponent extends ComponenteBasePrincipa
   }
 
   checknombre(hola:any){
-    console.log("entro",hola);
+    //console.log("entro",hola);
     this.vernombre = true;
     this.verdocumento = false;
 

@@ -105,12 +105,12 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
     var anio = hoy.getFullYear();
     this.filtro.FechaVencimiento = new Date(`${anio},${mes},${dia}`);
     this.filtro.FechaEmision = new Date(hoy);
-    console.log("fechaActual FechaVencimiento", this.filtro.FechaVencimiento);
+    //console.log("fechaActual FechaVencimiento", this.filtro.FechaVencimiento);
 
   }
 
   saveData() {  //prueba validar med del value esto si se puede borar
-    console.log("save data", this.validarMed.value);
+    //console.log("save data", this.validarMed.value);
   }
 
   coreBusquedaRapida(filtro: string): void {
@@ -153,7 +153,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
     objdet.FechaCreacion = new Date();
     this.lstDetalle.push(objdet);
     this.lstDetalle = [...this.lstDetalle];
-    console.log("Cobranza Registro Filtro", this.lstDetalle);
+    //console.log("Cobranza Registro Filtro", this.lstDetalle);
   }
 
   validarTeclaEnter(evento) {
@@ -228,18 +228,18 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
   }
 
   onRowEditInit(product: dtoCobranzadetalle) {
-    console.log("Cobranza Reg onRowEditInit :: ", product);
+    //console.log("Cobranza Reg onRowEditInit :: ", product);
     this.clonedProducts[product.LoteTarjeta as string] = { ...product };
   }
 
   onRowEditSave(product: dtoCobranzadetalle) {
-    console.log("Cobranza Reg onRowEditSave Inicio:: ", product);
+    //console.log("Cobranza Reg onRowEditSave Inicio:: ", product);
     var listaComboPago = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('SessionTipoPago')));
     var listaComboMoneda = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('SessionMoneda')));
     var listaComboBanco = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('SessionBanco')));
-    console.log("Reg onRowEditSave listaComboPago:: ", listaComboPago);
-    console.log("Reg onRowEditSave listaComboMoneda:: ", listaComboMoneda);
-    console.log("Reg onRowEditSave listaComboBanco:: ", listaComboBanco);
+    //console.log("Reg onRowEditSave listaComboPago:: ", listaComboPago);
+    //console.log("Reg onRowEditSave listaComboMoneda:: ", listaComboMoneda);
+    //console.log("Reg onRowEditSave listaComboBanco:: ", listaComboBanco);
 
     for (let element of listaComboPago) {
       if (element.hasOwnProperty("Nombre")) {
@@ -265,7 +265,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
       }
     }
 
-    console.log("Cobranza Reg onRowEditSave Asignado:: ", product);
+    //console.log("Cobranza Reg onRowEditSave Asignado:: ", product);
 
 
     if (product.Monto > 0) {
@@ -313,7 +313,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
     this.titulo = 'PAGO PARTICULAR';
     this.mensajeController = mensaje;
     this.acciones = `${this.titulo}: ${this.mensajeController.tipo}`;
-    console.log("cajapago coreIniciarComponente mensajeController", this.mensajeController);
+    //console.log("cajapago coreIniciarComponente mensajeController", this.mensajeController);
     const p3 = this.ListarMoneda();
     const p1 = this.listaComboTipoVenta();
     const p2 = this.listaComboMedioPago();
@@ -333,9 +333,9 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
         this.filtro.FechaAdmision = new Date(this.admision.FechaAdmision);
         this.filtro.NombreCliente = this.admision.NombreCompleto;
 
-        console.log("cajapago coreIniciarComponente rowdata", rowdata);
+        //console.log("cajapago coreIniciarComponente rowdata", rowdata);
         this.lstListarXAdmision = this.mensajeController.componenteDestino.lstListarXAdmision;
-        console.log("cajapago coreIniciarComponente filtro", this.filtro);
+        //console.log("cajapago coreIniciarComponente filtro", this.filtro);
 
         this.filtro.Compania = this.Auth[0].ACCESO;
         this.filtro.ClasificadorMovimiento = this.admision.ClasificadorMovimiento;
@@ -358,7 +358,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Facturacion cargarComboTipoComprobante", this.lstTipoComprobante);
+    //console.log("Facturacion cargarComboTipoComprobante", this.lstTipoComprobante);
   }
 
   listaComboTipoVenta() {
@@ -367,7 +367,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPVEN").forEach(i => {
       this.lstTipoVenta.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Facturacion listaComboTipoVenta", this.lstTipoVenta);
+    //console.log("Facturacion listaComboTipoVenta", this.lstTipoVenta);
   }
 
   listaComboMedioPago() {
@@ -376,7 +376,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "MEDPAG").forEach(i => {
       this.lstMedioPago.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("Facturacion listaComboMedioPago", this.lstMedioPago);
+    //console.log("Facturacion listaComboMedioPago", this.lstMedioPago);
   }
 
   ListarMoneda() {
@@ -384,7 +384,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
     this.lstMoneda = [];
     this.lstMoneda.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.MaestrodetalleService.ListarMoneda(dto).then(res => {
-    console.log("cargarComboMoneda::", res);
+    //console.log("cargarComboMoneda::", res);
         res.forEach(ele => {
             this.lstMoneda.push({ label: ele.DescripcionCorta.trim(), value: ele.MonedaCodigo });
         });
@@ -400,19 +400,19 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
       IdSede: this.filtro.IdSede,
       TipoComprobante: this.filtro.TipoComprobante
     };
-    console.log("Facturacion Filtro", filtroSerie);
+    //console.log("Facturacion Filtro", filtroSerie);
     this.lstSerie.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.ComprobanteService.ListarSedeSucursalNegocio(filtroSerie).then(resp => {
       resp.forEach(e => {
         this.lstSerie.push({ label: e.SERIE, value: e.SERIE.trim() });
       });
-      console.log("Facturacion ListarSucursalSerie", resp);
+      //console.log("Facturacion ListarSucursalSerie", resp);
       return 1;
     });
   }
 
   selectedItemTipoComprobante(event) {
-    console.log("Facturacion selectedItemTipoComprobante", event);
+    //console.log("Facturacion selectedItemTipoComprobante", event);
     if (this.filtro.TipoComprobante == null) {
       this.lstSerie.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     } else {
@@ -425,14 +425,14 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
   ListarBanco() {
     this.lstBanco = [];
     let filtroBanco = { Estado: "A" };
-    console.log("Cobranza Registro Filtro", filtroBanco);
+    //console.log("Cobranza Registro Filtro", filtroBanco);
     this.lstBanco.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.ComprobanteService.ListarBanco(filtroBanco).then(resp => {
       resp.forEach(e => {
         this.lstBanco.push({ label: e.DescripcionCorta, value: e.DescripcionCorta.trim() });
       });
       sessionStorage.setItem('SessionBanco', JSON.stringify(resp));
-      console.log("Cobranza Registro ListarBanco", resp);
+      //console.log("Cobranza Registro ListarBanco", resp);
       return 1;
     });
   }
@@ -443,7 +443,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
     this.lstTipoPago.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.ComprobanteService.ListarTipoPago(filtroPeriodo)
       .then((res) => {
-        console.log("Cobranza Registro ListarTipoPago", res);
+        //console.log("Cobranza Registro ListarTipoPago", res);
         res.forEach((ele) => {
           this.lstTipoPago.push({ label: ele.Nombre.trim(), value: ele.Nombre.trim() });
         });
@@ -454,7 +454,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
 
 
   keydownMonto(evento): void {
-    console.log("Cobranza Reg keydownMonto :: ", evento);
+    //console.log("Cobranza Reg keydownMonto :: ", evento);
     if (evento.key == "Enter" || evento.key == "Tab") {
       this.bloquearPag = true;
       var subtotal = 0
@@ -473,8 +473,8 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
       });
 
       //  this.filtro.CalTotal = subtotal;
-      //console.log("Cobranza Reg keydownMonto evento ::", evento.value);    
-      console.log("Cobranza Reg keydownMonto lstDetalle::", this.lstDetalle);
+      ////console.log("Cobranza Reg keydownMonto evento ::", evento.value);    
+      //console.log("Cobranza Reg keydownMonto lstDetalle::", this.lstDetalle);
       this.bloquearPag = false;
     }
   }
@@ -525,7 +525,7 @@ export class CajaPagoComponent extends ComponenteBasePrincipal implements OnInit
 
     this.tipoPagoSeleccionado = event.value;
 
-    // console.log("tipo sleeccionado", tipoPagoSeleccionado);
+    // //console.log("tipo sleeccionado", tipoPagoSeleccionado);
     // for (let tipoPago of this.lstTipoPago) {
     //   switch (tipoPago.value) {
     //     case tipoPagoSeleccionado:

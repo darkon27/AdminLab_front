@@ -34,7 +34,7 @@ export class LoginService {
         return this.config.getHttp().post('/api/Items', resultado)
             .toPromise()
             .then(response => response)
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
 
     }
 
@@ -61,8 +61,8 @@ export class LoginService {
 
             })
         };
-        console.log("::::::httpOptions::::", httpOptions);
-        console.log("")
+        //console.log("::::::httpOptions::::", httpOptions);
+        //console.log("")
         // return this.config.getHttp().post('/api/Admision/ListaLogin', usuario)
         return this.config.getHttp().post(`${this.urlseg}ListaLogin`, usuario, httpOptions)
             .toPromise()
@@ -102,7 +102,7 @@ export class LoginService {
     }
 
     listarPortal(portal: any): Promise<any> {
-        console.log('/api/Seguridad/ListaPortal')
+        //console.log('/api/Seguridad/ListaPortal')
         return this.config.getHttp().post(`${this.urlseg}ListaPortal`, portal)
             .toPromise()
             .then(response => response as any)
@@ -110,7 +110,7 @@ export class LoginService {
     }
 
     listarSedes(sede: any): Promise<any> {
-        console.log("listarSedes", this.urlma);
+        //console.log("listarSedes", this.urlma);
         return this.config.getHttp().post(`${this.urlma}ListaSede`, sede)
             .toPromise()
             .then(response => response as any)
@@ -118,7 +118,7 @@ export class LoginService {
     }
 
     listarSedesMaestro(sede: any) {
-        console.log("listarSedesMaestro", this.urlma);
+        //console.log("listarSedesMaestro", this.urlma);
         return this.config.getHttp().post(`${this.urlma}ListaSede`, sede)
             .toPromise()
             .then(response => response as any)

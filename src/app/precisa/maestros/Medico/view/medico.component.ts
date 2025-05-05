@@ -62,7 +62,7 @@ export class MedicoComponent extends ComponenteBasePrincipal implements OnInit, 
 
     Promise.all([p1, p2]).then(
       f => {
-        console.log("combitos::cargaditos::");
+        //console.log("combitos::cargaditos::");
         setTimeout(() => {
           this.bloquearPag = false;
         }, 500);
@@ -91,9 +91,9 @@ export class MedicoComponent extends ComponenteBasePrincipal implements OnInit, 
 
   coreMensaje(mensage: MensajeController): void {
     if (mensage.componente == 'TIPMAAMEDICOEDIT') {
-      console.log("data", mensage.resultado);
+      //console.log("data", mensage.resultado);
       if (!this.esNumeroVacio(mensage.resultado)) {
-        console.log("Medico buscar TIPMAAMEDICOEDIT");
+        //console.log("Medico buscar TIPMAAMEDICOEDIT");
         this.coreBuscar();
       }
     }
@@ -185,7 +185,7 @@ export class MedicoComponent extends ComponenteBasePrincipal implements OnInit, 
 
     this.loading = true;
     this.filtro.MedicoId = -1;
-    console.log("entrooo:::::");
+    //console.log("entrooo:::::");
     // this.bloquearPagina();
     this.medicoService.listarpaginado(this.filtro).then((res) => {
       // this.filtro.paginacion = res;
@@ -196,7 +196,7 @@ export class MedicoComponent extends ComponenteBasePrincipal implements OnInit, 
         element.numeromedico = contado++;
         // this.lstMedico.push(element);
       });
-      console.log("data listado:", res);
+      //console.log("data listado:", res);
       this.loading = false;
       this.lstMedico = res;
       //this.desbloquearPagina();
@@ -204,11 +204,11 @@ export class MedicoComponent extends ComponenteBasePrincipal implements OnInit, 
   }
 
   // comboCargarDatos(event: LazyLoadEvent) {
-  //   console.log("entrooo:::al::combito");
+  //   //console.log("entrooo:::al::combito");
   //   // this.bloquearPagina();
   //   this.medicoService.especialidadpaginado(this.especialidad).then((res) => {
   //     // this.filtro.paginacion = res;
-  //     console.log("data listado combito:", res);
+  //     //console.log("data listado combito:", res);
 
   //     this.lstMedico = res;
 
@@ -224,7 +224,7 @@ export class MedicoComponent extends ComponenteBasePrincipal implements OnInit, 
   comboCargarDatos(): Promise<number> {
     this.lstespecialidad.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.medicoService.especialidadpaginado(this.especialidad).then(resp => {
-      console.log("Medico Maestre combo Procedencia:", resp);
+      //console.log("Medico Maestre combo Procedencia:", resp);
       resp.forEach(e => {
 
         this.lstespecialidad.push({ label: e.Nombre, value: e.IdEspecialidad });

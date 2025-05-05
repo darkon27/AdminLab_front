@@ -63,7 +63,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
   }
 
   coreVer(dto): void {
-    console.log("llego BtncoreEditar  ", dto);
+    //console.log("llego BtncoreEditar  ", dto);
     this.Entydad = dto;
     this.empleadosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_EMPLEADO', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, this.Entydad);
 
@@ -71,7 +71,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
   }
 
   coreEditar(dto): void {
-    console.log("llego BtncoreEditar  ", dto);
+    //console.log("llego BtncoreEditar  ", dto);
     this.Entydad = dto;
     this.empleadosMantenimientoComponent.iniciarComponente(new MensajeController(this, 'SELECTOR_EMPLEADO', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, this.Entydad);
 
@@ -100,7 +100,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
 
 
   onRowSelect(event: any) {
-    console.log("seleccion onRowSelect:", event);
+    //console.log("seleccion onRowSelect:", event);
   }
 
   ngOnInit(): void {
@@ -142,7 +142,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
     this.lstEstados = [];
       this.lstEstados.push({ label: ConstanteAngular.COMBOTODOS, value: null });
       this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
-        //console.log("i", i);
+        ////console.log("i", i);
         this.lstEstados.push({ label: i.Nombre, value: i.Codigo });
       });
   }
@@ -165,7 +165,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
     this.filtrocompa.estado = "A";
     this.lstCompania.push({ label: ConstanteAngular.COMBOTODOS, value: null });
     return this.maestrocompaniaMastService.listarCompaniaMast(this.filtrocompa).then(res => {
-      console.log("company", res);
+      //console.log("company", res);
       res.forEach(ele => {
         this.lstCompania.push({ label: ele.DescripcionCorta.trim(), value: ele.CompaniaCodigo.trim() + '00' });
       });
@@ -176,7 +176,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
 
   coreBuscar(): void {
     this.bloquearPag = true;
-    console.log("llego coreBuscar");
+    //console.log("llego coreBuscar");
 
     if (this.filtro.CompaniaSocio == "") {
       this.filtro.CompaniaSocio = null;
@@ -205,7 +205,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
       this.lstEmpleado = res;
       this.bloquearPag = false;
     });
-    console.log("llego coreBuscar", this.lstEmpleado);
+    //console.log("llego coreBuscar", this.lstEmpleado);
   }
 
   coreinactivar(dtoInactivar) {
@@ -323,7 +323,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
       });
 
       const result = await this.exportarService.exportExcel(this.lstEmpleado, listaExportar, "Empleados");
-      console.log(result);
+      //console.log(result);
 
       this.bloquearPag = await false;
       this.messageService.add({
@@ -401,7 +401,7 @@ export class EmpleadosComponent extends ComponenteBasePrincipal implements OnIni
       });
 
       const result = await this.exportarService.ExportPdf(this.lstEmpleado, col, rows, "Empleados.pdf", "l");
-      console.log("result", result);
+      //console.log("result", result);
       this.bloquearPag = await false;
       this.messageService.add({
         key: "bc",

@@ -132,7 +132,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
       case ConstanteUI.ACCION_SOLICITADA_EDITAR:
         this.editarRegistro(); 
         this.dto.cabecera = data;
-        console.log("coreIniciarComponentemantenimiento ::", this.dto.cabecera);
+        //console.log("coreIniciarComponentemantenimiento ::", this.dto.cabecera);
         break;
       default: this.nuevoRegistro(); 
         break;
@@ -290,7 +290,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
   }
 
   editarVerRegistro(dto: any) {
-    console.log("Liquidacion Reg iniciarComponente", dto);
+    //console.log("Liquidacion Reg iniciarComponente", dto);
     this.filtro = { ...dto };
     this.listaLiquidacionDetalle(this.filtro);
     this.filtro.FechaInicio = new Date(dto.FechaInicio);
@@ -344,7 +344,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
           element.num = resp.length--;
         });
         this.lstExpedienteDetalle = resp;
-        console.log("lIquidacion listaLiquidacionDetalle", resp);
+        //console.log("lIquidacion listaLiquidacionDetalle", resp);
       }
     });
   }
@@ -364,7 +364,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
           Estado: "A"
         }
         this.personaService.listarpaginado(dto).then((res) => {
-          console.log("enter empresa", res)
+          //console.log("enter empresa", res)
           if (res.length > 0) {
             this.filtro.NombreCompleto = res[0].NombreCompleto;
             this.filtro.IdClienteFacturacion = res[0].Persona;
@@ -395,7 +395,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
 
 
   ListarTipoPaciente(evento): void {
-    console.log("Liqui Reg selectedItemTipoPaciente ::", evento);
+    //console.log("Liqui Reg selectedItemTipoPaciente ::", evento);
     var operacionFiltro = new FiltroTipoOperacion();
     this.Auth = this.getUsuarioAuth();
     var usuario = this.Auth.data;
@@ -410,7 +410,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
       resp.forEach(e => {
         this.lstTipoPaciente.push({ label: e.Descripcion, value: e.TipoPacienteId });
       });
-      console.log("Liq Reg selectedItemTipoPaciente", resp);
+      //console.log("Liq Reg selectedItemTipoPaciente", resp);
     });
   }
 
@@ -424,7 +424,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
     operacionFiltro.TipoPacienteId = evento;
     operacionFiltro.Persona = this.filtro.IdClienteFacturacion;
     operacionFiltro.TipEstado = 1;
-    console.log("Liqui Reg operacionFiltro ::", operacionFiltro);
+    //console.log("Liqui Reg operacionFiltro ::", operacionFiltro);
     this.lstContrato = [];
     this.lstContrato.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     this.consultaAdmisionService.listarcombotipooperacion(operacionFiltro).then(resp => {
@@ -432,25 +432,25 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
         this.lstContrato.push({ label: e.Descripcion, value: e.TipoOperacionID });
       });
       //   sessionStorage.setItem('LiqEntyOperacion', JSON.stringify(resp));
-      console.log("Liqui Reg listartipooperacion ::", resp);
+      //console.log("Liqui Reg listartipooperacion ::", resp);
     });
   }
 
   selectedItemTipoPaciente(evento): void {
-    console.log("Liqui Reg selectedItemTipoPaciente ::", evento);
+    //console.log("Liqui Reg selectedItemTipoPaciente ::", evento);
     this.listartipooperacion(evento.value);
   }
 
 
   selectedItemContrato(evento): void {
-    console.log("Liqui Reg selectedItemContrato ::", evento.value);
+    //console.log("Liqui Reg selectedItemContrato ::", evento.value);
     this.filtro.IdContrato = evento.value;
-    console.log("Liqui Reg this.filtro ::", this.filtro);
+    //console.log("Liqui Reg this.filtro ::", this.filtro);
   }
 
 
   selectedItemSede(evento): void {
-    console.log("Liqui Reg selectedItemSede ::", evento);
+    //console.log("Liqui Reg selectedItemSede ::", evento);
     var operacionFiltro = new FiltroTipoOperacion();
     this.Auth = this.getUsuarioAuth();
     var usuario = this.Auth.data;
@@ -464,7 +464,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
       resp.forEach(e => {
         this.lstSede.push({ label: e.SedDescripcion, value: e.IdSede });
       });
-      console.log("Liq Reg selectedItemSede", resp);
+      //console.log("Liq Reg selectedItemSede", resp);
     });
   }
 
@@ -484,7 +484,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
       return;
     }
 
-    console.log("Liq Reg coreGuardar ::", this.dto);
+    //console.log("Liq Reg coreGuardar ::", this.dto);
     Swal.fire({
       icon: 'warning',
       title: '¡Mensaje!',
@@ -497,7 +497,7 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
     }).then((result) => {
       if (result.isConfirmed) {
         this.messageShow('success', 'Success', this.getMensajeGuardado());
-        console.log("Cobranza Reg coreGuardar ::", this.dto);
+        //console.log("Cobranza Reg coreGuardar ::", this.dto);
         this.ServicioRegistrar();
       } else {
         this.verLiquidacion = true;
@@ -515,13 +515,13 @@ export class LiquidacionFormMantenimientoComponent extends ComponenteBasePrincip
 
     this.liquidacionService.MantenimientoExpediente(1, this.dto, this.getUsuarioToken()).then(
       res => {
-        console.log("res guardado:", res);
+        //console.log("res guardado:", res);
         if (res.success) {
           this.makeToast(this.getMensajeGrabado(this.dto.cabecera.CodigoExpediente));
           this.verLiquidacion = false;
-          console.log("entro:", this.mensajeController.resultado)
+          //console.log("entro:", this.mensajeController.resultado)
           this.mensajeController.resultado = res;
-          console.log("res enviando:", res);
+          //console.log("res enviando:", res);
           this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
         }
         else {

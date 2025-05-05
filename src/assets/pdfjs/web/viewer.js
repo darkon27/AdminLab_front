@@ -1449,7 +1449,7 @@ var PDFViewerApplication = {
       _this5.documentInfo = info;
       _this5.metadata = metadata;
       _this5.contentDispositionFilename = contentDispositionFilename;
-      console.log('PDF ' + pdfDocument.fingerprint + ' [' + info.PDFFormatVersion + ' ' + (info.Producer || '-').trim() + ' / ' + (info.Creator || '-').trim() + ']' + ' (PDF.js: ' + (_pdfjsLib.version || '-') + (_app_options.AppOptions.get('enableWebGL') ? ' [WebGL]' : '') + ')');
+      //console.log('PDF ' + pdfDocument.fingerprint + ' [' + info.PDFFormatVersion + ' ' + (info.Producer || '-').trim() + ' / ' + (info.Creator || '-').trim() + ']' + ' (PDF.js: ' + (_pdfjsLib.version || '-') + (_app_options.AppOptions.get('enableWebGL') ? ' [WebGL]' : '') + ')');
       var pdfTitle;
 
       if (metadata && metadata.has('dc:title')) {
@@ -14938,7 +14938,7 @@ document.webL10n = function (window, document, undefined) {
       var dict = getL10nDictionary();
 
       if (dict && dict.locales && dict.default_locale) {
-        console.log('using the embedded JSON directory, early way out');
+        //console.log('using the embedded JSON directory, early way out');
         gL10nData = dict.locales[lang];
 
         if (!gL10nData) {
@@ -14958,7 +14958,7 @@ document.webL10n = function (window, document, undefined) {
 
         callback();
       } else {
-        console.log('no resource to load, early way out');
+        //console.log('no resource to load, early way out');
       }
 
       fireL10nReadyEvent(lang);
@@ -15417,7 +15417,7 @@ document.webL10n = function (window, document, undefined) {
         return gL10nData[arg];
       }
 
-      console.log('argument {{' + arg + '}} for #' + key + ' is undefined.');
+      //console.log('argument {{' + arg + '}} for #' + key + ' is undefined.');
       return matched_text;
     });
   }

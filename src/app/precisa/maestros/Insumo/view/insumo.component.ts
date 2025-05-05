@@ -52,7 +52,7 @@ export class InsumoComponent  extends ComponenteBasePrincipal implements OnInit,
   }
 
   coreVer(dto): void{
-    console.log(this.objetoTitulo)
+    //console.log(this.objetoTitulo)
     this.insumoMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
   }
 

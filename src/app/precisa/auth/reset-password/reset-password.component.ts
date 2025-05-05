@@ -43,7 +43,7 @@ export class ResetPasswordComponent implements OnInit {
   resetPass(){
 
     if(this.resetForm.valid){
-      console.log(this.resetForm.value)
+      //console.log(this.resetForm.value)
     }else{
    
       this.resetForm.markAllAsTouched();

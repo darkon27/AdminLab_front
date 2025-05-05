@@ -60,20 +60,20 @@ export class ExamenAsignarHomologacionComponent extends ComponenteBasePrincipal 
       this.titulo = `${titulo}: ${accionform}`;
       this.dialog = true;
       this.puedeEditar = false;
-      console.log("this.mensajeController",       this.mensajeController);
+      //console.log("this.mensajeController",       this.mensajeController);
 
       let objExaHomo = {
         CodigoComponente: dtoEditExamen.CodigoComponente,
         Estado: 1
       }
-      console.log("Lista objExaHomo", objExaHomo);
+      //console.log("Lista objExaHomo", objExaHomo);
        this.ExamenService.ListadoComponenteHomologacion(objExaHomo).then((resMue) => {
           var cont = 1;
           resMue.forEach(element => {
             element.numeroExamen = cont++;
           });
           this.lsthomologacion = resMue;
-          console.log("Lista lsthomologacion", resMue);
+          //console.log("Lista lsthomologacion", resMue);
         });
     });
 
@@ -89,8 +89,8 @@ export class ExamenAsignarHomologacionComponent extends ComponenteBasePrincipal 
       this.filtro.NombreCompleto = mensage.resultado.NombreCompleto;
       this.filtro.Persona = mensage.resultado.Persona;
       this.editarCampoEmpresa = true;
-      console.log("selec empresa", mensage.resultado)
-      // console.log("datoscombo",mensage.resultado.Persona)
+      //console.log("selec empresa", mensage.resultado)
+      // //console.log("datoscombo",mensage.resultado.Persona)
     }
   }
   coreNuevo(): void {
@@ -134,7 +134,7 @@ export class ExamenAsignarHomologacionComponent extends ComponenteBasePrincipal 
         filtro.Documento = this.filtro.Documento.trim();
         filtro.TipoDocumento = "R";
         this.personaService.listarpaginado(filtro).then((res) => {
-          console.log("enter empresa", res)
+          //console.log("enter empresa", res)
           if (res.length > 0) {
             this.filtro.NombreCompleto = res[0].NombreCompleto;
             this.filtro.Persona = res[0].Persona;

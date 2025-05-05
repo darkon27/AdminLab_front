@@ -90,7 +90,7 @@ export class ListaComprobantesComponent extends ComponenteBasePrincipal implemen
     var anio = hoy.getFullYear();
     this.filtro.FechaEmision = new Date(`${anio},${mes},${dia}`);
     this.filtro.FechaVencimiento = new Date(`${anio},${mes},${dia}`);
-    console.log("Consulta Admision fecha creacion", this.filtro.FechaEmision)
+    //console.log("Consulta Admision fecha creacion", this.filtro.FechaEmision)
   }
 
   coreNuevo(): void {
@@ -141,7 +141,7 @@ export class ListaComprobantesComponent extends ComponenteBasePrincipal implemen
       this.FiltroCompan.estado = "A";
       this.lstCompania.push({ label: ConstanteAngular.COMBOTODOS, value: null });
       return this.maestrocompaniaMastService.listarCompaniaMast(this.FiltroCompan).then(res => {
-        console.log("Cobranza listarCompaniaMast", res);
+        //console.log("Cobranza listarCompaniaMast", res);
         res.forEach(ele => {
           this.lstCompania.push({ label: ele.DescripcionCorta.trim().toUpperCase(), value: ele.CompaniaCodigo.trim(), title: ele.Persona });
         });
@@ -157,7 +157,7 @@ export class ListaComprobantesComponent extends ComponenteBasePrincipal implemen
         resp.forEach(e => {
           this.lstsedes.push({ label: e.DescripcionLocal, value: e.Sucursal });
         });
-        console.log("Cobranza listarSucursal", resp);
+        //console.log("Cobranza listarSucursal", resp);
         return 1;
       });
     }

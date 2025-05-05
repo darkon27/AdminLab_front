@@ -75,7 +75,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
 
   async coreBuscar() {
     this.bloquearPag = true;
-    console.log("Facturacion coreBuscar:", this.filtro);
+    //console.log("Facturacion coreBuscar:", this.filtro);
     this.ComprobanteService.ListarComprobante(this.filtro).then((res) => {
       this.bloquearPag = false;
       var contado = res.length;
@@ -83,7 +83,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
         element.num = contado--;
       });
       this.lstComprobante = res;
-      console.log("Facturacion coreBuscar listado:", res);
+      //console.log("Facturacion coreBuscar listado:", res);
     });
   
   }
@@ -99,7 +99,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
   }
 
   coreVer(dto): void{
-    console.log(this.objetoTitulo)
+    //console.log(this.objetoTitulo)
     this.facturacionMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo,dto)
   }
 
@@ -129,7 +129,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     var anio = hoy.getFullYear();
     this.filtro.FechaEmision = new Date(`${anio},${mes},${dia}`);
     this.filtro.FechaVencimiento = new Date(hoy);
-    console.log("fechaActual FechaEmision", this.filtro.FechaEmision);
+    //console.log("fechaActual FechaEmision", this.filtro.FechaEmision);
   }
 
   coreEditar(dto): void{
@@ -142,7 +142,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTFAC").forEach(i => {
       this.lstEstado.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("llego cargarComboEstados", this.lstEstado);
+    //console.log("llego cargarComboEstados", this.lstEstado);
   }
 
   listaComboTipoComprobante() {
@@ -151,7 +151,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOCOMPROBANTE").forEach(i => {
       this.lstTipoComprobante.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("llego cargarComboTipoComprobante", this.lstTipoComprobante);
+    //console.log("llego cargarComboTipoComprobante", this.lstTipoComprobante);
   }
 
   listaComboTipoVenta() {
@@ -160,7 +160,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPVEN").forEach(i => {
       this.lstTipoVenta.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("llego listaComboTipoVenta", this.lstTipoVenta);
+    //console.log("llego listaComboTipoVenta", this.lstTipoVenta);
   }
 
   listaComboTipoImpuesto() {
@@ -169,7 +169,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOIMPUESTO").forEach(i => {
       this.lstTipoImpuesto.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("llego listaComboTipoImpuesto", this.lstTipoImpuesto);
+    //console.log("llego listaComboTipoImpuesto", this.lstTipoImpuesto);
   }
 
   listaComboMedioPago() {
@@ -178,7 +178,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "MEDPAG").forEach(i => {
       this.lstMedioPago.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("llego listaComboTipoImpuesto", this.lstMedioPago);
+    //console.log("llego listaComboTipoImpuesto", this.lstMedioPago);
   }
 
   listaComboTipoConcepto() {
@@ -187,14 +187,14 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "CPTOFACTURACION").forEach(i => {
       this.lstTipoConcepto.push({ label: i.Nombre.toUpperCase(), value: i.Codigo });
     });
-    console.log("llego listaComboTipoImpuesto", this.lstTipoConcepto);
+    //console.log("llego listaComboTipoImpuesto", this.lstTipoConcepto);
   }
 
   listaCombocompania(): Promise<number> {
     this.FiltroCompan.estado = "A";
     this.lstCompania.push({ label: ConstanteAngular.COMBOTODOS, value: null });
     return this.maestrocompaniaMastService.listarCompaniaMast(this.FiltroCompan).then(res => {
-      console.log("listarCompaniaMast", res);
+      //console.log("listarCompaniaMast", res);
       res.forEach(ele => {
         //  this.lstCompania.push({ label: ele.DescripcionCorta.trim(), value: ele.Persona });
         this.lstCompania.push({ label: ele.DescripcionCorta.trim().toUpperCase(), value: ele.CompaniaCodigo.trim(), title: ele.Persona });
@@ -213,7 +213,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
         this.lstClasificadorMovimiento.push({ label: e.Nombre, value: e.ClasificadorMovimiento });
       });
       this.filtro.ClasificadorMovimiento = service[0].ClasificadorMovimiento;
-      console.log("listaComboClasificadorMovimiento", resp);
+      //console.log("listaComboClasificadorMovimiento", resp);
       return 1;
     });
   }
@@ -226,7 +226,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
       resp.forEach(e => {
         this.lstSede.push({ label: e.DescripcionLocal, value: e.Sucursal });
       });
-      console.log("listarSucursal", resp);
+      //console.log("listarSucursal", resp);
       return 1;
     });
   }
@@ -254,7 +254,7 @@ export class FacturacionComponent extends ComponenteBasePrincipal  implements On
 
         this.personaService.listarpaginado(this.filtro).then((res) => {
 
-          console.log("enter empresa", res)
+          //console.log("enter empresa", res)
           if (res.length > 0) {
 
             this.filtro.NombreCliente = res[0].NombreCompleto;

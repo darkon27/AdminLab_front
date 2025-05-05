@@ -78,8 +78,8 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
 
     /**OBJETOS */
     this.DtoUsuario = new Usuario();
-    console.log("Usuario iniciarComponente rowdata:", rowdata);
-    console.log("Usuario iniciarComponente this.getUsuarioAuth().data[0]:", this.getUsuarioAuth().data[0]);
+    //console.log("Usuario iniciarComponente rowdata:", rowdata);
+    //console.log("Usuario iniciarComponente this.getUsuarioAuth().data[0]:", this.getUsuarioAuth().data[0]);
     /**AUDITORIA */
     this.fechaModificacion = undefined;
     this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
@@ -113,14 +113,14 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
         break;
       case ConstanteUI.ACCION_SOLICITADA_EDITAR:
         this.puedeEditar = false;
-        console.log("ConstanteUI.ACCION_SOLICITADA_EDITAR", rowdata);
+        //console.log("ConstanteUI.ACCION_SOLICITADA_EDITAR", rowdata);
         /**BUSCAR OBJETO */
         /**
          * BUSCAR USUARIO POR EL OBJETO ROWDATA CON SU PROPIEDAD USUSARIO
          */
         this.filtroUsuario.Usuario = rowdata.Usuario;
         const respEditar: any[] = await this.UsuarioService.listarUsuarioMast(this.filtroUsuario);
-        console.log("data", respEditar);
+        //console.log("data", respEditar);
         this.DtoUsuario = await respEditar[0];
         // fin
 
@@ -138,14 +138,14 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
         break;
       case ConstanteUI.ACCION_SOLICITADA_VER:
         this.puedeEditar = true;
-        console.log("ConstanteUI.ACCION_SOLICITADA_EDITAR", rowdata);
+        //console.log("ConstanteUI.ACCION_SOLICITADA_EDITAR", rowdata);
         /**BUSCAR OBJETO */
         /**
          * BUSCAR USUARIO POR EL OBJETO ROWDATA CON SU PROPIEDAD USUSARIO
          */
         this.filtroUsuario.Usuario = rowdata.Usuario;
         const respVer: any[] = await this.UsuarioService.listarUsuarioMast(this.filtroUsuario);
-        console.log("data", respVer);
+        //console.log("data", respVer);
         this.DtoUsuario = await respVer[0];
         // fin
         this.ListaUsuarioSede(this.filtroUsuario.Usuario);
@@ -201,7 +201,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
 
   coreGuardar() {
 
-    console.log("coreGuardar", this.DtoUsuario);
+    //console.log("coreGuardar", this.DtoUsuario);
     if (this.estaVacio(this.DtoUsuario.Usuario)) {
       this.messageShow('warn', 'Advertencia', 'Seleccione una persona válida');
       return;
@@ -239,7 +239,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
 
     // Asegurar que las sedes seleccionadas se añadan al DTO
     this.DtoUsuario.SedesPerfil = this.lstSede;
-    console.log("coreGuarda this.validarform", this.validarform);
+    //console.log("coreGuarda this.validarform", this.validarform);
     this.bloquearPag = true;
     switch (this.validarform) {
       case ConstanteUI.ACCION_SOLICITADA_NUEVO:
@@ -254,8 +254,8 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
             this.DtoUsuario.UltimoUsuario = null;
             this.DtoUsuario.FechaCreacion = new Date();
             this.DtoUsuario.UltimaFechaModif = null;
-            console.log("mantenimientoUsuarioMast NUEVO", this.DtoUsuario);
-            console.log("Contenido de lstSede:", this.lstSede);
+            //console.log("mantenimientoUsuarioMast NUEVO", this.DtoUsuario);
+            //console.log("Contenido de lstSede:", this.lstSede);
             const respNuevo = await this.UsuarioService.mantenimientoUsuarioMast(ConstanteUI.SERVICIO_SOLICITUD_NUEVO, this.DtoUsuario, this.getUsuarioToken());
             if (respNuevo != null) {
               if (respNuevo.success) {
@@ -265,7 +265,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
                   mensaje: "Se envia MantenimientoUsuarioSede",
                   data: [...this.lstSede]  // Clonamos la lista para evitar problemas
                 };
-                console.log("daMantenimientoUsuarioSedea", dto);
+                //console.log("daMantenimientoUsuarioSedea", dto);
                 const respNuevoSede = await this.UsuarioService.MantenimientoUsuarioSede(ConstanteUI.SERVICIO_SOLICITUD_NUEVO, dto, this.getUsuarioToken());
 
                 this.messageShow('success', 'Success', this.getMensajeGuardado());
@@ -287,8 +287,8 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
 
       case ConstanteUI.ACCION_SOLICITADA_EDITAR:
 
-        console.log("mantenimientoUsuarioMast EDITAR", this.DtoUsuario);
-        console.log("Contenido de lstSede:", this.lstSede);
+        //console.log("mantenimientoUsuarioMast EDITAR", this.DtoUsuario);
+        //console.log("Contenido de lstSede:", this.lstSede);
         this.DtoUsuario.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario;
         this.DtoUsuario.UltimaFechaModif = new Date();
 
@@ -311,7 +311,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
                   mensaje: "Se envia MantenimientoUsuarioSede",
                   data: [...this.lstSede]  // Clonamos la lista para evitar problemas
                 };
-                console.log("daMantenimientoUsuarioSedea", dto);
+                //console.log("daMantenimientoUsuarioSedea", dto);
                 const respNuevoSede = await this.UsuarioService.MantenimientoUsuarioSede(1, dto, this.getUsuarioToken());
                 this.messageShow('success', 'Success', this.getMensajeActualizado());
                 this.mensajeController.resultado = respEditar;
@@ -362,7 +362,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
     this.lstPerfil = [];
     this.lstPerfil.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.UsuarioService.listarComboPerfil(dto).then(res => {
-      console.log("Mant Usuario cargarPerfiles::", res);
+      //console.log("Mant Usuario cargarPerfiles::", res);
       res.forEach(ele => {
         this.lstPerfil.push({ label: ele.Descripcion.trim(), value: ele.Codigo.trim() });
       });
@@ -381,7 +381,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
       res.forEach(element => {
         element.num = contado++;
       });
-      console.log("consulta ListaUsuarioSede:", res);
+      //console.log("consulta ListaUsuarioSede:", res);
       this.lstSede = res;
       this.bloquearPag = false;
 
@@ -475,7 +475,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
         this.lstSede.forEach(s => {
           s.num = num++;
         });
-        console.log("eliminarSede:", sede);
+        //console.log("eliminarSede:", sede);
       }
     })
   }
@@ -488,7 +488,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
       sedes => {
         if (sedes.length > 0) {
           sedes.forEach(obj => this.lstSedecombo.push({ label: obj.SedDescripcion, value: obj.IdSede }));
-          console.log(" combolistarSedesCargarSedes", this.lstSedecombo);
+          //console.log(" combolistarSedesCargarSedes", this.lstSedecombo);
         }
         return 1
       }
@@ -496,7 +496,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
   }
 
   async coreMensaje(mensage: MensajeController) {
-    console.log("data llegando mensage:", mensage);
+    //console.log("data llegando mensage:", mensage);
     if (mensage.resultado.EsEmpleado != 'S') {
       this.messageService.add({
         key: 'bc',
@@ -510,10 +510,10 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
 
     let filtrarEmpleado: filtroEmpleadoMast = new filtroEmpleadoMast();
     filtrarEmpleado.Documento = mensage.resultado.Documento.trim();
-    console.log("filtrarEmpleado", filtrarEmpleado);
+    //console.log("filtrarEmpleado", filtrarEmpleado);
     let empleado = await this.empleadoMastService.listarEmpleadoMast(filtrarEmpleado);
-    console.log("empleado", empleado[0]);
-    console.log("empleado.Estado", empleado[0].Estado.trim());
+    //console.log("empleado", empleado[0]);
+    //console.log("empleado.Estado", empleado[0].Estado.trim());
 
     if (empleado[0].Estado != "A") {
       this.messageService.add({
@@ -615,7 +615,7 @@ export class UsuariosMantenimientoComponent extends ComponenteBasePrincipal impl
       res.forEach(element => {
         element.num = contado++;
       });
-      console.log("consulta ListaUsuarioSede:", res);
+      //console.log("consulta ListaUsuarioSede:", res);
       this.lstSedesAgregar = res;
       this.bloquearPag = false;
 

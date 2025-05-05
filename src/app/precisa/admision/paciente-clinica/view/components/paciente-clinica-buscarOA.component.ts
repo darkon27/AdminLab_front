@@ -77,13 +77,13 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
 
   ngOnInit(): void {
    // this.getUrlDominio();
-    console.log("COsnultaOA ngOnInit getUrlDominio:: ",   this.getUrlDominio());
+    //console.log("COsnultaOA ngOnInit getUrlDominio:: ",   this.getUrlDominio());
     this.combocliente();
     const p2 = this.comboTipoAtencion();
     const p4 = this.comboTipoPaciente();
-    console.log("comboTipoPaciente:: ", p4);
+    //console.log("comboTipoPaciente:: ", p4);
     const p5 = this.comboTipoServicio();
-    console.log("comboTipoServicio:: ", p5);
+    //console.log("comboTipoServicio:: ", p5);
     Promise.all([ p2, p4, p5]).then((resp) => {
 
     }); 
@@ -142,7 +142,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
 
   defaultBuscar(event) {
     if (event.keyCode === 13) {
-      console.log("defaultBuscar por enter:: ", event);
+      //console.log("defaultBuscar por enter:: ", event);
       this.coreBuscar();
     }
   }
@@ -174,7 +174,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
              this.pacienteClinicaService.listarpaginado(this.filtro).then((res) => 
              {
               this.bloquearPag = false;
-               console.log("LISTA data de ConsultaOA ::", res);
+               //console.log("LISTA data de ConsultaOA ::", res);
                  if (res.valor > 0)
                  {               
                    this.lstgridbuscarOA = res.data;
@@ -203,13 +203,13 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
   llamarPersonaXdocumento(docu) {
     let Documento = { Documento: docu.trim() }
     this.personaService.listarpaginado(Documento).then((res) => {
-      console.log("mensaje del res llamar persona ", res)
+      //console.log("mensaje del res llamar persona ", res)
     });
   }
 
 
   combocliente() {
-    console.log("ConsultaOA lista cliente", JSON.parse(sessionStorage.getItem('comboCliente')));
+    //console.log("ConsultaOA lista cliente", JSON.parse(sessionStorage.getItem('comboCliente')));
     var listaComboliente = convertDateStringsToDates(JSON.parse(sessionStorage.getItem('comboCliente')));    
     if (!this.esListaVacia(listaComboliente)){
       listaComboliente.forEach(e => {
@@ -231,7 +231,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
           resp.forEach(obj => this.lstCliente.push({ label: obj.empresa, value: obj.Persona }));
           if(this.lstCliente.length > 0){
           this.filtro.IdCliente = resp[0].Persona;
-          console.log("ConsultaOA lista cliente", resp);
+          //console.log("ConsultaOA lista cliente", resp);
           sessionStorage.setItem('comboCliente', JSON.stringify(resp));         
           this.combosedecliente(this.filtro.IdCliente);
         }
@@ -248,7 +248,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
       .then(resp => {
         resp.forEach(obj => this.lstsedeCliente.push({ label: obj.SedDescripcion, value: obj.SedCodigo }));
         this.filtro.Sucursal = resp[0].SedCodigo;
-        console.log("ConsultaOA lista combosedecliente", this.lstsedeCliente);
+        //console.log("ConsultaOA lista combosedecliente", this.lstsedeCliente);
         return 1;
       });
     
@@ -259,7 +259,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOATENCION").forEach(i => {
       this.lstTipoAtencion.push({ label: i.Nombre, value: i.IdCodigo })
     });
-    console.log("ConsultaOA lista comboTipoAtencion", this.lstTipoAtencion);
+    //console.log("ConsultaOA lista comboTipoAtencion", this.lstTipoAtencion);
   }
 
   comboTipoPaciente(): Promise<number> {
@@ -271,7 +271,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
     return this.pacienteClinicaService.listarTipoPaciente(this.filtro)
       .then(resp => {
         resp.forEach(obj => this.lstTipoPaciente.push({ label: obj.Descripcion, value: obj.TipoOperacionID }));
-        console.log("ConsultaOA lista comboTipoPaciente", this.lstTipoPaciente);
+        //console.log("ConsultaOA lista comboTipoPaciente", this.lstTipoPaciente);
         return 1;
       });
   }
@@ -284,7 +284,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
     return this.pacienteClinicaService.listarcomboTipoServicio(this.filtro)
       .then(resp => {
         resp.forEach(obj => this.lstTipoServicio.push({ label: obj.Nombre, value: obj.ClasificadorMovimiento }));
-        console.log("ConsultaOA lista comboTipoServicio", this.lstTipoServicio);
+        //console.log("ConsultaOA lista comboTipoServicio", this.lstTipoServicio);
         return 1;
       });
   }
@@ -412,7 +412,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
         }
     });
     this.dtofinal.IndicadorWS = 1;
-    console.log("ConsultaOA Envio GUARDAR DTO:",this.dtofinal); 
+    //console.log("ConsultaOA Envio GUARDAR DTO:",this.dtofinal); 
     this.bloquearPag = true;
     // Bloquear página y enviar datos
     this.bloquearPag = true;
@@ -420,7 +420,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
       .mantenimientoAdmisionClinica(1, this.dtofinal, this.getUsuarioToken())
       .then(res => {
         this.bloquearPag = false;
-        console.log("data registrada:", res);
+        //console.log("data registrada:", res);
   
         if (res.valor > 0) {
           if (res.Admision.NroPeticion != null) {
@@ -440,7 +440,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
             this.mostrarError(res.mensaje);
           }
         } else {
-          console.log(res)
+          //console.log(res)
           this.mostrarError(res.error?.mensaje || res?.mensaje);
         }
       });
@@ -515,7 +515,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
     // Asignación de IndicadorWS
     this.dtofinal.IndicadorWS = 1;
   
-    console.log("ConsultaOA Envio GUARDAR DTO:", this.dtofinal);
+    //console.log("ConsultaOA Envio GUARDAR DTO:", this.dtofinal);
   
     // Bloquear página y enviar datos
     this.bloquearPag = true;
@@ -523,7 +523,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
       .mantenimientoAdmisionClinica(1, this.dtofinal, this.getUsuarioToken())
       .then(res => {
         this.bloquearPag = false;
-        console.log("data registrada:", res);
+        //console.log("data registrada:", res);
   
         if (res.valor > 0) {
           if (res.Admision.NroPeticion != null) {
@@ -550,7 +550,7 @@ export class PacienteClinicaBuscarOAComponent extends ComponenteBasePrincipal im
   
   // Función para mostrar errores
   mostrarError(mensaje: string): void {
-    console.log("Error:", mensaje);
+    //console.log("Error:", mensaje);
     this.messageService.add({
       severity: "error",
       detail: this.getMensajeAlerta(mensaje),

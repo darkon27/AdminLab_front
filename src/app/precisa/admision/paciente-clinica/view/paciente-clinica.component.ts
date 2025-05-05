@@ -183,18 +183,18 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     const p3 = this.comboComboTipoOrden();
     const p4 = this.comboCargarServicios();
     const p5 = this.comboCargarTipoAtencion();
-    console.log("Clinica selec comboCargarTipoAtencion", p5);
+    //console.log("Clinica selec comboCargarTipoAtencion", p5);
     const p6 = this.comboCargarCliente();
-    console.log("selec comboCargarCliente", p6);
+    //console.log("selec comboCargarCliente", p6);
     const p7 = this.comboCargarTipoOperacion();
-    console.log("Clinica selec comboCargarTipoOperacion", p7);
+    //console.log("Clinica selec comboCargarTipoOperacion", p7);
     // this.titulo = '';
     Promise.all([p1, p3, p4, p5, p6, p7]).then(resp => {
       var condicion = this.route.snapshot.url.length;
       if (condicion > 2) {
         this.tempfiltro = convertDateStringsToDates(JSON.parse(this.route.snapshot.params['dto'] as string) as Admision);
         if (this.tempfiltro) {
-          console.log("Clinica ngOnInit Ingreso EditarAdmision", this.tempfiltro);
+          //console.log("Clinica ngOnInit Ingreso EditarAdmision", this.tempfiltro);
           this.EditarAdmision(this.tempfiltro);
           this.auditoria(this.tempfiltro, 2);
           this.admision = this.tempfiltro;
@@ -210,7 +210,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         this.auditoria("NUEVO", 1);
       }
       this.filtro = this.formularioFiltrosRestaurar(this.filtro);
-      console.log("Clinica Termino ngOnInit", this.filtro);
+      //console.log("Clinica Termino ngOnInit", this.filtro);
       this.bloquearPag = false;
     });
   }
@@ -225,11 +225,11 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
       this.fechaCreacion = new Date();
       this.fechaModificacion = new Date();
-      console.log("mostrar auditoria comparacion", this.getUsuarioAuth().data[0].Usuario, filtro.UsuarioCreacion, filtro.UsuarioModificacion)
+      //console.log("mostrar auditoria comparacion", this.getUsuarioAuth().data[0].Usuario, filtro.UsuarioCreacion, filtro.UsuarioModificacion)
       if (this.estaVacio(filtro.UsuarioModificacion)) {
-        console.log("UsuarioModificacion Vacío")
+        //console.log("UsuarioModificacion Vacío")
         if (filtro.UsuarioCreacion == this.getUsuarioAuth().data[0].Usuario) {
-          console.log("UsuarioCreacion Igual a UsuarioLogeado")
+          //console.log("UsuarioCreacion Igual a UsuarioLogeado")
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
           this.fechaCreacion = new Date(filtro.FechaCreacion);
           if (this.esFechaVacia(filtro.FechaModificacion)) {
@@ -238,7 +238,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             this.fechaModificacion = new Date(filtro.FechaModificacion);
           }
         } else {
-          console.log("Traer Usuario Creado Nuevo")
+          //console.log("Traer Usuario Creado Nuevo")
           let dto = {
             Documento: filtro.UsuarioCreacion.trim(),
             tipopersona: "USU",
@@ -253,13 +253,13 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             } else {
               this.fechaModificacion = new Date(filtro.FechaModificacion);
             }
-            console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
+            //console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
           })
         }
       } else {
-        console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
+        //console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
         if (filtro.UsuarioModificacion == this.getUsuarioAuth().data[0].Usuario) {
-          console.log("Usuario Modificado Igual a Usuario Logeado")
+          //console.log("Usuario Modificado Igual a Usuario Logeado")
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto;
           this.fechaCreacion = new Date(filtro.FechaCreacion);
           if (this.esFechaVacia(filtro.FechaModificacion)) {
@@ -268,8 +268,8 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             this.fechaModificacion = new Date(filtro.FechaModificacion);
           }
         } else {
-          console.log("Traer Usuario Modificado Nuevo")
-          console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
+          //console.log("Traer Usuario Modificado Nuevo")
+          //console.log("Usuario Modificado Lleno", this.getUsuarioAuth().data[0].Usuario, this.getUsuarioAuth().data[0].NombreCompleto)
           let dto = {
             Documento: filtro.UsuarioModificacion.trim(),
             tipopersona: "ID",
@@ -284,7 +284,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             } else {
               this.fechaModificacion = new Date(filtro.FechaModificacion);
             }
-            console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
+            //console.log("mostrar auditoria", this.usuario, this.fechaCreacion, this.fechaModificacion)
           })
         }
       }
@@ -298,7 +298,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     filtro.persona = persona;
     filtro.IdSede = this.getUsuarioAuth().data[0].IdSede;
     return this.personaService.listadoSedeHistoria(filtro).then((res) => {
-      console.log("historia clinica res", res);
+      //console.log("historia clinica res", res);
       this.filtro.CodigoHC = res[0].CodigoHC;
     }).catch(error => error);
   }
@@ -306,7 +306,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
   //aqui coreMensaje
   async coreMensaje(mensage: MensajeController) {
     if (mensage.componente == "SELECPACIENTE") {
-      console.log("seleccionar paciente", mensage.resultado);
+      //console.log("seleccionar paciente", mensage.resultado);
       this.bscPersona = mensage.resultado;
       this.listadoHistoriaClinica(mensage.resultado.Persona);
       this.listarConsentimientoXdocumento(mensage.resultado.Documento);
@@ -358,13 +358,13 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.lstSedeEmpresa = [];
       this.comboCargarSedeEmpresa(mensage.resultado.Persona);
       this.editarCampoEmpresa = true;
-      console.log("selec empresa", mensage.resultado);
+      //console.log("selec empresa", mensage.resultado);
     }
     else if (mensage.componente == "SELECASEGURADORA") {
       this.filtro.IdAseguradora = mensage.resultado.IdAseguradora;
       this.filtro.NombreEmpresa = mensage.resultado.NombreEmpresa;
       this.editarCampoAseguradora = true;
-      console.log("selec aseguradora", mensage.resultado);
+      //console.log("selec aseguradora", mensage.resultado);
     }
     else if (mensage.componente == "SELECMEDICO") {
       this.filtro.CMP = mensage.resultado.CMP;
@@ -388,7 +388,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
               return;
             }
           }
-          console.log("BUSCEXAM  Sexo", mensage.resultado);
+          //console.log("BUSCEXAM  Sexo", mensage.resultado);
           if (examenParaAgregar.Sexo != "A") {
             if (examenParaAgregar.Sexo != this.filtro.Sexo) {
               Swal.fire({
@@ -424,14 +424,14 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
     }
     else if (mensage.componente == 'BUSCOA') {
-      console.log("DATA ADMISION VIAJANDO DE BUSCOA ", mensage.resultado.Admision);
+      //console.log("DATA ADMISION VIAJANDO DE BUSCOA ", mensage.resultado.Admision);
       if (mensage.resultado == "1") {
         this.btnNuevo();
       }
       else if (mensage.resultado.Admision != null) {
         this.auditoria(mensage.resultado.Admision, 2);
         this.selectedItemTipoAtencion(mensage.resultado.Admision.TipoAtencion)
-        console.log("TIPO ATENCION", mensage.resultado.Admision.TipoAtencion);
+        //console.log("TIPO ATENCION", mensage.resultado.Admision.TipoAtencion);
 
         this.editarCampos = false;
         this.editarDetallePrueba = false;
@@ -467,8 +467,8 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         for (let examenParaAgregar of mensage.resultado.list_AdmisionServicio) {
           if (examenParaAgregar.Sexo != "A") {
             if (examenParaAgregar.Sexo != this.filtro.Sexo) {
-              console.log("es de sexo distinto", examenParaAgregar.Sexo);
-              console.log("es de sexo distinto", this.filtro.Sexo);
+              //console.log("es de sexo distinto", examenParaAgregar.Sexo);
+              //console.log("es de sexo distinto", this.filtro.Sexo);
               valoesexo = 1;
               break;
             }
@@ -538,7 +538,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             this.lstListarXAdmision.push({ ...examenParaAgregar });
           }
           this.lstListarXAdmision = [...this.lstListarXAdmision];
-          console.log(this.lstListarXAdmision)
+          //console.log(this.lstListarXAdmision)
           await this.calculoDePruebasIgv();
 
           this.verBtnAnular = true;
@@ -557,7 +557,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         })
       }
     } else if (mensage.componente == 'TIPMAPERSONANUEVO') {
-      console.log("TIPMAPERSONANUEVO data llegando:", mensage.resultado);
+      //console.log("TIPMAPERSONANUEVO data llegando:", mensage.resultado);
 
       this.disableBtnGuardar = true;
       if (mensage.resultado != null) {
@@ -599,13 +599,13 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       }
 
     } else if (mensage.componente == 'TIPMAPERSONAEDITAR') {
-      console.log("TIPMAPERSONAEDITAR VIAJANDO ", mensage.resultado.data);
-      console.log("TIPMAPERSONAEDITAR paciente", this.bscPersona);
+      //console.log("TIPMAPERSONAEDITAR VIAJANDO ", mensage.resultado.data);
+      //console.log("TIPMAPERSONAEDITAR paciente", this.bscPersona);
       this.MostrarEmpresa(this.bscPersona.Persona, 1);
 
     } else if (mensage.componente == 'TIPREGMEDICO') {
-      console.log("data llegando medico", mensage.componente)
-      console.log("data llegando medico", mensage.resultado)
+      //console.log("data llegando medico", mensage.componente)
+      //console.log("data llegando medico", mensage.resultado)
       if (mensage.resultado != null) {
         this.bloquearPag = true;
         this.filtro.CMP = mensage.resultado.data.CMP;
@@ -625,7 +625,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
       }
     } else if (mensage.componente == 'TIPREGEMPRESA') {
-      console.log("data llegando mensaje", mensage.resultado)
+      //console.log("data llegando mensaje", mensage.resultado)
       if (mensage.resultado != null) {
         this.bloquearPag = true;
         this.filtro2.DocumentoFiscal = mensage.resultado.data.Documento;
@@ -640,9 +640,9 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log("probando aqui", this.seleccionarItemPaciente)
-    // console.log("VALOR ngOnChanges", changes.currentValue)
-    // console.log(" aver despues", changes.previousValue)
+    // //console.log("probando aqui", this.seleccionarItemPaciente)
+    // //console.log("VALOR ngOnChanges", changes.currentValue)
+    // //console.log(" aver despues", changes.previousValue)
   }
 
   selectedItemTipoPaciente(event) {
@@ -652,7 +652,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       listaEntyOperacion.forEach(e => {
         if (e.TipoOperacionID == event.value) {
           this.IdConsentimiento = e.FlaCon;
-          console.log("selectedItemTipoPaciente listaEntyOperacion", e);
+          //console.log("selectedItemTipoPaciente listaEntyOperacion", e);
         }
       });
     }
@@ -662,7 +662,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     }
 
     if (this.lstListarXAdmision.length > 0) {
-      console.log("valor de lcombo despues", this.selectedTipoPaciente)
+      //console.log("valor de lcombo despues", this.selectedTipoPaciente)
       this.bloquearPag = true;
       if (this.admision != null) {
         this.dtofinal.Admision.UsuarioCreacion = this.admision.UsuarioCreacion; //derrepente pasando nulo
@@ -711,13 +711,13 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.dtofinal.Admision.ClasificadorMovimiento = this.filtro.ClasificadorMovimiento;
       this.dtofinal.Admision.IdEspecialidad = this.filtro.IdEspecialidad;
       this.dtofinal.Admision.TIPOADMISIONID = 1; //admision.TIPOADMISIONID;
-      console.log("llegando toda cabecera tipo paciente", this.dtofinal.Admision)
-      console.log("lista llegando combo", this.lstListarXAdmision)
+      //console.log("llegando toda cabecera tipo paciente", this.dtofinal.Admision)
+      //console.log("lista llegando combo", this.lstListarXAdmision)
 
       this.dtofinal.list_AdmisionServicio = [];
       this.lstListarXAdmision.forEach(element => {
         var dtoAdmClini = new DtoAdmisionclinicaDetalle;
-        console.log("valor de dtoadmclini", dtoAdmClini)
+        //console.log("valor de dtoadmclini", dtoAdmClini)
         dtoAdmClini.IdAdmServicio = element.IdAdmServicio;
         dtoAdmClini.IdAdmision = element.IdAdmision;
         dtoAdmClini.Linea = element.Linea;
@@ -739,9 +739,9 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
       });
 
-      console.log("llegando lista combo tipo paciente", this.dtofinal.list_AdmisionServicio)
+      //console.log("llegando lista combo tipo paciente", this.dtofinal.list_AdmisionServicio)
       this.dtofinal.IndicadorWS = 0;
-      console.log("dto a selec tipo paciente:", this.dtofinal);
+      //console.log("dto a selec tipo paciente:", this.dtofinal);
       this.bloquearPag = false;
       this.pacienteClinicaService.cambioContratoTipoPaciente(1, this.dtofinal, this.getUsuarioToken()).then(
 
@@ -758,7 +758,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             this.lstListarXAdmision = [];
             var totala = 0;
             var cantidadExamenes = 0;
-            console.log("probando res de la lista", res.list_AdmisionServicio[0].TipoOperacionId)
+            //console.log("probando res de la lista", res.list_AdmisionServicio[0].TipoOperacionId)
             res.list_AdmisionServicio.forEach(element => {
               cantidadExamenes += element.Cantidad;
               element.ValorEmpresa = element.Valor * element.Cantidad;
@@ -779,7 +779,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             }
           } else {
             this.bloquearPag = true;
-            console.log("res al guardar admision TODO", res)
+            //console.log("res al guardar admision TODO", res)
             Swal.fire({
               icon: 'warning',
               title: '¡Mensaje!',
@@ -788,11 +788,11 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
               if (result.isConfirmed) {
                 if (this.admision != null) {
                   this.filtro.TipoOperacionID = this.admision.TipoOperacionId;
-                  console.log("tipo operacon del despues", this.filtro.TipoOperacionID)
+                  //console.log("tipo operacon del despues", this.filtro.TipoOperacionID)
                   this.bloquearPag = false;
                 } else {
                   this.filtro.TipoOperacionID = this.seleccionarItemPacienteTemp;
-                  console.log("tipo operacon del despues", this.filtro.TipoOperacionID)
+                  //console.log("tipo operacon del despues", this.filtro.TipoOperacionID)
                   this.bloquearPag = false;
                 }
 
@@ -805,7 +805,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
   }
 
   EditarAdmision(tempfiltro: Admision) {
-    console.log("EditarAdmision", this.tempfiltro);
+    //console.log("EditarAdmision", this.tempfiltro);
     this.bloquearPag = true;
     this.filtro.Documento = tempfiltro.Documento;
     this.filtro.NombreCompleto = tempfiltro.NombreCompleto;
@@ -851,7 +851,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       listaEntyOperacion.forEach(e => {
         if (e.TipoOperacionID == tempfiltro.TipoOperacionID) {
           this.IdConsentimiento = e.FlaCon;
-          console.log("IdConsentimiento", this.IdConsentimiento);
+          //console.log("IdConsentimiento", this.IdConsentimiento);
         }
       });
     }
@@ -1072,12 +1072,12 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     //  this.bloquearPag = true;
 
     if (this.filtro.NombreCompleto == null && this.filtro.Documento == null) {
-      console.log("Primer Console")
+      //console.log("Primer Console")
       this.personaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'TIPMAPERSONANUEVO', ''), "NUEVO", 1);
     } else {
-      console.log("2 Console")
-      // console.log(":: this.filtro.Documento multipersona", this.filtro.Documento.trim())
-      console.log("MultiPersona this.filtro", this.filtro);
+      //console.log("2 Console")
+      // //console.log(":: this.filtro.Documento multipersona", this.filtro.Documento.trim())
+      //console.log("MultiPersona this.filtro", this.filtro);
       this.bscPersona.ApellidoPaterno = this.filtro.ApellidoPaterno;
       this.bscPersona.ApellidoMaterno = this.filtro.ApellidoMaterno;
       this.bscPersona.NombreCompleto = this.filtro.NombreCompleto;
@@ -1096,15 +1096,15 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.bscPersona.Edad = this.filtro.Edad;
       this.bscPersona.Comentario = this.filtro.Comentario;
       if (this.bscPersona.Documento != null) {
-        console.log("3 Console")
+        //console.log("3 Console")
         this.personaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'TIPMAPERSONAEDITAR', ''), "EDITAR", 1, this.bscPersona);
 
       } else if (this.admision != null) {
-        console.log("4 Console")
+        //console.log("4 Console")
         this.getPersonaServicio(this.filtro.Documento.trim(), 1);
 
       } else {
-        console.log("5 Console")
+        //console.log("5 Console")
         // this.getPersonaServicio(this.filtro.Documento.trim(), 1);
         this.personaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'TIPMAPERSONANUEVO', ''), "NUEVO", 1);
       }
@@ -1114,8 +1114,8 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
 
   Correo(admision: DtoPacienteClinica) {
-    console.log("correo admision ::", admision);
-    console.log("correo this.filtro ::", this.filtro);
+    //console.log("correo admision ::", admision);
+    //console.log("correo this.filtro ::", this.filtro);
     if (this.esListaVacia(this.filtro)) {
       Swal.fire({
         icon: 'warning',
@@ -1135,7 +1135,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       }
 
       if (!this.esEmailValido(this.filtro.CorreoElectronico)) {
-        console.log("correo", this.filtro.CorreoElectronico);
+        //console.log("correo", this.filtro.CorreoElectronico);
         setTimeout(() => {
           this.bloquearPag = false;
         }, 300);
@@ -1154,8 +1154,8 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       var usuario = this.Auth.data;
 
       this.personaService.listarUsuarioWeb(IdPersona).then(resp => {
-        console.log("4 Console")
-        console.log("resp", resp)
+        //console.log("4 Console")
+        //console.log("resp", resp)
         if (resp[0].estadoActualizacion == 1) {
           _parametros = {
             success: 1,
@@ -1170,7 +1170,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           var validar = 1;
 
           if (this.estaVacio(_parametros.str_pTo)) {
-            console.log("correo", _parametros.str_pTo);
+            //console.log("correo", _parametros.str_pTo);
             setTimeout(() => {
               this.bloquearPag = false;
             }, 300);
@@ -1178,7 +1178,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             validar = 2;
           } else {
             if (!this.esEmailValido(_parametros.str_pTo)) {
-              console.log("correo", _parametros.str_pTo);
+              //console.log("correo", _parametros.str_pTo);
               setTimeout(() => {
                 this.bloquearPag = false;
               }, 300);
@@ -1188,7 +1188,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           }
           if (validar == 1) {
             return this.consultaAdmisionService.sendCorreo(_parametros).then(resp => {
-              console.log("correo", resp)
+              //console.log("correo", resp)
               setTimeout(() => {
                 this.bloquearPag = false;
               }, 300);
@@ -1282,7 +1282,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     var anular = this.registroSeleccionado;
     var validado = 0;
     this.lstAnularAdmisionDetalle = [];
-    console.log("AnularDetallePrueba registro seleccionado", anular);
+    //console.log("AnularDetallePrueba registro seleccionado", anular);
     anular.forEach(element => {
       // if (element.Estado == 1 || element.Estado == 2) {
       if (element.hasOwnProperty("IdAdmision")) {
@@ -1304,7 +1304,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           dtoAdmClini.IpCreacion = element.IpCreacion;
           dtoAdmClini.IpModificacion = this.getIp();
           this.lstAnularAdmisionDetalle.push(dtoAdmClini);
-          console.log("llegando toda la lista", this.dtofinal.list_AdmisionServicio);
+          //console.log("llegando toda la lista", this.dtofinal.list_AdmisionServicio);
         } else {
           validado = 1
 
@@ -1326,7 +1326,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           this.bloquearPag = true;
           this.toastMensaje(`${res.mensaje}`, 'success', 2000);
           this.bloquearPag = false;
-          console.log("llegando data del res anular admision", res);
+          //console.log("llegando data del res anular admision", res);
           if (res.list_AdmisionServicio != null) {
             this.loading = true;
             this.lstListarXAdmision = [];
@@ -1358,7 +1358,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
   async ValidarQuitarDetallePrueba() {
     this.bloquearPag = true;
-    console.log("ValidarQuitarDetallePrueba::", this.registroSeleccionado)
+    //console.log("ValidarQuitarDetallePrueba::", this.registroSeleccionado)
     let lstConIdAdmision: DtoPacienteClinica[] = [];
     let lstSinIdAdmision: DtoPacienteClinica[] = [];
     this.loading = true;
@@ -1409,7 +1409,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       let isElimino = await this.QuitarDetallePrueba(lstConIdAdmision);
       if (isElimino) {
         for (let ele of lstConIdAdmision) { this.lstListarXAdmision = this.lstListarXAdmision.filter((e) => e.Descripcion != ele.Descripcion); }
-      } console.log("ss", this.lstListarXAdmision);
+      } //console.log("ss", this.lstListarXAdmision);
     }
     await this.calculoDePruebasIgv();
     this.registroSeleccionado = [];
@@ -1422,7 +1422,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
   async QuitarDetallePrueba(listaEliminar: DtoPacienteClinica[]): Promise<boolean> {
     let lstEliminar: DtoPacienteClinica[] = listaEliminar;
     var validar: boolean = true;
-    console.log("QuitarDetallePrueba del registro seleccionado", lstEliminar)
+    //console.log("QuitarDetallePrueba del registro seleccionado", lstEliminar)
 
     for (let element of lstEliminar) {
       // 1 representa al estado pendiende de un examen
@@ -1523,7 +1523,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
   AnularAdmision(admision: DtoPacienteClinica) {
 
     var validar = this.ValidateAnular();
-    console.log("llegando ", validar);
+    //console.log("llegando ", validar);
     if (validar != null) {
       //this.mostrarMensaje(valida, 'warn');
 
@@ -1546,7 +1546,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       }).then((result) => {
         if (result.isConfirmed) {
 
-          console.log("filtro del anular admision despues", this.filtro);
+          //console.log("filtro del anular admision despues", this.filtro);
           this.dtofinal.Admision.TipoDocumento = this.filtro.TipoDocumento;
           this.dtofinal.Admision.Documento = this.filtro.Documento;
           this.dtofinal.Admision.NombreCompleto = this.filtro.NombreCompleto;
@@ -1584,7 +1584,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           this.dtofinal.Admision.DesEstado = admision.DesEstado;
           this.dtofinal.Admision.TIPOADMISIONID = 1; //admision.TIPOADMISIONID;
           this.dtofinal.Admision.FlatAprobacion = admision.FlatAprobacion;
-          console.log("llegando toda cabecera", this.dtofinal.Admision);
+          //console.log("llegando toda cabecera", this.dtofinal.Admision);
           this.dtofinal.list_AdmisionServicio = [];
 
           this.lstListarXAdmision.forEach(element => {
@@ -1605,11 +1605,11 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             dtoAdmClini.IpCreacion = element.IpCreacion;
             dtoAdmClini.IpModificacion = this.getIp();
             this.dtofinal.list_AdmisionServicio.push(dtoAdmClini);
-            console.log("llegando toda la lista", this.dtofinal.list_AdmisionServicio)
+            //console.log("llegando toda la lista", this.dtofinal.list_AdmisionServicio)
           });
 
           this.dtofinal.IndicadorWS = 0;
-          console.log("dto a anular admision:", this.dtofinal);
+          //console.log("dto a anular admision:", this.dtofinal);
           this.pacienteClinicaService.mantenimientoAdmisionClinica(3, this.dtofinal, this.getUsuarioToken()).then(
             res => {
               this.auditoria(res.Admision, 2);
@@ -1714,7 +1714,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             if (this.admision != null) {
 
               this.filtro.ClasificadorMovimiento = this.admision.ClasificadorMovimiento;
-              console.log("COMBO SERVICIO DESDE ADMISION", this.admision.ClasificadorMovimiento);
+              //console.log("COMBO SERVICIO DESDE ADMISION", this.admision.ClasificadorMovimiento);
             }
             else {
               this.filtro.ClasificadorMovimiento = this.seleccionarItemServicioTemp;
@@ -1728,8 +1728,8 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
 
   ValidarGuardar(admision: DtoPacienteClinica) {
-    console.log("Admision cantidad", this.cantidad);
-    console.log("Admision contarExamenes", this.contarExamenes);
+    //console.log("Admision cantidad", this.cantidad);
+    //console.log("Admision contarExamenes", this.contarExamenes);
     interface validar {
       correo: string;
       valida: string;
@@ -1742,7 +1742,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       estadoPersona: this.EstadoPersona,
       validaCMP: this.ValidateCMP(),
     }
-    console.log("VALIDACIONES", validacion);
+    //console.log("VALIDACIONES", validacion);
 
 
     this.loading = false;
@@ -1796,7 +1796,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     }
 
     if (validacion.validaCMP == null) {
-      console.log("Admision contarExamenes", this.contarExamenes);
+      //console.log("Admision contarExamenes", this.contarExamenes);
       Swal.fire({
         title: '¡Importante!',
         text: "¿Seguro que desea guardar el registro?" + " " + this.filtro.Documento,
@@ -1848,8 +1848,8 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
     } else {
       validacion.validaCMP;
-      console.log("Admision cantidad", this.cantidad);
-      console.log("Admision contarExamenes", this.contarExamenes);
+      //console.log("Admision cantidad", this.cantidad);
+      //console.log("Admision contarExamenes", this.contarExamenes);
       Swal.fire({
         title: '¡Mensaje!',
         text: validacion.validaCMP,
@@ -1942,9 +1942,9 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     let _dtofinal = new TraerXAdmisionServicio();
     var serv = this.registroSeleccionado;
     var indicaRegis = 0;
-    console.log("Admision DTO GuardarAdmision", admision);
-    console.log("GuardarAdmision filtro", this.filtro);
-    console.log("Admision registroSeleccionado", this.registroSeleccionado);
+    //console.log("Admision DTO GuardarAdmision", admision);
+    //console.log("GuardarAdmision filtro", this.filtro);
+    //console.log("Admision registroSeleccionado", this.registroSeleccionado);
 
     if (admision == null) {
 
@@ -2020,13 +2020,13 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       });
       this.dtofinal.IndicadorWS = 0;
       this.dtofinal.Admision.ObservacionAlta = this.filtro.ObservacionAlta;
-      console.log("GuardarAdmision dtofinal Modificar", this.dtofinal);
+      //console.log("GuardarAdmision dtofinal Modificar", this.dtofinal);
       this.bloquearPag = true;
       this.pacienteClinicaService.ValidarComponentePerfil(1, this.dtofinal, this.getUsuarioToken()).then((resPerfil) => {
         this.bloquearPag = false;
-        console.log("ValidarComponentePerfil :: ", resPerfil);
+        //console.log("ValidarComponentePerfil :: ", resPerfil);
         if (resPerfil.valor == 1) {
-          console.log("DTO  GUARDAR", this.dtofinal);
+          //console.log("DTO  GUARDAR", this.dtofinal);
           this.pacienteClinicaService.mantenimientoAdmisionClinica(2, this.dtofinal, this.getUsuarioToken()).then(
             async res => {
               this.bloquearPag = false;
@@ -2041,7 +2041,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
                   this.toastMensaje(`${res.mensaje}`, 'warning', 3000);
                 }
               }
-              console.log("DTO  GUARDAR mantenimientoAdmisionClinica", res);
+              //console.log("DTO  GUARDAR mantenimientoAdmisionClinica", res);
 
               this.dtofinal.Admision.DesEstado = res.Admision.DesEstado;
               this.dtofinal.Admision.Estado = res.Admision.Estado;
@@ -2100,7 +2100,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
     }
     else {
-      console.log("DTO  admision", this.filtro);
+      //console.log("DTO  admision", this.filtro);
       var serv = this.registroSeleccionado;
       this.dtofinal.Admision.TipoDocumento = this.filtro.TipoDocumento;
       this.dtofinal.Admision.Documento = this.filtro.Documento;
@@ -2154,10 +2154,10 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.dtofinal.IndicadorWS = 0;
 
       this.bloquearPag = true;
-      console.log("GuardarAdmision dtofinal insertar", this.dtofinal);
+      //console.log("GuardarAdmision dtofinal insertar", this.dtofinal);
       this.pacienteClinicaService.ValidarComponentePerfil(1, this.dtofinal, this.getUsuarioToken()).then((resPerfil) => {
         this.bloquearPag = false;
-        console.log("ValidarComponentePerfil :: ", resPerfil);
+        //console.log("ValidarComponentePerfil :: ", resPerfil);
         if (resPerfil.valor == 1) {
           this.bloquearPag = true;
           this.loading = true;
@@ -2165,7 +2165,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
             async res => {
               this.bloquearPag = false;
               this.loading = false;
-              console.log("data registrada:", res)
+              //console.log("data registrada:", res)
               this.toastMensaje(`${res.mensaje}`, 'warning', 3000);
               if (res.valor > 0) {
                 this.admision = res.Admision;
@@ -2226,7 +2226,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
   ValidateFiles() {
 
-    console.log(this.filtro.Telefono)
+    //console.log(this.filtro.Telefono)
     if (this.esNumeroVacio(this.filtro.Telefono)) {
 
 
@@ -2359,7 +2359,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.lstTipoOrden.push({ label: i.Nombre, value: i.Codigo })
     });
     this.filtro.TipoOrden = "R";
-    console.log("Clinica comboComboTipoOrden", this.lstTipoOrden);
+    //console.log("Clinica comboComboTipoOrden", this.lstTipoOrden);
   }
 
   selectedItemProcedencia(event) {
@@ -2388,7 +2388,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     var dtoadmin = new FiltroPacienteClinica();
     dtoadmin.MedicoId = MedicoId;
     return this.medicoService.listarpaginado(dtoadmin).then((res) => {
-      console.log("mostrar medico", res)
+      //console.log("mostrar medico", res)
       if (res[0].MedicoId == 0) {
         this.filtro.CMP = res[0].MedicoId;
       } else {
@@ -2407,16 +2407,16 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
 
   MostrarAseguradora(IdAseguradora) {
-    console.log("ID LLEGANDO ASEGURADORA", IdAseguradora);
+    //console.log("ID LLEGANDO ASEGURADORA", IdAseguradora);
     // var tempdto = convertDateStringsToDates(JSON.parse(this.route.snapshot.params['dto'] as string) as Admision);
     var filtro = new dtoPersona();
     filtro.IdAseguradora = IdAseguradora;
     // let IdAseguradora = { IdAseguradora: this.filtro.IdAseguradora }
 
-    // console.log("data listado ID ASEGURADORA:", IdAseguradora);
+    // //console.log("data listado ID ASEGURADORA:", IdAseguradora);
 
     return this.aseguradoraService.listarpaginado(filtro).then((res) => {
-      console.log("mostrar aseguradora", res)
+      //console.log("mostrar aseguradora", res)
       this.filtro.IdAseguradora = res[0].IdAseguradora;
       this.filtro.NombreEmpresa = res[0].NombreEmpresa;
       this.filtro.TipoOrdenAtencion = res[0].TipoAseguradora;
@@ -2438,10 +2438,10 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         } else {
           this.filtro.NombreCompleto = res[0].NombreCompleto;
         }
-        console.log("Clinica MostrarPersona: ", res);
+        //console.log("Clinica MostrarPersona: ", res);
         this.listadoHistoriaClinica(res[0].Persona);
         this.filtro.Documento = res[0].Documento;
-        console.log("Clinica listarConsentimientoXdocumento TipoOperacionID: ", this.filtro.TipoOperacionID);
+        //console.log("Clinica listarConsentimientoXdocumento TipoOperacionID: ", this.filtro.TipoOperacionID);
 
         this.listarConsentimientoXdocumento(res[0].Documento);
         this.filtro.CorreoElectronico = res[0].CorreoElectronico;
@@ -2454,7 +2454,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         this.filtro.ApellidoPaterno = res[0].ApellidoPaterno;
         this.filtro.ApellidoMaterno = res[0].ApellidoMaterno;
         this.filtro.Telefono = res[0].Telefono;
-        console.log("el Telefono es: ", this.filtro.Telefono);
+        //console.log("el Telefono es: ", this.filtro.Telefono);
         this.bscPersona = null
         this.bscPersona = res[0];
         this.filtro.Comentario = res[0].Comentario;
@@ -2475,13 +2475,13 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
   }
 
   guardarOAmedico(oamedico) {
-    console.log("IDMEDICO CONSULTAR OA", oamedico);
+    //console.log("IDMEDICO CONSULTAR OA", oamedico);
     var dtoadmin = new FiltroPacienteClinica();
     dtoadmin.MedicoId = oamedico;
     this.bloquearPag = true;
     return this.medicoService.listarpaginado(dtoadmin).then((res) => {
       this.bloquearPag = false;
-      console.log("oa medico", res);
+      //console.log("oa medico", res);
       if (res != null) {
         if (res[0].MedicoId == 0) {
           this.filtro.CMP = res[0].MedicoId;
@@ -2508,7 +2508,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     this.bloquearPag = true;
     return this.aseguradoraService.listarpaginado(dtoadmin).then((res) => {
       this.bloquearPag = false;
-      console.log("oa aseguradora", res);
+      //console.log("oa aseguradora", res);
       if (res != null) {
         this.filtro.IdAseguradora = res[0].IdAseguradora;
         this.filtro.NombreEmpresa = res[0].NombreEmpresa;
@@ -2526,7 +2526,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     var dtoadmin = new FiltroPacienteClinica();
     dtoadmin.Persona = oaempresa;
     this.bloquearPag = true;
-    console.log("oa guardarOAempresa", oaempresa);
+    //console.log("oa guardarOAempresa", oaempresa);
     return this.personaService.listarXPersona(dtoadmin).then((res) => {
       this.bloquearPag = false;
       if (res != null) {
@@ -2546,7 +2546,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     return this.personaService.listarXPersona(dtoadmin).then((res) => {
       this.bloquearPag = false;
       if (res != null) {
-        console.log("oa guardarOAPersona", res[0]);
+        //console.log("oa guardarOAPersona", res[0]);
         this.filtro.Documento = res[0].Documento;
         if (this.estaVacio(res[0].NombreCompleto)) {
           this.filtro.NombreCompleto = `${res[0].Nombres}, ${res[0].ApellidoPaterno}`
@@ -2571,7 +2571,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
   grillaCargarDatos(event: LazyLoadEvent) {
     var tempfiltro = convertDateStringsToDates(JSON.parse(this.route.snapshot.params['dto'] as string) as Admision);
-    console.log("grillaCargarDatos JSON.parse", tempfiltro)
+    //console.log("grillaCargarDatos JSON.parse", tempfiltro)
 
     this.xadmision.IdAdmision = tempfiltro.IdAdmision;
 
@@ -2584,7 +2584,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.filtro.CoaSeguro = res.Admision.CoaSeguro;
       this.filtro.CorreoElectronico = res.Admision.CorreoElectronico;
       this.filtro.Telefono = res.Admision.Telefono;
-      console.log("grillaCargarDatos", res)
+      //console.log("grillaCargarDatos", res)
       //this.disableBtnGuardar = false;
       if (res.Admision.IdEspecialidad != null) {
         this.filtro.IdEspecialidad = res.Admision.IdEspecialidad;
@@ -2600,7 +2600,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         this.editarCampoNroCama = true;
       }
       // this.bscPersona = res.Admision
-      // console.log("valor pasando", this.bscPersona)
+      // //console.log("valor pasando", this.bscPersona)
       this.contarExamenes = res.list_AdmisionServicio.length;
       var cantidadExamenes = 0;
       res.list_AdmisionServicio.forEach(element => {
@@ -2624,14 +2624,14 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
   revertir() {
     // this.soap.createClient('./assets/calculator.wsdl')
     // .then(client => {
-    //   console.log('Client', client);
+    //   //console.log('Client', client);
     //   this.client = client;
     // })
-    // .catch(err => console.log('Error', err));
+    // .catch(err => //console.log('Error', err));
 
 
     this.pacienteClinicaService.listarConsultaOa().then((res) => {
-      console.log("response service::", res);
+      //console.log("response service::", res);
     });
 
 
@@ -2640,7 +2640,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
   eliminarprueba() {
     this.Auth = this.getUsuarioAuth();
     var prueba = this.Auth.data;
-    console.log("datos del auth", prueba);
+    //console.log("datos del auth", prueba);
   }
 
   coreEliminar() {
@@ -2660,7 +2660,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
   }
 
   comboCargarTipoOperacion(): Promise<number> {
-    console.log("Clinica this.filtro", this.filtro);
+    //console.log("Clinica this.filtro", this.filtro);
     this.operacion.TipEstado = 1;
     this.operacion.TIPOADMISIONID = 1;
     this.operacion.Persona = this.filtro.comboCliente;
@@ -2670,7 +2670,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       resp.forEach(e => {
         this.lstTipoOperacion.push({ label: e.Descripcion, value: e.TipoOperacionID });
       });
-      console.log("Clinica comboCargarTipoOperacion", this.lstTipoOperacion);
+      //console.log("Clinica comboCargarTipoOperacion", this.lstTipoOperacion);
       if (this.lstTipoOperacion.length > 1) {
         this.filtro.TipoOperacionID = resp[0].TipoOperacionID;
         this.valorTipoPacienteId = resp[0].TipoOperacionID;
@@ -2709,8 +2709,8 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           this.valorCliente = e.Persona;
         });
         sessionStorage.setItem('comboCliente', JSON.stringify(resp));
-        console.log("Clinica lista cliente", JSON.stringify(resp));
-        console.log("sessionStorage cliente", sessionStorage);
+        //console.log("Clinica lista cliente", JSON.stringify(resp));
+        //console.log("sessionStorage cliente", sessionStorage);
         return 1;
       });
     }
@@ -2727,8 +2727,8 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         // this.filtro.ClasificadorMovimiento = service[0].ClasificadorMovimiento
       });
       this.filtro.ClasificadorMovimiento = service[0].ClasificadorMovimiento;
-      console.log("Clinica combo ClasificadorMovimiento", resp);
-      console.log("combo ClasificadorMovimiento", service[0]);
+      //console.log("Clinica combo ClasificadorMovimiento", resp);
+      //console.log("combo ClasificadorMovimiento", service[0]);
       return 1;
     });
 
@@ -2752,7 +2752,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       lstComboprocedencia.forEach(e => {
         this.lstprocedencia.push({ label: e.Nombre, value: e.IdEspecialidad });
       });
-      console.log("Clinica combo CargarProcendia", this.lstprocedencia);
+      //console.log("Clinica combo CargarProcendia", this.lstprocedencia);
       this.filtro.IdEspecialidad = 0;
     }
   }
@@ -2856,7 +2856,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     this.bloquearPag = true;
     return this.personaService.listaConsentimiento(Documento).then((res) => {
       this.bloquearPag = false;
-      console.log("Clinica listaConsentimiento Respuesta ", res);
+      //console.log("Clinica listaConsentimiento Respuesta ", res);
       if (!this.estaVacio(res[0].msn)) {
         Swal.fire({
           icon: 'warning',
@@ -2893,7 +2893,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
 
 
   getPersonaServicio(documento: any, validator: number) {
-    console.log("mensaje documento", documento);
+    //console.log("mensaje documento", documento);
     let dto = {
       Documento: documento.trim(),
       tipopersona: "P",
@@ -2901,8 +2901,8 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       UneuNegocioId: "0"
     }
     return this.personaService.listaPersonaUsuario(dto).then((res) => {
-      console.log("mensaje del res", res);
-      console.log("dataaaa", res.length);
+      //console.log("mensaje del res", res);
+      //console.log("dataaaa", res.length);
       this.bloquearPag = false;
       if (res.length > 0) {
         if (validator == 1) {
@@ -2912,18 +2912,18 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         } else {
 
           if (this.estaVacio(res[0].NombreCompleto)) {
-            console.log("Documento ==", res);
+            //console.log("Documento ==", res);
             this.filtro.NombreCompleto = `${res[0].Nombres}, ${res[0].ApellidoPaterno}`
 
           } else {
-            console.log("Documento !=", res);
+            //console.log("Documento !=", res);
             this.filtro.NombreCompleto = res[0].NombreCompleto;
           }
           this.disableBtnGuardar = true;
           this.listadoHistoriaClinica(res[0].Persona);
           this.filtro.Documento = res[0].Documento;
 
-          console.log("Clinica listarConsentimientoXdocumento IdConsentimiento ", this.IdConsentimiento);
+          //console.log("Clinica listarConsentimientoXdocumento IdConsentimiento ", this.IdConsentimiento);
           if (this.IdConsentimiento == 1) {
             this.listarConsentimientoXdocumento(res[0].Documento);
           }
@@ -2947,7 +2947,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           if (this.filtro.ClasificadorMovimiento == "02") {
             this.editarCantidad = false;
           }
-          console.log("llenar listaPersonaUsuario: ", this.filtro);
+          //console.log("llenar listaPersonaUsuario: ", this.filtro);
 
         }
 
@@ -2965,7 +2965,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         this.disableBtnGuardar = true;
 
       } else {
-        console.log("entroo nadaaa");
+        //console.log("entroo nadaaa");
         this.toastMensaje('Documento no encontrado, revise bien los parametros', 'warning', 3000)
         this.filtro.Documento = null;
       }
@@ -3014,7 +3014,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       if (res.length >= 1) {
 
         this.bloquearPag = true;
-        console.log("enter medico", res);
+        //console.log("enter medico", res);
         this.filtro.CMP = res[0].CMP;
         if (!this.estaVacio(res[0].Busqueda)) {
           this.filtro.Busqueda = res[0].Busqueda;
@@ -3048,7 +3048,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
         this.aseguradoraService.listarpaginado(filtro).then((res) => {
           // this.filtro.NombreCompleto = `${res[0].ApellidoPaterno} ${res[0].ApellidoMaterno}, ${res[0].Nombres}`
           if (res.length == 1) {
-            console.log("enter aseguradora", res)
+            //console.log("enter aseguradora", res)
             this.filtro.NombreEmpresa = res[0].NombreEmpresa;
             this.filtro.TipoOrdenAtencion = res[0].TipoAseguradora;
             this.editarCampoAseguradora = true;
@@ -3081,7 +3081,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           Estado: "A"
         }
         this.personaService.listarpaginado(dto).then((res) => {
-          console.log("enter empresa", res)
+          //console.log("enter empresa", res)
           if (res.length > 0) {
             this.filtro2.NombreCompleto = res[0].NombreCompleto;
             this.filtro2.Persona = res[0].Persona;
@@ -3118,7 +3118,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
     this.consultaAdmisionService.listarModeloServicio(filtro).then(resp => {
       this.listPerfil = resp;
       if (!this.esListaVacia(this.listPerfil)) {
-        console.log("Clinica listaPerfil", resp[0].ModeloServicioId);
+        //console.log("Clinica listaPerfil", resp[0].ModeloServicioId);
         this.modeloSevicioId = resp[0].ModeloServicioId;
       }
     });
@@ -3149,7 +3149,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
       this.examen.ModeloServicioId = this.modeloSevicioId;
       this.examen.CodigoComponente = this.filtro.CodigoComponente.trim();
       this.examen.ClasificadorMovimiento = this.filtro.ClasificadorMovimiento;
-      console.log("filtro validarTeclaEnterExamen", this.filtro)
+      //console.log("filtro validarTeclaEnterExamen", this.filtro)
       this.examenService.examenpaginado(this.examen).then(async (res) => {
 
         this.loading = true;
@@ -3189,7 +3189,7 @@ export class PacienteClinicaComponent extends ComponenteBasePrincipal implements
           this.lstListarXAdmision.push({ ...examenParaAgregar });
         }
         this.lstListarXAdmision = [...this.lstListarXAdmision];
-        console.log("List validarTeclaEnterExamen", this.lstListarXAdmision)
+        //console.log("List validarTeclaEnterExamen", this.lstListarXAdmision)
         await this.calculoDePruebasIgv();
         this.loading = false;
         this.filtro.CodigoComponente = null;

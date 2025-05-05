@@ -80,7 +80,7 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
         element.num = contado++;
       });
       this.lstGrilla = res;
-      console.log("coreBuscar listado:", res);
+      //console.log("coreBuscar listado:", res);
     });
   }
 
@@ -109,7 +109,7 @@ export class CorrelativosComponent extends ComponenteBasePrincipal implements On
           Entity.Estado = "I";
           Entity.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario;
           Entity.UltimaFechaModif = new Date(hoy);
-          console.log("coreInactivar  this.Entity ::", Entity);
+          //console.log("coreInactivar  this.Entity ::", Entity);
 
           return this.CorrelativoService.MantenimientoCorrelativos(3, Entity, this.getUsuarioToken()).then(
             res => {

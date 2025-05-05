@@ -53,7 +53,7 @@ export class SedescompartidaComponent extends ComponenteBasePrincipal implements
     this.dialog = true;
     this.bloquearPag = true;
     this.dto = new DtoWcoSede();
-    console.log("iniciarComponenteMaestro rowdata:", rowdata);
+    //console.log("iniciarComponenteMaestro rowdata:", rowdata);
   //  this.dto = rowdata;
     this.dto.SedCodigo = rowdata.SedCodigo;
     this.dto.SedDescripcion = rowdata.SedDescripcion;
@@ -65,7 +65,7 @@ export class SedescompartidaComponent extends ComponenteBasePrincipal implements
   }
   async coreMensaje(mensage: MensajeController) {
     if (mensage.componente == "SELECCLIENTE") {
-      console.log("SELECCLIENTE", mensage.resultado);
+      //console.log("SELECCLIENTE", mensage.resultado);
       this.dto.CodEmpresaRoe = mensage.resultado.Documento;
       this.dto.NombreCompleto = mensage.resultado.empresa;
       this.dto.IdEmpresa = mensage.resultado.Persona;
@@ -77,7 +77,7 @@ export class SedescompartidaComponent extends ComponenteBasePrincipal implements
 
     this.lstCompartirSede = [];
     let CompartirSede = { IdSede:  this.dto.IdSede }
-    console.log("ListaSedeCompartida:", CompartirSede);
+    //console.log("ListaSedeCompartida:", CompartirSede);
     this.maestroSucursalService.ListaSedeCompartida(CompartirSede).then((res) => {
       this.bloquearPag = false;
       var contado = 1;
@@ -85,7 +85,7 @@ export class SedescompartidaComponent extends ComponenteBasePrincipal implements
         element.num = contado++;
       });
       this.lstCompartirSede = res;
-      console.log("lstCompartirSede:", res);
+      //console.log("lstCompartirSede:", res);
     });
 
   }
@@ -146,7 +146,7 @@ export class SedescompartidaComponent extends ComponenteBasePrincipal implements
     return this.maestroSucursalService.ListaSede(filtrosede)
       .then(resp => {
         resp.forEach(obj => this.lstsedeCliente.push({ label: obj.SedDescripcion, value: obj.IdSede }));
-        console.log("ConsultaOA lista combosedecliente", this.lstsedeCliente);
+        //console.log("ConsultaOA lista combosedecliente", this.lstsedeCliente);
         return 1;
       });
     
@@ -154,7 +154,7 @@ export class SedescompartidaComponent extends ComponenteBasePrincipal implements
   
   coreGuardar() {
 
-    console.log("coreGuardar this.dto :: ", this.dto);
+    //console.log("coreGuardar this.dto :: ", this.dto);
     this.confirmationService.confirm({
       header: "Confirmación",
       icon: "fa fa-question-circle",

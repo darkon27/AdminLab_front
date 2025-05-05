@@ -214,7 +214,7 @@ export class TipoAdmisionComponent extends ComponenteBasePrincipal implements On
         element.num = contado++;
       });
       this.lsttipoAdmision = res;
-      console.log("coreBuscar listado:", res);
+      //console.log("coreBuscar listado:", res);
     });
   }
 

@@ -6,7 +6,7 @@ export class MyValidatorsSeguridad {
 
   static isPriceValid(control: AbstractControl) {
     const value = control.value;
-    console.log(value);
+    //console.log(value);
     if (value > 10000) {
       return {price_invalid: true};
     }
