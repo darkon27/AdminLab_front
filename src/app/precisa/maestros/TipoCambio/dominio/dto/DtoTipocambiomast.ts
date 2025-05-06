@@ -5,7 +5,8 @@ export class DtoTipocambiomast  {
     }
     num: number;
     // pk
-    monedacodigo : string;
+    MonedaCodigo : string;
+    MonedaDesc : string;
     monedacambiocodigo : string;
     fechacambio : Date;
     fechacambiostring : string;

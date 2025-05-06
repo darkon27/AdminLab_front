@@ -48,16 +48,16 @@ export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal im
   }
 
   ngOnInit(): void {
-    this.bloquearPag = true;
-    const p1 = this.cargarTipo();
-    const p2 = this.cargarEstados();
-    const p3 = this.cargarCombocompania();
-    Promise.all([p1, p2, p3]).then(
-      f => {
-        setTimeout(() => {
-          this.bloquearPag = false;
-        }, 100);
-      });
+    // this.bloquearPag = true;
+    // const p1 = this.cargarTipo();
+    // const p2 = this.cargarEstados();
+    // const p3 = this.cargarCombocompania();
+    // Promise.all([p1, p2, p3]).then(
+    //   f => {
+    //     setTimeout(() => {
+    //       this.bloquearPag = false;
+    //     }, 100);
+    //   });
   }
 
   ngOnDestroy(): void {

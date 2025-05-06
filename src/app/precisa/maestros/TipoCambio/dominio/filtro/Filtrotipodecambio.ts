@@ -1,10 +1,15 @@
-export class Filtrotipodecambio{
+export class Filtrotipodecambio {
 
-    constructor(){
+    constructor() {
     }
-    
+    CompaniaCodigo: string;
+    AplicacionCodigo: string;
+    ParametroClave: string;
+    DescripcionParametro: string;
+    TipodeDatoFlag: string;
+    Estado: string;
     estado: number;
-    fechacambio:Date;
-    ultimafechamodif:Date;
+    fechacambio: Date;
+    ultimafechamodif: Date;
 
 }

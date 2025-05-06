@@ -14,7 +14,7 @@ export class MaestrocompaniaMastService {
   private urlse = `${this.url}${this.config.getEnv('proxy.precisa')}api/Seguridad/`;
 
   constructor(private config: AppConfig, private http: HttpClient) { }
-  listarCompaniaMast(filtro: FiltroCompaniamast) {
+  listarCompaniaMast(filtro: any) {
     return this.config.getHttp().post(`${this.urlse}ListarCompania`, filtro)
       .toPromise()
       .then(response => response)

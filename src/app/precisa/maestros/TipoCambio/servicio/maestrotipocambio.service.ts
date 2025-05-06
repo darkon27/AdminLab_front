@@ -10,12 +10,13 @@ import { API_ROUTESE } from '../../../../data/constants/routes/api.routes';
 })
 export class MaestrotipocambioService {
 
-  public url = API_ROUTESE.precisa;  
+  public url = API_ROUTESE.precisa;
   private urlma = `${this.url}${this.config.getEnv('proxy.precisa')}api/Maestro/`;
+  private urlad = `${this.url}${this.config.getEnv('proxy.precisa')}api/Admision/`;
   //private urlma = `${this.config.getEnv('proxy.precisa')}api/Maestro/`;
 
-  constructor(private config: AppConfig, private http:HttpClient) { }
-  
+  constructor(private config: AppConfig, private http: HttpClient) { }
+
   // listarmaestroTipoCambio(filtro: Filtrotipodecambio) {
   // return this.config.getHttp().post(`${this.urlma}ListadoTipoCambio`, filtro)
   //   .toPromise()
@@ -23,12 +24,18 @@ export class MaestrotipocambioService {
   //   .catch(error => error)
   // }
 
-  
+
   listarmaestroTipoCambio(filtro: Filtrotipodecambio): Promise<DtoTipocambiomast[]> {
-    return this.config.getHttp().post(`${this.urlma}ListadoTipoCambio`, filtro)
-        .toPromise()
-        .then(response => response as DtoTipocambiomast[])
-        .catch(error => []);
+    return this.config.getHttp().post(`${this.urlad}ListadoTipoCambio`, filtro)
+      .toPromise()
+      .then(response => response as DtoTipocambiomast[])
+      .catch(error => []);
+  }
+  listarMonedas(filtro: any): Promise<DtoTipocambiomast[]> {
+    return this.config.getHttp().post(`${this.urlad}ListadoTipoCambio`, filtro)
+      .toPromise()
+      .then(response => response as DtoTipocambiomast[])
+      .catch(error => []);
   }
 
 }

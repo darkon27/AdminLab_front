@@ -467,7 +467,6 @@ export class ComponenteBasePrincipal {
     obtenerDataMaestro(tipoMaestro: string): Observable<any[]> {
 
         const data: any[] = JSON.parse(sessionStorage.getItem('access_miscelaneos') || '')
-
         let maestroFormateado: any[] = data.map((d: any) => ({
             tipo: d.CodigoTabla,
             value: d.Codigo,
