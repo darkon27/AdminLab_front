@@ -28,11 +28,12 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
   dto: Maestro[] = []
   bloquearPag: boolean;
   seleccion: any;
+  TipoSeleccion: any;
   filtroPeriodo: dtoPeriodo = new dtoPeriodo();
   lstEstado: SelectItem[] = [];
   btnEliminar: boolean = true;
   constructor(
-    private messageService: MessageService,
+    private _MessageService: MessageService,
     private confirmationService: ConfirmationService,
     private ProduccionService: ProduccionService,
     private toastrService: NbToastrService) {
@@ -116,9 +117,10 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
     this.ProduccionService.ListarProduccionGeneral(this.filtro).then((res) => {
       this.bloquearPag = false;
       var contado = res.length;
-      res.forEach((element) => {
+      res?.forEach(element => {
         element.num = contado--;
       });
+      this.seleccion = res.length > 0 ? res[0] : {};
       this.lstProduccion = res;
       //console.log("maestro CONTRATO listado:", res);
     });
@@ -146,13 +148,66 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
   coreSalir(): void {
     throw new Error('Method not implemented.');
   }
-  coreEliminar(): void {
-    //console.log(33)
-  }
-  onRowSelect(event: any) {
-    //console.log("FILA SELECCIONADA:", event.data);
-    this.seleccion = event.data
-  }
+  coreEliminarSeleccion(rowData: any) {
+    this.confirmationService.confirm({
+      header: "Confirmación",
+      icon: "fa fa-question-circle",
+      message: "¿Desea eliminar este registro? ",
+      key: "confirm2",
+      accept: async () => {
+        try {
+
+          let valorAccionServicio: number = 3; // eliminar seleccion
+          this.bloquearPag = true;
+
+          const consultaRepsonse = await this.ProduccionService.MantenimientoProduccion(valorAccionServicio, rowData, this.getUsuarioToken());
+          if (consultaRepsonse.success == true) {
+            this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
+            this.coreBuscar();
+          } else {
+            this.MensajeToastComun('notification', 'warn', 'Advertencia', consultaRepsonse.mensaje);
+          }
+        }
+        catch (error) {
+          console.error(error)
+          this.MensajeToastComun('notification', 'error', 'Error', 'Se generó un error. Pongase en contacto con los administradores.');
+          this.bloquearPag = false;
+        } finally {
+          this.bloquearPag = false;
+        }
+      }
+
+    });
 
 
+  }
+
+  async coreEliminar() {
+
+    try {
+
+      let valorAccionServicio: number = 4; // eliminar masivo
+      this.bloquearPag = true;
+
+      const consultaRepsonse = await this.ProduccionService.MantenimientoProduccion(valorAccionServicio, this.seleccion, this.getUsuarioToken());
+      if (consultaRepsonse.success == true) {
+        this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
+        this.coreBuscar();
+      } else {
+        this.MensajeToastComun('notification', 'warn', 'Advertencia', consultaRepsonse.mensaje);
+      }
+    }
+    catch (error) {
+      console.error(error)
+      this.MensajeToastComun('notification', 'error', 'Error', 'Se generó un error. Pongase en contacto con los administradores.');
+      this.bloquearPag = false;
+    } finally {
+      this.bloquearPag = false;
+    }
+  }
+
+  MensajeToastComun(key: string, tipo: string, titulo: string, dsc: string): void {
+    this._MessageService.clear();
+    this._MessageService.add({ key: key, severity: tipo, summary: titulo, detail: dsc });
+  }
 }

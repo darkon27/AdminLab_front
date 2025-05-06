@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { SelectItem } from "primeng/api";
+import { MessageService, SelectItem } from "primeng/api";
 import { ComponenteBasePrincipal } from "../../../../../util/ComponenteBasePrincipa";
 import { filtroProduccion } from "../model/filtro.produccion";
 import { MensajeController } from "../../../../../util/MensajeController";
@@ -14,6 +14,7 @@ import { FiltroServicio } from "../../../framework-comun/Examen/dominio/filtro/F
 import { EmpresaBuscarComponent } from "../../../framework-comun/Empresa/view/empresa-buscar.component";
 import { PersonaBuscarComponent } from "../../../framework-comun/Persona/components/persona-buscar.component";
 import { AseguradoraBuscarComponent } from "../../../framework-comun/Aseguradora/components/aseguradora-buscar.component";
+import { ProduccionService } from "../service/produccion.services";
 
 @Component({
   selector: 'ngx-produccion-mantenimiento',
@@ -25,6 +26,14 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
   @ViewChild(EmpresaBuscarComponent, { static: false }) empresaBuscarComponent: EmpresaBuscarComponent;
   @ViewChild(PersonaBuscarComponent, { static: false }) personaBuscarComponent: PersonaBuscarComponent;
   @ViewChild(AseguradoraBuscarComponent, { static: false }) aseguradoraBuscarComponent: AseguradoraBuscarComponent;
+  titulo: string = ''
+  accionRealizar: string = ''
+  position: string = 'top'
+  bloquearPag: boolean;
+  visible: boolean;
+  usuario: string;
+  fechaCreacion: Date;
+  fechaModificacion: Date;
 
 
   // Listas de combos
@@ -41,14 +50,14 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
   //Datos persona Sesion
   usuarioSesion: any;
   acciones: string = ''
-  position: string = 'top'
-
   //Objetos de formulario
   produccionForm: any = {};
 
   constructor(
     private _TipoAdmisionService: TipoAdmisionService,
     private examenService: ExamenService,
+    private _MessageService: MessageService,
+    private ProduccionService: ProduccionService,
     private _ConsultaAdmisionService: ConsultaAdmisionService,
   ) { super(); }
 
@@ -258,5 +267,38 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
     this.produccionForm.IdAseguradora = '';
     this.produccionForm.nombreSAseguradora = '';
   }
-  
+  async coreGuardar() {
+
+    try {
+
+
+      let valorAccionServicio: number = 1;
+      this.bloquearPag = true;
+
+      const consultaRepsonse = await this.ProduccionService.MantenimientoProduccion(valorAccionServicio, this.produccionForm, this.getUsuarioToken());
+      if (consultaRepsonse.success == true) {
+        this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
+
+        this.mensajeController.resultado = consultaRepsonse;
+        this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+        this.dialog = false;
+
+      } else {
+        this.MensajeToastComun('notification', 'warn', 'Advertencia', consultaRepsonse.mensaje);
+      }
+    }
+    catch (error) {
+      console.error(error)
+      this.MensajeToastComun('notification', 'error', 'Error', 'Se generó un error. Pongase en contacto con los administradores.');
+      this.bloquearPag = false;
+    } finally {
+      this.bloquearPag = false;
+    }
+  }
+
+  MensajeToastComun(key: string, tipo: string, titulo: string, dsc: string): void {
+    this._MessageService.clear();
+    this._MessageService.add({ key: key, severity: tipo, summary: titulo, detail: dsc });
+  }
+
 }
