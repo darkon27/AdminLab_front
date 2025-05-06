@@ -3,6 +3,8 @@ import { MensajeController } from "./MensajeController";
 export declare interface UIMantenimientoController {
 
     btnEliminar?: boolean;
+    btnNuevoAccion?: boolean;
+    btnGuardar?: boolean;
     // listado
     coreNuevo(): void;
     coreBuscar(): void;

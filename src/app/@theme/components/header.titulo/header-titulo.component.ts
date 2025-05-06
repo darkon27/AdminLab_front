@@ -130,6 +130,10 @@ export class HeaderTituloComponent implements OnInit, OnDestroy {
   Exportar() {
     this.objTitulo.componente.coreExportar();
   }
+  guardar() {
+    this.objTitulo.componente.coreGuardar();
+  }
+
   Eliminar() {
     this.objTitulo.componente.coreEliminar();
   }

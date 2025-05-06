@@ -1,3 +1,14 @@
+<p-blockUI [blocked]="bloquearPag">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-confirmDialog #c key="confirm2">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
 <nb-card fixed>
     <nb-card-header>
         <nav class="fixed">
@@ -7,116 +18,80 @@
 
     <nb-card-body>
         <p-fieldset legend="Criterio de Busqueda de Usuarios">
-            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" style="padding: 10px;">
-                <div class="col-sm-1" style="text-align: center;">
-                    <label for="inputFirstName" class="label">Asignar Perfil</label>
-                    <button nbTooltip="Asignar" nbTooltipPlacement="top" nbTooltipStatus="warning" pButton pRipple
-                        (click)="op.toggle($event)" icon="pi pi-check-square"
-                        class="p-button-rounded p-button-warning"></button>
-                    <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '300px'}">
-                        <ng-template pTemplate>
-                            <p-dropdown appendTo="body" [options]="perfilesAsignar" [filter]="true"
-                                placeholder="Asignar Perfil"></p-dropdown>
-                        </ng-template>
-                    </p-overlayPanel>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Perfil</label>
+                    <p-dropdown [(ngModel)]="filtro.Perfil" [filter]="true" [options]="lstComboPerfiles"
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
                 </div>
-                <div class="col">
-                    <label for="inputFirstName" class="label">Usuario</label>
-                    <input (input)="dt.filter($event.target.value, 'tipousuario', 'contains')" type="text" nbInput
-                        fullWidth id="inputFirstName" placeholder="buscar por usuario">
-
+                <div class="col-sm-4">
+                    <label for="inputLastName" class="label">Usuario</label>
+                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" mode="currency"
+                        currency="PEN" locale="es-PE" [(ngModel)]="filtro.Usuario" />
                 </div>
-                <div class="col">
+                <div class="col-sm-4">
                     <label for="inputLastName" class="label">Persona</label>
-                    <input (input)="dt.filter($event.target.value, 'Perfil', 'contains')" maxlength="200" type="text"
-                        nbInput fullWidth id="inputLastName" placeholder="buscar por persona">
-
+                    <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" mode="currency"
+                        currency="PEN" locale="es-PE" [(ngModel)]="filtro.Persona" />
                 </div>
-                <div class="col">
-                    <label for="inputLastName" class="label">Buscar por Perfil</label>
-                    <p-dropdown appendTo="body" [options]="perfiles" [filter]="true"
-                        (onChange)="dt.filter($event.value,'VaEstado', 'contains')" placeholder="Seleccionar Perfil">
-                    </p-dropdown>
-
-                </div>
-
-
-
-
             </div>
-
-
-
-
-
-
         </p-fieldset>
         <br>
         <p-fieldset legend="Perfil a Asignar">
-            <div class="col-sm-4">
-                <div class="form-group">
+            <div class="row">
+                <div class="col-sm-4">
                     <label for="inputLastName" class="label">Perfil</label>
-                    <p-dropdown appendTo="body" [options]="perfiles" [filter]="true"
-                        (onChange)="dt.filter($event.value,'VaEstado', 'contains')" placeholder="Seleccionar Perfil">
-                    </p-dropdown>
+                    <p-dropdown [(ngModel)]="filtro.Perfil" [filter]="true" [options]="lstComboPerfiles"
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
                 </div>
             </div>
 
         </p-fieldset>
         <br>
         <p-fieldset legend="Resultados">
-
-            <p-table #dt [value]="asignarPerfil" [rows]="15" [paginator]="true" [rowHover]="true" dataKey="tipousuario"
-                [responsive]="true" [sortOrder]="-1" sortField="tipousuario"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-                [showCurrentPageReport]="true">
-                
-
-
-
-
+            <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" [responsive]="true" [sortOrder]="1"
+                [value]="lstPerfiles" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                [showCurrentPageReport]="true" selectionMode="single" [scrollable]="true"
+                [rowsPerPageOptions]="[15,30,50]">
                 <ng-template pTemplate="header">
                     <tr>
-                        
-                        <th class="border-thread-left" pSortableColumn="tipousuario">Nro <p-sortIcon field="tipousuario"> </p-sortIcon>
+                        <th pSortableColumn="num" class="label" ALIGN="center" style="width: 4rem; text-align: center;">
+                            Nro<p-sortIcon field="num"></p-sortIcon>
                         </th>
-
-                        <th pSortableColumn="Perfil">Usuario <p-sortIcon field="Perfil"></p-sortIcon>
+                        <th pSortableColumn="num" class="label" ALIGN="center" style="width: 5rem; text-align: center;">
+                            Usuario<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
-
-                        <th pSortableColumn="VaEstado">Apellidos y Nombres <p-sortIcon field="VaEstado"></p-sortIcon>
+                        <th pSortableColumn="num" class="label" ALIGN="center"
+                            style="width: 10rem; text-align: center;">
+                            Apellidos y nombres<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="VaEstado">Perfil <p-sortIcon field="VaEstado">
-                            </p-sortIcon>
+                        <th pSortableColumn="num" class="label" ALIGN="center" style="width: 5rem; text-align: center;">
+                            Perfil<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
-                        <th class="border-thread-right" >Seleccionar
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                            
-
-                        </th>
-                        
-
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-asignarPerfil>
+                <ng-template pTemplate="body" let-rowData>
                     <tr>
-                        
-                        <td>{{asignarPerfil.tipousuario}}</td>
-
-                        <td>{{asignarPerfil.Perfil}}</td>
-
-                        <td>
-                            <span>{{asignarPerfil.VaEstado}}</span>
+                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                            style="width: 4rem; text-align: center;">
+                            <span class="p-column-title">Nro</span>
+                            {{ rowData.num }}
                         </td>
-                        <td>
-                            <p-dropdown appendTo="body" [options]="perfilesAsignar" [filter]="true"
-                                placeholder="Asignar Perfil"></p-dropdown>
+                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                            style="width: 5rem; text-align: center;">
+                            <span class="p-column-title">Usuario</span>
+                            {{ rowData.Usuario?.trim() }}
                         </td>
-                        <td>
-                            <p-tableCheckbox [value]="asignarPerfil"></p-tableCheckbox>
-
+                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                            style="width: 10rem; text-align: center;">
+                            <span class="p-column-title">Apellidos y nombres</span>
+                            {{ rowData.NombreCompleto }}
                         </td>
-
+                        <td class="tablaColumnaCodigoChico text-center" ALIGN="center"
+                            style="width: 5rem; text-align: center;">
+                            <span class="p-column-title">Perfil</span>
+                            {{ rowData.Perfil }}
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>

@@ -7,6 +7,9 @@ import { MensajeController } from '../../../../../util/MensajeController';
 import { UIMantenimientoController } from '../../../../../util/UIMantenimientoController';
 import { AppSatate } from '../../app.reducer';
 import * as actions from '../../perfi-usuarios/store/actions'
+import { AsignarPerfilService } from '../service/asignar-perfil.service';
+import { forkJoin } from 'rxjs';
+import { ConstanteAngular } from '../../../../@theme/ConstanteAngular';
 
 @Component({
   selector: 'ngx-asignar-perfil',
@@ -15,16 +18,22 @@ import * as actions from '../../perfi-usuarios/store/actions'
 })
 export class AsignarPerfilComponent extends ComponenteBasePrincipal implements OnInit, UIMantenimientoController {
 
-  asignarPerfil:any[]=[]
-  filtrosAsignarPerfil:any
-  perfiles:SelectItem[]=[]
-  perfilesAsignar:SelectItem[]=[]
+  btnGuardar?: boolean = true;
+  btnNuevoAccion?: boolean = true;
+  btnEliminar?: boolean;
+  bloquearPag: boolean;
 
+  filtro: any = {};
+  lstComboPerfiles: SelectItem[] = []
+  lstPerfiles: any[] = [];
 
-  constructor(private store:Store<AppSatate>) {
+  constructor(private store: Store<AppSatate>,
+    private _AsignarPerfilService: AsignarPerfilService,
+
+  ) {
     super();
   }
-  btnEliminar?: boolean;
+
   coreEliminar(): void {
     throw new Error('Method not implemented.');
   }
@@ -33,10 +42,20 @@ export class AsignarPerfilComponent extends ComponenteBasePrincipal implements O
   }
 
   coreNuevo(): void {
-   
-  }
-  coreBuscar(): void {
 
+  }
+
+  coreBuscar(): void {
+    this.bloquearPag = true;
+    this._AsignarPerfilService.listarperfiles(this.filtro).then((res) => {
+      this.bloquearPag = false;
+      var contado = 1;
+      res.forEach(element => {
+        element.num = contado++;
+      });
+      this.lstPerfiles = res;
+      //console.log("coreBuscar listado:", res);
+    });
   }
   coreGuardar(): void {
     throw new Error('Method not implemented.');
@@ -49,27 +68,24 @@ export class AsignarPerfilComponent extends ComponenteBasePrincipal implements O
   }
 
   ngOnInit(): void {
-    this.cargarFuncionesIniciales()
-    let perfil ={tipousuario:1,Perfil:'datito',VaEstado:'A'}
-    this.asignarPerfil.push(perfil)
-  }
-
-  cargarFuncionesIniciales() {
     this.tituloListadoAsignar(1, this);
-    this.iniciarComponent()
-    this.store.dispatch(actions.cargarLista())
-    this.cargarPerfiles()
+    this.iniciarComponent();
+    this.cargarSelect();
+
+  }
+  cargarSelect(): void {
+    const optTodos = { label: ConstanteAngular.COMBOTODOS, value: null };
+    forkJoin({
+      perfiles: this._AsignarPerfilService.listarComboPerfil({ ESTADO: "A" }),
+    }
+    ).subscribe(resp => {
+
+      const dataPerfiles = resp.perfiles?.map((ele: any) => ({
+        label: ele.Descripcion?.trim()?.toUpperCase() || "", value: `${ele.Codigo?.trim() || ""}00`
+      }));
+      this.lstComboPerfiles = [optTodos, ...dataPerfiles];
+
+    });
   }
 
-  cargarPerfiles(){
-    this.store.select('perfil').subscribe(perfiles=>{
-      const items = [...perfiles.perfiles];
-      this.perfiles=[]
-      this.perfiles.push({ label: 'Seleccionar Perfil', value: null })
-      items.forEach(perfil => {
-        this.perfiles.push({ label: perfil.Perfil, value: perfil.Perfil })
-        this.perfilesAsignar.push({ label: perfil.Perfil, value: perfil.Perfil })
-      });
-    })
-  }
 }

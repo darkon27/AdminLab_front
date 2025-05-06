@@ -14,17 +14,17 @@
     <nb-action icon="search-outline" matRipple (click)="buscar()" [matRippleUnbounded]="true" [matRippleCentered]="true"
       nbTooltip="Buscar" nbTooltipPlacement="top" nbTooltipStatus="primary"></nb-action>
 
-    <nb-action icon="plus-outline" matRipple (click)="nuevo()" [matRippleUnbounded]="true" [matRippleCentered]="true"
-      nbTooltip="Nuevo" nbTooltipPlacement="top" nbTooltipStatus="success"></nb-action>
-    <nb-action
-      icon="trash-outline"
-      matRipple
-      (click)="Eliminar()"
-      *ngIf="this.objTitulo.componente.btnEliminar == true"
-      [matRippleUnbounded]="true"
-      [matRippleCentered]="true"
-      nbTooltip="Recargar" nbTooltipPlacement="top" nbTooltipStatus="success"
-    ></nb-action>
+    <nb-action icon="save-outline" matRipple (click)="guardar()" *ngIf="this.objTitulo.componente.btnGuardar == true"
+      [matRippleUnbounded]="true" [matRippleCentered]="true" nbTooltip="Guardar" nbTooltipPlacement="top"
+      nbTooltipStatus="success"></nb-action>
+    <nb-action icon="trash-outline" matRipple (click)="Eliminar()" *ngIf="this.objTitulo.componente.btnEliminar == true"
+      [matRippleUnbounded]="true" [matRippleCentered]="true" nbTooltip="Eliminar" nbTooltipPlacement="top"
+      nbTooltipStatus="success"></nb-action>
+    <nb-action icon="plus-outline" matRipple (click)="nuevo()" *ngIf="this.objTitulo.componente.btnNuevoAccion != true"
+      [matRippleUnbounded]="true" [matRippleCentered]="true" nbTooltip="Nuevo" nbTooltipPlacement="top"
+      nbTooltipStatus="success"></nb-action>
+
+
 
     <nb-action icon="download-outline" matRipple (click)="Exportar()" nbTooltip="Descargar" nbTooltipPlacement="top"
       nbTooltipStatus="warning" [matRippleUnbounded]="true" [matRippleCentered]="true"></nb-action>
