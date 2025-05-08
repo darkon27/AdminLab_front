@@ -45,20 +45,7 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
     this.tituloListadoAsignar(1, this)
     const p1 = this.cargarEstados();
     this.ltsExportar = [
-      {
-        label: "Formato PDF",
-        icon: "pi pi-file-pdf",
-        command: () => {
-          this.exportPdf();
-        },
-      },
-      {
-        label: "Formato EXCEL",
-        icon: "pi pi-file-excel",
-        command: () => {
-          this.exportExcel();
-        },
-      },
+     
     ];
     Promise.all([p1]).then((resp) => {
 
