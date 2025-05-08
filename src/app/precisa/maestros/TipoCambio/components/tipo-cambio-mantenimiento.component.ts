@@ -12,6 +12,7 @@ import { MaestrocompaniaMastService } from "../../../seguridad/companias/servici
 import { filtroParametros } from "../../Parametros/model/filtro.parametros";
 import { Parametros } from "../../Parametros/model/parametros";
 import { ParametrosService } from "../../Parametros/service/parametros.service";
+import { DtoTipocambiomast } from "../dominio/dto/DtoTipocambiomast";
 
 
 
@@ -19,6 +20,9 @@ import { ParametrosService } from "../../Parametros/service/parametros.service";
     selector: 'ngx-tipo-cambio-mantenimiento',
     templateUrl: './tipo-cambio-mantenimiento.component.html'
   })
+
+
+
 export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal implements OnInit, OnDestroy {
   @ViewChild(AuditoriaComponent, { static: false }) auditoriaComponent: AuditoriaComponent;
   acciones: string = '';
@@ -32,6 +36,7 @@ export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal im
   usuario: string = "";
   usuarioAuth: UsuarioAuth = new UsuarioAuth();
   dto: Parametros = new Parametros();
+  dto2: DtoTipocambiomast = new DtoTipocambiomast();
   filtrocompa: FiltroCompaniamast = new FiltroCompaniamast();
   loading: boolean = false;
   bloquearPag: boolean;
@@ -39,7 +44,19 @@ export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal im
   NoPuedeEditar: boolean = false;
   fechaCreacion: Date;
   fechaModificacion: Date;
+  minDate: Date;  // Primer día del mes actual
+  maxDate: Date;  // Día actual o último día del mes (lo que sea menor)
   
+  
+  calcularFechasPermitidas(): void {
+    const hoy = new Date();
+    const primerDiaMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+    const ultimoDiaMes = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0);
+
+    this.minDate = primerDiaMes;
+    this.maxDate = hoy < ultimoDiaMes ? hoy : ultimoDiaMes;
+  }
+
   constructor(
     private maestrocompaniaMastService: MaestrocompaniaMastService,
     private messageService: MessageService,
@@ -48,6 +65,7 @@ export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal im
   }
 
   ngOnInit(): void {
+    this.calcularFechasPermitidas();
     // this.bloquearPag = true;
     // const p1 = this.cargarTipo();
     // const p2 = this.cargarEstados();
@@ -184,16 +202,11 @@ export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal im
 
 
   saveProduct() {
-
-    if (this.estaVacio(this.dto.CompaniaCodigo)) { this.messageShow('warn', 'Advertencia', 'Seleccione una compañia válida'); return; }
-    if (this.estaVacio(this.dto.TipodeDatoFlag)) { this.messageShow('warn', 'Advertencia', 'Seleccione un tipo de dato válido'); return; }
-    if (this.estaVacio(this.dto.AplicacionCodigo)) { this.messageShow('warn', 'Advertencia', 'Ingrese una aplicación válida'); return; }
-    if (this.estaVacio(this.dto.Texto)) { this.messageShow('warn', 'Advertencia', 'Ingrese un texto válido'); return; }
-    if (this.estaVacio(this.dto.ParametroClave)) { this.messageShow('warn', 'Advertencia', 'Ingrese un parámetro válido'); return; }
-    if (this.estaVacio(this.dto.Numero)) { this.messageShow('warn', 'Advertencia', 'Ingrese un valor válido'); return; }
     if (this.estaVacio(this.dto.Fecha)) { this.messageShow('warn', 'Advertencia', 'Ingrese una fecha válida'); return; }
     if (this.estaVacio(this.dto.Estado)) { this.messageShow('warn', 'Advertencia', 'Seleccione una estado válido'); return; }
-
+    // if (this.estaVacio(this.dto2.MonedaDesc)) { this.messageShow('warn', 'Advertencia', 'Seleccione una moneda válida'); return; }
+    // if (this.estaVacio(this.dto2.factorventa)) { this.messageShow('warn', 'Advertencia', 'Ingrese un factor venta válido'); return; }
+    // if (this.estaVacio(this.dto2.factorcompra)) { this.messageShow('warn', 'Advertencia', 'Ingrese un factor compra válido'); return; }
 
 
 

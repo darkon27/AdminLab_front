@@ -27,6 +27,7 @@ import { Filtrotipodecambio } from '../dominio/filtro/Filtrotipodecambio';
   templateUrl: './tipo-cambio.component.html',
   styleUrls: ['./tipo-cambio.component.scss']
 })
+
 export class TipoCambioComponent extends ComponenteBasePrincipal implements OnInit, UIMantenimientoController {
 
   @ViewChild(TipoCambioMantenimientoComponent, { static: false }) tipoCambioMantenimientoComponent: TipoCambioMantenimientoComponent;
