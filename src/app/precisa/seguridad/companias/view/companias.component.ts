@@ -8,9 +8,9 @@ import { ConstanteAngular } from '../../../../@theme/ConstanteAngular';
 import { iCompania } from '../dominio/dto/icompania';
 import { FiltroCompaniamast } from '../dominio/filtro/FiltroCompaniamast';
 import { MaestrocompaniaMastService } from '../servicio/maestrocompania-mast.service';
-//import { CompaniamastMantenimientoComponent } from './components/companiamast-mantenimiento.component';
 import { DtoCompaniamast } from '../dominio/dto/DtoCompaniamast';
 import { ExportarService } from '../../../framework-comun/Exportar/exportar.service';
+import { CompaniamastMantenimientoComponent } from '../components/companiamast-mantenimiento.component';
 //import { LotesImagenComponent } from '../../../proyecto/Lotes/lotes-imagen/lotes-imagen.component';
 
 @Component({
@@ -19,7 +19,7 @@ import { ExportarService } from '../../../framework-comun/Exportar/exportar.serv
   styleUrls: ['./companias.component.scss']
 })
 export class CompaniasComponent extends ComponenteBasePrincipal implements OnInit, UIMantenimientoController {
-
+  @ViewChild(CompaniamastMantenimientoComponent, { static: false }) companiamastMantenimientoComponent: CompaniamastMantenimientoComponent;
   lstCompanias: any[] = []
   lstEstado: SelectItem[] = [];
   bloquearPag: boolean = false;
@@ -34,7 +34,7 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
     private messageService: MessageService,
     private exportarService: ExportarService,
   ) {
-    super();
+    super(); //clase heredada
   }
   btnEliminar?: boolean;
   coreEliminar(): void {
@@ -43,13 +43,7 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
 
   ngOnInit(): void {
     this.tituloListadoAsignar(1, this)
-    const p1 = this.cargarEstados();
-    this.ltsExportar = [
-     
-    ];
-    Promise.all([p1]).then((resp) => {
-
-    });
+    this.cargarEstados();
   }
 
   coreMensaje(mensage: MensajeController): void {
@@ -60,15 +54,15 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
   }
 
  coreNuevo(): void {
-   // this.companiamastMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_COMPANY', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo);
+    this.companiamastMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_COMPANY', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo);
   }
 
   coreEditar(row) {
-   // this.companiamastMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_COMPANY', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, row);
+    this.companiamastMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_COMPANY', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, row);
   }
 
   coreVer(row) {
-   // this.companiamastMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_COMPANY', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, row);
+    this.companiamastMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_COMPANY', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, row);
   }
 
   async coreVerImagen(row) {
@@ -101,7 +95,7 @@ export class CompaniasComponent extends ComponenteBasePrincipal implements OnIni
   }
 
   coreGuardar(): void {
-    throw new Error('Method not implemented.');
+    
   }
 
   coreExportar(): void {

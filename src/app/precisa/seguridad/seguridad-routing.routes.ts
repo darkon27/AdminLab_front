@@ -11,6 +11,7 @@ import { UsuariosComponent } from './usuarios/view/usuarios.component';
 import { GenerarComprobanteComponent } from './generar-comprobante/view/generar-comprobante.component';
 import { ConfigurarCorreoMantenimientoComponent } from './conf-correo/components/configurar-correo-mantenimiento.component';
 import { UsuariosMantenimientoComponent } from './usuarios/components/usuarios-mantenimiento.component';
+import { CompaniamastMantenimientoComponent } from './companias/components/companiamast-mantenimiento.component';
 
 const routes: Routes = [{
   path: '',
@@ -61,6 +62,7 @@ export const routedComponents = [
   UsuariosComponent,
   ConfigurarCorreoComponent,
   CompaniasComponent,
+  CompaniamastMantenimientoComponent,  // ctrl + .
   PortalComponent,
   GenerarComprobanteComponent,
   ConfigurarCorreoMantenimientoComponent,
