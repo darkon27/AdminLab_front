@@ -80,7 +80,7 @@ export class AsignarPerfilComponent extends ComponenteBasePrincipal implements O
             contSolicitudes++;
             usuario.Perfil = this.dto.Perfil;
 
-            const respPerfiles = await this._AsignarPerfilService.mantenimientoPerfiles(ConstanteUI.SERVICIO_SOLICITUD_EDITAR, usuario, this.getUsuarioToken());
+            const respPerfiles = await this._AsignarPerfilService.mantenimientoPerfiles(ConstanteUI.SERVICIO_SOLICITUD_CAMBIO_PERFIL, usuario, this.getUsuarioToken());
             if (respPerfiles != null) {
               if (respPerfiles.success) {
                 this.MensajeToastComun('notification', 'success', 'Actualización exitosa', `Se actualizó el perfil del usuario: ${usuario.NombreCompleto}`);
