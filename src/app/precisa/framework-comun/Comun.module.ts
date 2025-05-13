@@ -3,7 +3,7 @@ import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/c
 import { AseguradoraMantenimientoComponent } from './Aseguradora/vista/aseguradora-mantenimiento.component';
 import { MedicoMantenimientoComponent } from './Medico/vista/medico-mantenimiento.component';
 import { PersonaMantenimientoComponent } from './Persona/vista/persona-mantenimiento.component';
-import {ScrollPanelModule} from 'primeng/scrollpanel';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PickListModule } from 'primeng/picklist';
 import { DividerModule } from 'primeng/divider';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -42,6 +42,8 @@ import { ExamenPerfilComponent } from './Examen/components/examen-perfil.compone
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { BlockUIModule } from 'primeng/blockui';
 import { CajaPagoComponent } from './Cajapago/vista/cajapago.component';
+import { LotesImagenComponent } from './imagen/ver-imagen/lotes-imagen.component';
+import { CarouselModule } from 'primeng/carousel';
 
 
 // Importaciones de pago
@@ -62,7 +64,8 @@ import { CajaPagoComponent } from './Cajapago/vista/cajapago.component';
     ExamenPerfilComponent,
     ExamenBuscarComponent,
     ClienteRucBuscarComponent,
-    ReporteVistaComponent
+    ReporteVistaComponent,
+    LotesImagenComponent
   ],
   imports: [
     ScrollPanelModule,
@@ -95,7 +98,9 @@ import { CajaPagoComponent } from './Cajapago/vista/cajapago.component';
     NbCheckboxModule,
     PdfJsViewerModule,
     NbStepperModule,
-    DividerModule
+    DividerModule,
+    CarouselModule,
+
   ],
   exports: [
     AseguradoraMantenimientoComponent,
