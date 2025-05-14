@@ -1,37 +1,38 @@
 
-export class DtoTipocambiomast  {
-    constructor(){
+export class DtoTipocambiomast {
+    constructor() {
 
     }
     num: number;
     // pk
-    MonedaCodigo : string;
-    MonedaDesc : string;
-    monedacambiocodigo : string;
-    fechacambio : Date;
-    fechacambiostring : string;
-    factor : number;
-    factorcompra : number;
-    factorventa : number;
-    factorpromedio : number;
-    factorcompraafp : number;
-    factorventaafp : number;
-    factorcomprasbs : number;
-    factorventasbs : number;
-    valorcuota : number;
-    tasatamex : number;
-    tasatamn : number;
-    tasaanualtamex : number;
-    tasaanualtamn : number;
-    estado : string;
-    ultimafechamodif : Date;
-    ultimousuario : string;
-    factorcobranza : number;
-    factorcobranzaventa : number;
+    MonedaCodigo: string
+    MonedaCambioCodigo: string
+    FechaCambio: string | Date
+    FechaCambioString: string
+    Factor: number
+    FactorCompra: number
+    FactorVenta: number
+    FactorPromedio: number
+    FactorCompraAfp: any
+    FactorVentaAfp: any
+    FactorCompraSBS: number
+    FactorVentaSBS: number
+    ValorCuota: any
+    TasaTAMEX: number
+    TasaTAMN: number
+    TasaAnualTAMEX: number
+    TasaAnualTAMN: number
+    EstadoDesc: string
+    Estado: string
+    UltimaFechaModif: Date | string
+    UltimoUsuario: string
+    FactorCobranza: any
+    FactorCobranzaVenta: number
+    DesMoneda: string
+    DesCambio: string
 
-    estadodesc : string;
-    desmonedade : string;
-    desmonedaa : string;
+    UsuarioCreacion: string;
+    FechaCreacion: Date;
     // columnas
-    
+
 }

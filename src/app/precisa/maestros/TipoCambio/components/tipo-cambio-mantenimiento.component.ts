@@ -13,41 +13,49 @@ import { filtroParametros } from "../../Parametros/model/filtro.parametros";
 import { Parametros } from "../../Parametros/model/parametros";
 import { ParametrosService } from "../../Parametros/service/parametros.service";
 import { DtoTipocambiomast } from "../dominio/dto/DtoTipocambiomast";
+import { forkJoin } from "rxjs";
+import { MaestrotipocambioService } from "../servicio/maestrotipocambio.service";
 
 
 
 @Component({
-    selector: 'ngx-tipo-cambio-mantenimiento',
-    templateUrl: './tipo-cambio-mantenimiento.component.html'
-  })
+  selector: 'ngx-tipo-cambio-mantenimiento',
+  templateUrl: './tipo-cambio-mantenimiento.component.html'
+})
 
 
 
 export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal implements OnInit, OnDestroy {
   @ViewChild(AuditoriaComponent, { static: false }) auditoriaComponent: AuditoriaComponent;
+  titulo: string = ''
+  accionRealizar: string = ''
+  position: string = 'top'
+  bloquearPag: boolean;
+  visible: boolean;
+  usuario: string;
+  fechaCreacion: Date;
+  fechaModificacion: Date;
+
+  lstEstados: SelectItem[] = [];
+  lstCompania: SelectItem[] = [];
+  lstMoneda: SelectItem[] = [];
+
   acciones: string = '';
-  position: string = 'top';
+
   validarAccion: string = '';
 
   checked: boolean = false
-  lstEstados: SelectItem[] = [];
-  lstCompania: SelectItem[] = [];
   lstTipoDato: SelectItem[] = [];
-  usuario: string = "";
   usuarioAuth: UsuarioAuth = new UsuarioAuth();
-  dto: Parametros = new Parametros();
-  dto2: DtoTipocambiomast = new DtoTipocambiomast();
+  dto: DtoTipocambiomast = new DtoTipocambiomast();
   filtrocompa: FiltroCompaniamast = new FiltroCompaniamast();
   loading: boolean = false;
-  bloquearPag: boolean;
   puedeEditar: boolean = false;
   NoPuedeEditar: boolean = false;
-  fechaCreacion: Date;
-  fechaModificacion: Date;
   minDate: Date;  // Primer día del mes actual
   maxDate: Date;  // Día actual o último día del mes (lo que sea menor)
-  
-  
+
+
   calcularFechasPermitidas(): void {
     const hoy = new Date();
     const primerDiaMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
@@ -58,200 +66,134 @@ export class TipoCambioMantenimientoComponent extends ComponenteBasePrincipal im
   }
 
   constructor(
-    private maestrocompaniaMastService: MaestrocompaniaMastService,
-    private messageService: MessageService,
-    private ParametrosService: ParametrosService) {
+    private _MaestrocompaniaMastService: MaestrocompaniaMastService,
+    private _MaestrotipocambioService: MaestrotipocambioService,
+    private _MessageService: MessageService,
+
+  ) {
     super();
   }
 
   ngOnInit(): void {
+
+    this.cargarSelect();
+    this.iniciarComponent();
     this.calcularFechasPermitidas();
-    // this.bloquearPag = true;
-    // const p1 = this.cargarTipo();
-    // const p2 = this.cargarEstados();
-    // const p3 = this.cargarCombocompania();
-    // Promise.all([p1, p2, p3]).then(
-    //   f => {
-    //     setTimeout(() => {
-    //       this.bloquearPag = false;
-    //     }, 100);
-    //   });
   }
 
   ngOnDestroy(): void {
-
   }
 
-  iniciarComponente(msj: MensajeController, accion: string, titulo: string) {
-    this.mensajeController = msj;
-    this.dto = new Parametros();
-    this.acciones = `${titulo}: ${accion}`;
-    this.dialog = true;
-    this.puedeEditar = false;
-    this.validarAccion = accion;
-    let fechaM = new Date();
-    this.dto.UltimaFechaModif = null;
-    this.dto.FechaCreacion = new Date();
-    this.fechaCreacion = new Date();
-    this.fechaModificacion = undefined;
-    this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+  cargarSelect(): void {
+    const optSeleccione = { label: ConstanteAngular.COMBOSELECCIONE, value: null };
+    const filtroCompania: FiltroCompaniamast = new FiltroCompaniamast();;
+    filtroCompania.estado = 'A'
+    forkJoin({
+      estados: this.obtenerDataMaestro('ESTLETRAS'),
+      monedas: this._MaestrotipocambioService.listarMonedas({ Estado: 'A' }),
+      compania: this._MaestrocompaniaMastService.listarCompaniaMast({ estado: 'A' }),
+    }
+    ).subscribe(resp => {
+      this.lstEstados = [optSeleccione, ...resp.estados];
+      const dataCompania = resp.compania?.map((ele: any) => ({
+        label: ele.DescripcionCorta?.trim()?.toUpperCase() || "", value: `${ele.CompaniaCodigo?.trim() || ""}00`, title: ele.Persona
+      }));
+      this.lstCompania = [optSeleccione, ...dataCompania];
+
+      const dataMoneda = resp.monedas?.map((ele: any) => ({
+        label: ele.DescripcionCorta?.trim()?.toUpperCase().replace('DOLÁRES', 'DÓLARES') || "", value: `${ele.MonedaCodigo?.trim() || ""}`
+      }));
+
+      this.lstMoneda = [optSeleccione, ...dataMoneda];
+    });
   }
 
-  async cargarAcciones(msj: MensajeController, accion: string, titulo: string, Entydad?: Parametros) {
-    //console.log("dsad",accion);
-    /**PARAMETROS */
-    this.mensajeController = msj;
-    this.validarAccion = accion;
-    this.acciones = `${titulo}: ${accion}`;
-    this.dialog = true;
-
-    /**OBJETOS */
-    this.dto = new Parametros();
-    let filtro = new filtroParametros();
-
-    /**AUDITORIA */
-    this.fechaModificacion = undefined;
-    this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
-
-    /**METODOS DE COMBOS  */
-    await this.cargarEstados();
-    await this.cargarCombocompania();
-
-    /**ACCION DE FORMULARIO */
+  coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, data?: any): void {
     this.bloquearPag = true;
-    
+    this.mensajeController = mensaje;
+    this.cargarAcciones(accionform, titulo, data)
+    this.bloquearPag = false;
+  }
+
+  cargarAcciones(accion: string, titulo: string, rowdata?: any) {
+    this.titulo = `${titulo}: ${accion}`;
+    this.accionRealizar = accion;
+    this.dialog = true;
+
     switch (accion) {
       case ConstanteUI.ACCION_SOLICITADA_NUEVO:
-        this.puedeEditar = false;
-        this.NoPuedeEditar = false;
-        this.dto.AplicacionCodigo = "W1";
+        this.dto = new DtoTipocambiomast();
         this.dto.Estado = "A";
-      
-        
-        this.fechaCreacion = new Date();
-        break;
-      case ConstanteUI.ACCION_SOLICITADA_EDITAR:
+        this.dto.MonedaCodigo = 'EX';
+        this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+        this.dto.FechaCreacion = new Date();
         this.puedeEditar = false;
-        this.NoPuedeEditar = true;
-        filtro.ParametroClave = Entydad.ParametroClave;
-        const respParametros = await this.ParametrosService.listarParametros(filtro);
-        this.dto = await respParametros[0];
 
-        this.dto.CompaniaCodigo = await this.dto.CompaniaCodigo.trim();
-        
-        //falta fecha de creación
-        this.fechaCreacion = new Date(this.dto.FechaCreacion);
-        this.dto.Fecha = new Date(this.dto.Fecha);
-        if (this.dto.UltimaFechaModif != null) {
-          this.fechaModificacion = new Date(this.dto.UltimaFechaModif);
-        }
+        this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+        this.fechaCreacion = new Date();
+        this.fechaModificacion = null;
         break;
+
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR:
+        this.dto = rowdata;
+        this.dto.FechaCambio = new Date(this.dto.FechaCambio);
+        this.puedeEditar = false;
+        this.fechaModificacion = new Date();
+        this.fechaCreacion = new Date(rowdata.UltimaFechaModif);
+        this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+
+        this.dto.UltimoUsuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+        this.dto.UltimaFechaModif = new Date();
+        break;
+
       case ConstanteUI.ACCION_SOLICITADA_VER:
+        this.dto = rowdata;
+        this.dto.FechaCambio = new Date(this.dto.FechaCambio);
+
         this.puedeEditar = true;
-        this.NoPuedeEditar = true;
-        filtro.ParametroClave = Entydad.ParametroClave;
-        const respParametrosVer = await this.ParametrosService.listarParametros(filtro);
-        this.dto = await respParametrosVer[0];
-
-        this.dto.CompaniaCodigo = await this.dto.CompaniaCodigo.trim();
-
-        //falta fecha de creación
-        this.fechaCreacion = new Date(this.dto.FechaCreacion);
-        this.dto.Fecha = new Date(this.dto.Fecha);
-        if (this.dto.UltimaFechaModif != null) {
-          this.fechaModificacion = new Date(this.dto.UltimaFechaModif);
-        }
+        if (rowdata.FechaModificacion == null || rowdata.FechaModificacion == null) { this.fechaModificacion = null; }
+        else { this.fechaModificacion = new Date(rowdata.FechaModificacion); }
+        this.fechaCreacion = new Date(rowdata.UltimaFechaModif);
+        this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
         break;
     }
-    this.bloquearPag = false
+
   }
 
+  async coreGuardar() {
+    try {
 
-  cargarEstados() {
-    this.lstEstados = [];
-    this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
-      this.lstEstados.push({ label: i.Nombre.trim().toUpperCase(), value: i.Codigo.trim() });
-    });
-    //console.log("lstEstados",this.lstEstados);
-    
-  }
+      if (this.estaVacio(this.dto.MonedaCodigo)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una moneda válida'); return; }
+      if (this.estaVacio(this.dto.FechaCambio)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Ingrese una fecha de cambio válida'); return; }
+      if (this.estaVacio(this.dto.Estado)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una estado válido'); return; }
+      if (this.estaVacio(this.dto.FactorCompra)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Ingrese un valor de compra'); return; }
+      if (this.estaVacio(this.dto.FactorVenta)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Ingrese un valor de venta'); return; }
 
-  cargarCombocompania(): Promise<number> {
-    this.lstCompania = [];
-    this.lstCompania.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.filtrocompa.estado = "A";
-    return this.maestrocompaniaMastService.listarCompaniaMast(this.filtrocompa).then(res => {
-      //console.log("company", res);
-      res.forEach(ele => {
-        this.lstCompania.push({ label: ele.DescripcionCorta.trim().toUpperCase(), value: ele.CompaniaCodigo.trim() });
-      });
-      return 1;
-    });
-  }
+      let valorAccionServicio: number = this.accionRealizar == ConstanteUI.ACCION_SOLICITADA_NUEVO ? 1 : 2;
+      this.bloquearPag = true;
 
+      const consultaRepsonse = await this._MaestrotipocambioService.MantenimientoTipoCambio(valorAccionServicio, this.dto, this.getUsuarioToken());
+      if (consultaRepsonse.success == true) {
+        this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
 
-  cargarTipo() {
-    this.lstTipoDato = [];
-    this.lstTipoDato.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
-    this.lstTipoDato.push({ label: 'Texto'.toUpperCase(), value: "T" });
-    this.lstTipoDato.push({ label: 'Numero'.toUpperCase(), value: "N" });
-    this.lstTipoDato.push({ label: 'Fecha'.toUpperCase(), value: "F" });
-    this.dto.TipodeDatoFlag = "T";
-  }
+        this.mensajeController.resultado = consultaRepsonse;
+        this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+        this.dialog = false;
 
-
-  saveProduct() {
-    if (this.estaVacio(this.dto.Fecha)) { this.messageShow('warn', 'Advertencia', 'Ingrese una fecha válida'); return; }
-    if (this.estaVacio(this.dto.Estado)) { this.messageShow('warn', 'Advertencia', 'Seleccione una estado válido'); return; }
-    // if (this.estaVacio(this.dto2.MonedaDesc)) { this.messageShow('warn', 'Advertencia', 'Seleccione una moneda válida'); return; }
-    // if (this.estaVacio(this.dto2.factorventa)) { this.messageShow('warn', 'Advertencia', 'Ingrese un factor venta válido'); return; }
-    // if (this.estaVacio(this.dto2.factorcompra)) { this.messageShow('warn', 'Advertencia', 'Ingrese un factor compra válido'); return; }
-
-
-
-    this.dto.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario;
-    
-    /**ELIMINA HORAS DE CAMPO FECHA */
-    this.dto.Fecha.setHours(0, 0, 0, 0);
-
-    if (this.validarAccion == "EDITAR") {
-      this.dto.UltimaFechaModif = new Date();
-      this.ParametrosService.mantenimientoParametros(2, this.dto, this.getUsuarioToken()).then(
-        res => {
-          if (res.success) {
-            this.dialog = false;
-            this.messageService.add({ key: 'bc', severity: 'success', summary: 'Actualización', detail: 'Se modifico el registro con éxito.' });
-            this.mensajeController.resultado = res;
-            this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-          } else {
-            this.dialog = false;
-            this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'Error al modificar.' });
-
-          }
-        }
-      ).catch(error => error)
+      } else {
+        this.MensajeToastComun('notification', 'warn', 'Advertencia', consultaRepsonse.mensaje);
+      }
     }
-    else if (this.validarAccion == "NUEVO") {
-      this.dto.FechaCreacion = new Date();
-      this.ParametrosService.mantenimientoParametros(1, this.dto, this.getUsuarioToken()).then(
-        res => {
-          if (res.success) {
-            this.dialog = false;
-            this.mensajeController.resultado = res;
-            this.messageService.add({ key: 'bc', severity: 'success', summary: 'Actualización', detail: 'Se registro con éxito.' });
-            this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-          } else {
-            this.dialog = false;
-            this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'Error al registrar.' });
-
-          }
-        })
+    catch (error) {
+      console.error(error)
+      this.MensajeToastComun('notification', 'error', 'Error', 'Se generó un error. Pongase en contacto con los administradores.');
+      this.bloquearPag = false;
+    } finally {
+      this.bloquearPag = false;
     }
   }
-
-  async messageShow(_severity: string, _summary: string, _detail: string) {
-    this.messageService.add({ key: 'bc', severity: _severity, summary: _summary, detail: _detail, life: 1000 });
+  MensajeToastComun(key: string, tipo: string, titulo: string, dsc: string): void {
+    this._MessageService.clear();
+    this._MessageService.add({ key: key, severity: tipo, summary: titulo, detail: dsc });
   }
-
 }

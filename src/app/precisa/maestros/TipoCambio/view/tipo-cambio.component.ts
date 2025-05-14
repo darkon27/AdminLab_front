@@ -20,6 +20,7 @@ import { UIMantenimientoController } from '../../../../../util/UIMantenimientoCo
 import { forkJoin } from 'rxjs';
 import { MaestrotipocambioService } from '../servicio/maestrotipocambio.service';
 import { Filtrotipodecambio } from '../dominio/filtro/Filtrotipodecambio';
+import { DtoTipocambiomast } from '../dominio/dto/DtoTipocambiomast';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class TipoCambioComponent extends ComponenteBasePrincipal implements OnIn
   btnNuevoAccion?: boolean;
   btnGuardar?: boolean;
 
-  filtro: Filtrotipodecambio = new Filtrotipodecambio();
+  filtro: DtoTipocambiomast = new DtoTipocambiomast();
   // Entydad: Parametros = new Parametros();
   // FiltroCompan: FiltroCompaniamast = new FiltroCompaniamast();
   lstEstado: SelectItem[] = [];
@@ -78,24 +79,24 @@ export class TipoCambioComponent extends ComponenteBasePrincipal implements OnIn
         label: ele.DescripcionCorta?.trim()?.toUpperCase() || "", value: `${ele.CompaniaCodigo?.trim() || ""}00`, title: ele.Persona
       }));
       this.lstCompania = [optTodos, ...dataCompania];
-      
+
       const dataMoneda = resp.monedas?.map((ele: any) => ({
-        label: ele.DesMoneda?.trim()?.toUpperCase() || "", value: `${ele.MonedaCodigo?.trim() || ""}`
+        label: ele.DescripcionCorta?.trim()?.toUpperCase().replace('DOLÁRES', 'DÓLARES') || "", value: `${ele.MonedaCodigo?.trim() || ""}`
       }));
 
       this.lstMoneda = [optTodos, ...dataMoneda];
-      
+
     });
   }
 
   coreBuscar(): void {
     this.bloquearPag = true;
-
+    this.filtro.Factor = 1;
     this._MaestrotipocambioService.listarmaestroTipoCambio(this.filtro).then((res) => {
       var contado = 1;
       res?.forEach(element => {
         element.num = contado++;
-        element.MonedaDesc = this.lstMoneda.filter((f)=> f.value == element.MonedaCodigo)[0]?.label.replace('DOLÁRES','DÓLARES'); 
+        element.MonedaDesc = this.lstMoneda.filter((f) => f.value == element.MonedaCodigo)[0]?.label.replace('DOLÁRES', 'DÓLARES');
       });
       this.lstTipoCambio = res?.length > 0 ? res : [];
       this.bloquearPag = false;
@@ -103,20 +104,29 @@ export class TipoCambioComponent extends ComponenteBasePrincipal implements OnIn
   }
 
   coreNuevo(): void {
-    this.tipoCambioMantenimientoComponent.cargarAcciones(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'TIPOCAMBIO', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo);
+    this.tipoCambioMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'TIPOCAMBIO', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
   coreVer(row: any) {
-    this.tipoCambioMantenimientoComponent.cargarAcciones(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'TIPOCAMBIO', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, row);
+    this.tipoCambioMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'TIPOCAMBIO', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, row);
   }
   coreEditar(row: any) {
-    this.tipoCambioMantenimientoComponent.cargarAcciones(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPOCAMBIO', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, row)
+    this.tipoCambioMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPOCAMBIO', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, row)
   }
 
   coreGuardar(): void {
     throw new Error('Method not implemented.');
   }
   coreMensaje(mensage: MensajeController): void {
-    throw new Error('Method not implemented.');
+    const dataDevuelta = mensage.resultado;
+
+    switch (mensage.componente.toUpperCase()) {
+      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'TIPOCAMBIO':
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPOCAMBIO':
+        this.coreBuscar();
+        break;
+      default:
+        break;
+    }
   }
   coreExportar(): void {
     throw new Error('Method not implemented.');

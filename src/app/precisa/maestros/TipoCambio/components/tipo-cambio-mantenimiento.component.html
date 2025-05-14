@@ -1,8 +1,17 @@
-<p-blockUI [blocked]="bloquearPag" [baseZIndex]="1001">
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
+<p-confirmDialog #c key="refinanciar" [visible]="visible" [baseZIndex]="10000">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
+
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="1000">
+    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
         <br>
@@ -12,40 +21,6 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="row">
-
-                        <!-- <div class="col-sm-6">
-                            <label class="label">Compañia</label>
-                            <div class="p-inputgroup">
-                                <span class="p-inputgroup-addon"><i class="pi pi-align-justify"></i></span>
-                                <p-dropdown [disabled]="NoPuedeEditar" class="drop-down"
-                                [(ngModel)]="dto.CompaniaCodigo" [options]="lstCompania"
-                                [style]="{'width':'100%', 'background-color':'rgb(247, 247, 208)'}">
-                            </p-dropdown>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="col-sm-6">
-                            <label class="label">Código</label>
-                            <input pInputText type="text" [(ngModel)]="dto.AplicacionCodigo" [disabled]="true"
-                                [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" />
-                        </div> -->
-                        <!-- <div class="col-sm-6">
-                            <label class="label">Valor</label>
-                            <input pInputText type="text" [(ngModel)]="dto.Numero" [disabled]="puedeEditar"
-                                [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" />
-                        </div> -->
-                        <!-- <div class="col-sm-6">
-                            <label class="label">Tipo de Dato</label>
-                            <div class="p-inputgroup">
-                                <span class="p-inputgroup-addon"><i class="pi pi-align-justify"></i></span>
-                                <p-dropdown [disabled]="puedeEditar" placeholder="Seleccione"
-                                    [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"
-                                    [disabled]="puedeEditar" class="tablaCompletaIzquieda" [options]="lstTipoDato"
-                                    [(ngModel)]="dto.TipodeDatoFlag">
-                                </p-dropdown>
-                            </div>
-                        </div> -->
-                        
                         <div class="col-sm-6">
                             <label class="label">Moneda</label>
                             <div class="p-inputgroup">
@@ -53,7 +28,7 @@
                                 <p-dropdown [disabled]="puedeEditar" placeholder="Seleccione"
                                     [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"
                                     [disabled]="puedeEditar" class="tablaCompletaIzquieda" [options]="lstMoneda"
-                                    [(ngModel)]="dto.MonedaDesc">
+                                    [(ngModel)]="dto.MonedaCodigo">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -70,32 +45,26 @@
                         </div>
                         <div class="col-sm-6">
                             <label class="label">Factor Venta</label>
-                            <input pInputText type="number" step="0.01" [(ngModel)]="dto.factorventa" [disabled]="puedeEditar"
-                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"/>
+                            <input pInputText type="number" step="0.001" [(ngModel)]="dto.FactorVenta"
+                                [disabled]="puedeEditar"
+                                [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" />
                         </div>
                         <div class="col-sm-6">
                             <label class="label">Factor Compra</label>
-                            <input pInputText type="number" step="0.01" [(ngModel)]="dto.factorcompra" [disabled]="puedeEditar"
-                                [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"/>
+                            <input pInputText type="number" step="0.001" [(ngModel)]="dto.FactorCompra"
+                                [disabled]="puedeEditar"
+                                [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" />
                         </div>
 
                         <div class="col-sm-6">
                             <label class="label">Fecha</label>
-                            <p-calendar 
-                              [disabled]="puedeEditar"
-                              [monthNavigator]="true"
-                              [yearNavigator]="true"
-                              [style]="{'width':'100%'}"
-                              [inputStyle]="{'width':'100%','background-color':'rgb(247, 247, 208)'}"
-                              yearRange="1940:2200"
-                              [locale]="es"
-                              [minDate]="minDate"
-                              [maxDate]="maxDate"
-                              [(ngModel)]="dto.Fecha"
-                              dateFormat="dd/mm/yy"
-                              [showIcon]="true">
+                            <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
+                                [style]="{'width':'100%'}"
+                                [inputStyle]="{'width':'100%','background-color':'rgb(247, 247, 208)'}"
+                                yearRange="1940:2200" [locale]="es" [maxDate]="maxDate"
+                                [(ngModel)]="dto.FechaCambio" dateFormat="dd/mm/yy" [showIcon]="true">
                             </p-calendar>
-                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -111,7 +80,7 @@
     </ng-template>
     <ng-template pTemplate="footer">
         <p-button label="Guardar" icon="pi pi-save" *ngIf="!puedeEditar" styleClass="p-button-primary"
-            [disabled]="puedeEditar" type="submit" (click)="saveProduct()"></p-button>
+            [disabled]="puedeEditar" type="submit" (click)="coreGuardar()"></p-button>
     </ng-template>
 </p-dialog>
 <p-toast key="bc" [baseZIndex]="2000"></p-toast>

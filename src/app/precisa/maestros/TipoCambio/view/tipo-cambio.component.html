@@ -19,23 +19,14 @@
 
   <p-fieldset legend="Información Consulta" (keyup.enter)="coreBuscar()">
     <div class="row">
-      <div class="col-sm-3">
-        <label for="inputOrdAten" class="label">Compañia</label>
-        <p-dropdown [(ngModel)]="filtro.CompaniaCodigo" [options]="lstCompania"
-          [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
-      </div>
 
       <div class="col-sm-3">
-        <label for="inputOrdAten" class="label">Código</label>
-        <input pInputText type="text" placeholder="" style="width:100%; height: 30px; text-transform: uppercase;"
-          [(ngModel)]="filtro.AplicacionCodigo" />
+        <label for="inputOrdAten" class="label">Fecha TipoCambio</label>
+        <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true" [style]="{'width':'100%'}"
+          yearRange="1940:2200" [locale]="es" [(ngModel)]="filtro.FechaCambio" dateFormat="dd/mm/yy" [showIcon]="true">
+        </p-calendar>
       </div>
 
-      <div class="col-sm-3">
-        <label for="inputOrdAten" class="label">Parametro</label>
-        <input pInputText type="text" placeholder="" style="width:100%; height: 30px; text-transform: uppercase;"
-          [(ngModel)]="filtro.ParametroClave" />
-      </div>
       <div class="col-sm-3">
         <label for="inputLastName" class="label">Estado</label>
         <p-dropdown [options]="lstEstado" [(ngModel)]="filtro.Estado"
