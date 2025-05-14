@@ -289,6 +289,10 @@ export class CompaniamastMantenimientoComponent extends ComponenteBasePrincipal 
    
   }
 
+  // getDisplayValue(value: any): string {
+  //   return value ? value.toString().trim() : '-- No tiene información --';
+  //   }
+
   cargarEstados() {
     this.lstEstados = [];
     this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
@@ -334,104 +338,102 @@ export class CompaniamastMantenimientoComponent extends ComponenteBasePrincipal 
 
 
   async coreGuardar() {
-
-
-    this.filtro = new FiltroCompaniamast();
-    const companias: DtoCompaniamast[] = await this.maestrocompaniaMastService.listarCompaniaMast(this.filtro);
-    let accionGuardar: string;
-    for (var i = 0; i < companias.length; i++) {
-      if (companias[i].RUC == this.dto.personadoc) {
-        this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: "Ya existe una compañia con la misma razón social." });
-        this.bloquearPag = false;
-        return;
-      }
-    }
-
-
-    if (this.estaVacio(this.dto.personadoc)) { this.messageShow('warn', 'Advertencia', 'Seleccione una razón social válida'); return; }
-    if (this.estaVacio(this.dto.DocumentoFiscal)) { this.messageShow('warn', 'Advertencia', 'Seleccione un representante válido'); return; }
-
-    //validar correo
-    if (!this.estaVacio(this.dto.DireccionAdicional)) {
-      if (!this.validarCorreo(this.dto.DireccionAdicional)) { this.messageShow('warn', 'Advertencia', 'Ingrese un correo valido.'); return; }
-    }
-
-    if (this.estaVacio(this.dto.Estado)) { this.messageShow('warn', 'Advertencia', 'Seleccione un estado válido'); return; }
-
-    this.bloquearPag = true;
-    this.dto.Grupo = this.dto.CodDep + "" + this.dto.CodPro + "" + this.dto.CodDis;
-    console.log("grupo:", this.dto.Grupo);
-    if (this.validarform == "NUEVO") {
-      this.bloquearPag = true;
-      this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario.trim();
-      this.dto.FechaCreacion = this.fechaCreacion;
-      this.maestrocompaniaMastService.mantenimientoMaestro(1, this.dto, this.getUsuarioToken()).then(
-        res => {
+    try {
+      this.filtro = new FiltroCompaniamast();
+      const companias: DtoCompaniamast[] = await this.maestrocompaniaMastService.listarCompaniaMast(this.filtro);
+      let accionGuardar: string;
+      for (var i = 0; i < companias.length; i++) {
+        if (companias[i].RUC == this.dto.personadoc) {
+          this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: "Ya existe una compañia con la misma razón social." });
           this.bloquearPag = false;
-          console.log("registrado:", res);
-          if (res != null) {
-            this.dialog = false;
-            if (res.success) {
-              accionGuardar = this.validarform;
-              this.mensajeController.resultado = res;
-              this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-              this.messageShow('success', 'Creada', 'Creación exitosa');
-            } else {
-              this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: res.mensaje });
-            }
-          }
-        });
-
-    } else if (this.validarform == "EDITAR") {
-      this.dto.UltimaFechaModif = this.fechaModificacion;
-      this.bloquearPag = true;
-      this.maestrocompaniaMastService.mantenimientoMaestro(2, this.dto, this.getUsuarioToken()).then(
-        res => {
-          this.bloquearPag = false;
-          if (res != null) {
-            this.dialog = false;
-            console.log("registrado:", res);
-            if (res.mensaje == "Ok") {
-              accionGuardar = this.validarform;
-              this.mensajeController.resultado = res;
-              this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-            } else {
-              this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: res.mensaje });
-            }
-          }
-
-        });
-    }
-
-    if (this.dto.DescripcionPSF != null || this.dto.DescripcionPSF != undefined) {
-      if (this.dto.DescripcionPSF.length > 0) {
-        const Archivo = {
-          Id: 0,
-          Tabla: "COMPANY",
-          IdTabla: this.dto.Persona,
-          Linea: 1,
-          NombrePDF: this.dto.DetraccionCuentaBancaria, //name
-          Contenido: this.dto.DescripcionLarga, //type
-          Estado: 1,
-          UsuarioCreacion: this.dto.UsuarioCreacion,
-          UsuarioModificacion: this.dto.UltimoUsuario,
-          FechaCreacion: this.dto.FechaCreacion,
-          FechaModificacion: this.dto.UltimaFechaModif
-        };
-
-        console.log("coreGuardar Mantenimientofile:", Archivo);
-
-        let ViewModalExite = {
-          success: "true",
-          valor: "1",
-          tokem: this.dto.DetraccionCuentaBancaria,
-          mensaje: this.dto.DescripcionPSF,
-          Archivo: this.file,
-          data: Archivo
+          return;
         }
+      }
 
-        console.log("coreGuardar ViewModalExite:", ViewModalExite);    
-          this.maestrocompaniaMastService.Mantenimientofile(1, ViewModalExite, this.getUsuarioToken()).then(
+      if (this.estaVacio(this.dto.personadoc)) { this.messageShow('warn', 'Advertencia', 'Seleccione una razón social válida'); return; }
+      if (this.estaVacio(this.dto.DocumentoFiscal)) { this.messageShow('warn', 'Advertencia', 'Seleccione un representante válido'); return; }
+
+      //validar correo
+      if (!this.estaVacio(this.dto.DireccionAdicional)) {
+        if (!this.validarCorreo(this.dto.DireccionAdicional)) { this.messageShow('warn', 'Advertencia', 'Ingrese un correo valido.'); return; }
+      }
+
+      if (this.estaVacio(this.dto.Estado)) { this.messageShow('warn', 'Advertencia', 'Seleccione un estado válido'); return; }
+
+      this.bloquearPag = true;
+      this.dto.Grupo = this.dto.CodDep + "" + this.dto.CodPro + "" + this.dto.CodDis;
+      console.log("grupo:", this.dto.Grupo);
+      if (this.validarform == "NUEVO") {
+        this.bloquearPag = true;
+        this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario.trim();
+        this.dto.FechaCreacion = this.fechaCreacion;
+        await this.maestrocompaniaMastService.mantenimientoMaestro(1, this.dto, this.getUsuarioToken()).then(
+          res => {
+            this.bloquearPag = false;
+            console.log("registrado:", res);
+            if (res != null) {
+              this.dialog = false;
+              if (res.success) {
+                accionGuardar = this.validarform;
+                this.mensajeController.resultado = res;
+                this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+                this.messageShow('success', 'Creada', 'Creación exitosa');
+              } else {
+                this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: res.mensaje });
+              }
+            }
+          });
+
+      } else if (this.validarform == "EDITAR") {
+        this.dto.UltimaFechaModif = this.fechaModificacion;
+        this.bloquearPag = true;
+        await this.maestrocompaniaMastService.mantenimientoMaestro(2, this.dto, this.getUsuarioToken()).then(
+          res => {
+            this.bloquearPag = false;
+            if (res != null) {
+              this.dialog = false;
+              console.log("registrado:", res);
+              if (res.mensaje == "Ok") {
+                accionGuardar = this.validarform;
+                this.mensajeController.resultado = res;
+                this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+              } else {
+                this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: res.mensaje });
+              }
+            }
+
+          });
+      }
+
+      if (this.dto.DescripcionPSF != null || this.dto.DescripcionPSF != undefined) {
+        if (this.dto.DescripcionPSF.length > 0) {
+          const Archivo = {
+            Id: 0,
+            Tabla: "COMPANY",
+            IdTabla: this.dto.Persona,
+            Linea: 1,
+            NombrePDF: this.dto.DetraccionCuentaBancaria, //name
+            Contenido: this.dto.DescripcionLarga, //type
+            Estado: 1,
+            UsuarioCreacion: this.dto.UsuarioCreacion,
+            UsuarioModificacion: this.dto.UltimoUsuario,
+            FechaCreacion: this.dto.FechaCreacion,
+            FechaModificacion: this.dto.UltimaFechaModif
+          };
+
+          console.log("coreGuardar Mantenimientofile:", Archivo);
+
+          let ViewModalExite = {
+            success: "true",
+            valor: "1",
+            tokem: this.dto.DetraccionCuentaBancaria,
+            mensaje: this.dto.DescripcionPSF,
+            Archivo: this.file,
+            data: Archivo
+          }
+
+          console.log("coreGuardar ViewModalExite:", ViewModalExite);    
+          await this.maestrocompaniaMastService.Mantenimientofile(1, ViewModalExite, this.getUsuarioToken()).then(
             res => {
               this.bloquearPag = false;
               console.log("Mantenimientofile res", res);
@@ -452,9 +454,12 @@ export class CompaniamastMantenimientoComponent extends ComponenteBasePrincipal 
                 }
               }
             });
-       
-
+        }
       }
+    } catch (error) {
+      this.bloquearPag = false;
+      this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Ocurrió un error al guardar la compañía.' });
+      console.error('Error en coreGuardar:', error);
     }
   }
   async messageShow(_severity: string, _summary: string, _detail: string) {

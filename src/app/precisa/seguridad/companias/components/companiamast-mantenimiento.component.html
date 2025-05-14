@@ -15,26 +15,26 @@
                     <div class="p-inputgroup">
                         <div class="p-inputgroup">
                             <input pInputText type="text" (keydown)="validarEnterEmpresa($event)"
-                                [disabled]="editarCampoEmpresa" [(ngModel)]="dto.personadoc"
+                                [disabled]="true" [value]="dto.personadoc || '-- No tiene información --'"
                                 class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
                                 style="width:70%; background-color: rgb(247, 247, 208); height: 30px;" />
                             &nbsp;
                             <input pInputText type="text"
                                 class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
-                                [(ngModel)]="dto.DescripcionCorta"
+                                [value]="dto.DescripcionCorta || '-- No tiene información --'"
                                 style="width:130%; background-color: rgb(247, 247, 208); height: 30px;"
                                 [disabled]="true" />
                             <div class="input-group-append">
                                 <button pButton icon="fad fa-minus-circle" type="button" title="Limpiar"
-                                    (click)="limpiarEmpresaRUC()" [disabled]="editarCampoEmpresa">
+                                    (click)="limpiarEmpresaRUC()" [disabled]="false">
                                 </button>
                             </div>
                         </div>
 
                         <button (click)="verSelectorRuc()" pButton icon="fal fa-search" class="botonbuscar"
-                            [disabled]="editarCampoEmpresa" type="button" title="Buscar Empresa"></button>
+                            [disabled]="false" type="button" title="Buscar Empresa"></button>
                         <button (click)="crearPersonaEmpresa()" pButton icon="fal fa-user-plus" class="botonbuscar"
-                            [disabled]="puedeEditar" type="button" title="Nueva Empresa"></button>
+                            [disabled]="false" type="button" title="Nueva Empresa"></button>
                     </div>
                 </div>
             </div>
@@ -45,11 +45,11 @@
                     <div class="p-inputgroup">
                         <div class="p-inputgroup">
                             <input pInputText type="text" (keydown)="validarTeclaEnterRepresentante($event)"
-                                [(ngModel)]="dto.DocumentoFiscal" [disabled]="editarrepresen"
+                                [value]="dto.DocumentoFiscal ||  '-- No tiene información --'" [disabled]="true"
                                 class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
                                 style="width:70%; background-color: rgb(247, 247, 208); height: 30px;" />
                             &nbsp;
-                            <input pInputText type="text" [(ngModel)]="dto.RepresentanteLegal"
+                            <input pInputText type="text" [value]="dto.RepresentanteLegal  ||  '-- No tiene información --'"
                                 class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
                                 style="width:130%; background-color: rgb(247, 247, 208); height: 30px;"
                                 [disabled]="true" />
@@ -133,13 +133,13 @@
                         </button>
                         <input pInputText type="text" [(ngModel)]="dto.DescripcionPSF" [style]="{'width':'100%'}"
                             [disabled]="true" />
-                        <button pButton pRipple type="button" icon="fa fa-upload" title="Importar" title="Subir Archivo"
+                        <!-- <button pButton pRipple type="button" icon="fa fa-upload" title="Importar" title="Subir Archivo"
                             (click)="subirArchivo(fileUpload)" [disabled]="puedeEditar"></button>
                         <button pButton type="button" icon="pi pi-image" label="Show"
                             (click)="coreVerImagen(dto)"></button>
 
                         <input #fileUpload type="file" id="fileUpload" name="fileUpload" class="form-control"
-                            style="display:none" (change)="exportar($event)" accept="image/*">
+                            style="display:none" (change)="exportar($event)" accept="image/*"> -->
                     </div>
                 </div>
             </div>
