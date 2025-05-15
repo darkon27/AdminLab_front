@@ -8,6 +8,7 @@ import { ConstanteAngular } from '../../../../@theme/ConstanteAngular';
 import { TipoPagoMantenimientoComponent } from '../components/tipo-pago-mantenimiento.component';
 import { TipoPago } from '../model/TipoPago';
 import { TipoPagoService } from '../service/TipoPagoService';
+import { ConstanteUI } from '../../../../../util/Constantes/Constantes';
 
 @Component({
   selector: 'ngx-tipo-pago',
@@ -15,7 +16,7 @@ import { TipoPagoService } from '../service/TipoPagoService';
   styleUrls: ['./tipo-pago.component.scss']
 })
 
-export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit,UIMantenimientoController {
+export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit, UIMantenimientoController {
   @ViewChild(TipoPagoMantenimientoComponent, { static: false }) tipoPagoMantenimientoComponent: TipoPagoMantenimientoComponent;
   bloquearPag: boolean;
   filtro: TipoPago = new TipoPago();
@@ -25,15 +26,15 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
   validarAccion: string;
   acciones: string = ''
   position: string = 'top'
-  titulo: string; 
+  titulo: string;
   registroSeleccionado: any;
   loading: boolean;
 
   constructor(
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private toastrService: NbToastrService,
-    private TipoPagoService: TipoPagoService) {
+    private _TipoPagoService: TipoPagoService,
+    private _ConfirmationService: ConfirmationService,
+    private _MessageService: MessageService,
+  ) {
     super();
   }
   btnEliminar?: boolean;
@@ -41,12 +42,10 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
     throw new Error('Method not implemented.');
   }
 
-  coreMensaje(mensage: MensajeController): void {
-    throw new Error('Method not implemented.');
-  }
 
 
-  coreBuscar(): void {    
+
+  coreBuscar(): void {
     if (!this.estaVacio(this.filtro.Codigo)) {
       this.filtro.Codigo = this.filtro.Codigo.trim();
     }
@@ -55,7 +54,7 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
     }
 
     this.bloquearPag = true;
-    this.TipoPagoService.ListarTipoPago(this.filtro).then((res) => {
+    this._TipoPagoService.ListarTipoPago(this.filtro).then((res) => {
       this.bloquearPag = false;
       var contado = 1;
       res.forEach(element => {
@@ -76,6 +75,35 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
 
   coreSalir(): void {
     throw new Error('Method not implemented.');
+  }
+
+  coreInactivar(data: any) {
+    //console.log("llego coreInvactivar", event);
+    this._ConfirmationService.confirm({
+      header: "Confirmación",
+      icon: "fa fa-question-circle",
+      message: "¿Desea inactivar este registro ? ",
+      key: "confirm2",
+      accept: () => {
+        this.bloquearPag = true;
+        data.Estado = "I";
+        data.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario;
+        this._TipoPagoService.MantenimientoTipoPago(ConstanteUI.SERVICIO_SOLICITUD_INACTIVAR, data, this.getUsuarioToken()).then(
+          res => {
+            if (res.success == true) {
+              this.MensajeToastComun('notification', 'success', 'Advertencia', res.mensaje);
+              this.coreBuscar();
+            } else {
+              this.MensajeToastComun('notification', 'warn', 'Advertencia', res.mensaje);
+            }
+
+          }).catch(error =>
+            console.error(error)
+          )
+
+        this.bloquearPag = false;
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -102,7 +130,7 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstado.push({ label: i.Nombre, value: i.IdCodigo });
     });
-    this.filtro.Estado=1;
+    this.filtro.Estado = 1;
   }
 
   defaultBuscar(event) {
@@ -111,21 +139,31 @@ export class TipoPagoComponent extends ComponenteBasePrincipal implements OnInit
     }
   }
 
-/*   coreEditar(dto): void{
-    this.tipoPagoMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
-  }
- */
   coreNuevo(): void {
-    this.tipoPagoMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_MODELO', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo);
+    this.tipoPagoMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'TIPOPAGO', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
+  }
+  coreVer(row: any) {
+    this.tipoPagoMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'TIPOPAGO', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, row);
+  }
+  coreEditar(row: any) {
+    this.tipoPagoMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPOPAGO', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, row)
+  }
+  coreMensaje(mensage: MensajeController): void {
+    const dataDevuelta = mensage.resultado;
+
+    switch (mensage.componente.toUpperCase()) {
+      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'TIPOPAGO':
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPOPAGO':
+        this.coreBuscar();
+        break;
+      default:
+        break;
+    }
   }
 
-  coreEditar(row) {
-    this.tipoPagoMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_MODELO', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, row);
+  MensajeToastComun(key: string, tipo: string, titulo: string, dsc: string): void {
+    this._MessageService.clear();
+    this._MessageService.add({ key: key, severity: tipo, summary: titulo, detail: dsc });
   }
-
-  coreVer(row) {
-    this.tipoPagoMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_MODELO', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, row);
-  }
-
 
 }

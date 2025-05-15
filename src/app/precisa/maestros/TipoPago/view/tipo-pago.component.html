@@ -79,7 +79,7 @@
                 </th>
                 <th>
                   <button pButton pRipple type="button" icon="fal fa-minus-circle" title="Inactivar" [disabled]="rowData.Estado != 1"
-                    class="p-button-rounded p-button-text" (click)="coreinactivar(rowData)"></button>
+                    class="p-button-rounded p-button-text" (click)="coreInactivar(rowData)"></button>
                 </th>
               </tr>
             </table>
@@ -114,3 +114,5 @@
   </p-fieldset>
 </p-card>
 <ngx-tipo-pago-mantenimiento></ngx-tipo-pago-mantenimiento>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+  position="top-right"></p-toast>

@@ -20,7 +20,7 @@ export class TipoPagoService {
         .catch(error => error)
       }
 
-      MantenimientoTipoPago(codigo: number, Operacion: TipoPago, token: string) {
+      MantenimientoTipoPago(codigo: number, Operacion: any, token: string) {
         const headers = new HttpHeaders().set("Authorization", token)
         return this.config.getHttp().post(`${this.urlma}MantenimientoTipoPago/` + codigo, Operacion, { headers: headers })
           .toPromise()
