@@ -105,7 +105,7 @@ export class ConsultaAdmisionService {
         .catch(error => error)
   }
 
-  listarcombotipoadmision(tipoadmin: FiltroTipoOAdmision) {
+  listarcombotipoadmision(tipoadmin: any) {
     tipoadmin.AdmEstado = 1;
     // return this.config.getHttp().post('/api/Maestro/ListaTipoAdmision', tipoadmin)
     return this.config.getHttp().post(`${this.urlma}ListaTipoAdmision`, tipoadmin)

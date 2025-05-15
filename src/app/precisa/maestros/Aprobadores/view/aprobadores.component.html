@@ -1,123 +1,121 @@
 <p-blockUI [blocked]="bloquearPag">
-    <img src="assets\img\ZZ5H.gif" style="width: 5%">
-  </p-blockUI>
-  <p-confirmDialog #c key="AutoDialog">
-    <p-footer>
-      <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
-        (click)="c.accept()"></button>
-      <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded" 
-        (click)="c.reject()"></button>
-    </p-footer>
-  </p-confirmDialog>
-  <p-card>
-    <nb-card-header>
-      <nav class="fixed">
-          <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
-      </nav>
+  <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-confirmDialog #c key="AutoDialog">
+  <p-footer>
+    <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+      (click)="c.accept()"></button>
+    <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded" (click)="c.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
+<p-card>
+  <nb-card-header>
+    <nav class="fixed">
+      <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+    </nav>
   </nb-card-header>
-    <p-fieldset legend="Información Consulta">
-      <div class="row">
-        <div class="col-sm-4">
-          <label for="documentoFiscal" class="label">Aprobador</label>
+  <p-fieldset legend="Información Consulta">
+    <div class="row">
+      <div class="col-sm-4">
+        <label for="documentoFiscal" class="label">Aprobador</label>
+        <div class="p-inputgroup">
           <div class="p-inputgroup">
-            <div class="p-inputgroup">
-              <input pInputText type="text" (keydown)="validarEnterAutorizador($event)" 
-                class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
-                style="width:70%; height: 30px;" [(ngModel)]="filtro.IdUsuario"
-                [disabled]="editarCampoAutorizador" />
-              &nbsp;
-              <input pInputText type="text"
-                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
-                style="width:130%; height: 30px;" [(ngModel)]="filtro.NombreCompleto" [disabled]="true" />
-              <div class="input-group-append">
-                <button class="btn btn-outline" type="button" id="button-addon2"
-                  style=" height:30px; margin-left:-32px" (click)="limpiarAutorizador()"
-                  [disabled]="editarCampo1">x</button>
-              </div>
+            <input pInputText type="text" class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+              style="width:70%; height: 30px;" [(ngModel)]="filtro.IdUsuario" [disabled]="editarCampoAutorizador" />
+            &nbsp;
+            <input pInputText type="text"
+              class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+              style="width:130%; height: 30px;" [(ngModel)]="filtro.NombreCompleto" [disabled]="true" />
+            <div class="input-group-append">
+              <button class="btn btn-outline" type="button" id="button-addon2" style=" height:30px; margin-left:-32px"
+                (click)="limpiarAutorizador()" [disabled]="editarCampo1">x</button>
             </div>
-            <button (click)="verSelectorAutorizador()" pButton icon="fa fa-search" class="botonbuscar" type="button"
-              title="Buscar Autorizador" [disabled]="editarCampo1"></button>
           </div>
-        </div>   
-        <div class="col-sm-4">
-          <label for="inputLastName" class="label">Estado</label>
-          <p-dropdown [options]="lstEstado" [(ngModel)]="filtro.Estado"
-            [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+          <button (click)="verSelectorAutorizador()" pButton icon="fa fa-search" class="botonbuscar" type="button"
+            title="Buscar Autorizador" [disabled]="editarCampo1"></button>
         </div>
       </div>
-    </p-fieldset>
-    <p-fieldset legend="Información Consulta">
-      <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstModelo"
-        [responsive]="true" [sortOrder]="1" sortField="num"
-        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-        [rowsPerPageOptions]="[15,30,50,100]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
-        <ng-template pTemplate="header">
-          <tr>
-            <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
-            <th pSortableColumn="num" class="label text-center" ALIGN="center" style="width: 5rem;  ">Nro <p-sortIcon field="num">
-              </p-sortIcon>
-            </th>
-            <th pSortableColumn="NombreCompleto" class="label text-center" ALIGN="center" style="width: 12rem; ">Aprobador<p-sortIcon
-                field="NombreCompleto"></p-sortIcon>
-            </th>
-      
-            <th pSortableColumn="TipoDescuento " class="label text-center" ALIGN="center" style="width: 5rem;  ">Tipo Dsto<p-sortIcon
-                field="TipoDescuento "></p-sortIcon>
-            </th>          
-            <th pSortableColumn="Monto" class="label text-center" ALIGN="center" style="width: 5rem;  ">Monto<p-sortIcon
-                field="Monto"></p-sortIcon>
-            </th>
-            <th pSortableColumn="ESTADOdesc" class="label text-center" ALIGN="center" style="width: 8rem;  ">Estado<p-sortIcon
-                field="ESTADOdesc"></p-sortIcon>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData>
-          <tr>
-            <td class="tablaColumnaAccion3">
-              <span class="p-column-title">Acción</span>
-              <table>
-                <tr>
-                  <th>
-                    <button pButton pRipple type="button" icon="fad fa-pencil-alt" class="p-button-rounded p-button-text"
-                      title="Editar" (click)="coreEditar(rowData)"></button>
-                  </th>
-                  <th>
-                    <button pButton pRipple type="button" icon="fad fa-search" (click)="coreVer(rowData)"
-                      class="p-button-rounded p-button-text" title="Ver"></button>
-                  </th>
-                  <th>
-                    <button pButton pRipple type="button" icon="fad fa-minus-circle" *ngIf="rowData.Estado == '1' "
-                      (click)="coreInactivar(rowData)" class="p-button-rounded p-button-text" title="Inactivar"></button>
-                  </th>
-                </tr>
-              </table>
-            </td>
-            <td class="tablaColumnaCodigoChico text-center" style="width: 5rem;">
-              <span class="p-column-title">Nro</span>
-              {{rowData.num}}
-            </td>
-            <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 12rem;">
-              <span class="p-column-title">Aprobador</span>
-              <span>{{rowData.NombreCompleto}}</span>
-            </td>
-              <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
-                <span class="p-column-title">Tipo dscto</span>
-                <span> {{rowData.TipoDescuento}}</span>
-              </td>          
-            <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
-              <span class="p-column-title">Monto</span>
-              <span>{{rowData.Monto|currency: 'S/'}}</span>     
-            </td>
-            <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
-              <span class="p-column-title">Estado</span>
-              <span>{{rowData.ESTADOdesc|uppercase}}</span>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-fieldset>
-  </p-card>
-  <ngx-persona-buscar></ngx-persona-buscar>
+      <div class="col-sm-4">
+        <label for="inputLastName" class="label">Estado</label>
+        <p-dropdown [options]="lstEstado" [(ngModel)]="filtro.Estado"
+          [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+      </div>
+    </div>
+  </p-fieldset>
+  <br>
+  <p-fieldset legend="Información Consulta">
+    <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstModelo" [responsive]="true"
+      [sortOrder]="1" sortField="num" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+      [rowsPerPageOptions]="[15,30,50,100]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
+          <th pSortableColumn="num" class="label text-center" ALIGN="center" style="width: 5rem;  ">Nro <p-sortIcon
+              field="num">
+            </p-sortIcon>
+          </th>
+          <th pSortableColumn="NombreCompleto" class="label text-center" ALIGN="center" style="width: 12rem; ">
+            Aprobador<p-sortIcon field="NombreCompleto"></p-sortIcon>
+          </th>
+
+          <th pSortableColumn="TipoDescuento " class="label text-center" ALIGN="center" style="width: 5rem;  ">Tipo
+            Dsto<p-sortIcon field="TipoDescuento "></p-sortIcon>
+          </th>
+          <th pSortableColumn="Monto" class="label text-center" ALIGN="center" style="width: 5rem;  ">Monto<p-sortIcon
+              field="Monto"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ESTADOdesc" class="label text-center" ALIGN="center" style="width: 8rem;  ">
+            Estado<p-sortIcon field="ESTADOdesc"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <td class="tablaColumnaAccion3">
+            <span class="p-column-title">Acción</span>
+            <table>
+              <tr>
+                <th>
+                  <button pButton pRipple type="button" icon="fad fa-pencil-alt" class="p-button-rounded p-button-text"
+                    title="Editar" (click)="coreEditar(rowData)"></button>
+                </th>
+                <th>
+                  <button pButton pRipple type="button" icon="fad fa-search" (click)="coreVer(rowData)"
+                    class="p-button-rounded p-button-text" title="Ver"></button>
+                </th>
+                <th>
+                  <button pButton pRipple type="button" icon="fad fa-minus-circle" [disabled]="rowData.Estado != '1' "
+                    (click)="coreInactivar(rowData)" class="p-button-rounded p-button-text" title="Inactivar"></button>
+                </th>
+              </tr>
+            </table>
+          </td>
+          <td class="tablaColumnaCodigoChico text-center" style="width: 5rem;">
+            <span class="p-column-title">Nro</span>
+            {{rowData.num}}
+          </td>
+          <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 12rem;">
+            <span class="p-column-title">Aprobador</span>
+            <span>{{rowData.NombreCompleto}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
+            <span class="p-column-title">Tipo dscto</span>
+            <span> {{rowData.TipoDescuento}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
+            <span class="p-column-title">Monto</span>
+            <span>{{rowData.Monto|currency: 'S/'}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
+            <span class="p-column-title">Estado</span>
+            <span>{{rowData.ESTADOdesc|uppercase}}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-fieldset>
+</p-card>
+<ngx-persona-buscar></ngx-persona-buscar>
 <ngx-aprobadores-mantenimiento></ngx-aprobadores-mantenimiento>
-<p-toast key="bcaur" [baseZIndex]="3000"></p-toast>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+  position="top-right"></p-toast>

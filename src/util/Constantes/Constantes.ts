@@ -26,6 +26,8 @@ export class ConstanteUI {
 
  public static ACCION_SOLICITADA_REVERTIR = 'REVERTIR';
 
+ public static ACCION_SOLICITADA_SELECCION_EMPLEADO = 'SELECT_EMPLEADO';
+
 
  // EXPRESIONES REGULARES PARA CAMPOS
  public static EXPRESIONES_REGULARES_ALFANUMERICO = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ,.\d\-_\s]+$/;

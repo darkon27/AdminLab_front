@@ -1,21 +1,23 @@
-export class Aprobadores{
+export class Aprobadores {
 
-    constructor(){
+    constructor() {
     }
 
-    num:                number;
-    UneuNegocioId?:     number;
-    IdAprobador?:       number;
-    IdUsuario?:         string;
-    NombreCompleto?:    string;
-    Monto?:             number;
-    TipoDescuento?:     number;
-   
-    FechaCreacion?:     Date; 
-    FechaModificacion?: Date; 
-    UsuarioCreacion:    string; 
-    UsuarioModificacion:string; 
-    Estado?:            number;
-    EstadoDesc:         string; 
-  
+    num: number;
+    IdAprobador: number
+    UneuNegocioId: number
+    IdUsuario: string
+    TipoDescuento: number
+    Monto: number
+    Estado: any
+    FechaCreacion: string | Date
+    FechaModificacion: string | Date
+    UsuarioCreacion: string
+    UsuarioModificacion: any
+    IpCreacion: string
+    IpModificacion: any
+    Clave: string
+    NombreCompleto: string
+    ESTADOdesc: string
+
 }
