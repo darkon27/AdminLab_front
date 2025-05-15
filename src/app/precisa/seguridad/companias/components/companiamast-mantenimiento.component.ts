@@ -343,7 +343,7 @@ export class CompaniamastMantenimientoComponent extends ComponenteBasePrincipal 
       const companias: DtoCompaniamast[] = await this.maestrocompaniaMastService.listarCompaniaMast(this.filtro);
       let accionGuardar: string;
       for (var i = 0; i < companias.length; i++) {
-        if (companias[i].RUC == this.dto.personadoc) {
+        if (companias[i].RUC == this.dto.personadoc && this.validarform == "NUEVO") {
           this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: "Ya existe una compañia con la misma razón social." });
           this.bloquearPag = false;
           return;
@@ -405,57 +405,57 @@ export class CompaniamastMantenimientoComponent extends ComponenteBasePrincipal 
           });
       }
 
-      if (this.dto.DescripcionPSF != null || this.dto.DescripcionPSF != undefined) {
-        if (this.dto.DescripcionPSF.length > 0) {
-          const Archivo = {
-            Id: 0,
-            Tabla: "COMPANY",
-            IdTabla: this.dto.Persona,
-            Linea: 1,
-            NombrePDF: this.dto.DetraccionCuentaBancaria, //name
-            Contenido: this.dto.DescripcionLarga, //type
-            Estado: 1,
-            UsuarioCreacion: this.dto.UsuarioCreacion,
-            UsuarioModificacion: this.dto.UltimoUsuario,
-            FechaCreacion: this.dto.FechaCreacion,
-            FechaModificacion: this.dto.UltimaFechaModif
-          };
+      // if (this.dto.DescripcionPSF != null || this.dto.DescripcionPSF != undefined) {
+      //   if (this.dto.DescripcionPSF.length > 0) {
+      //     const Archivo = {
+      //       Id: 0,
+      //       Tabla: "COMPANY",
+      //       IdTabla: this.dto.Persona,
+      //       Linea: 1,
+      //       NombrePDF: this.dto.DetraccionCuentaBancaria, //name
+      //       Contenido: this.dto.DescripcionLarga, //type
+      //       Estado: 1,
+      //       UsuarioCreacion: this.dto.UsuarioCreacion,
+      //       UsuarioModificacion: this.dto.UltimoUsuario,
+      //       FechaCreacion: this.dto.FechaCreacion,
+      //       FechaModificacion: this.dto.UltimaFechaModif
+      //     };
 
-          console.log("coreGuardar Mantenimientofile:", Archivo);
+      //     console.log("coreGuardar Mantenimientofile:", Archivo);
 
-          let ViewModalExite = {
-            success: "true",
-            valor: "1",
-            tokem: this.dto.DetraccionCuentaBancaria,
-            mensaje: this.dto.DescripcionPSF,
-            Archivo: this.file,
-            data: Archivo
-          }
+      //     let ViewModalExite = {
+      //       success: "true",
+      //       valor: "1",
+      //       tokem: this.dto.DetraccionCuentaBancaria,
+      //       mensaje: this.dto.DescripcionPSF,
+      //       Archivo: this.file,
+      //       data: Archivo
+      //     }
 
-          console.log("coreGuardar ViewModalExite:", ViewModalExite);    
-          await this.maestrocompaniaMastService.Mantenimientofile(1, ViewModalExite, this.getUsuarioToken()).then(
-            res => {
-              this.bloquearPag = false;
-              console.log("Mantenimientofile res", res);
+      //     console.log("coreGuardar ViewModalExite:", ViewModalExite);    
+      //     await this.maestrocompaniaMastService.Mantenimientofile(1, ViewModalExite, this.getUsuarioToken()).then(
+      //       res => {
+      //         this.bloquearPag = false;
+      //         console.log("Mantenimientofile res", res);
 
-              if (res != null) {
-                this.dialog = false;          
-                if (res.success) {
-                  console.log("Mantenimientofile res   LLEGO", res);
-                  if (accionGuardar == 'NUEVO') {
-                    this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se registró con éxito.' });
-                  } else if (accionGuardar == 'EDITAR') {
-                    this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se actualizó con éxito.' });
-                  }
-                  this.mensajeController.resultado = res;
-                  this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-                } else {
-                  this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: res.mensaje });
-                }
-              }
-            });
-        }
-      }
+      //         if (res != null) {
+      //           this.dialog = false;          
+      //           if (res.success) {
+      //             console.log("Mantenimientofile res   LLEGO", res);
+      //             if (accionGuardar == 'NUEVO') {
+      //               this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se registró con éxito.' });
+      //             } else if (accionGuardar == 'EDITAR') {
+      //               this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se actualizó con éxito.' });
+      //             }
+      //             this.mensajeController.resultado = res;
+      //             this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+      //           } else {
+      //             this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: res.mensaje });
+      //           }
+      //         }
+      //       });
+      //   }
+      // }
     } catch (error) {
       this.bloquearPag = false;
       this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Ocurrió un error al guardar la compañía.' });
