@@ -82,13 +82,13 @@ import { AprobadoresBuscarComponent } from './Aprobadores/components/aprobadores
 import { ComunModule } from '../framework-comun/Comun.module';
 import { BlockUIModule } from 'primeng/blockui';
 import { PersonamastComponent } from './persona/vista/personamast.component';
-import { NodeService } from './TipoTrabajador/Service/nodeservice';
 import { ExamenMantenimientoComponentVista } from './examen/components/examen-mantenimiento/examen-mantenimiento.component';
 import { TabViewModule } from 'primeng/tabview';
 import { PersonamastUnificacionComponent } from './persona/components/personamast-unificacion/personamast-unificacion.component';
 import { TipoadmisionMantenimientoComponent } from './TipoAdmision/tipoadmision-mantenimiento/tipoadmision-mantenimiento.component';
 import { TipopacienteMantenimientoComponent } from './TipoPaciente/tipopaciente-mantenimiento/tipopaciente-mantenimiento.component';
 import { SedescompartidaComponent } from './Sedes/sedescompartida/sedescompartida.component';
+import { NodeService } from './TipoTrabajador/Service/nodeservice';
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 
   return localStorageSync({ keys: ['perfil'], rehydrate: true })(reducer);

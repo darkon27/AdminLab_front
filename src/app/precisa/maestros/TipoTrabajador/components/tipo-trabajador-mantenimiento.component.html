@@ -1,75 +1,69 @@
 <p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
+
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
-        <p-fieldset legend="Datos">
-            <div class="row" style="padding: 10px;">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Código Componente</label>
-                        <input pInputText type="text" placeholder=""
-                            style="width:100%; background-color: rgb(247, 247, 208); height: 30px;"  />
-                    </div>
+        <br>
+        <p-fieldset legend="Información General">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="label">Descripción</label>
+                    <input pInputText type="text" [(ngModel)]="dto.DescripcionLocal" [disabled]=" puedeEditar"
+                        [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" />
                 </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Descripción</label>
-                        <input pInputText type="text" placeholder="" [(ngModel)]="nombreruta" 
-                        style="width:100%; background-color: rgb(247, 247, 208); height: 30px;" />
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Abreviatura</label>
-                        <input pInputText type="text" placeholder="" style="width:100%; background-color: rgb(247, 247, 208); height: 30px;" />
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Tiempo</label>
-                        <p-dropdown  [filter]="true" >              </p-dropdown>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Dias de entrega</label>
-                        <input pInputText type="text" placeholder="" style="width:100%; background-color: rgb(247, 247, 208); height: 30px;" />
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Sexo</label>
-                        <p-dropdown  [filter]="true" ></p-dropdown>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Estado</label>
-                        <p-dropdown  [filter]="true" ></p-dropdown>
-
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">                    
-                        <input pInputText type="text" placeholder="" [disabled]="true" 
-                        style="width:100%; background-color: rgb(247, 247, 208); height: 30px;"  [(ngModel)]="nombrearchivo" />
-                        <input type="file" id="fileUpload" name="fileUpload" class="form-control"
-                            style="display:none" (change)="exportar($event)" />
-                        <button pButton pRipple type="button" icon="fa fa-upload" [showIcon]="true"  label="Importar" title="Importar"
-                            styleClass="p-button-primary"   title="Subir Archivo" (click)="subirArchivo(fileUpload)"></button>
-                    </div>
+                <div class="col-sm-6">
+                    <label class="label">Descripción Extranjera</label>
+                    <input pInputText type="text" [style]="{ 'width':'100%'}" [(ngModel)]="dto.DescripcionExtranjera"
+                        [disabled]=" puedeEditar" />
                 </div>
 
+                <div class="col-sm-6">
+                    <label class="label">Código Seguro</label>
+                    <input pInputText type="text" [style]="{ 'width':'100%'}" [(ngModel)]="dto.CodigoSeguro"
+                        [disabled]=" puedeEditar" />
+                </div>
+                <div class="col-sm-6">
+                    <label class="label">Componente Hospitalización</label>
+                    <input pInputText type="text" [style]="{ 'width':'100%'}"
+                        [(ngModel)]="dto.ComponenteHospitalizacion" [disabled]=" puedeEditar" />
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="label">Estado</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-align-justify"></i></span>
+                        <p-dropdown [disabled]="puedeEditar" placeholder="Seleccione"
+                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" [disabled]="puedeEditar"
+                            class="tablaCompletaIzquieda" [options]="lstEstado" [(ngModel)]="dto.Estado">
+                        </p-dropdown>
+                    </div>
+                </div>
             </div>
-        </p-fieldset>    
+        </p-fieldset>
+        <br>
+        <p-fieldset legend="Auditoria">
+            <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
+                [modificacionFecha]="fechaModificacion"></ngx-auditoria>
+        </p-fieldset>
     </ng-template>
     <ng-template pTemplate="footer">
         <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
-            (click)="saveProduct($event)"></p-button>
+            (click)="coreGuardar()"></p-button>
     </ng-template>
 
+
+
+    <!-- <ng-template pTemplate="footer">
+        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar"
+        type="submit"   (click)="saveProduct($event)" ></p-button>
+    </ng-template> -->
+
+
+
+
 </p-dialog>
-<p-toast [baseZIndex]="10000" ></p-toast>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+    position="top-right"></p-toast>
