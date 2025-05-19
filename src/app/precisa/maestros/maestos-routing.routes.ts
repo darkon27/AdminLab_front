@@ -36,7 +36,7 @@ import { ExamenListaMantenimientoComponent } from './exameneslista/components/ex
 import { MaestroDetalleMantenimientoComponent } from './Detalle/components/maestro-detalle-mantenimiento.component';
 import { TipoCambioMantenimientoComponent } from './TipoCambio/components/tipo-cambio-mantenimiento.component';
 import { TipoTrabajadorMantenimientoComponent } from './TipoTrabajador/components/tipo-trabajador-mantenimiento.component';
-import { CuentaBancariaMantenimientoComponent } from './CuentaBancaria/view/components/cuenta-bancaria-mantenimiento.component';
+import { CuentaBancariaMantenimientoComponent } from './CuentaBancaria/components/cuenta-bancaria-mantenimiento.component';
 import { ParametrosMantenimientoComponent } from './Parametros/components/parametros-mantenimiento.component';
 import { TipoPagoMantenimientoComponent } from './TipoPago/components/tipo-pago-mantenimiento.component';
 import { TipoPacienteMantenimientoComponent } from './TipoPaciente/view/components/tipo-paciente-mantenimiento.component';
@@ -47,7 +47,7 @@ import { AprobadoresMantenimientoComponent } from './Aprobadores/components/apro
 import { ExamenPatologicoMantenimientoComponent } from './ExamenPatológico/components/examen-patologico-mantenimiento.component';
 import { EmpleadosMantenimientoComponent } from './Empleados/components/empleados-mantenimiento.component';
 import { InsumoMantenimientoComponent } from './Insumo/components/insumo-mantenimiento.component';
-import { CuentaBancariaBuscarComponent } from './CuentaBancaria/view/components/cuenta-bancaria-buscar.component';
+import { CuentaBancariaBuscarComponent } from './CuentaBancaria/components/cuenta-bancaria-buscar.component';
 import { AprobadoresBuscarComponent } from './Aprobadores/components/aprobadores-buscar.component';
 import { PersonamastComponent } from './persona/vista/personamast.component';
 
