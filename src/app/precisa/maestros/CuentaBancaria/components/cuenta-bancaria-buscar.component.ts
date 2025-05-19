@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ComponenteBasePrincipal } from "../../../../../../util/ComponenteBasePrincipa";
+import { ComponenteBasePrincipal } from "../../../../../util/ComponenteBasePrincipa";
 
 
 

@@ -6,22 +6,22 @@ import { API_ROUTESE } from '../../../../data/constants/routes/api.routes';
 @Injectable({
   providedIn: 'root'
 })
-export class InsumoService {
+export class CuentaBancariaService {
   public url = API_ROUTESE.precisa;
   private urlma = `${this.url}${this.config.getEnv('proxy.precisa')}api/Maestro/`;
   constructor(private config: AppConfig, private http: HttpClient) { }
 
 
-  ListaInsumo(filtro: any) {
-    return this.config.getHttp().post(`${this.urlma}ListarInsumos`, filtro)
+  Listacuentabancariaa(filtro: any) {
+    return this.config.getHttp().post(`${this.urlma}ListarCuentaBancaria`, filtro)
       .toPromise()
       .then(response => response)
       .catch(error => error)
   }
 
-  mantenimientoInsumo(codigo: number, dto: any, token: string) {
+  mantenimientoCuentaBancaria(codigo: number, dto: any, token: string) {
     const headers = new HttpHeaders().set("Authorization", token)
-    return this.config.getHttp().post(`${this.urlma}MantenimientoCuentaBancaria/` + codigo, dto, { headers: headers })
+    return this.config.getHttp().post(`${this.urlma}MantenimientoInsumos/` + codigo, dto, { headers: headers })
       .toPromise()
       .then(response => response)
       .catch(error => error)
