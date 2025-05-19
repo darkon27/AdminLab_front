@@ -1,95 +1,46 @@
-<p-blockUI [blocked]="bloquearPag" [baseZIndex]="1001">
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
+
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="1000">
+    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
         <br>
-
-        <p-fieldset legend="">
-
+        <p-fieldset legend="Información General">
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="row">
+                <div class="col-sm-6">
+                    <label class="label">Fecha Inicio</label>
+                    <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
+                        [style]="{'width':'100%'}" yearRange="1940:2200" [locale]="es" [(ngModel)]="dto.FechaInicio"
+                        dateFormat="dd/mm/yy" [showIcon]="true">
+                    </p-calendar>
+                </div>
+                <div class="col-sm-6">
+                    <label class="label">Fecha Fin</label>
+                    <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
+                        [style]="{'width':'100%'}" yearRange="1940:2200" [locale]="es" [(ngModel)]="dto.FechaFin"
+                        dateFormat="dd/mm/yy" [showIcon]="true">
+                    </p-calendar>
+                </div>
 
-                        <div class="col-sm-6">
-                            <label class="label">Compañia</label>
-                            <div class="p-inputgroup">
-                                <span class="p-inputgroup-addon"><i class="pi pi-align-justify"></i></span>
-                                <p-dropdown [disabled]="NoPuedeEditar" class="drop-down"
-                                [(ngModel)]="dto.CompaniaCodigo" [options]="lstCompania"
-                                [style]="{'width':'100%', 'background-color':'rgb(247, 247, 208)'}">
-                            </p-dropdown>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="label">Fecha</label>
-                            <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
-                                [style]="{'width':'100%'}"
-                                [inputStyle]="{'width':'100%','background-color':'rgb(247, 247, 208)'}"
-                                yearRange="1940:2200" [locale]="es" [maxDate]="maxDate" [(ngModel)]="dto.Fecha"
-                                dateFormat="dd/mm/yy" [showIcon]="true">
-                            </p-calendar>
-                        </div>
-
-
-                        <div class="col-sm-6">
-                            <label class="label">Código</label>
-                            <input pInputText type="text" [(ngModel)]="dto.AplicacionCodigo" [disabled]="true"
-                                [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" />
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="label">Texto</label>
-                            <input pInputText type="text" [(ngModel)]="dto.Texto" [disabled]="puedeEditar"
-                                [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" />
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label class="label">Parámetro</label>
-                            <input pInputText type="text" [(ngModel)]="dto.ParametroClave" [disabled]="NoPuedeEditar"
-                                [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" />
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="label">Valor</label>
-                            <input pInputText type="text" [(ngModel)]="dto.Numero" [disabled]="puedeEditar"
-                                [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" />
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="label">Tipo de Dato</label>
-                            <div class="p-inputgroup">
-                                <span class="p-inputgroup-addon"><i class="pi pi-align-justify"></i></span>
-                                <p-dropdown [disabled]="puedeEditar" placeholder="Seleccione"
-                                    [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"
-                                    [disabled]="puedeEditar" class="tablaCompletaIzquieda" [options]="lstTipoDato"
-                                    [(ngModel)]="dto.TipodeDatoFlag">
-                                </p-dropdown>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label class="label">Estado</label>
-                            <div class="p-inputgroup">
-                                <span class="p-inputgroup-addon"><i class="pi pi-align-justify"></i></span>
-                                <p-dropdown [disabled]="puedeEditar" placeholder="Seleccione"
-                                    [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"
-                                    [disabled]="puedeEditar" class="tablaCompletaIzquieda" [options]="lstEstados"
-                                    [(ngModel)]="dto.Estado">
-                                </p-dropdown>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="label">Descripción</label>
-                            <input pInputText type="text" [(ngModel)]="dto.DescripcionParametro" [disabled]="puedeEditar"
-                                [style]="{'width':'100%'}" />
-                        </div>
+                <div class="col-sm-6">
+                    <label class="label">Valor</label>
+                    <input pInputText type="text" [style]="{ 'width':'100%'}" [(ngModel)]="dto.Valor"
+                        [disabled]=" puedeEditar" />
+                </div>
+                <div class="col-sm-6">
+                    <label class="label">Estado</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-align-justify"></i></span>
+                        <p-dropdown [disabled]="puedeEditar" placeholder="Seleccione"
+                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" [disabled]="puedeEditar"
+                            class="tablaCompletaIzquieda" [options]="lstEstado" [(ngModel)]="dto.Estado">
+                        </p-dropdown>
                     </div>
                 </div>
             </div>
-
-
         </p-fieldset>
-
         <br>
         <p-fieldset legend="Auditoria">
             <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
@@ -97,8 +48,9 @@
         </p-fieldset>
     </ng-template>
     <ng-template pTemplate="footer">
-        <p-button label="Guardar" icon="pi pi-save" *ngIf="!puedeEditar" styleClass="p-button-primary"
-            [disabled]="puedeEditar" type="submit" (click)="saveProduct()"></p-button>
+        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
+            (click)="coreGuardar()"></p-button>
     </ng-template>
 </p-dialog>
-<p-toast key="bc" [baseZIndex]="2000"></p-toast>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+    position="top-right"></p-toast>

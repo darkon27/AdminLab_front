@@ -24,7 +24,7 @@ import { SedesComponent } from './Sedes/view/sedes.component';
 import { InsumoComponent } from './Insumo/view/insumo.component';
 import { ExamenPatologicoComponent } from './ExamenPatológico/view/examen-patologico.component';
 import { AprobadoresComponent } from './Aprobadores/view/aprobadores.component';
-import { CambioComercialComponent } from './CambioComercial/cambio-comercial.component';
+import { CambioComercialComponent } from './CambioComercial/view/cambio-comercial.component';
 import { TipoPagoComponent } from './TipoPago/view/tipo-pago.component';
 import { ParametrosComponent } from './Parametros/view/parametros.component';
 import { AsignarExamenesComponent } from './asignar-examenes/asignar-examenes.component';

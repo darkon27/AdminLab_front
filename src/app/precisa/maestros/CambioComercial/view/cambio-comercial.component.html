@@ -1,0 +1,118 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+  <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-confirmDialog #c key="confirm2">
+  <p-footer>
+    <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+      (click)="c.accept()"></button>
+    <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded" (click)="c.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<p-card>
+  <nb-card-header>
+    <nav class="fixed">
+      <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+    </nav>
+  </nb-card-header>
+
+  <p-fieldset legend="Información Consulta" (keyup.enter)="coreBuscar()">
+    <div class="row">
+
+      <div class="col-sm-4">
+        <label for="inputOrdAten" class="label">Fecha Inicio</label>
+        <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true" [style]="{'width':'100%'}"
+          yearRange="1940:2200" [locale]="es" [(ngModel)]="filtro.FechaInicio" dateFormat="dd/mm/yy" [showIcon]="true">
+        </p-calendar>
+      </div>
+      <div class="col-sm-4">
+        <label for="inputOrdAten" class="label">Fecha Fin</label>
+        <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true" [style]="{'width':'100%'}"
+          yearRange="1940:2200" [locale]="es" [(ngModel)]="filtro.FechaFin" dateFormat="dd/mm/yy" [showIcon]="true">
+        </p-calendar>
+      </div>
+      <div class="col-sm-4">
+        <label for="inputLastName" class="label">Estado</label>
+        <p-dropdown [options]="lstEstado" [(ngModel)]="filtro.Estado"
+          [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+      </div>
+    </div>
+  </p-fieldset>
+  <br>
+  <p-fieldset legend="Información Consulta">
+    <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstInsumo" [responsive]="true"
+      [sortOrder]="1" sortField="num" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+      [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
+          <th pSortableColumn="num" class="label text-center" ALIGN="center" style="width: 5rem;  ">Nro
+            <p-sortIcon field="num">
+            </p-sortIcon>
+          </th>
+          <th pSortableColumn="FechaInicio" class="label text-center" ALIGN="center" style="width: 5rem; ">
+            Fecha Inicio<p-sortIcon field="FechaInicio"></p-sortIcon>
+          </th>
+          <th pSortableColumn="FechaFin" class="label text-center" ALIGN="center" style="width: 5rem; ">
+            Fecha Fin<p-sortIcon field="FechaFin"></p-sortIcon>
+          </th>
+          <th pSortableColumn="Valor" class="label text-center" ALIGN="center" style="width: 5rem; ">
+            Valor<p-sortIcon field="Valor"></p-sortIcon>
+          </th>
+          <th pSortableColumn="EstadoDesc" class="label text-center" ALIGN="center" style="width: 5rem;  ">
+            Estado<p-sortIcon field="EstadoDesc"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <td class="tablaColumnaAccion3">
+            <span class="p-column-title">Acción</span>
+            <table>
+              <tr>
+                <th>
+                  <button pButton pRipple type="button" icon="fad fa-pencil-alt" title="Editar"
+                    class="p-button-rounded p-button-text" (click)="coreEditar(rowData)"></button>
+                </th>
+                <th>
+                  <button pButton pRipple type="button" icon="fad fa-search" (click)="coreVer(rowData)"
+                    class="p-button-rounded p-button-text" title="Ver"></button>
+                </th>
+                <th>
+                  <button pButton pRipple type="button" icon="fal fa-minus-circle" title="Inactivar"
+                    [disabled]="rowData.Estado != 'A'" class="p-button-rounded p-button-text"
+                    (click)="coreInactivar(rowData)"></button>
+                </th>
+              </tr>
+            </table>
+          </td>
+          <td class="tablaColumnaCodigoChico text-center" style="width: 5rem;">
+            <span class="p-column-title">Nro</span>
+            {{rowData.num}}
+          </td>
+          <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
+            <span class="p-column-title">Fecha Inicio</span>
+            <span>{{rowData.FechaInicio || '' | date: 'dd/MM/yyyy'}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
+            <span class="p-column-title">Fecha Fin</span>
+            <span>{{rowData.FechaFin || '' | date: 'dd/MM/yyyy'}}</span>
+          </td>
+          <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
+            <span class="p-column-title">Valor</span>
+            <span>{{rowData.Valor || 0}}</span>
+          </td>
+
+          <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
+            <span class="p-column-title">Estado</span>
+            <span>{{rowData.EstadoDesc |uppercase}}</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-fieldset>
+</p-card>
+
+<ngx-cambio-comercial-mantenimiento></ngx-cambio-comercial-mantenimiento>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+  position="top-right"></p-toast>
