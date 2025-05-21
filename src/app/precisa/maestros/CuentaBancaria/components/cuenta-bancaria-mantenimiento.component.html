@@ -4,217 +4,100 @@
     <ng-template pTemplate="content">
         <br>
         <p-fieldset legend="Información General">
+            <!-- Empresa (parte superior) -->
             <div class="row">
-                <div class="col-sm-8">
-                    <label for="inputLastName" class="label">Empresa</label>
+                <div class="col-sm-12">
+                    <label class="label">Empresa</label>
                     <div class="p-inputgroup">
-                        <input pInputText type="text" placeholder="" [style]="{'width':'50px'}" />
-                        <div class="col-sm-4">
-                            <input pInputText type="text" disabled class="hoverDisabled" style="width:100%" />&nbsp;
-                        </div>
-                        <p-button styleClass="p-button-primary" type="button" title="Buscar">
-
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-search" viewBox="0 0 16 16">
-                                <path
-                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                            </svg>
-                        </p-button>
-                        <button pButton type="button" title="Limpiar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-x" viewBox="0 0 10 13">
-                                <path
-                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z">
-                                </path>
-                            </svg>
-                        </button>
-                        <button pButton type="button" title="Agregar Nueva Empresa">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-person-plus-fill" viewBox="0 0 10 13">
-                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                <path fill-rule="evenodd"
-                                    d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Cuenta Bancaria</label>
-                        <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Fecha Apertura</label>
-                        <p-calendar [disabled]="false" [(ngModel)]="date3" [showIcon]="true"></p-calendar>
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Descripcion</label>
-                        <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Fecha Cierre Cuenta</label>
-                        <p-calendar [disabled]="false" [(ngModel)]="date4" [showIcon]="true"></p-calendar>
-                    </div>
-                </div>
-
-
-
-
-
-
-                <!-- <div class="col-sm-4">
-                    <label for="inputLastName" class="label">Cliente</label>
-                    <div class="p-inputgroup">
-                        <input pInputText type="text" disabled class="hoverDisabled" style="width:60px" />&nbsp;
-                        <input pInputText type="text" disabled class="hoverDisabled"
-                            style="width:100%; height: 30px;" />
-                        <button pButton icon="fa fa-binoculars" type="button" title="Buscar Empleado"></button>
-                    </div>
-                </div> -->
-
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Cuenta Bancaria Consolidada</label>
-                        <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="p-grid ui-fluid" style="margin-top: 10px;">
-                        <div class="p-field p-col-12">
-                            <label for="inputLastName" class="label">Tipo de Cuenta</label>
-                            <!-- <p-dropdown placeholder="Seleccione" [options]="lstEstados" [disabled]="puedeEditar" [(ngModel)]="dto.Estado"></p-dropdown> -->
-                            <p-dropdown placeholder="--Tipo de Cuenta--" [options]="lstEstados"
-                                [disabled]="puedeEditar">
-                            </p-dropdown>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Cuenta Banco Original</label>
-                        <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="p-grid ui-fluid" style="margin-top: 10px;">
-                        <div class="p-field p-col-12">
-                            <label for="inputLastName" class="label">Tipo Moneda</label>
-                            <!-- <p-dropdown placeholder="Seleccione" [options]="lstEstados" [disabled]="puedeEditar" [(ngModel)]="dto.Estado"></p-dropdown> -->
-                            <p-dropdown placeholder="--Moneda--" [options]="lstEstados" [disabled]="puedeEditar">
-                            </p-dropdown>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Cuenta Contable</label>
-                        <input pInputText type="text" placeholder="" [style]="{'width':'100%'}" />
-                    </div>
-                </div>
-
-
-                <div class="col-sm-4">
-                    <div class="p-grid ui-fluid" style="margin-top: 10px;">
-                        <div class="p-field p-col-12">
-                            <label for="inputLastName" class="label">Estado</label>
-                            <!-- <p-dropdown placeholder="Seleccione" [options]="lstEstados" [disabled]="puedeEditar" [(ngModel)]="dto.Estado"></p-dropdown> -->
-                            <p-dropdown placeholder="--Estado--" [options]="lstEstados" [disabled]="puedeEditar">
-                            </p-dropdown>
-                        </div>
+                        <input pInputText type="text" placeholder="" style="width: 100%" />
+                        <p-button styleClass="p-button-primary" type="button" title="Buscar" icon="pi pi-search"></p-button>
+                        <!-- NO TIENE UN METODO QUE LLAME - AQUI EN ESTOS BOTONES - ANTES DE GUARDAR DEBE FUNCIONAR ESTOS -->
+                        <p-button styleClass="p-button-secondary" type="button" title="Limpiar" icon="pi pi-times"></p-button>
+                        <p-button styleClass="p-button-success" type="button" title="Agregar Nueva Empresa" icon="pi pi-plus"></p-button>
                     </div>
                 </div>
             </div>
-            <br>
+
+            <div class="row" style="margin-top: 20px;">
+                <!-- Columna izquierda -->
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="label">Cuenta Bancaria</label>
+                        <input pInputText type="text" placeholder="" style="width: 100%" />
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label class="label">Descripción</label>
+                        <input pInputText type="text" placeholder="" style="width: 100%" [(ngModel)]="descripcion" name="descripcion" />
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label class="label">Cuenta Bancaria Consolidada</label>
+                        <input pInputText type="text" placeholder="" style="width: 100%" />
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label class="label">Cuenta Banco Original</label>
+                        <input pInputText type="text" placeholder="" style="width: 100%" />
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label class="label">Cuenta Contable</label>
+                        <input pInputText type="text" placeholder="" style="width: 100%" />
+                    </div>
+                </div>
+
+                <!-- Columna derecha -->
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="label">Fecha Apertura</label>
+                        <p-calendar
+                            [disabled]="false" 
+                            [(ngModel)]="date3" 
+                            [showIcon]="true"
+                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"
+                            [inputStyle]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}">
+                        </p-calendar>
+                    </div>
 
 
+                    <div class="form-group">
+                        <label for="inputLastName" class="label">Fecha Cierre Cuenta</label>
+                        <p-calendar [disabled]="false" [(ngModel)]="date4" [showIcon]="true"
+                        [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"></p-calendar>
+                    </div>
 
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label class="label">Tipo de Cuenta</label>
+                        <p-dropdown [options]="lstTipoCuenta" placeholder="--Tipo de Cuenta--" style="width: 100%"></p-dropdown>
+                    </div>
 
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label class="label">Tipo Moneda</label>
+                        <p-dropdown [options]="lstMoneda" placeholder="Seleccione moneda" style="width: 100%"></p-dropdown>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label class="label">Estado</label>
+                        <p-dropdown [options]="lstEstado" placeholder="--Estado--" style="width: 100%"></p-dropdown>
+                    </div>
+                </div>
+            </div>
         </p-fieldset>
+
         <br>
 
-        <!-- <p-fieldset legend="">
-            <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="tipousuario" [responsive]="true"
-                [sortOrder]="-1" sortField="tipousuario"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-                [showCurrentPageReport]="true">
-
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Nro.</th>
-
-                        <th pSortableColumn="">Descripción<p-sortIcon field="Documento"></p-sortIcon>
-                        </th>
-
-                        <th pSortableColumn="">Tipo Admisión<p-sortIcon field="IdOr"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="">Tipo Paciente<p-sortIcon field="Paterno"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="">Empresa<p-sortIcon field="Materno"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="">Sede<p-sortIcon field="Nombre"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="">Factor<p-sortIcon field="Nombre"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="">Estado<p-sortIcon field="Nombre"></p-sortIcon>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-rowData let-columns="columns">
-                    <tr>
-                        <td class="">
-                        </td>
-                    </tr>
-
-                </ng-template>
-            </p-table>
-        </p-fieldset> -->
-        <p-fieldset legend="Datos Generales">
-            <ngx-auditoria></ngx-auditoria>
+        <p-fieldset legend="Auditoria">
+            <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
+                [modificacionFecha]="fechaModificacion"></ngx-auditoria>
         </p-fieldset>
     </ng-template>
+
     <ng-template pTemplate="footer">
-
-        <p-button label="&nbsp;&nbsp;Nuevo" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
-            (click)="saveProduct($event)">
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-plus-square"
-                viewBox="0 0 16 16">
-                <path
-                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                <path
-                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-            </svg>
-        </p-button>
+        <!-- <p-button label="Nuevo" icon="pi pi-plus" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
+            (click)="saveProduct($event)"></p-button> -->
         <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
-            (click)="saveProduct($event)"></p-button>
+            (click)="coreGuardar()"></p-button>
     </ng-template>
-
-
-
-    <!-- <ng-template pTemplate="footer">
-        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar"
-        type="submit"   (click)="saveProduct($event)" ></p-button>
-    </ng-template> -->
-
-
-
-
 </p-dialog>
 <p-toast></p-toast>

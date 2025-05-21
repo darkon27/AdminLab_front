@@ -13,4 +13,8 @@ export class CuentaBancaria {
     Estado : string
     Banco : number
     ESTADOdesc : string
+    UsuarioCreacion: string
+    UsuarioModificacion: string
+    FechaCreacion: string | Date
+    FechaModificacion: string | Date
 }

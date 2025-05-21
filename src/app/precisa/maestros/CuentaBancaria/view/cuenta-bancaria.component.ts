@@ -44,9 +44,11 @@ export class CuentaBancariaComponent extends ComponenteBasePrincipal implements 
     }
   
   ngOnInit(): void {
+    this.bloquearPag = true;
     this.tituloListadoAsignar(1, this);
     this.iniciarComponent();
     this.cargarSelect();
+    this.bloquearPag = false;
   }
   // ngOnInit(): void {
   //   this.tituloListadoAsignar(1, this);
@@ -93,8 +95,9 @@ export class CuentaBancariaComponent extends ComponenteBasePrincipal implements 
       }
     });
   }
+
   coreNuevo(): void {
-    this.componentMantenimientoComponent.iniciarComponente("NUEVO", this.objetoTitulo.menuSeguridad.titulo);
+    this.componentMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'CUENTA-BANCARIA', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
   coreVer(row: any) {
     this.componentMantenimientoComponent.iniciarComponente("VER", this.objetoTitulo.menuSeguridad.titulo);
@@ -111,7 +114,6 @@ export class CuentaBancariaComponent extends ComponenteBasePrincipal implements 
      this.componentBuscarComponent.iniciarComponente("BUSCADOR EMPRESAS", this.objetoTitulo.menuSeguridad.titulo)
   }
   coreGuardar(): void {
-    throw new Error('Method not implemented.');
   }
   coreExportar(): void {
     throw new Error('Method not implemented.');
