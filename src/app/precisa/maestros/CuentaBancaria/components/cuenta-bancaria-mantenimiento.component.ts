@@ -8,6 +8,8 @@ import { ConstanteAngular } from "../../../../@theme/ConstanteAngular";
 import { CuentaBancaria } from "../model/Cuenta-Bancaria";
 import { CuentaBancariaService } from "../services/cuenta-bancaria.service";
 import { MaestrotipocambioService } from "../../TipoCambio/servicio/maestrotipocambio.service";
+import { MaestrocompaniaMastService } from "../../../seguridad/companias/servicio/maestrocompania-mast.service";
+import { FiltroCompaniamast } from "../../../seguridad/companias/dominio/filtro/FiltroCompaniamast";
 import { FormGroup } from "@angular/forms";
 
 @Component({
@@ -33,18 +35,23 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
     cuentaContable : string;
     cuentaBancariaConsolidada : string;
 
+    lstCompania: SelectItem[] = [];
+    
+    lstcuentaBancaria: SelectItem[] = [];
     lstTipoCuenta: SelectItem[] = [];
     lstMoneda: SelectItem[] = [];
     lstBanco: SelectItem[] = [];
     lstTipoCambio: SelectItem[] = [];
     lstEstado: SelectItem[] = [];
     dto: CuentaBancaria = new CuentaBancaria();
+    FiltroCompan: FiltroCompaniamast = new FiltroCompaniamast();
 
   
   constructor(
       private _MessageService: MessageService,
       private _CuentaBancariaService: CuentaBancariaService,
       private _MaestrotipocambioService: MaestrotipocambioService,
+      private maestrocompaniaMastService: MaestrocompaniaMastService,
   
     ) {
       super();
@@ -58,10 +65,11 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
     const optTodos = { label: ConstanteAngular.COMBOTODOS, value: null };
     forkJoin({
       estados: this.obtenerDataMaestro('ESTGEN'),
-      bancos: this.obtenerDataMaestro('BANCO'),
+      bancos: this._CuentaBancariaService.ListarBanco({Estado: "A"}),
       monedas: this._MaestrotipocambioService.listarMonedas({ Estado: 'A' }),
       tipoCambio: this.obtenerDataMaestro('TIPCAM'),
       tipoCuenta: this.obtenerDataMaestro('TIPCUENTA'),
+      companias: this.maestrocompaniaMastService.listarCompaniaMast(this.FiltroCompan),
     }
     ).subscribe(resp => {
       const dataEstados = resp.estados?.map((ele: any) => ({
@@ -69,9 +77,13 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
       }));
       this.lstEstado = [optTodos, ...dataEstados];
       const dataBancos = resp.bancos?.map((ele: any) => ({
-        label: ele.label?.trim()?.toUpperCase() || "", value: Number.parseInt(ele.value)
+        label: ele.DescripcionCorta?.trim()?.toUpperCase() || "", value: `${ele.Banco?.trim() || ""}`
       }));
       this.lstBanco = [optTodos, ...dataBancos];
+      const dataCompania = resp.companias?.map((ele: any) => ({
+        label: ele.DescripcionCorta?.trim()?.toUpperCase() || "", value: `${ele.CompaniaCodigo?.trim() || ""}00`, title: ele.Persona || ""
+      }));
+      this.lstCompania = [...dataCompania];
       const dataMonedas = resp.monedas?.map((ele: any) => ({
         label: ele.DescripcionCorta?.trim()?.toUpperCase().replace('DOLÁRES', 'DÓLARES') || "", value: `${ele.MonedaCodigo?.trim() || ""}`
       }));
@@ -122,15 +134,16 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
           this.dto = new CuentaBancaria();
           this.dto.Estado = "A";
           this.dto.MonedaCodigo = 'EX';
+          this.dto.Banco = 0;
           this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
           this.dto.FechaCreacion = new Date();
-          this.dto.FechaApertura = new Date();
-          this.dto.TipoCuenta;
-          this.dto.CuentaBancaria;
-          this.dto.CuentaContable;
-          this.dto.CuentaBancariaConsolidada; 
-          this.dto.CuentaBancariaOriginal;
-          this.dto.Descripcion;
+          // this.dto.FechaApertura = new Date();
+          // this.dto.TipoCuenta;
+          // this.dto.CuentaBancaria;
+          // this.dto.CuentaContable;
+          // this.dto.CuentaBancariaConsolidada; 
+          // this.dto.CuentaBancariaOriginal;
+          // this.dto.Descripcion;
           this.puedeEditar = false;
   
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
@@ -169,14 +182,8 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
         console.log("Probando guardar", this.dto);
         // if (this.estaVacio(this.dto.Descripcion)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una descripción válida'); return; }
         // if (this.estaVacio(this.dto.Estado)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una estado válido'); return; }
-        if (this.estaVacio(this.dto.CuentaBancaria)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una cuenta bancaria válida'); return; }
-        if (this.estaVacio(this.dto.Descripcion)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una descripción válida'); return; }
-        if (this.estaVacio(this.dto.FechaApertura)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una fecha de apertura válida'); return; }
-        if (this.estaVacio(this.dto.TipoCuenta)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una tipo de cuenta válida'); return; }
-        if (this.estaVacio(this.dto.CuentaContable)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una cuenta contable válida'); return; }
-        if (this.estaVacio(this.dto.CuentaBancariaConsolidada)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una cuenta bancaria consolidada válida'); return; }
-        if (this.estaVacio(this.dto.CuentaBancariaOriginal)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una cuenta bancaria original válida'); return; }
-        if (this.estaVacio(this.dto.Banco)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una banco válido'); return; }
+        // if (this.estaVacio(this.dto.CuentaContable)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una cuenta contable válida'); return; }
+        // if (this.estaVacio(this.dto.Banco)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una banco válido'); return; }
         if (this.estaVacio(this.dto.MonedaCodigo)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una moneda válida'); return; }
 
         

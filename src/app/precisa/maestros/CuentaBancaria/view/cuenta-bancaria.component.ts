@@ -44,11 +44,9 @@ export class CuentaBancariaComponent extends ComponenteBasePrincipal implements 
     }
   
   ngOnInit(): void {
-    this.bloquearPag = true;
     this.tituloListadoAsignar(1, this);
     this.iniciarComponent();
     this.cargarSelect();
-    this.bloquearPag = false;
   }
   // ngOnInit(): void {
   //   this.tituloListadoAsignar(1, this);
@@ -107,7 +105,16 @@ export class CuentaBancariaComponent extends ComponenteBasePrincipal implements 
   }
 
   coreMensaje(mensage: MensajeController): void {
-    throw new Error('Method not implemented.');
+    const dataDevuelta = mensage.resultado;
+
+    switch (mensage.componente.toUpperCase()) {
+      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'CUENTA-BANCARIA':
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'CUENTA-BANCARIA':
+        this.coreBuscar();
+        break;
+      default:
+        break;
+    }
   }
   
   verSelectorEmpresa(): void {

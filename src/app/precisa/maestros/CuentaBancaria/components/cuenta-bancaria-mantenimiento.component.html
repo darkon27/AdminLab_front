@@ -1,76 +1,33 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
         <br>
         <p-fieldset legend="Información General">
-            <!-- Empresa (parte superior) -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <label class="label">Empresa</label>
-                    <div class="p-inputgroup">
-                        <input pInputText type="text" placeholder="" style="width: 100%" />
-                        <p-button styleClass="p-button-primary" type="button" title="Buscar" icon="pi pi-search"></p-button>
-                        <!-- NO TIENE UN METODO QUE LLAME - AQUI EN ESTOS BOTONES - ANTES DE GUARDAR DEBE FUNCIONAR ESTOS -->
-                        <p-button styleClass="p-button-secondary" type="button" title="Limpiar" icon="pi pi-times"></p-button>
-                        <p-button styleClass="p-button-success" type="button" title="Agregar Nueva Empresa" icon="pi pi-plus"></p-button>
-                    </div>
-                </div>
-            </div>
-
             <div class="row" style="margin-top: 20px;">
                 <!-- Columna izquierda -->
                 <div class="col-sm-6">
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="inputLastName" class="label">Compañia</label>
+                        <p-dropdown [(ngModel)]="dto.CompaniaCodigo" [options]="lstCompania" [disabled]="puedeEditar"
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label class="label">Banco</label>
+                        <p-dropdown [options]="lstBanco" placeholder="Seleccione banco" style="width: 100%"></p-dropdown>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
                         <label class="label">Cuenta Bancaria</label>
-                        <input pInputText type="text" placeholder="" style="width: 100%" />
-                    </div>
-
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label class="label">Descripción</label>
-                        <input pInputText type="text" placeholder="" style="width: 100%" [(ngModel)]="descripcion" name="descripcion" />
-                    </div>
-
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label class="label">Cuenta Bancaria Consolidada</label>
-                        <input pInputText type="text" placeholder="" style="width: 100%" />
-                    </div>
-
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label class="label">Cuenta Banco Original</label>
-                        <input pInputText type="text" placeholder="" style="width: 100%" />
-                    </div>
-
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label class="label">Cuenta Contable</label>
-                        <input pInputText type="text" placeholder="" style="width: 100%" />
+                        <input pInputText type="text" [(ngModel)]="dto.CuentaBancaria" placeholder="" style="width: 100%" />
                     </div>
                 </div>
 
                 <!-- Columna derecha -->
                 <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Fecha Apertura</label>
-                        <p-calendar
-                            [disabled]="false" 
-                            [(ngModel)]="date3" 
-                            [showIcon]="true"
-                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"
-                            [inputStyle]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}">
-                        </p-calendar>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="inputLastName" class="label">Fecha Cierre Cuenta</label>
-                        <p-calendar [disabled]="false" [(ngModel)]="date4" [showIcon]="true"
-                        [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}"></p-calendar>
-                    </div>
-
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label class="label">Tipo de Cuenta</label>
-                        <p-dropdown [options]="lstTipoCuenta" placeholder="--Tipo de Cuenta--" style="width: 100%"></p-dropdown>
-                    </div>
 
                     <div class="form-group" style="margin-top: 15px;">
                         <label class="label">Tipo Moneda</label>
@@ -100,4 +57,7 @@
             (click)="coreGuardar()"></p-button>
     </ng-template>
 </p-dialog>
-<p-toast></p-toast>
+<!-- compañia, banco, num cuenta, selecmoneda,selecestado-->
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+    position="top-right"></p-toast>
+
