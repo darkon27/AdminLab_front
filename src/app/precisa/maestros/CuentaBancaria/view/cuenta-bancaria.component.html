@@ -22,11 +22,11 @@
       <div class="row" style="padding: 10px;">
         <div class="col-sm-3">
           <label class="label">Cuenta Bancaria</label>
-          <input pInputText type="text" style="width:100%; height: 30px;"/>
+          <input pInputText type="text" style="width:100%; height: 30px;text-transform: uppercase;" [(ngModel)]="filtro.CuentaBancaria" />
         </div>
         <div class="col-sm-3">
-          <label class="label">Empresa</label>
-          <input pInputText type="text" style="width:100%; height: 30px;"/>
+          <label class="label">Banco</label>
+                        <p-dropdown [options]="lstBanco" [(ngModel)]="filtro.Banco" placeholder="Seleccione Banco" style="width: 100%"></p-dropdown>
         </div>
         <div class="col-sm-6">
             <label for="inputLastName" class="label">Estado</label>
@@ -39,59 +39,71 @@
     <br>
     
     <p-fieldset legend="Detalle">
-      <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" [responsive]="true" [style]="{ width: '100%' }"
-        [sortOrder]="1" sortField="num"
-        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-        [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+      <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstCuentaBancaria"
+            [responsive]="true" [sortOrder]="1" sortField="num"
+            currentPageReportTemplate="Mestrado {first} a {last} de {totalRecords} registros"
+            [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
 
         <ng-template pTemplate="header">
-          <tr>
-            <th class="tablaHeaderAccion3 label" align="center">Acciones</th>
-            <th pSortableColumn="Codigo" class="label" align="center">No.<p-sortIcon field="Codigo"></p-sortIcon></th>
-            <th pSortableColumn="Nombre" class="label" align="center">Cuenta Bancaria<p-sortIcon field="Nombre"></p-sortIcon></th>
-            <th pSortableColumn="Descripcion" class="label" align="center">Banco<p-sortIcon field="Descripcion"></p-sortIcon></th>
-            <th pSortableColumn="TiempoPromedio" class="label" align="center">Fecha Apertura<p-sortIcon field="TiempoPromedio"></p-sortIcon></th>
-            <th pSortableColumn="Estado" class="label" align="center">Fecha Cierre<p-sortIcon field="Estado"></p-sortIcon></th>
-            <th pSortableColumn="Estado" class="label" align="center">Cuenta Consolidada<p-sortIcon field="Estado"></p-sortIcon></th>
-            <th pSortableColumn="Estado" class="label" align="center">Cuenta Original<p-sortIcon field="Estado"></p-sortIcon></th>
-            <th pSortableColumn="Estado" class="label" align="center">Estado<p-sortIcon field="Estado"></p-sortIcon></th>
-          </tr>
-        </ng-template>
+                <tr>
+                    <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
+                    <th pSortableColumn="num" class="label text-center" ALIGN="center" style="width: 5rem;  ">Nro
+                        <p-sortIcon field="num">
+                        </p-sortIcon>
+                    </th>
+                    <th pSortableColumn="CuentaBancaria" class="label text-center" ALIGN="center" style="width: 5rem; ">
+                        Cuenta Bancaria<p-sortIcon field="CuentaBancaria"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="BancoDesc" class="label text-center" ALIGN="center" style="width: 5rem; ">
+                        Banco<p-sortIcon field="BancoDesc"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ESTADOdesc" class="label text-center" ALIGN="center" style="width: 5rem;  ">
+                        Estado<p-sortIcon field="ESTADOdesc"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
 
         <ng-template pTemplate="body" let-rowData>
-          <tr>
-            <td class="tablaColumnaAccion3">
-              <table>
                 <tr>
-                  <th>
-                    <button pButton pRipple type="button" icon="fad fa-pencil-alt"
-                      class="p-button-rounded p-button-text" title="Editar"
-                      (click)="coreEditar(rowData)"></button>
-                  </th>
-                  <th>
-                    <button pButton pRipple type="button" icon="fad fa-search"
-                      class="p-button-rounded p-button-text" title="Ver"
-                      (click)="coreVer(rowData)"></button>
-                  </th>
-                  <th>
-                    <button pButton pRipple type="button" icon="fad fa-minus-circle"
-                      class="p-button-rounded p-button-text" title="Inactivar"
-                      (click)="coreInactivar(rowData)"></button>
-                  </th>
+                    <td class="tablaColumnaAccion3">
+                        <span class="p-column-title">Acción</span>
+                        <table>
+                            <tr>
+                                <th>
+                                    <button pButton pRipple type="button" icon="fad fa-pencil-alt" title="Editar"
+                                        class="p-button-rounded p-button-text" (click)="coreEditar(rowData)"></button>
+                                </th>
+                                <th>
+                                    <button pButton pRipple type="button" icon="fad fa-search"
+                                        (click)="coreVer(rowData)" class="p-button-rounded p-button-text"
+                                        title="Ver"></button>
+                                </th>
+                                <th>
+                                    <button pButton pRipple type="button" icon="fal fa-trash-alt"title="Inactivar"
+                      class="p-button-rounded p-button-text" (click)="coreinactivar(rowData)"></button>
+                                </th>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" style="width: 5rem;">
+                        <span class="p-column-title">Nro</span>
+                        {{rowData.num}}
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
+                        <span class="p-column-title">Cuenta Bancaria</span>
+                        <span>{{rowData.CuentaBancaria|uppercase}}</span>
+                    </td>
+
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
+                        <span class="p-column-title">BancoDesc</span>
+                        <span>{{rowData.BancoDesc|uppercase}}</span>
+
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
+                        <span class="p-column-title">ESTADOdesc</span>
+                        <span>{{rowData.ESTADOdesc|uppercase}}</span>
+                    </td>
                 </tr>
-              </table>
-            </td>
-            <td class="text-center">{{rowData.Codigo}}</td>
-            <td>{{rowData.Nombre}}</td>
-            <td>{{rowData.Descripcion}}</td>
-            <td class="text-center">{{rowData.TiempoPromedio}}</td>
-            <td class="text-center">
-              <span [ngClass]="{'badge bg-success': rowData.Estado === 'A', 'badge bg-danger': rowData.Estado === 'I'}">
-                {{rowData.Estado === 'A' ? 'Activo' : 'Inactivo'}}
-              </span>
-            </td>
-          </tr>
-        </ng-template>
+            </ng-template>
       </p-table>
     </p-fieldset>
   </nb-card-body>

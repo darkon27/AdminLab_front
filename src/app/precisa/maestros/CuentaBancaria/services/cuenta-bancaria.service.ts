@@ -18,24 +18,20 @@ export class CuentaBancariaService {
   constructor(private config: AppConfig, private http: HttpClient) {}
 
   Listacuentabancariaa(filtro: any) {
-    return this.config
-      .getHttp()
-      .post(`${this.urlma}ListarCuentaBancaria`, filtro)
+    return this.config.getHttp().post(`${this.urlma}ListarCuentaBancaria`, filtro)
       .toPromise()
-      .then((response) => response)
-      .catch((error) => error);
+      .then(response => response)
+      .catch(error => error);
   }
 
   mantenimientoCuentaBancaria(codigo: number, dto: any, token: string) {
     const headers = new HttpHeaders().set("Authorization", token);
     return this.config
       .getHttp()
-      .post(`${this.urlma}MantenimientoCuentabancaria/` + codigo, dto, {
-        headers: headers,
-      })
+      .post(`${this.urlma}MantenimientoCuentaBancaria/` + codigo, dto, {headers: headers,})
       .toPromise()
-      .then((response) => response)
-      .catch((error) => error);
+      .then(response => response)
+      .catch(error => error);
   }
 
   ListarBanco(filtro: any) {

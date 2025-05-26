@@ -21,7 +21,7 @@ export class InsumoService {
 
   mantenimientoInsumo(codigo: number, dto: any, token: string) {
     const headers = new HttpHeaders().set("Authorization", token)
-    return this.config.getHttp().post(`${this.urlma}MantenimientoCuentaBancaria/` + codigo, dto, { headers: headers })
+    return this.config.getHttp().post(`${this.urlma}MantenimientoInsumos/` + codigo, dto, { headers: headers })
       .toPromise()
       .then(response => response)
       .catch(error => error)

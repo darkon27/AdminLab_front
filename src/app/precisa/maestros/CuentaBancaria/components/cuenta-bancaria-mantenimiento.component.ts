@@ -28,12 +28,9 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
     fechaCreacion: Date;
     fechaModificacion: Date;
     cuentaBancaria : string;
-    descripcion : string;
-    fechaApertura: string | Date;
-    fechaCierreCuenta: string | Date;
-    tipoCuenta : string;
-    cuentaContable : string;
-    cuentaBancariaConsolidada : string;
+    Banco : string;
+    CompaniaCodigo : string;
+    Estado : string;
 
     lstCompania: SelectItem[] = [];
     
@@ -64,7 +61,7 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
   cargarSelect(): void {
     const optTodos = { label: ConstanteAngular.COMBOTODOS, value: null };
     forkJoin({
-      estados: this.obtenerDataMaestro('ESTGEN'),
+      estados: this.obtenerDataMaestro('ESTLETRAS'),
       bancos: this._CuentaBancariaService.ListarBanco({Estado: "A"}),
       monedas: this._MaestrotipocambioService.listarMonedas({ Estado: 'A' }),
       tipoCambio: this.obtenerDataMaestro('TIPCAM'),
@@ -74,10 +71,10 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
     ).subscribe(resp => {
       const dataEstados = resp.estados?.map((ele: any) => ({
         label: ele.label?.trim()?.toUpperCase() || "", value: Number.parseInt(ele.value)
-      }));
+      })) || [];
       this.lstEstado = [optTodos, ...dataEstados];
       const dataBancos = resp.bancos?.map((ele: any) => ({
-        label: ele.DescripcionCorta?.trim()?.toUpperCase() || "", value: `${ele.Banco?.trim() || ""}`
+        label: ele.DescripcionCorta?.trim()?.toUpperCase() || "", value: `${ele.BancoNumero || 0}`
       }));
       this.lstBanco = [optTodos, ...dataBancos];
       const dataCompania = resp.companias?.map((ele: any) => ({
@@ -98,29 +95,39 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
     });
   }
 
-  verEmpresa(){
-    this.componentBuscarComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'CUENTABANCARIA', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
+  cargarEstados() {
+    this.lstEstado = [];
+      this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
+      this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTLETRAS").forEach(i => {
+        //console.log("i", i);
+        this.lstEstado.push({ label: i.Nombre, value: i.Codigo });
+      });
+      // //console.log(this.getMiscelaneos().filter(x => x.CodigoTabla.includes("ESTLETRAS")));
   }
+  // verEmpresa(){
+  //   this.componentBuscarComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'CUENTABANCARIA', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
+  // }
 
   
-  acciones: string = ''
+  // acciones: string = ''
 
-  iniciarComponente(accion: string,titulo) {
-    if (accion == "NUEVO") {
-      this.cargarAcciones(accion,titulo)}
+  // iniciarComponente(accion: string,titulo) {
+  //   if (accion == "NUEVO") {
+  //     this.cargarAcciones(accion,titulo)}
 
     
-    // else{
-    //   this.cargarAcciones(accion,titulo)
-    // }
+  //   // else{
+  //   //   this.cargarAcciones(accion,titulo)
+  //   // }
     
-  }
+  // }
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, data?: any): void {
     this.bloquearPag = true;
     this.mensajeController = mensaje;
     this.cargarAcciones(accionform, titulo, data)
     this.bloquearPag = false;
+    this.cargarEstados();
   }
 
   
@@ -133,8 +140,6 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
         case ConstanteUI.ACCION_SOLICITADA_NUEVO:
           this.dto = new CuentaBancaria();
           this.dto.Estado = "A";
-          this.dto.MonedaCodigo = 'EX';
-          this.dto.Banco = 0;
           this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
           this.dto.FechaCreacion = new Date();
           // this.dto.FechaApertura = new Date();
@@ -181,9 +186,11 @@ export class CuentaBancariaMantenimientoComponent extends ComponenteBasePrincipa
         
         console.log("Probando guardar", this.dto);
         // if (this.estaVacio(this.dto.Descripcion)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una descripción válida'); return; }
-        // if (this.estaVacio(this.dto.Estado)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una estado válido'); return; }
+        if (this.estaVacio(this.dto.Estado)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una estado válido'); return; }
         // if (this.estaVacio(this.dto.CuentaContable)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una cuenta contable válida'); return; }
-        // if (this.estaVacio(this.dto.Banco)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una banco válido'); return; }
+        if (this.estaVacio(this.dto.CompaniaCodigo)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una compañia válida'); return; }
+        if (this.estaVacio(this.dto.CuentaBancaria )) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese una cuenta bancaria válida'); return; }
+        if (this.estaVacio(this.dto.Banco)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una banco válido'); return; }
         if (this.estaVacio(this.dto.MonedaCodigo)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una moneda válida'); return; }
 
         

@@ -1,20 +1,15 @@
 export class CuentaBancaria {
-    constructor() {
-    }
-    CuentaBancaria : string
-    Descripcion : string
-    FechaApertura : string | Date
-    FechaCierreCuenta : string | Date
-    MonedaCodigo : string
-    TipoCuenta : string
-    CuentaContable : string
-    CuentaBancariaConsolidada : string
-    CuentaBancariaOriginal : string
-    Estado : string
-    Banco : number
-    ESTADOdesc : string
-    UsuarioCreacion: string
-    UsuarioModificacion: string
-    FechaCreacion: string | Date
-    FechaModificacion: string | Date
+    CuentaBancaria: string;
+    MonedaCodigo: string;
+    CompaniaCodigo: string;
+    TipoCuenta: string;
+    Estado: string;
+    Banco: string;
+    BancoDesc: string;
+    ESTADOdesc: string;
+
+    UsuarioCreacion: string;
+    UsuarioModificacion: string;
+    FechaCreacion: string | Date;
+    FechaModificacion: string | Date;
 }
