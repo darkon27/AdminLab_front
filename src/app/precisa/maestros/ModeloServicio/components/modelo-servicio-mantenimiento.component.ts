@@ -57,6 +57,9 @@ export class ModeloServicioMantenimientoComponent extends ComponenteBasePrincipa
         this.dto.MosEstado = 1;
         this.puedeEditar = false;
         this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+        this.filtro.TIPOADMISIONID =this.dto.TIPOADMISIONID;
+        this.cargarTipoPaciente();
+        this.filtro.TipoPacienteId = this.dto.TipoPacienteId
         this.fechaCreacion = new Date();
       } else if (this.validarform == "EDITAR") {
         //console.log("EDITAR FILA :", rowdata);
@@ -107,13 +110,14 @@ export class ModeloServicioMantenimientoComponent extends ComponenteBasePrincipa
   }
 
   async coreGuardar() {
-    if (this.estaVacio(this.dto.Descripcion)) { this.messageShow('warn', 'Advertencia', 'Ingrese un código válido'); return; }
+    if (this.estaVacio(this.dto.TipoPacienteId)) { this.messageShow('warn', 'Advertencia', 'Ingrese un código válido'); return; }
     if (this.estaVacio(this.dto.MosDescripcion)) { this.messageShow('warn', 'Advertencia', 'Ingrese un nombre válido'); return; }
     if (this.estaVacio(this.dto.MosEstado)) { this.messageShow('warn', 'Advertencia', 'Seleccione una estado válido'); return; }
     if (this.validarform == "NUEVO") {
       this.bloquearPag = true;
       this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario.trim();
       this.dto.FechaCreacion = this.fechaCreacion;
+      this.dto.UneuNegocioId = 1;
       this.ModeloServicioService.MantenimientoModeloServicio(1, this.dto, this.getUsuarioToken()).then(
         res => {
           this.bloquearPag = false;
@@ -163,6 +167,7 @@ export class ModeloServicioMantenimientoComponent extends ComponenteBasePrincipa
 
   comboTipoAdmision(): Promise<number> {
     this.tipoadmision.AdmEstado=1;
+    this.lsttipoadmision = []; // <-- Limpiar array
     this.lsttipoadmision.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
     return this.consultaAdmisionService.listarcombotipoadmision(this.tipoadmision).then(resp => {
       //console.log("combo tipo admision:", resp);

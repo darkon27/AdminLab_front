@@ -2,7 +2,7 @@ export class ModeloServicio{
 
     constructor(){
     }
-    UneuNegocioId?:        number;
+    UneuNegocioId:        number;
     ModeloServicioId?:    number;
     TipoOperacionId?:     number;
     MosAplicaFactor?:     number;

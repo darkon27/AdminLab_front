@@ -1,5 +1,9 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="1001">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="1000">
 
     <ng-template pTemplate="content">
 
@@ -59,15 +63,16 @@
                 </div>    
             </div>
         </p-fieldset>
-      
-        <p-fieldset legend="Datos Generales">
-            <ngx-auditoria></ngx-auditoria>
+        <br>
+        <p-fieldset legend="Auditoria">
+            <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
+                [modificacionFecha]="fechaModificacion"></ngx-auditoria>
         </p-fieldset>
     </ng-template>
     <ng-template pTemplate="footer">
         <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar"
-        type="submit"   (click)="saveProduct($event)" ></p-button>
+        type="submit"   (click)="coreGuardar()" ></p-button>
     </ng-template>
 
 </p-dialog>
-<p-toast></p-toast>
+<p-toast key="bc" [baseZIndex]="3000"></p-toast>
