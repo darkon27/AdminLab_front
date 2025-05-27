@@ -14,6 +14,7 @@ export class tipoAdmision{
     IpCreacion:           string; 
     IpModificacion:       string; 
     AdmEstado?:           number;
-    EstadoDesc:           string; 
+    EstadoDesc:           string;
+    Estado:              string;
   
 }
