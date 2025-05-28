@@ -73,9 +73,6 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
     });
   }
 
-  coreMensaje(mensage: MensajeController): void {
-    throw new Error('Method not implemented.');
-  }
 
   mensajeValidacion(icono: SweetAlertIcon, title: any, text: string, tipo: string): boolean {
     switch (tipo) {
@@ -131,10 +128,23 @@ export class ProduccionComponent extends ComponenteBasePrincipal implements OnIn
   }
 
   coreNuevo(): void {
-    this.produccionMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'NUEVOPERIODO', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, ConstanteUI.ACCION_SOLICITADA_NUEVO, 0, {});
+    this.produccionMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'PRODUCCION', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, ConstanteUI.ACCION_SOLICITADA_NUEVO, 0, {});
   }
   coreEditar(): void {
-    this.produccionMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, 'EDITARPERIODO', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, ConstanteUI.ACCION_SOLICITADA_EDITAR, 0, {});
+    this.produccionMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'PRODUCCION', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, ConstanteUI.ACCION_SOLICITADA_EDITAR, 0, {});
+  }
+
+  coreMensaje(mensage: MensajeController): void {
+    const dataDevuelta = mensage.resultado;
+
+    switch (mensage.componente.toUpperCase()) {
+      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'PRODUCCION':
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'PRODUCCION':
+        // this.coreBuscar();
+        break;
+      default:
+        break;
+    }
   }
 
   coreGuardar(): void {

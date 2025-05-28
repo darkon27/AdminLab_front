@@ -74,6 +74,7 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
     */
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, data?: any): void {
+    this.mensajeController = mensaje;
 
     this.dialog = true;
     this.acciones = `Corte de Producción: ${titulo}`;
@@ -267,12 +268,12 @@ export class ProduccionMantenimientoComponent extends ComponenteBasePrincipal im
     this.produccionForm.IdAseguradora = '';
     this.produccionForm.nombreSAseguradora = '';
   }
-  async coreGuardar() {
+
+  async coreGuardar(valorAccionServicio: number) {
 
     try {
 
 
-      let valorAccionServicio: number = 1;
       this.bloquearPag = true;
 
       const consultaRepsonse = await this.ProduccionService.MantenimientoProduccion(valorAccionServicio, this.produccionForm, this.getUsuarioToken());
