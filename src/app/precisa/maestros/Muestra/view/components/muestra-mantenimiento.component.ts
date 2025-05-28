@@ -74,7 +74,6 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
           this.dto.Estado = 1;
           this.puedeEditar = false;
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
-          this.fechaCreacion = new Date();
         } else if (this.validarform == "EDITAR") {
           //console.log("EDITAR FILA :", rowdata);
           this.filtro.IdMuestra = rowdata.IdMuestra;
@@ -116,13 +115,20 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
     }
   
     cargarEstados() {
-      this.lstEstado = [];
-      this.lstEstado.push({ label: ConstanteAngular.COMBOTODOS, value: null });
-      this.getMiscelaneos().filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
-        this.lstEstado.push({ label: i.Nombre, value: i.IdCodigo });
+    this.lstEstado = [];
+    this.lstEstado.push({
+      label: ConstanteAngular.COMBOSELECCIONE,
+      value: null,
+    });
+    this.getMiscelaneos()
+      ?.filter((x) => x.CodigoTabla == "ESTGEN")
+      .forEach((i) => {
+        this.lstEstado.push({
+          label: i.Nombre.toUpperCase(),
+          value: i.IdCodigo,
+        });
       });
-      this.filtro.Estado=1;
-    }
+  }
 
     comboTipoAdmision(): Promise<number> {
       this.tipoadmision.AdmEstado=1;
@@ -139,7 +145,7 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
     async coreGuardar() {
       if (this.estaVacio(this.dto.IdMuestra)) { this.messageShow('warn', 'Advertencia', 'Ingrese un código válido'); return; }
       if (this.estaVacio(this.dto.Nombre)) { this.messageShow('warn', 'Advertencia', 'Ingrese un nombre válido'); return; }
-      if (this.estaVacio(this.dto.Estado)) { this.messageShow('warn', 'Advertencia', 'Seleccione una estado válido'); return; }
+      //if (this.estaVacio(this.dto.Estado)) { this.messageShow('warn', 'Advertencia', 'Seleccione una estado válido'); return; }
       if (this.validarform == "NUEVO") {
         this.bloquearPag = true;
         this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario.trim();

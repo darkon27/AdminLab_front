@@ -1,5 +1,9 @@
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="1001">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="1000">
 
     <ng-template pTemplate="content">
         <br>
@@ -8,9 +12,9 @@
                 <!-- Código Muestra -->
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="codigoMuestra" class="label">Código Muestra</label>
+                        <label for="idmuestra" class="label">Código Muestra</label>
                         <div class="p-inputgroup">
-                            <input pInputText type="text" id="codigoMuestra" [(ngModel)]="dto.CodigoMuestra" 
+                            <input pInputText type="text" id="idmuestra" [(ngModel)]="dto.IdMuestra" 
                                 style="width:100%; background-color: #FFFACD;" />
                         </div>
                     </div>
@@ -67,18 +71,17 @@
                 <!-- Estado -->
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="estado" class="label">Estado</label>
-                        <div class="p-inputgroup">
-                            <p-dropdown id="estado" [options]="lstEstado" [(ngModel)]="dto.Estado" [disabled]="false"
-                                [ngModelOptions]="{standalone: true}" style="width:100%; background-color: #FFFACD;">
-                            </p-dropdown>
-                        </div>
-                    </div>
+                    <label for="inputLastName" class="label">Estado</label>
+                    <p-dropdown [options]="lstEstado" [(ngModel)]="filtro.Estado" [(ngModel)]="dto.Estado" 
+                        [disabled]="puedeEditar" 
+                        [placeholder]="'Seleccione un estado'" 
+                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+                  </div>
                 </div>
             </div>
         </p-fieldset>
 
-        <p-fieldset legend="Datos Generales">
+        <p-fieldset legend="Auditoria">
             <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
                 [modificacionFecha]="fechaModificacion"></ngx-auditoria>
         </p-fieldset>
@@ -86,7 +89,7 @@
 
     <ng-template pTemplate="footer">
         <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" 
-            type="submit" (click)="saveProduct($event)"></p-button>
+            type="submit" (click)="coreGuardar()"></p-button>
     </ng-template>
 </p-dialog>
-<p-toast></p-toast>
+<p-toast key="bc" [baseZIndex]="3000"></p-toast>
