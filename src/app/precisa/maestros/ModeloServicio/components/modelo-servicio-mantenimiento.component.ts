@@ -29,6 +29,11 @@ export class ModeloServicioMantenimientoComponent extends ComponenteBasePrincipa
   tipoadmision: FiltroTipoOAdmision = new FiltroTipoOAdmision();
   acciones: string = '';
   position: string = 'top';
+  AdmDescripcion: string;
+  Descripcion: string;
+  IpCreacion: string;
+
+
 
   constructor(
     private messageService: MessageService,

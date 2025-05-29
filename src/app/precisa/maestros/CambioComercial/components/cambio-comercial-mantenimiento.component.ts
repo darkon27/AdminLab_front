@@ -28,6 +28,7 @@ export class CambioComercialMantenimientoComponent extends ComponenteBasePrincip
   accionRealizar: string = ''
   position: string = 'top'
   bloquearPag: boolean;
+  validarform: string = null;
   visible: boolean;
   usuario: string;
   fechaCreacion: Date;
@@ -38,7 +39,7 @@ export class CambioComercialMantenimientoComponent extends ComponenteBasePrincip
 
 
   constructor(
-    private _MessageService: MessageService,
+    private messageService: MessageService,
     private _CambioComercialService: CambioComercialService
   ) {
     super();
@@ -108,37 +109,109 @@ export class CambioComercialMantenimientoComponent extends ComponenteBasePrincip
   }
 
   async coreGuardar() {
-    try {
-
-      if (this.estaVacio(this.dto.Valor)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'ingrese un valor válido'); return; }
-      if (this.estaVacio(this.dto.Estado)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una estado válido'); return; }
-
-      let valorAccionServicio: number = this.accionRealizar == ConstanteUI.ACCION_SOLICITADA_NUEVO ? 1 : 2;
-      this.bloquearPag = true;
-
-      const consultaRepsonse = await this._CambioComercialService.mantenimiento(valorAccionServicio, this.dto, this.getUsuarioToken());
-      if (consultaRepsonse.success == true) {
-        this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
-
-        this.mensajeController.resultado = consultaRepsonse;
-        this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-        this.dialog = false;
-
-      } else {
-        this.MensajeToastComun('notification', 'warn', 'Advertencia', consultaRepsonse.mensaje);
-      }
+    if (this.estaVacio(this.dto.Valor)) {
+        this.messageShow("warn", "Advertencia", "Ingrese un valor válido");
+        return;
     }
-    catch (error) {
-      console.error(error)
-      this.MensajeToastComun('notification', 'error', 'Error', 'Se generó un error. Pongase en contacto con los administradores.');
-      this.bloquearPag = false;
-    } finally {
-      this.bloquearPag = false;
+    if (this.estaVacio(this.dto.Estado)) {
+        this.messageShow("warn", "Advertencia", "Seleccione un estado válido");
+        return;
     }
+
+    if (this.validarform == "NUEVO") {
+        this.bloquearPag = true;
+        this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario.trim();
+        this.dto.FechaCreacion = this.fechaCreacion;
+        
+        this._CambioComercialService.mantenimiento(1, this.dto, this.getUsuarioToken()).then(
+            res => {
+                this.bloquearPag = false;
+                this.dialog = false;
+                
+                if (res != null) {
+                    if (res.success == true) {
+                        this.messageService.add({
+                            key: "bc",
+                            severity: "success",
+                            summary: "Success",
+                            detail: res.mensaje || "Se registró con éxito."
+                        });
+                        this.mensajeController.resultado = res;
+                        this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+                    } else {
+                        this.messageService.add({
+                            key: "bc",
+                            severity: "warn",
+                            summary: "Advertencia",
+                            detail: res.mensaje
+                        });
+                    }
+                }
+            }
+        ).catch(error => {
+            console.error(error);
+            this.messageService.add({
+                key: "bc",
+                severity: "error",
+                summary: "Error",
+                detail: "Se generó un error. Póngase en contacto con los administradores."
+            });
+            this.bloquearPag = false;
+        });
+    } else if (this.validarform == "EDITAR") {
+        this.bloquearPag = true;
+        this.dto.FechaModificacion = this.fechaModificacion;
+        
+        this._CambioComercialService.mantenimiento(2, this.dto, this.getUsuarioToken()).then(
+            res => {
+                this.bloquearPag = false;
+                this.dialog = false;
+                
+                if (res != null) {
+                    if (res.success == true) {
+                        this.messageService.add({
+                            key: "bc",
+                            severity: "success",
+                            summary: "Success",
+                            detail: res.mensaje || "Se actualizó con éxito."
+                        });
+                        this.mensajeController.resultado = res;
+                        this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+                    } else {
+                        this.messageService.add({
+                            key: "bc",
+                            severity: "warn",
+                            summary: "Advertencia",
+                            detail: res.mensaje
+                        });
+                    }
+                }
+            }
+        ).catch(error => {
+            console.error(error);
+            this.messageService.add({
+                key: "bc",
+                severity: "error",
+                summary: "Error",
+                detail: "Se generó un error. Póngase en contacto con los administradores."
+            });
+            this.bloquearPag = false;
+        });
+    }
+}
+
+async messageShow(_severity: string, _summary: string, _detail: string) {
+    this.messageService.add({
+      key: "bc",
+      severity: _severity,
+      summary: _summary,
+      detail: _detail,
+      life: 1000,
+    });
   }
 
   MensajeToastComun(key: string, tipo: string, titulo: string, dsc: string): void {
-    this._MessageService.clear();
-    this._MessageService.add({ key: key, severity: tipo, summary: titulo, detail: dsc });
+    this.messageService.clear();
+    this.messageService.add({ key: key, severity: tipo, summary: titulo, detail: dsc });
   }
 }

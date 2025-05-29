@@ -1,9 +1,9 @@
-<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="1001">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
 
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="1000">
 
     <ng-template pTemplate="content">
         <br>
@@ -52,5 +52,4 @@
             (click)="coreGuardar()"></p-button>
     </ng-template>
 </p-dialog>
-<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
-    position="top-right"></p-toast>
+<p-toast key="bc" [baseZIndex]="2000"></p-toast>
