@@ -1,6 +1,6 @@
 <p-blockUI [blocked]="bloquearPag">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
-  </p-blockUI>
+</p-blockUI>
 <p-confirmDialog #c key="confirm2">
     <p-footer>
         <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
@@ -10,201 +10,181 @@
     </p-footer>
 </p-confirmDialog>
 <p-card>
-    <nb-card-header style="background-color: transparent; margin-top: 0px;">
-        <div class="row">
-            <div class="col-sm-6">
-                <br>
-                <h4 class="titulonuevo">Cobranza</h4>
-            </div>
-            <div class="col-sm-2"   style="background-color: transparent;"></div>
-            <div class="col-sm-4" style="right: 5%;    position: fixed;   z-index: 950;" aria-orientation="horizontal">
-                <nb-card class="col-sm-12 fondocard" style="padding: 2px; margin-bottom: -10px; margin-top: 5px;">
-                    <div class="row" aria-orientation="horizontal">
-                        <button pButton icon="fa fa-search" type="button" title="Buscar" label="Buscar" class="p-button-secondary"
-                        (click)="coreBuscar()"></button>
-                        <button pButton icon="fa fa-file" type="button" title="Nuevo" label="Nuevo" class="p-button-secondary"
-                        (click)="coreNuevo()"></button>
-                        <button pButton icon="fa fa-file" type="button" title="Guardar" label="Guardar" class="p-button-secondary"
-                        (click)="coreGuardar()"></button>
-                        <button pButton icon="fa fa-file" type="button" title="Exportar" label="Exportar" class="p-button-secondary"
-                        (click)="coreExportar()"></button>                      
-                    </div>
-                </nb-card>
-            </div>
-        </div>
+    <nb-card-header>
+        <nav class="fixed">
+            <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
+        </nav>
     </nb-card-header>
-    <p-fieldset legend="Consulta General" (keyup.enter)="coreBuscar()">    
-            <div class="row" style="padding: 10px;">
-                <div class="col-sm-4">
-                    <label for="inputLastName" class="label">Compañia</label>
-                    <p-dropdown [(ngModel)]="filtro.Compania" [filter]="true" [options]="lstCompania"                  
+    <p-fieldset legend="Consulta General" (keyup.enter)="coreBuscar()">
+        <div class="row" style="padding: 10px;">
+            <div class="col-sm-4">
+                <label for="inputLastName" class="label">Compañia</label>
+                <p-dropdown [(ngModel)]="filtro.Compania" [filter]="true" [options]="lstCompania"
                     [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
-                </div>
-                <div class="col-sm-4">
-                    <label for="inputOrdAten" class="label">Clasificador</label>
-                    <p-dropdown [(ngModel)]="filtro.ClasificadorMovimiento" [filter]="true" [options]="lstClasificadorMovimiento"                  
-                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
-                </div>   
-                <div class="col-sm-4">  
-                    <label for="inputLastName" class="label">Sede</label>
-                    <p-dropdown [(ngModel)]="filtro.Sucursal" [filter]="true" [options]="lstSede"                  
+            </div>
+            <div class="col-sm-4">
+                <label for="inputOrdAten" class="label">Clasificador</label>
+                <p-dropdown [(ngModel)]="filtro.ClasificadorMovimiento" [filter]="true"
+                    [options]="lstClasificadorMovimiento"
                     [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
-                </div>
-    
-                <div class="col-sm-4">
-                    <label for="inputLastName" class="label">Cliente</label>
+            </div>
+            <div class="col-sm-4">
+                <label for="inputLastName" class="label">Sede</label>
+                <p-dropdown [(ngModel)]="filtro.Sucursal" [filter]="true" [options]="lstSede"
+                    [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+            </div>
+
+            <div class="col-sm-4">
+                <label for="inputLastName" class="label">Cliente</label>
+                <div class="p-inputgroup">
                     <div class="p-inputgroup">
-                        <div class="p-inputgroup">
-                            <input pInputText type="text" (keydown)="validarEnterEmpresa($event)"
-                                class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
-                                style="width:70%; height: 30px;" [(ngModel)]="filtro.DocumentoCliente"
-                                [disabled]="editarCampoEmpresa" />
-                            &nbsp;
-                            <input pInputText type="text"
-                                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
-                                style="width:130%; height: 30px;" [(ngModel)]="filtro.NombreCliente"
-                                [disabled]="true" />
-                            <div class="input-group-append">
-                                <button class="btn btn-outline" type="button" id="button-addon2"
-                                    style=" height:30px; margin-left:-32px" (click)="limpiarEmpresa()"
-                                    [disabled]="editarCampos">x</button>
-                            </div>
-                        </div>    
-                        <button (click)="verSelectorEmpresa()" pButton icon="fa fa-search" class="botonbuscar"
-                            type="button" title="Buscar Empresa" [disabled]="editarCampos"></button>                  
+                        <input pInputText type="text" (keydown)="validarEnterEmpresa($event)"
+                            class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                            style="width:70%; height: 30px;" [(ngModel)]="filtro.DocumentoCliente"
+                            [disabled]="editarCampoEmpresa" />
+                        &nbsp;
+                        <input pInputText type="text"
+                            class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                            style="width:130%; height: 30px;" [(ngModel)]="filtro.NombreCliente" [disabled]="true" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline" type="button" id="button-addon2"
+                                style="height: 30px;margin-left: -32px;display: flex;align-items: center;"
+                                (click)="limpiarEmpresa()" [disabled]="editarCampos">x</button>
+                        </div>
                     </div>
-                </div> 
-    
-                <div class="col-sm-4">         
-                    <label for="inputLastName" class="label">Tipo Comprobante</label>
-                    <p-dropdown [(ngModel)]="filtro.TipoComprobante" [filter]="true" [options]="lstTipoComprobante"                  
-                    [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>         
-            </div>
-                <div class="col-sm-4">         
-                        <label for="inputLastName" class="label">Serie</label>
-                        <p-dropdown [(ngModel)]="filtro.SerieComprobante" [filter]="true" [options]="lstSerie"                  
-                        [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>             
+                    <button (click)="verSelectorEmpresa()" pButton icon="fa fa-search" class="botonbuscar" type="button"
+                        title="Buscar Empresa" [disabled]="editarCampos"></button>
                 </div>
-                <div class="col-sm-4">
-                    <label for="inputLastName" class="label">Nro Comprobante</label>
-                    <p-inputNumber mode="decimal" [style]="{'width':'100%'}"  [(ngModel)]="filtro.NumeroComprobante"
-                     [minFractionDigits]="0" [maxFractionDigits]="0">
-                    </p-inputNumber>
             </div>
-           
-                <div class="col-sm-4">
-                    <label class="label">Fecha Inicio</label>
-                    <p-calendar [monthNavigator]="true" [(ngModel)]="filtro.FechaIngreso" [yearNavigator]="true"
-                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2300" [locale]="es"
-                        dateFormat="dd/mm/yy" [showIcon]="true">
-                    </p-calendar>
-                </div>
-                <div class="col-sm-4">
-                    <label class="label">Fecha Fin</label>
-                    <p-calendar [monthNavigator]="true" [(ngModel)]="filtro.FechaPago" [yearNavigator]="true"
-                        [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
-                        dateFormat="dd/mm/yy" [showIcon]="true">
-                    </p-calendar>
-                </div>
-    
+
+            <div class="col-sm-4">
+                <label for="inputLastName" class="label">Tipo Comprobante</label>
+                <p-dropdown [(ngModel)]="filtro.TipoComprobante" [filter]="true" [options]="lstTipoComprobante"
+                    [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
             </div>
-          
+            <div class="col-sm-4">
+                <label for="inputLastName" class="label">Serie</label>
+                <p-dropdown [(ngModel)]="filtro.SerieComprobante" [filter]="true" [options]="lstSerie"
+                    [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
+            </div>
+            <div class="col-sm-4">
+                <label for="inputLastName" class="label">Nro Comprobante</label>
+                <p-inputNumber mode="decimal" [style]="{'width':'100%'}" [(ngModel)]="filtro.NumeroComprobante"
+                    [minFractionDigits]="0" [maxFractionDigits]="0">
+                </p-inputNumber>
+            </div>
+
+            <div class="col-sm-4">
+                <label class="label">Fecha Inicio</label>
+                <p-calendar [monthNavigator]="true" [(ngModel)]="filtro.FechaIngreso" [yearNavigator]="true"
+                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2300" [locale]="es"
+                    dateFormat="dd/mm/yy" [showIcon]="true">
+                </p-calendar>
+            </div>
+            <div class="col-sm-4">
+                <label class="label">Fecha Fin</label>
+                <p-calendar [monthNavigator]="true" [(ngModel)]="filtro.FechaPago" [yearNavigator]="true"
+                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" yearRange="1940:2200" [locale]="es"
+                    dateFormat="dd/mm/yy" [showIcon]="true">
+                </p-calendar>
+            </div>
+
+        </div>
+
     </p-fieldset>
-
-    <p-fieldset legend="Información Detalle">
-
-        <p-table id="contenido" #dt [rows]="25" [paginator]="true" [rowHover]="true" [responsive]="true "
-            [style]="{ width: '100%'}" [sortOrder]="1" sortField="num" [value]="lstCobranza" [(selection)]="seleccion"
-            selectionMode="single" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-            [rowsPerPageOptions]="[25,50,100]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
+    <br>
+    <p-fieldset legend="Información Consulta">
+        <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstCobranza"
+            [responsive]="true" [sortOrder]="1" sortField="num"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
             <ng-template pTemplate="header">
-                <tr>  
-                    <th style="width: 8rem;" class="label">Acción</th>
-                    <th pSortableColumn="num"  ALIGN="center" style="width: 4rem; text-align: center;">
-                        Nro <p-sortIcon field="num"> </p-sortIcon>
+                <tr>
+                    <th class="tablaHeaderAccion3 label" ALIGN="center">Acciones</th>
+                    <th pSortableColumn="num" class="label text-center" ALIGN="center" style="width: 5rem;  ">Nro
+                        <p-sortIcon field="num">
+                        </p-sortIcon>
                     </th>
-                    <th pSortableColumn="NumeroComprobante" class="label"  ALIGN="center" style="width: 4rem; text-align: center;">
-                        Numero<p-sortIcon field="NumeroComprobante"></p-sortIcon>
-                    </th>                    
-                    <th pSortableColumn="FechaPago" class="label" ALIGN="center"
-                        style="width: 6rem; text-align: center;">
-                        Fecha<p-sortIcon field="FechaPago"></p-sortIcon>
+                    <th pSortableColumn="NumeroComprobante" class="label text-center" ALIGN="center"
+                        style="width: 8rem; ">
+                        Comprobante<p-sortIcon field="NumeroComprobante"></p-sortIcon>
                     </th>
-                    <th class="label" pSortableColumn="NombreCliente" ALIGN="center"
-                        style="width: 16rem; text-align: center;">
+                    <th pSortableColumn="FechaPago" class="label text-center" ALIGN="center" style="width: 8rem; ">
+                        Fecha de pago<p-sortIcon field="FechaPago"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="NombreCliente" class="label text-center" ALIGN="center"
+                        style="width: 15rem;  ">
                         Cliente<p-sortIcon field="NombreCliente"></p-sortIcon>
                     </th>
-                    <th class="label" pSortableColumn="Moneda" ALIGN="center"
-                        style="width: 4rem; text-align: center;">
+                    <th pSortableColumn="Moneda" class="label text-center" ALIGN="center" style="width: 8rem;  ">
                         Moneda<p-sortIcon field="Moneda"></p-sortIcon>
-                    </th>                    
-                    <th class="label" pSortableColumn="TipoCambio" ALIGN="center"
-                        style="width: 6rem; text-align: center;">
+                    </th>
+                    <th pSortableColumn="TipoCambio" class="label text-center" ALIGN="center" style="width: 8rem;  ">
                         T. Cambio<p-sortIcon field="TipoCambio"></p-sortIcon>
                     </th>
-                    <th class="label" pSortableColumn="Monto" ALIGN="center" style="width: 6rem; text-align: center;">
+                    <th pSortableColumn="Monto" class="label text-center" ALIGN="center" style="width: 8rem;  ">
                         Monto<p-sortIcon field="Monto"></p-sortIcon>
                     </th>
-                    <th class="label" pSortableColumn="DesEstado" ALIGN="center" style="width: 6rem; text-align: center;">
+                    <th pSortableColumn="DesEstado" class="label text-center" ALIGN="center" style="width: 5rem;  ">
                         Estado<p-sortIcon field="DesEstado"></p-sortIcon>
                     </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
-                <tr [pSelectableRow]="rowData"> 
-                    <td style="width: 8rem">
+                <tr>
+                    <td class="tablaColumnaAccion3">
                         <span class="p-column-title">Acción</span>
                         <table>
-                          <tr>
-                            <th>
-                              <button pButton pRipple type="button" icon="fad fa-pencil-alt"
-                                class="p-button-rounded p-button-text" title="Editar" (click)="coreEditar(rowData)"></button>
-                            </th>
-                            <th>
-                              <button pButton pRipple type="button" icon="fad fa-search" 
-                              class="p-button-rounded p-button-text" title="Ver" (click)="coreVer(rowData)"></button>
-                            </th>
-                            <th>
-                              <button pButton pRipple type="button" icon="fal fa-trash-alt"
-                                class="p-button-rounded p-button-text" title="Inactivar" (click)="coreInactivar(rowData)"
-                                [disabled]="rowData.Estado == '2'"></button>
-                            </th>
-                          </tr>
+                            <tr>
+                                <th>
+                                    <button pButton pRipple type="button" icon="fad fa-pencil-alt" title="Editar"
+                                        class="p-button-rounded p-button-text" (click)="coreEditar(rowData)"></button>
+                                </th>
+                                <th>
+                                    <button pButton pRipple type="button" icon="fad fa-search"
+                                        (click)="coreVer(rowData)" class="p-button-rounded p-button-text"
+                                        title="Ver"></button>
+                                </th>
+                                <th>
+                                    <button pButton pRipple type="button" icon="fal fa-minus-circle" title="Inactivar"
+                                        [disabled]="rowData.Estado != 1" class="p-button-rounded p-button-text"
+                                        (click)="coreInactivar(rowData)"></button>
+                                </th>
+                            </tr>
                         </table>
-                      </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 4rem; text-align: center;">
-                        <span class="p-column-title">Nro</span>
-                        {{ rowData.num }}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem; text-align: center;">
-                        <span class="p-column-title">Codigo</span>
+                    <td class="tablaColumnaCodigoChico text-center" style="width: 5rem;">
+                        <span class="p-column-title">Nro</span>
+                        {{rowData.num}}
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
+                        <span class="p-column-title">Comprobante</span>
                         {{ rowData.NumeroComprobante |uppercase }}
                     </td>
-
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem;">
-                        <span class="p-column-title">FechaPago</span>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
+                        <span class="p-column-title">Fecha de pago</span>
                         {{rowData.FechaPago| date: 'dd/MM/yyyy'}}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 16rem;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 15rem;">
                         <span class="p-column-title">Cliente</span>
                         {{ rowData.NombreCliente |uppercase }}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 4rem;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
                         <span class="p-column-title">Moneda</span>
                         {{ rowData.Moneda |uppercase }}
-                    </td>                 
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem;">
-                        <span class="p-column-title">T. Cambio</span>                      
+                    </td>
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
+                        <span class="p-column-title">T. cambio</span>
                         {{ rowData.TipoCambio | number:'1.2-2'}}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem; text-align: center;">
-                            <span class="p-column-title">Monto</span>
-                            {{ rowData.Monto | number:'1.2-2'}}
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 8rem;">
+                        <span class="p-column-title">Monto</span>
+                        {{ rowData.Monto | number:'1.2-2'}}
                     </td>
-                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 6rem;">
+                    <td class="tablaColumnaCodigoChico text-center" ALIGN="center" style="width: 5rem;">
                         <span class="p-column-title">Estado</span>
-                        {{ rowData.DesEstado |uppercase }}
-                    </td>                  
+                        <span>{{rowData.DesEstado|uppercase}}</span>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>
