@@ -26,30 +26,29 @@
                             [(ngModel)]="dto.Descripcion" maxlength="60" />
                     </div>
                 </div>
+                
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="label">Fecha Inicio</label>
-                        <div class="p-inputgroup"> 
-                            <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                [style]="{'width':'100%'}"    [(ngModel)]="dto.FechaValidezInicio" 
-                                [inputStyle]="{'width':'100%'}" [disabled]="true" yearRange="1940:2300"
-                                [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
-                            </p-calendar>
-                        </div>
+                        <label class="label">Fecha de Inicio</label>
+                                <p-calendar [monthNavigator]="true" [(ngModel)]="dto.FechaValidezInicio"
+                                    [yearNavigator]="true" [maxDate]="maxDate"
+                                    [style]="{'width':'100%'}"
+                                    [inputStyle]="{'background-color':'rgb(247, 247, 208)', 'width':'80%'}"
+                                    yearRange="1901:2200" [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy"  [disabled]="puedeEditar">
+                                </p-calendar>
                     </div>
                 </div>   
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="label">Fecha Fin</label>
-                        <div class="p-inputgroup">                                
-                            <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                [style]="{'width':'100%'}"    [(ngModel)]="dto.FechaValidezFin"
-                                [inputStyle]="{'width':'100%'}" [disabled]="true" yearRange="1940:2300"
-                                [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
-                            </p-calendar>
-                        </div>
+                                <p-calendar [monthNavigator]="true" [(ngModel)]="dto.FechaValidezFin"
+                                    [yearNavigator]="true" [maxDate]="maxDate"
+                                    [style]="{'width':'100%'}"
+                                    [inputStyle]="{'background-color':'rgb(247, 247, 208)', 'width':'80%'}"
+                                    yearRange="1901:2200" [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy"  [disabled]="puedeEditar">
+                                </p-calendar>
                     </div>
                 </div>
             </div>

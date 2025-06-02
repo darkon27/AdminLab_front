@@ -15,6 +15,8 @@ import { listabaseServices } from "../service/listabase.service";
 export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal implements OnInit {
   lstEstados: SelectItem[] = [];
   lstMoneda: SelectItem[] = [];
+  lstTipoLista: SelectItem[] = [];
+  titulo: string = '';
   bloquearPag:boolean;
   validarform:string = null;
   usuario:    string;
@@ -44,6 +46,7 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
     this.dialog = true;
     const p1 = this.cargarEstados();
     const p2 = this.cargarComboMoneda();
+    const p3 = this.cargarTipoLista();
     this.dto = new listabase();
     this.fechaModificacion = undefined;
     Promise.all([p1,p2]).then((resp) => {
@@ -106,6 +109,14 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
         res.forEach(ele => {
             this.lstMoneda.push({ label: ele.DescripcionCorta.trim(), value: ele.MonedaCodigo });
         });
+    });
+  }
+
+  cargarTipoLista(){
+    this.lstTipoLista = [];
+    this.lstTipoLista.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
+    this.getMiscelaneos()?.filter(x => x.CodigoTabla == "TIPOLISTA").forEach(i => {
+      this.lstTipoLista.push({ label: i.Nombre.toUpperCase(), value: i.IdCodigo });
     });
   }
 

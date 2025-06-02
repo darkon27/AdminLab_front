@@ -1,13 +1,22 @@
-<p-blockUI [blocked]="bloquearPag" [baseZIndex]="1001">
-    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+  <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
+<p-confirmDialog #c key="refinanciar" [visible]="visible" [baseZIndex]="10000">
+  <p-footer>
+    <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
+      (click)="c.accept()"></button>
+    <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
+      (click)="c.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
 
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="1000">
+  [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
         <br>
         <p-fieldset legend="Datos">
+            <div class="container">
             <div class="row">
                 <!-- Código Muestra -->
                 <div class="col-sm-4">
@@ -38,7 +47,7 @@
                     <div class="form-group">
                         <label for="tapa" class="label">Tapa</label>
                         <div class="p-inputgroup">
-                            <input pInputText type="text" id="tapa" [(ngModel)]="dto.Tapa" 
+                            <input pInputText type="text" id="tapa" [(ngModel)]="dto.Observacion" 
                                 style="width:100%; background-color: #FFFACD;" />
                         </div>
                     </div>
@@ -49,7 +58,7 @@
                     <div class="form-group">
                         <label for="cantidadImpresion" class="label">Cantidad Impresión</label>
                         <div class="p-inputgroup">
-                            <input pInputText type="number" id="cantidadImpresion" [(ngModel)]="dto.CantidadImpresion" 
+                            <input pInputText type="number" id="cantidadImpresion" [(ngModel)]="dto.Cantidad" 
                                 style="width:100%; background-color: #FFFACD;" />
                         </div>
                     </div>
@@ -79,8 +88,9 @@
                   </div>
                 </div>
             </div>
+            </div>
         </p-fieldset>
-
+        <br>
         <p-fieldset legend="Auditoria">
             <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
                 [modificacionFecha]="fechaModificacion"></ngx-auditoria>
@@ -88,8 +98,10 @@
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" 
-            type="submit" (click)="coreGuardar()"></p-button>
-    </ng-template>
+    <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
+      (click)="coreGuardar()"></p-button>
+  </ng-template>
 </p-dialog>
-<p-toast key="bc" [baseZIndex]="3000"></p-toast>
+<p-toast></p-toast>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+  position="top-right"></p-toast>
