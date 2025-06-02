@@ -20,8 +20,6 @@ export class MuestraComponent extends ComponenteBasePrincipal implements OnInit,
   filtro: MuestraModel = new MuestraModel();
   lstEstado: SelectItem[] = [];
   lstMuestra: SelectItem[] = [];
-  validarAccion: string;
-  acciones: string = ''
   position: string = 'top'
   titulo: string; 
   registroSeleccionado: any;
@@ -55,12 +53,12 @@ export class MuestraComponent extends ComponenteBasePrincipal implements OnInit,
     this.muestraMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'MUESTRA', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
 
-  coreEditar(row: any): void {
-    this.muestraMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'MUESTRA', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, row);  
+  coreEditar(dto): void {
+    this.muestraMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'MUESTRA', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo,0, dto);  
   }
 
   coreVer(row: any): void {
-    this.muestraMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'MUESTRA', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, row);  
+    this.muestraMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'MUESTRA', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo,0, row);  
   }
 
   coreInactivar(data: any) {
@@ -153,7 +151,4 @@ export class MuestraComponent extends ComponenteBasePrincipal implements OnInit,
     } 
 
 
-  openNew() {
-    this.muestraMantenimientoComponent.iniciarComponente('NUEVO',this.objetoTitulo.menuSeguridad.titulo)
-  }
 }

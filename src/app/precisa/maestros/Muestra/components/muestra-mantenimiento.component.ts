@@ -36,7 +36,6 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
     dto:  MuestraModel = new MuestraModel();
     filtro:  MuestraModel= new MuestraModel();
     tipoadmision: FiltroTipoOAdmision = new FiltroTipoOAdmision();
-    acciones: string = '';
     position: string = 'top';
     visible: boolean;
   
@@ -67,15 +66,6 @@ export class MuestrasMantenimientoComponent extends ComponenteBasePrincipal impl
       });
     }
 
-  iniciarComponente(accion: string,titulo) {
-    //if (accion == "NUEVO") {
-      this.cargarAcciones(accion,titulo)
-      this.cargarEstados()
-      
-
-    //}
-    
-  }
 
   
   cargarAcciones(accion: string, titulo: string, rowdata?: any) {
