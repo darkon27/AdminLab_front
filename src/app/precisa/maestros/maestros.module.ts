@@ -70,7 +70,7 @@ import { CuentaBancariaMantenimientoComponent } from './CuentaBancaria/component
 import { ParametrosMantenimientoComponent } from './Parametros/components/parametros-mantenimiento.component';
 import { TipoPagoMantenimientoComponent } from './TipoPago/components/tipo-pago-mantenimiento.component';
 import { TipoPacienteMantenimientoComponent } from './TipoPaciente/view/components/tipo-paciente-mantenimiento.component';
-import { MuestrasMantenimientoComponent } from './Muestra/view/components/muestra-mantenimiento.component';
+import { MuestrasMantenimientoComponent } from './Muestra/components/muestra-mantenimiento.component';
 import { SedesMantenimientoComponent } from './Sedes/view/components/sedes-mantenimiento.component';
 import { CambioComercialMantenimientoComponent } from './CambioComercial/components/cambio-comercial-mantenimiento.component';
 import { AprobadoresMantenimientoComponent } from './Aprobadores/components/aprobadores-mantenimiento.component';

@@ -7,6 +7,7 @@ export class MuestraModel{
     Observacion:    string;
     Cantidad:      number;
     Estado?:        number;
+    ESTADOdesc:     string;
     FechaCreacion?: Date;
     FechaModificacion?: Date;
     UsuarioCreacion: string;
@@ -15,7 +16,8 @@ export class MuestraModel{
     IpModificacion: string;
     abreviatura?: string;
     Empresa: string;
-    FlgTipoEntrada: number;
+    FlgTipoEntrada?: number;
+    FlgEntrada: string;
     IdMuestraRec: number;
     TipoMuestra?: string;
     TipoSangre?: string;

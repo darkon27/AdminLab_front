@@ -1,4 +1,14 @@
-<nb-card>
+<p-blockUI [blocked]="bloquearPag">
+  <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-confirmDialog #c key="confirm2">
+  <p-footer>
+    <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+      (click)="c.accept()"></button>
+    <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded" (click)="c.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
+<p-card>
     <nb-card-header>
         <nav class="fixed">
             <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
@@ -92,8 +102,8 @@
                         class="p-button-rounded p-button-text" title="Ver"></button>
                     </th>
                     <th>
-                      <button pButton pRipple type="button" icon="fal fa-trash-alt"title="Inactivar"
-                        class="p-button-rounded p-button-text" (click)="coreinactivar(rowData)"></button>
+                      <button pButton pRipple type="button" icon="fal fa-minus-circle" title="Inactivar"
+                        class="p-button-rounded p-button-text" (click)="coreInactivar(rowData)"></button>
                       </th>            
                     <th>
                       <button pButton pRipple type="button" icon="fad fa-external-link" title="Asignar"
@@ -120,6 +130,7 @@
     </nb-card-body>
 
 
-</nb-card>
+</p-card>
 <ngx-muestra-mantenimiento></ngx-muestra-mantenimiento>
-<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '30vw'}"></p-confirmDialog>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+  position="top-right"></p-toast>
