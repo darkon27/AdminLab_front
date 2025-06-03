@@ -6,6 +6,9 @@ import { ConstanteAngular } from "../../../../@theme/ConstanteAngular";
 import { MaestrodetalleService } from "../../Detalle/servicio/maestrodetalle.service";
 import { listabase } from "../model/listabase";
 import { listabaseServices } from "../service/listabase.service";
+import { ConstanteUI } from "../../../../../util/Constantes/Constantes";
+import { forkJoin } from "rxjs";
+
 
 @Component({
     selector: 'ngx-lista-base-mantenimiento',
@@ -17,7 +20,9 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
   lstMoneda: SelectItem[] = [];
   lstTipoLista: SelectItem[] = [];
   titulo: string = '';
+  accionRealizar: string = ''
   bloquearPag:boolean;
+  visible: boolean;
   validarform:string = null;
   usuario:    string;
   fechaCreacion: Date;
@@ -36,60 +41,71 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
   }
 
   ngOnInit(): void {
-    throw new Error("Method not implemented.");
+    this.cargarSelect();
+    this.iniciarComponent();
   }
 
-  iniciarComponenteMaestro(msj: MensajeController, accion: string, titulo, rowdata?: any): void {
-    this.mensajeController = msj;
-    this.validarform = accion;
-    this.acciones = `${titulo}: ${accion}`;
-    this.dialog = true;
-    const p1 = this.cargarEstados();
-    const p2 = this.cargarComboMoneda();
-    const p3 = this.cargarTipoLista();
-    this.dto = new listabase();
-    this.fechaModificacion = undefined;
-    Promise.all([p1,p2]).then((resp) => {
-      if (this.validarform == "NUEVO") {
-        this.dto.Estado = 1;
-        this.puedeEditar = false;
-        this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
-        this.fechaCreacion = new Date();
-      } else if (this.validarform == "EDITAR") {
-        //console.log("EDITAR FILA :", rowdata);
-        this.filtro.IdListaBase = rowdata.IdListaBase;
-        this.bloquearPag = true;
-        this.listabaseServices.ListadoBase(this.filtro).then((res) => {
-          this.bloquearPag = false;
-          this.dto = res[0];
-          if (res[0].FechaValidezInicio != null) {this.dto.FechaValidezInicio = new Date(res[0].FechaValidezInicio); }
-          if (res[0].FechaValidezFin != null) {this.dto.FechaValidezFin = new Date(res[0].FechaValidezFin); }
-          //console.log("EDITAR this.dto :",   this.dto );
+  cargarSelect(): void {
+      const optTodos = { label: ConstanteAngular.COMBOTODOS, value: null };
+      forkJoin({
+        estados: this.obtenerDataMaestro('ESTGEN'),
+      }
+      ).subscribe(resp => {
+        this.lstEstados = [...resp.estados];
+      });
+      this.cargarComboMoneda();
+      this.cargarTipoLista();
+    }
+
+  coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, data?: any): void {
+    this.bloquearPag = true;
+    this.mensajeController = mensaje;
+    this.cargarAcciones(accionform, titulo, data)
+    this.bloquearPag = false;
+
+  }
+
+  cargarAcciones(accion: string, titulo: string, rowdata?: any) {
+      this.titulo = `${titulo}: ${accion}`;
+      this.accionRealizar = accion;
+      this.dialog = true;
+  
+      switch (accion) {
+        case ConstanteUI.ACCION_SOLICITADA_NUEVO:
+          this.dto = new listabase();
+          this.dto.Estado = 1;
+          this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+          this.dto.FechaCreacion = new Date();
+          this.puedeEditar = false;
+  
+          this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+          this.fechaCreacion = new Date();
+          this.fechaModificacion = null;
+          break;
+  
+        case ConstanteUI.ACCION_SOLICITADA_EDITAR:
+          this.dto = rowdata;
           this.puedeEditar = false;
           this.fechaModificacion = new Date();
-          this.fechaCreacion = new Date(res[0].FechaCreacion);
+          this.fechaCreacion = new Date(this.dto.FechaCreacion);
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
-        });
-
-      } else if (this.validarform == "VER") {
-        //console.log("VER FILA :", rowdata);
-        this.filtro.IdListaBase = rowdata.IdListaBase;
-        this.bloquearPag = true;
-        this.listabaseServices.ListadoBase(this.filtro).then((res) => {
-          this.bloquearPag = false;
-          this.dto = res[0];
+  
+          this.dto.UsuarioModificacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+          this.dto.FechaModificacion = new Date();
+          break;
+  
+        case ConstanteUI.ACCION_SOLICITADA_VER:
+          this.dto = rowdata;
+  
           this.puedeEditar = true;
-          if (res[0].FechaModificacion == null || res[0].FechaModificacion == undefined) {
-            this.fechaModificacion = undefined;
-          } else {
-            this.fechaModificacion = new Date(res[0].FechaModificacion);
-          }
-          this.fechaCreacion = new Date(res[0].FechaCreacion);
+          if (rowdata.FechaModificacion == null || rowdata.FechaModificacion == null) { this.fechaModificacion = null; }
+          else { this.fechaModificacion = new Date(rowdata.FechaModificacion); }
+          this.fechaCreacion = new Date(rowdata.FechaCreacion);
           this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
-        });
+          break;
       }
-    });
-  }
+  
+    }
 
 
   cargarEstados() {
@@ -121,57 +137,41 @@ export class ListaBaseMantenimientoComponent extends ComponenteBasePrincipal imp
   }
 
   async coreGuardar() {
-    if (this.estaVacio(this.dto.Codigo)) { this.messageShow('warn', 'Advertencia', 'Ingrese un código válido'); return; }
-    if (this.estaVacio(this.dto.Descripcion)) { this.messageShow('warn', 'Advertencia', 'Ingrese un nombre válido'); return; }
-    if (this.estaVacio(this.dto.Estado)) { this.messageShow('warn', 'Advertencia', 'Seleccione una estado válido'); return; }
-    if (this.validarform == "NUEVO") {
-      this.bloquearPag = true;
-      this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario.trim();
-      this.dto.FechaCreacion = this.fechaCreacion;
-      this.listabaseServices.MantenimientoBase(1, this.dto, this.getUsuarioToken()).then(
-        res => {
-          this.bloquearPag = false;
-          this.dialog = false;
-          //console.log("registrado:", res);
-          if (res != null) {
-            if (res.mensaje == "Created") {
-              this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se registró con éxito.' });
-              this.mensajeController.resultado = res;
+          try {
+            if (this.estaVacio(this.dto.Codigo)) { this.MensajeToastComun('notification','warn', 'Advertencia', 'Ingrese un valor válido'); return; }
+            if (this.estaVacio(this.dto.Estado)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una estado válido'); return; }
+            if (this.estaVacio(this.dto.Descripcion)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Ingrese una descripción válida'); return; }
+            // if (this.estaVacio(this.dto.IdTipoCambio)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione un tipo de cambio válido'); return; }
+            let valorAccionServicio: number = this.accionRealizar == ConstanteUI.ACCION_SOLICITADA_NUEVO ? 1 : 2;
+            this.bloquearPag = true;
+            const consultaRepsonse = await this.listabaseServices.MantenimientoBase(valorAccionServicio, this.dto, this.getUsuarioToken());
+            if (consultaRepsonse.success == true) {
+              this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
+      
+              this.mensajeController.resultado = consultaRepsonse;
               this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+              this.dialog = false;
+      
             } else {
-              this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: res.mensaje });
+              this.MensajeToastComun('notification', 'warn', 'Advertencia', consultaRepsonse.mensaje);
             }
           }
-        });
-
-    } else if (this.validarform == "EDITAR") {
-      this.bloquearPag = true;
-      this.dialog = false;
-      this.dto.FechaModificacion = this.fechaModificacion;
-
-      this.listabaseServices.MantenimientoBase(2, this.dto, this.getUsuarioToken()).then(
-        res => {
-          this.bloquearPag = false;
-          if (res != null) {
-            //console.log("registrado:", res);
-            if (res.mensaje == "Ok") {
-              this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Se actualizó con éxito.' });
-              this.mensajeController.resultado = res;
-              this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-              this.bloquearPag = false;
-              this.dialog = false;
-            } else {
-              this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertenciaaa', detail: res.mensaje });
-              this.bloquearPag = false;
-              this.dialog = false;
-            }
+          catch (error) {
+            console.error(error)
+            this.MensajeToastComun('notification', 'error', 'Error', 'Se generó un error. Pongase en contacto con los administradores.');
+            this.bloquearPag = false;
+          } finally {
+            this.bloquearPag = false;
           }
-        });
-    }
-    }
+        }
 
   async messageShow(_severity: string, _summary: string, _detail: string) {
     this.messageService.add({ key: 'bc', severity: _severity, summary: _summary, detail: _detail, life: 1000 });
+  }
+
+  MensajeToastComun(key: string, tipo: string, titulo: string, dsc: string): void {
+    this.messageService.clear();
+    this.messageService.add({ key: key, severity: tipo, summary: titulo, detail: dsc });
   }
 
 }

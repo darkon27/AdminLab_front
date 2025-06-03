@@ -11,6 +11,7 @@ import { ListaBaseMantenimientoComponent } from '../components/lista-base-manten
 import { IdListaBase } from '../model/IListaBase';
 import { listabase } from '../model/listabase';
 import { listabaseServices } from '../service/listabase.service';
+import { ConstanteUI } from '../../../../../util/Constantes/Constantes';
 
 @Component({
   selector: 'ngx-lista-base',
@@ -45,6 +46,7 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
   coreEliminar(): void {
     throw new Error('Method not implemented.');
   }
+  
 
   ngOnInit(): void {
     this.bloquearPag = true;
@@ -73,10 +75,17 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
   }
 
   coreMensaje(mensage: MensajeController): void {
-    if (mensage.componente == "SELECTOR_SEDES") {
-      this.coreBuscar();
+      const dataDevuelta = mensage.resultado;
+  
+      switch (mensage.componente.toUpperCase()) {
+        case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'LISTA_BASE':
+        case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'LISTA_BASE':
+          this.coreBuscar();
+          break;
+        default:
+          break;
+      }
     }
-  }
 
   exportExcel() {
     if (this.lstlistabase == null || this.lstlistabase == undefined || this.lstlistabase.length == 0) {
@@ -169,15 +178,14 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
     }
 
   }
-
   coreNuevo(): void {
-    this.listaBaseMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_SEDES', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo);
+    this.listaBaseMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'LISTA_BASE', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
-  coreEditar(row) {
-    this.listaBaseMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_SEDES', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, row);
+  coreVer(row: any) {
+    this.listaBaseMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'TIPO_TRABAJADOR', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, row);
   }
-  coreVer(row) {
-    this.listaBaseMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_SEDES', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, row);
+  coreEditar(row: any) {
+    this.listaBaseMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPO_TRABAJADOR', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, row)
   }
 
   coreinactivar(row) {
@@ -201,21 +209,14 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
   }
 
   coreBuscar(): void {
-    if (!this.estaVacio(this.filtro.Descripcion)) {
-      this.filtro.Descripcion = this.filtro.Descripcion.trim();
-    }
-    if (!this.estaVacio(this.filtro.Codigo)) {
-      this.filtro.Codigo = this.filtro.Codigo.trim();
-    }
     this.bloquearPag = true;
-    this.ExamenService.ListadoBaseComponente(this.filtro).then((res) => {
-      this.bloquearPag = false;
+    this.listabaseServices.ListadoBase(this.filtro).then((res) => {
       var contado = 1;
-      res.forEach(element => {
+      res?.forEach(element => {
         element.num = contado++;
       });
-      this.lstlistabase = res;
-      //console.log("coreBuscar listado:", res);
+      this.lstlistabase = res?.length > 0 ? res : [];
+      this.bloquearPag = false;
     });
   }
 
@@ -240,10 +241,6 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
     });
   }
 
-  defaultBuscar(event) {
-    if (event.keyCode === 13) {
-      this.coreBuscar();
-    }
-  }
+  
 
 }

@@ -15,18 +15,18 @@
           <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
       </nav>
   </nb-card-header>
-    <p-fieldset legend="Información Consulta">
+    <p-fieldset legend="Información Consulta" (keyup.enter)="coreBuscar()">
       <div class="row">
         <div class="col-sm-4">
           <label for="inputOrdAten" class="label">Código</label>
           <input pInputText type="text" placeholder="" style="width:100%; height: 30px; text-transform: uppercase;"
-            [(ngModel)]="filtro.Codigo" (keypress)="defaultBuscar($event)" />
+            [(ngModel)]="filtro.Codigo"/>
         </div>
   
         <div class="col-sm-4">
           <label for="inputOrdAten" class="label">Descripción</label>
           <input pInputText type="text" placeholder="" style="width:100%; height: 30px; text-transform: uppercase;"
-            [(ngModel)]="filtro.Descripcion" (keypress)="defaultBuscar($event)" />
+            [(ngModel)]="filtro.Descripcion"/>
         </div>
         <div class="col-sm-4">
           <label for="inputLastName" class="label">Estado</label>
