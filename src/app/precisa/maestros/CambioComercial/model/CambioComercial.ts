@@ -1,18 +1,15 @@
 export class CambioComercial {
+  constructor() {}
 
-    constructor() {
-    }
-
-    num: number
-    IdTipoCambio: number
-    FechaInicio: string
-    FechaFin: any
-    Valor: number
-    Estado: string
-    FechaCreacion: string | Date
-    UsuarioCreacion: string
-    FechaModificacion: string | Date
-    UsuarioModificacion: any
-    EstadoDesc: string
-
+  num: number;
+  IdTipoCambio: number;
+  FechaInicio: string | Date;
+  FechaFin: string | Date;
+  Valor: number;
+  Estado: string;
+  FechaCreacion: string | Date;
+  UsuarioCreacion: string;
+  FechaModificacion: string | Date;
+  UsuarioModificacion: string;
+  EstadoDesc: string;
 }

@@ -1,44 +1,59 @@
-<p-blockUI [blocked]="bloquearPag" [baseZIndex]="1001">
-    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+<p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+  <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
+<p-confirmDialog #c key="refinanciar" [visible]="visible" [baseZIndex]="10000">
+  <p-footer>
+    <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
+      (click)="c.accept()"></button>
+    <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
+      (click)="c.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
 
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="1000">
+  [style]="{width: '1000px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
         <br>
-        <p-fieldset legend="Información General">
-            <div class="row">
-                <div class="col-sm-6">
-                    <label class="label">Fecha Inicio</label>
-                    <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
-                        [style]="{'width':'100%'}" yearRange="1940:2200" [locale]="es" [(ngModel)]="dto.FechaInicio"
-                        dateFormat="dd/mm/yy" [showIcon]="true">
-                    </p-calendar>
-                </div>
-                <div class="col-sm-6">
-                    <label class="label">Fecha Fin</label>
-                    <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
-                        [style]="{'width':'100%'}" yearRange="1940:2200" [locale]="es" [(ngModel)]="dto.FechaFin"
-                        dateFormat="dd/mm/yy" [showIcon]="true">
-                    </p-calendar>
-                </div>
+        <p-fieldset legend="Información General" style="padding: 1.5rem;">
+            <div class="row" style="margin-left: 1.5rem; margin-right: 1.5rem;">
+            <!-- <div class="col-sm-6">
+                <label class="label">Id</label>
+                <input pInputText type="text" [style]="{ 'width':'100%'}" [(ngModel)]="dto.IdTipoCambio"
+                [disabled]=" puedeEditar" />
+            </div> -->
+            <div class="col-sm-6" style="margin-bottom: 1rem;">
+                <label class="label">Fecha Inicio</label>
+                <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
+                [inputStyle]="{'width':'100%','background-color':'rgb(247, 247, 208)'}"
+                [style]="{'width':'100%'}" yearRange="1940:2200" [locale]="es" [(ngModel)]="dto.FechaInicio"
+                dateFormat="dd/mm/yy" [showIcon]="true">
+                </p-calendar>
+            </div>
+            <div class="col-sm-6" style="margin-bottom: 1rem;">
+                <label class="label">Fecha Fin</label>
+                <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
+                [inputStyle]="{'width':'100%','background-color':'rgb(247, 247, 208)'}"
+                [style]="{'width':'100%'}" yearRange="1940:2200" [locale]="es" [(ngModel)]="dto.FechaFin"
+                dateFormat="dd/mm/yy" [showIcon]="true">
+                </p-calendar>
+            </div>
 
-                <div class="col-sm-6">
-                    <label class="label">Valor</label>
-                    <input pInputText type="text" [style]="{ 'width':'100%'}" [(ngModel)]="dto.Valor"
-                        [disabled]=" puedeEditar" />
+            <div class="col-sm-6" style="margin-bottom: 1rem;">
+                <label class="label">Valor</label>
+                <input pInputText type="text" [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" [(ngModel)]="dto.Valor"
+                [disabled]=" puedeEditar" />
+            </div>
+            <div class="col-sm-6" style="margin-bottom: 1rem;">
+                <label class="label">Estado</label>
+                <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-align-justify"></i></span>
+                <p-dropdown [disabled]="puedeEditar" placeholder="Seleccione"
+                    [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" [disabled]="puedeEditar"
+                    class="tablaCompletaIzquieda" [options]="lstEstado" [(ngModel)]="dto.Estado">
+                </p-dropdown>
                 </div>
-                <div class="col-sm-6">
-                    <label class="label">Estado</label>
-                    <div class="p-inputgroup">
-                        <span class="p-inputgroup-addon"><i class="pi pi-align-justify"></i></span>
-                        <p-dropdown [disabled]="puedeEditar" placeholder="Seleccione"
-                            [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" [disabled]="puedeEditar"
-                            class="tablaCompletaIzquieda" [options]="lstEstado" [(ngModel)]="dto.Estado">
-                        </p-dropdown>
-                    </div>
-                </div>
+            </div>
             </div>
         </p-fieldset>
         <br>
@@ -52,4 +67,6 @@
             (click)="coreGuardar()"></p-button>
     </ng-template>
 </p-dialog>
-<p-toast key="bc" [baseZIndex]="2000"></p-toast>
+<p-toast></p-toast>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+  position="top-right"></p-toast>

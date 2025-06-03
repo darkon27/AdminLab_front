@@ -17,8 +17,8 @@ export class ModeloServicioMantenimientoComponent extends ComponenteBasePrincipa
   lstEstados: SelectItem[] = [];
   lsttipoadmision: SelectItem[] = [];
   lstTipoPaciente: SelectItem[] = [];
-
-
+  dialog: boolean = false;
+  titulo: string = '';
   bloquearPag: boolean;
   validarform: string = null;
   usuario: string;
@@ -32,6 +32,7 @@ export class ModeloServicioMantenimientoComponent extends ComponenteBasePrincipa
   AdmDescripcion: string;
   Descripcion: string;
   IpCreacion: string;
+  visible: boolean;
 
 
 

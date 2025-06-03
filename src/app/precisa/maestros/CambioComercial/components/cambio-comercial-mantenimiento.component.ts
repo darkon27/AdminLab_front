@@ -76,6 +76,7 @@ export class CambioComercialMantenimientoComponent extends ComponenteBasePrincip
         this.dto = new CambioComercial();
         this.dto.Estado = 'A';
         this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+        this.dto.IdTipoCambio = 1;
         this.dto.FechaCreacion = new Date();
         this.puedeEditar = false;
 
@@ -109,96 +110,34 @@ export class CambioComercialMantenimientoComponent extends ComponenteBasePrincip
   }
 
   async coreGuardar() {
-    if (this.estaVacio(this.dto.Valor)) {
-        this.messageShow("warn", "Advertencia", "Ingrese un valor válido");
-        return;
-    }
-    if (this.estaVacio(this.dto.Estado)) {
-        this.messageShow("warn", "Advertencia", "Seleccione un estado válido");
-        return;
-    }
-
-    if (this.validarform == "NUEVO") {
-        this.bloquearPag = true;
-        this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].Usuario.trim();
-        this.dto.FechaCreacion = this.fechaCreacion;
-        
-        this._CambioComercialService.mantenimiento(1, this.dto, this.getUsuarioToken()).then(
-            res => {
-                this.bloquearPag = false;
-                this.dialog = false;
-                
-                if (res != null) {
-                    if (res.success == true) {
-                        this.messageService.add({
-                            key: "bc",
-                            severity: "success",
-                            summary: "Success",
-                            detail: res.mensaje || "Se registró con éxito."
-                        });
-                        this.mensajeController.resultado = res;
-                        this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-                    } else {
-                        this.messageService.add({
-                            key: "bc",
-                            severity: "warn",
-                            summary: "Advertencia",
-                            detail: res.mensaje
-                        });
-                    }
-                }
-            }
-        ).catch(error => {
-            console.error(error);
-            this.messageService.add({
-                key: "bc",
-                severity: "error",
-                summary: "Error",
-                detail: "Se generó un error. Póngase en contacto con los administradores."
-            });
-            this.bloquearPag = false;
-        });
-    } else if (this.validarform == "EDITAR") {
-        this.bloquearPag = true;
-        this.dto.FechaModificacion = this.fechaModificacion;
-        
-        this._CambioComercialService.mantenimiento(2, this.dto, this.getUsuarioToken()).then(
-            res => {
-                this.bloquearPag = false;
-                this.dialog = false;
-                
-                if (res != null) {
-                    if (res.success == true) {
-                        this.messageService.add({
-                            key: "bc",
-                            severity: "success",
-                            summary: "Success",
-                            detail: res.mensaje || "Se actualizó con éxito."
-                        });
-                        this.mensajeController.resultado = res;
-                        this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-                    } else {
-                        this.messageService.add({
-                            key: "bc",
-                            severity: "warn",
-                            summary: "Advertencia",
-                            detail: res.mensaje
-                        });
-                    }
-                }
-            }
-        ).catch(error => {
-            console.error(error);
-            this.messageService.add({
-                key: "bc",
-                severity: "error",
-                summary: "Error",
-                detail: "Se generó un error. Póngase en contacto con los administradores."
-            });
-            this.bloquearPag = false;
-        });
-    }
-}
+        try {
+          if (this.estaVacio(this.dto.Valor)) { this.MensajeToastComun('notification','warn', 'Advertencia', 'Ingrese un valor válido'); return; }
+          if (this.estaVacio(this.dto.Estado)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una estado válido'); return; }
+          if (this.estaVacio(this.dto.FechaInicio)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Ingrese una fecha de inicio válida'); return; }
+          if (this.estaVacio(this.dto.FechaFin)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Ingrese una fecha de fin válida'); return; }
+          // if (this.estaVacio(this.dto.IdTipoCambio)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione un tipo de cambio válido'); return; }
+          let valorAccionServicio: number = this.accionRealizar == ConstanteUI.ACCION_SOLICITADA_NUEVO ? 1 : 2;
+          this.bloquearPag = true;
+          const consultaRepsonse = await this._CambioComercialService.mantenimiento(valorAccionServicio, this.dto, this.getUsuarioToken());
+          if (consultaRepsonse.success == true) {
+            this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
+    
+            this.mensajeController.resultado = consultaRepsonse;
+            this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+            this.dialog = false;
+    
+          } else {
+            this.MensajeToastComun('notification', 'warn', 'Advertencia', consultaRepsonse.mensaje);
+          }
+        }
+        catch (error) {
+          console.error(error)
+          this.MensajeToastComun('notification', 'error', 'Error', 'Se generó un error. Pongase en contacto con los administradores.');
+          this.bloquearPag = false;
+        } finally {
+          this.bloquearPag = false;
+        }
+      }
 
 async messageShow(_severity: string, _summary: string, _detail: string) {
     this.messageService.add({
