@@ -49,7 +49,7 @@
             <th pSortableColumn="num" class="label text-center" ALIGN="center" style="width: 5rem;  ">Nro <p-sortIcon field="num">
               </p-sortIcon>
             </th>
-            <th pSortableColumn="Codigo" class="label text-center" ALIGN="center" style="width: 5rem; ">Codigo<p-sortIcon
+            <th pSortableColumn="Codigo" class="label text-center" ALIGN="center" style="width: 5rem; ">Código<p-sortIcon
                 field="Codigo"></p-sortIcon>
             </th>
             <th pSortableColumn="Descripcion" class="label text-center" ALIGN="center" style="width: 10rem;  ">Descripción<p-sortIcon
@@ -77,9 +77,13 @@
                       class="p-button-rounded p-button-text" title="Ver"></button>
                   </th>
                   <th>
+                    <button pButton pRipple type="button" icon="fad fa-minus-circle" (click)="coreinactivar(rowData)"
+                      class="p-button-rounded p-button-text" title="Inactivar"></button>
+                  </th>
+                  <!-- <th>
                     <button pButton pRipple type="button" icon="fad fa-minus-circle" *ngIf="rowData.SedEstado == '1' "
                       (click)="coreinactivar(rowData)" class="p-button-rounded p-button-text" title="Inactivar"></button>
-                  </th>
+                  </th> -->
                 </tr>
               </table>
             </td>

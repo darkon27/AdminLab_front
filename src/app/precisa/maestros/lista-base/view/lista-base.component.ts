@@ -199,7 +199,7 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
         this.ExamenService.MantenimientoBaseComponente(3, row, this.getUsuarioToken()).then(
           res => {
             if (res != null) {
-              this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Anulado con éxito.' });
+              this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Inactivado con éxito.' });
               this.coreBuscar();
             }
           });
