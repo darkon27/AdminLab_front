@@ -57,41 +57,81 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
     throw new Error('Method not implemented.');
   }
 
+    ngOnInit(): void {
+    this.tituloListadoAsignar(1, this);
+    this.iniciarComponent()
+    const p1 = this.cargarEstados();
+    Promise.all([p1]).then((resp) => {
+      this.bloquearPag = false;
+    });
+  }
+
+  // coreMensaje(mensage: MensajeController): void {
+  //   if (mensage.componente == "SELECPACIENTE") {
+  //     this.filtro.DocPaciente = mensage.resultado.Documento;
+  //     this.filtro.Paciente = mensage.resultado.NombreCompleto;
+  //     this.filtro.IdPaciente = mensage.resultado.Persona;
+  //   }
+  //   if (mensage.componente == "SELECEMPLEADO") {
+  //     this.filtro.DocAutorizador= mensage.resultado.Documento;
+  //     this.filtro.Persona = mensage.resultado.NombreCompleto;
+  //     this.filtro.IdAutorizacion = mensage.resultado.Persona;
+  //   }    
+  // }
 
   coreMensaje(mensage: MensajeController): void {
-    if (mensage.componente == "SELECPACIENTE") {
-      this.filtro.DocPaciente = mensage.resultado.Documento;
-      this.filtro.Paciente = mensage.resultado.NombreCompleto;
-      this.filtro.IdPaciente = mensage.resultado.Persona;
+      const dataDevuelta = mensage.resultado;
+  
+      switch (mensage.componente.toUpperCase()) {
+        case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'AUTORIZACIONES':
+        case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'AUTORIZACIONES':
+          this.coreBuscar();
+          break;
+        default:
+          break;
+      }
     }
-    if (mensage.componente == "SELECEMPLEADO") {
-      this.filtro.DocAutorizador= mensage.resultado.Documento;
-      this.filtro.Persona = mensage.resultado.NombreCompleto;
-      this.filtro.IdAutorizacion = mensage.resultado.Persona;
-    }    
-  }
 
   coreNuevo(): void {
-    this.autorizacionesMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_MODELO', ''), "NUEVO", this.objetoTitulo.menuSeguridad.titulo);
+    this.autorizacionesMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'AUTORIZACIONES', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
-  coreEditar(row) {
-    this.autorizacionesMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_MODELO', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, row);
+  coreVer(row: any) {
+    this.autorizacionesMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'AUTORIZACIONES', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, row);
   }
-  coreVer(row) {
-    this.autorizacionesMantenimientoComponent.iniciarComponenteMaestro(new MensajeController(this, 'SELECTOR_MODELO', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, row);
+  coreEditar(row: any) {
+    this.autorizacionesMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'AUTORIZACIONES', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, row);
   }
 
+
+  coreinactivar(row) {
+    this.confirmationService.confirm({
+      header: "Confirmación",
+      icon: "fa fa-question-circle",
+      message: "¿Desea inactivar este registro ? ",
+      key: "confirm2",
+      accept: () => {
+        row.SedEstado = 2;
+        this.AutorizacionService.MantenimientoAutorizacion(3, row, this.getUsuarioToken()).then(
+          res => {
+            if (res != null) {
+              this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Inactivado con éxito.' });
+              this.coreBuscar();
+            }
+          });
+      },
+
+    });
+  }
 
   coreBuscar(): void {
     this.bloquearPag = true;
     this.AutorizacionService.ListaAutorizacion(this.filtro).then((res) => {
-      this.bloquearPag = false;
       var contado = 1;
-      res.forEach(element => {
+      res?.forEach(element => {
         element.num = contado++;
       });
-      this.lstModelo = res;
-      //console.log("coreBuscar listado:", res);
+      this.lstModelo = res?.length > 0 ? res : [];
+      this.bloquearPag = false;
     });
   }
 
@@ -157,18 +197,6 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
   coreSalir(): void {
     throw new Error('Method not implemented.');
   }
-
-
-  ngOnInit(): void {
-    this.tituloListadoAsignar(1, this);
-    this.iniciarComponent()
-    const p1 = this.cargarEstados();
-    Promise.all([p1]).then((resp) => {
-      this.bloquearPag = false;
-    });
-  }
-
-
 
 
   coreInactivar(dtoInactivar) {

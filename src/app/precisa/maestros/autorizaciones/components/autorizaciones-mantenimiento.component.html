@@ -1,7 +1,7 @@
 <p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
-<p-confirmDialog #c key="RegAutDialog" [visible]="visible" [baseZIndex]="10000">
+<p-confirmDialog #c key="refinanciar" [visible]="visible" [baseZIndex]="10000">
     <p-footer>
         <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
             (click)="c.accept()"></button>
@@ -11,7 +11,129 @@
 </p-confirmDialog>
 
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '850px'}" [header]="acciones" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '1000px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+
+    <ng-template pTemplate="content">
+
+        <p-fieldset legend="Información General">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="label">Titular</label>
+                        <input pInputText type="text"
+                            [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}" [disabled]="puedeEditar"
+                             [(ngModel)]="dto.Codigo" placeholder="Ingrese el Titular"
+                            maxlength="4" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="label">Persona</label>
+                        <input pInputText type="text"
+                            [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}" [disabled]="puedeEditar"
+                             [(ngModel)]="dto.Persona" placeholder="Ingrese la Persona"
+                            maxlength="4" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="label">Observación</label>
+                        <input pInputText type="text"
+                            [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}" [disabled]="puedeEditar"
+                            [(ngModel)]="dto.Observacion" maxlength="60" placeholder="Ingrese la Observación"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="label">Estado</label>
+                        <p-dropdown 
+                            [options]="lstEstados" 
+                            [(ngModel)]="dto.Estado" 
+                            [disabled]="puedeEditar"
+                            [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}"
+                            [defaultLabel]="'Seleccione Estado'"
+                            (onShow)="dto.Estado = dto.Estado || 1">
+                        </p-dropdown>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="label">Fecha de Inicio</label>
+                                <p-calendar [monthNavigator]="true" [(ngModel)]="dto.FechaInicio"
+                                    [yearNavigator]="true" [maxDate]="maxDate"
+                                    [style]="{'width':'100%'}"
+                                    [inputStyle]="{'background-color':'rgb(247, 247, 208)', 'width':'80%'}"
+                                    yearRange="1901:2200" [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy"  [disabled]="puedeEditar">
+                                </p-calendar>
+                    </div>
+                </div>   
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="label">Fecha Fin</label>
+                                <p-calendar [monthNavigator]="true" [(ngModel)]="dto.FechaFin"
+                                    [yearNavigator]="true" [maxDate]="maxDate"
+                                    [style]="{'width':'100%'}"
+                                    [inputStyle]="{'background-color':'rgb(247, 247, 208)', 'width':'80%'}"
+                                    yearRange="1901:2200" [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy"  [disabled]="puedeEditar">
+                                </p-calendar>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">  
+                    <nb-checkbox 
+                        status="success" 
+                        [(ngModel)]="dto.AplicaTitular"
+                        [checked]="dto.AplicaTitular === 1"
+                        (checkedChange)="dto.AplicaTitular = $event ? 1 : 0">
+                        Asume Titular
+                    </nb-checkbox>
+                </div>
+        
+                <div class="col-sm-6">  
+                    <nb-checkbox 
+                        status="success"
+                        [(ngModel)]="dto.AplicaMonto"
+                        [checked]="dto.AplicaMonto === 1"
+                        (checkedChange)="dto.AplicaMonto = $event ? 1 : 0">
+                        Aplica Descuento
+                    </nb-checkbox>
+                </div>
+            </div>
+        
+        </p-fieldset>
+        <br>
+        <p-fieldset legend="Auditoria">
+            <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
+                [modificacionFecha]="fechaModificacion"></ngx-auditoria>
+        </p-fieldset>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
+            (click)="coreGuardar()"></p-button>
+    </ng-template>
+</p-dialog>
+<p-toast></p-toast>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+  position="top-right"></p-toast>
+
+<!-- <p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+</p-blockUI>
+<p-confirmDialog #c key="refinanciar" [visible]="visible" [baseZIndex]="10000">
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
+
+<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
+    [style]="{width: '1000px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
         <br>
@@ -106,19 +228,27 @@
                     <br>
                 </div>
                 <div class="col-sm-6">
-                    <label for="inputLastName" class="label">Estado</label>
-                    <p-dropdown placeholder="Seleccione" [options]="lstEstados" [disabled]="puedeEditar"></p-dropdown>  
+                    <div class="form-group">
+                        <label class="label">Estado</label>
+                        <p-dropdown [options]="lstEstados" [(ngModel)]="dto.Estado" [disabled]="puedeEditar"
+                           [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}">
+                        </p-dropdown>
+                    </div>
                 </div>
             </div>
         </p-fieldset>
-        <p-fieldset legend="Datos Generales">
-            <ngx-auditoria></ngx-auditoria>
+        <p-fieldset legend="Auditoria">
+            <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
+                [modificacionFecha]="fechaModificacion"></ngx-auditoria>
         </p-fieldset>
     </ng-template>
     <ng-template pTemplate="footer">
         <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
-            (click)="coreGuardar($event)"></p-button>
+            (click)="coreGuardar()"></p-button>
     </ng-template>
 </p-dialog>
-<p-toast key="x1auto" [baseZIndex]="10000"></p-toast>
-<ngx-persona-buscar></ngx-persona-buscar>
+<p-toast></p-toast>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
+  position="top-right"></p-toast>
+
+<ngx-persona-buscar></ngx-persona-buscar> -->

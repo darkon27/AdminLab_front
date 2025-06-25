@@ -1,17 +1,17 @@
 <p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
-  <img src="assets\img\ZZ5H.gif" style="width: 5%">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
 <p-confirmDialog #c key="refinanciar" [visible]="visible" [baseZIndex]="10000">
-  <p-footer>
-    <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
-      (click)="c.accept()"></button>
-    <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
-      (click)="c.reject()"></button>
-  </p-footer>
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
 </p-confirmDialog>
 
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-  [style]="{width: '1000px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '1000px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
 
