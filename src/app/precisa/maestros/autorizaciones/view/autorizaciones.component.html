@@ -1,14 +1,13 @@
 <p-blockUI [blocked]="bloquearPag">
-  <img src="assets\img\ZZ5H.gif" style="width: 5%">
-</p-blockUI>
-<p-confirmDialog #c key="AutoDialog">
-  <p-footer>
-    <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
-      (click)="c.accept()"></button>
-    <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded" 
-      (click)="c.reject()"></button>
-  </p-footer>
-</p-confirmDialog>
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
+  </p-blockUI>
+  <p-confirmDialog #c key="confirm2">
+    <p-footer>
+      <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+        (click)="c.accept()"></button>
+      <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded" (click)="c.reject()"></button>
+    </p-footer>
+  </p-confirmDialog>
 <p-card>
   <nb-card-header>
     <nav class="fixed">
@@ -155,5 +154,4 @@
 </p-card>
 <ngx-autorizaciones-mantenimiento></ngx-autorizaciones-mantenimiento>
 <ngx-persona-buscar></ngx-persona-buscar>
-<p-toast key="bcaur" [baseZIndex]="3000"></p-toast>
-
+<p-toast key="bc" [baseZIndex]="3000"></p-toast>

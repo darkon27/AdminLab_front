@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MessageService, SelectItem } from "primeng/api";
-import { ComponenteBasePrincipal } from "../../../../../../util/ComponenteBasePrincipa";
-import { MensajeController } from "../../../../../../util/MensajeController";
-import { ConstanteAngular } from "../../../../../@theme/ConstanteAngular";
-import { ConsultaAdmisionService } from "../../../../admision/consulta/servicio/consulta-admision.service";
-import { UsuarioAuth } from "../../../../auth/model/usuario";
-import { PersonaBuscarComponent } from "../../../../framework-comun/Persona/components/persona-buscar.component";
-import { Autorizacion } from "../../model/autorizacion";
-import { AutorizacionService } from "../../service/autorizacionService";
+import { ComponenteBasePrincipal } from "../../../../../util/ComponenteBasePrincipa";
+import { MensajeController } from "../../../../../util/MensajeController";
+import { ConstanteAngular } from "../../../../@theme/ConstanteAngular";
+import { ConsultaAdmisionService } from "../../../admision/consulta/servicio/consulta-admision.service";
+import { UsuarioAuth } from "../../../auth/model/usuario";
+import { PersonaBuscarComponent } from "../../../framework-comun/Persona/components/persona-buscar.component";
+import { Autorizacion } from "../model/autorizacion";
+import { AutorizacionService } from "../service/autorizacionService";
 
 @Component({
     selector: 'ngx-autorizaciones-mantenimiento',

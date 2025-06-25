@@ -14,6 +14,7 @@ import { MaestrocompaniaMastService } from "../../../seguridad/companias/servici
 import { MensajeController } from "../../../../../util/MensajeController";
 import { filtroParametros } from "../model/filtro.parametros";
 import { ConstanteUI } from "../../../../../util/Constantes/Constantes";
+import { forkJoin } from "rxjs";
 
 @Component({
   selector: 'ngx-parametros-mantenimiento',
@@ -22,11 +23,13 @@ import { ConstanteUI } from "../../../../../util/Constantes/Constantes";
 
 export class ParametrosMantenimientoComponent extends ComponenteBasePrincipal implements OnInit, OnDestroy {
   @ViewChild(AuditoriaComponent, { static: false }) auditoriaComponent: AuditoriaComponent;
-  acciones: string = '';
+  titulo: string = '';
   position: string = 'top';
   validarAccion: string = '';
-
-  checked: boolean = false
+  accionRealizar: string = '';
+  visible: boolean;
+  validarform:string = null;
+  checked: boolean = false;
   lstEstados: SelectItem[] = [];
   lstCompania: SelectItem[] = [];
   lstTipoDato: SelectItem[] = [];
@@ -49,105 +52,75 @@ export class ParametrosMantenimientoComponent extends ComponenteBasePrincipal im
   }
 
   ngOnInit(): void {
-    this.bloquearPag = true;
-    const p1 = this.cargarTipo();
-    const p2 = this.cargarEstados();
-    const p3 = this.cargarCombocompania();
-    Promise.all([p1, p2, p3]).then(
-      f => {
-        setTimeout(() => {
-          this.bloquearPag = false;
-        }, 100);
-      });
+    this.cargarSelect();
+    this.iniciarComponent();
   }
 
   ngOnDestroy(): void {
 
   }
 
-  iniciarComponente(msj: MensajeController, accion: string, titulo: string) {
-    this.mensajeController = msj;
-    this.dto = new Parametros();
-    this.acciones = `${titulo}: ${accion}`;
-    this.dialog = true;
-    this.puedeEditar = false;
-    this.validarAccion = accion;
-    let fechaM = new Date();
-    this.dto.UltimaFechaModif = null;
-    this.dto.FechaCreacion = new Date();
-    this.fechaCreacion = new Date();
-    this.fechaModificacion = undefined;
-    this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
-  }
+  cargarSelect(): void {
+        const optTodos = { label: ConstanteAngular.COMBOTODOS, value: null };
+        forkJoin({
+          estados: this.obtenerDataMaestro('ESTLETRAS'),
+        }
+        ).subscribe(resp => {
+          this.lstEstados = [...resp.estados];
+        });
+        this.cargarCombocompania();
+        this.cargarTipo();
+      }
 
-  async cargarAcciones(msj: MensajeController, accion: string, titulo: string, Entydad?: Parametros) {
-    //console.log("dsad",accion);
-    /**PARAMETROS */
-    this.mensajeController = msj;
-    this.validarAccion = accion;
-    this.acciones = `${titulo}: ${accion}`;
-    this.dialog = true;
-
-    /**OBJETOS */
-    this.dto = new Parametros();
-    let filtro = new filtroParametros();
-
-    /**AUDITORIA */
-    this.fechaModificacion = undefined;
-    this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
-
-    /**METODOS DE COMBOS  */
-    await this.cargarEstados();
-    await this.cargarCombocompania();
-
-    /**ACCION DE FORMULARIO */
+  coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, data?: any): void {
     this.bloquearPag = true;
-    
-    switch (accion) {
-      case ConstanteUI.ACCION_SOLICITADA_NUEVO:
-        this.puedeEditar = false;
-        this.NoPuedeEditar = false;
-        this.dto.AplicacionCodigo = "W1";
-        this.dto.Estado = "A";
-      
-        
-        this.fechaCreacion = new Date();
-        break;
-      case ConstanteUI.ACCION_SOLICITADA_EDITAR:
-        this.puedeEditar = false;
-        this.NoPuedeEditar = true;
-        filtro.ParametroClave = Entydad.ParametroClave;
-        const respParametros = await this.ParametrosService.listarParametros(filtro);
-        this.dto = await respParametros[0];
+    this.mensajeController = mensaje;
+    this.cargarAcciones(accionform, titulo, data)
+    this.bloquearPag = false;
 
-        this.dto.CompaniaCodigo = await this.dto.CompaniaCodigo.trim();
-        
-        //falta fecha de creación
-        this.fechaCreacion = new Date(this.dto.FechaCreacion);
-        this.dto.Fecha = new Date(this.dto.Fecha);
-        if (this.dto.UltimaFechaModif != null) {
-          this.fechaModificacion = new Date(this.dto.UltimaFechaModif);
-        }
-        break;
-      case ConstanteUI.ACCION_SOLICITADA_VER:
-        this.puedeEditar = true;
-        this.NoPuedeEditar = true;
-        filtro.ParametroClave = Entydad.ParametroClave;
-        const respParametrosVer = await this.ParametrosService.listarParametros(filtro);
-        this.dto = await respParametrosVer[0];
-
-        this.dto.CompaniaCodigo = await this.dto.CompaniaCodigo.trim();
-
-        //falta fecha de creación
-        this.fechaCreacion = new Date(this.dto.FechaCreacion);
-        this.dto.Fecha = new Date(this.dto.Fecha);
-        if (this.dto.UltimaFechaModif != null) {
-          this.fechaModificacion = new Date(this.dto.UltimaFechaModif);
-        }
-        break;
-    }
-    this.bloquearPag = false
   }
+
+  cargarAcciones(accion: string, titulo: string, rowdata?: any) {
+        this.titulo = `${titulo}: ${accion}`;
+        this.accionRealizar = accion;
+        this.dialog = true;
+    
+        switch (accion) {
+          case ConstanteUI.ACCION_SOLICITADA_NUEVO:
+            this.dto = new Parametros();
+            this.dto.Estado = "A";
+            this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+            this.dto.FechaCreacion = new Date();
+            this.puedeEditar = false;
+    
+            this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+            this.fechaCreacion = new Date();
+            this.fechaModificacion = null;
+            break;
+    
+          case ConstanteUI.ACCION_SOLICITADA_EDITAR:
+            this.dto = rowdata;
+            this.puedeEditar = false;
+            this.fechaModificacion = new Date();
+            this.fechaCreacion = new Date(this.dto.FechaCreacion);
+            this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+    
+            this.dto.UltimoUsuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+            this.dto.UltimaFechaModif = new Date();
+            break;
+    
+          case ConstanteUI.ACCION_SOLICITADA_VER:
+            this.dto = rowdata;
+    
+            this.puedeEditar = true;
+            if (rowdata.FechaModificacion == null || rowdata.FechaModificacion == null) { this.fechaModificacion = null; }
+            else { this.fechaModificacion = new Date(rowdata.FechaModificacion); }
+            this.fechaCreacion = new Date(rowdata.FechaCreacion);
+            this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
+            break;
+        }
+    
+      }
 
 
   cargarEstados() {
@@ -183,63 +156,47 @@ export class ParametrosMantenimientoComponent extends ComponenteBasePrincipal im
     this.dto.TipodeDatoFlag = "T";
   }
 
-
-  saveProduct() {
-
-    if (this.estaVacio(this.dto.CompaniaCodigo)) { this.messageShow('warn', 'Advertencia', 'Seleccione una compañia válida'); return; }
-    if (this.estaVacio(this.dto.TipodeDatoFlag)) { this.messageShow('warn', 'Advertencia', 'Seleccione un tipo de dato válido'); return; }
-    if (this.estaVacio(this.dto.AplicacionCodigo)) { this.messageShow('warn', 'Advertencia', 'Ingrese una aplicación válida'); return; }
-    if (this.estaVacio(this.dto.Texto)) { this.messageShow('warn', 'Advertencia', 'Ingrese un texto válido'); return; }
-    if (this.estaVacio(this.dto.ParametroClave)) { this.messageShow('warn', 'Advertencia', 'Ingrese un parámetro válido'); return; }
-    if (this.estaVacio(this.dto.Numero)) { this.messageShow('warn', 'Advertencia', 'Ingrese un valor válido'); return; }
-    if (this.estaVacio(this.dto.Fecha)) { this.messageShow('warn', 'Advertencia', 'Ingrese una fecha válida'); return; }
-    if (this.estaVacio(this.dto.Estado)) { this.messageShow('warn', 'Advertencia', 'Seleccione una estado válido'); return; }
-
-
-
-
-    this.dto.UltimoUsuario = this.getUsuarioAuth().data[0].Usuario;
-    
-    /**ELIMINA HORAS DE CAMPO FECHA */
-    this.dto.Fecha.setHours(0, 0, 0, 0);
-
-    if (this.validarAccion == "EDITAR") {
-      this.dto.UltimaFechaModif = new Date();
-      this.ParametrosService.mantenimientoParametros(2, this.dto, this.getUsuarioToken()).then(
-        res => {
-          if (res.success) {
-            this.dialog = false;
-            this.messageService.add({ key: 'bc', severity: 'success', summary: 'Actualización', detail: 'Se modifico el registro con éxito.' });
-            this.mensajeController.resultado = res;
-            this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-          } else {
-            this.dialog = false;
-            this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'Error al modificar.' });
-
+  async coreGuardar() {
+          try {
+            //if (this.estaVacio(this.dto.CompaniaCodigo)) { this.messageShow('warn', 'Advertencia', 'Seleccione una compañia válida'); return; }
+            //if (this.estaVacio(this.dto.TipodeDatoFlag)) { this.messageShow('warn', 'Advertencia', 'Seleccione un tipo de dato válido'); return; }
+            //if (this.estaVacio(this.dto.AplicacionCodigo)) { this.messageShow('warn', 'Advertencia', 'Ingrese una aplicación válida'); return; }
+            //if (this.estaVacio(this.dto.Texto)) { this.messageShow('warn', 'Advertencia', 'Ingrese un texto válido'); return; }
+            //if (this.estaVacio(this.dto.ParametroClave)) { this.messageShow('warn', 'Advertencia', 'Ingrese un parámetro válido'); return; }
+            //if (this.estaVacio(this.dto.Numero)) { this.messageShow('warn', 'Advertencia', 'Ingrese un valor válido'); return; }
+            //if (this.estaVacio(this.dto.Fecha)) { this.messageShow('warn', 'Advertencia', 'Ingrese una fecha válida'); return; }
+            //if (this.estaVacio(this.dto.Estado)) { this.messageShow('warn', 'Advertencia', 'Seleccione una estado válido'); return; }
+            let valorAccionServicio: number = this.accionRealizar == ConstanteUI.ACCION_SOLICITADA_NUEVO ? 1 : 2;
+            this.bloquearPag = true;
+            const consultaRepsonse = await this.ParametrosService.mantenimientoParametros(valorAccionServicio, this.dto, this.getUsuarioToken());
+            if (consultaRepsonse.success == true) {
+              this.MensajeToastComun('notification', 'success', 'Correcto', consultaRepsonse.mensaje);
+      
+              this.mensajeController.resultado = consultaRepsonse;
+              this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
+              this.dialog = false;
+      
+            } else {
+              this.MensajeToastComun('notification', 'warn', 'Advertencia', consultaRepsonse.mensaje);
+            }
+          }
+          catch (error) {
+            console.error(error)
+            this.MensajeToastComun('notification', 'error', 'Error', 'Se generó un error. Pongase en contacto con los administradores.');
+            this.bloquearPag = false;
+          } finally {
+            this.bloquearPag = false;
           }
         }
-      ).catch(error => error)
-    }
-    else if (this.validarAccion == "NUEVO") {
-      this.dto.FechaCreacion = new Date();
-      this.ParametrosService.mantenimientoParametros(1, this.dto, this.getUsuarioToken()).then(
-        res => {
-          if (res.success) {
-            this.dialog = false;
-            this.mensajeController.resultado = res;
-            this.messageService.add({ key: 'bc', severity: 'success', summary: 'Actualización', detail: 'Se registro con éxito.' });
-            this.mensajeController.componenteDestino.coreMensaje(this.mensajeController);
-          } else {
-            this.dialog = false;
-            this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Advertencia', detail: 'Error al registrar.' });
-
-          }
-        })
-    }
-  }
 
   async messageShow(_severity: string, _summary: string, _detail: string) {
     this.messageService.add({ key: 'bc', severity: _severity, summary: _summary, detail: _detail, life: 1000 });
   }
+
+  MensajeToastComun(key: string, tipo: string, titulo: string, dsc: string): void {
+    this.messageService.clear();
+    this.messageService.add({ key: key, severity: tipo, summary: titulo, detail: dsc });
+  }
+
 
 }

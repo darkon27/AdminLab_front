@@ -60,7 +60,7 @@ import { localStorageSync } from 'ngrx-store-localstorage';
 import { AsignarExamenesComponent } from './asignar-examenes/asignar-examenes.component';
 import { ModeloServicioMantenimientoComponent } from './ModeloServicio/components/modelo-servicio-mantenimiento.component';
 import { ConfiguracionContratosMantenimientoComponent } from './ConfiguracionContratos/components/configuracion-contratos-mantenimiento.component';
-import { AutorizacionesMantenimientoComponent } from './autorizaciones/view/components/autorizaciones-mantenimiento.component';
+import { AutorizacionesMantenimientoComponent } from './autorizaciones/components/autorizaciones-mantenimiento.component';
 import { ListaBaseMantenimientoComponent } from './lista-base/components/lista-base-mantenimiento.component';
 import { ExamenListaMantenimientoComponent } from './exameneslista/components/examen-lista-mantenimiento.component';
 import { MaestroDetalleMantenimientoComponent } from './Detalle/components/maestro-detalle-mantenimiento.component';

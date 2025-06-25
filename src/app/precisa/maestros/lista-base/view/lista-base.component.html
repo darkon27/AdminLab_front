@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-sm-4">
           <label for="inputOrdAten" class="label">Código</label>
-          <input pInputText type="text" placeholder="" style="width:100%; height: 30px; text-transform: uppercase;"
+          <input pInputText type="text" placeholder="" style="width:100%; height: 30px;"
             [(ngModel)]="filtro.Codigo"/>
         </div>
   
@@ -77,7 +77,7 @@
                       class="p-button-rounded p-button-text" title="Ver"></button>
                   </th>
                   <th>
-                    <button pButton pRipple type="button" icon="fad fa-minus-circle" (click)="coreinactivar(rowData)"
+                    <button pButton pRipple type="button" icon="fad fa-minus-circle" *ngIf="rowData.Estado == 1" (click)="coreinactivar(rowData)"
                       class="p-button-rounded p-button-text" title="Inactivar"></button>
                   </th>
                   <!-- <th>

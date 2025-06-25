@@ -108,27 +108,26 @@ export class ParametrosComponent extends ComponenteBasePrincipal implements OnIn
   }
 
   coreMensaje(mensage: MensajeController): void {
-    if (mensage.componente == "SELECTOR_PARAMETROS") {
-      this.coreBuscar();
+      const dataDevuelta = mensage.resultado;
+  
+      switch (mensage.componente.toUpperCase()) {
+        case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'SELECTOR_PARAMETROS':
+        case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'SELECTOR_PARAMETROS':
+          this.coreBuscar();
+          break;
+        default:
+          break;
+      }
     }
 
-  }
-
   coreNuevo(): void {
-    this.parametrosMantenimientoComponent.cargarAcciones(new MensajeController(this, 'SELECTOR_PARAMETROS', ''),ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo);
+    this.parametrosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'LISTA_BASE', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
-
-  coreVer(event: any) {
-    //console.log("llego BtncoreVer  ", event);
-    this.Entydad = event;
-    //console.log("llego Entydad  ", this.Entydad);
-    this.parametrosMantenimientoComponent.cargarAcciones(new MensajeController(this, 'SELECTOR_PARAMETROS', ''), "VER", this.objetoTitulo.menuSeguridad.titulo, this.Entydad);
+  coreVer(row: any) {
+    this.parametrosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'TIPO_TRABAJADOR', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, row);
   }
-
-  coreEditar(event: any) {
-    //console.log("llego BtncoreEditar  ", event);
-    this.Entydad = event;
-    this.parametrosMantenimientoComponent.cargarAcciones(new MensajeController(this, 'SELECTOR_PARAMETROS', ''), "EDITAR", this.objetoTitulo.menuSeguridad.titulo, this.Entydad)
+  coreEditar(row: any) {
+    this.parametrosMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPO_TRABAJADOR', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, row)
   }
 
   onRowSelect(event: any) {
@@ -136,7 +135,6 @@ export class ParametrosComponent extends ComponenteBasePrincipal implements OnIn
   }
 
   coreBuscar(): void {
-    //console.log("llego coreBuscar");
 
     if (this.filtro.AplicacionCodigo == "") {
       this.filtro.AplicacionCodigo = null;
@@ -146,6 +144,9 @@ export class ParametrosComponent extends ComponenteBasePrincipal implements OnIn
     }
     if (this.filtro.Estado == "") {
       this.filtro.Estado = null;
+    }
+    if (this.filtro.CompaniaCodigo == "") {
+      this.filtro.CompaniaCodigo = null;
     }
     //console.log("llego filtro", this.filtro);
     this.bloquearPag = true;

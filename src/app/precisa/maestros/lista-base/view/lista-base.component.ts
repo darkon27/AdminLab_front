@@ -196,7 +196,7 @@ export class ListaBaseComponent extends ComponenteBasePrincipal implements OnIni
       key: "confirm2",
       accept: () => {
         row.SedEstado = 2;
-        this.ExamenService.MantenimientoBaseComponente(3, row, this.getUsuarioToken()).then(
+        this.listabaseServices.MantenimientoBase(3, row, this.getUsuarioToken()).then(
           res => {
             if (res != null) {
               this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Inactivado con éxito.' });

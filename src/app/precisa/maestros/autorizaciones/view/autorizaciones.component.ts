@@ -12,7 +12,7 @@ import { PersonaService } from '../../../framework-comun/Persona/servicio/person
 import { Autorizacion } from '../model/autorizacion';
 import { IAutorizacion } from '../model/IAutorizacion';
 import { AutorizacionService } from '../service/autorizacionService';
-import { AutorizacionesMantenimientoComponent } from '../view/components/autorizaciones-mantenimiento.component';
+import { AutorizacionesMantenimientoComponent } from '../components/autorizaciones-mantenimiento.component';
 
 @Component({
   selector: 'ngx-autorizaciones',

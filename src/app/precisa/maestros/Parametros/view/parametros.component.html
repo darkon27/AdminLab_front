@@ -20,7 +20,7 @@
 
       <div class="col-sm-3">
         <label for="inputOrdAten" class="label">Compañia</label>
-        <p-dropdown [(ngModel)]="filtro.CompaniaCodigo" [options]="lstCompania"
+        <p-dropdown [(ngModel)]="filtro.CompaniaCodigo" [filter]="true" [options]="lstCompania"
           [style]="{'width':'100%','text-transform': 'uppercase'}"></p-dropdown>
       </div>
 
