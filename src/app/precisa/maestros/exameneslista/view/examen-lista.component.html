@@ -1,12 +1,11 @@
 <p-blockUI [blocked]="bloquearPag">
     <img src="assets\img\ZZ5H.gif" style="width: 5%">
   </p-blockUI>
-  <p-confirmDialog #c key="confirm">
+  <p-confirmDialog #c key="confirm2">
     <p-footer>
-        <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
-            (click)="c.accept()"></button>
-        <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded"
-            (click)="c.reject()"></button>
+      <button pButton type="button" icon="fa fa-check" label="Si" class="ui-button-rounded ui-button-danger"
+        (click)="c.accept()"></button>
+      <button pButton type="button" icon="fa fa-close" label="No" class="ui-button-rounded" (click)="c.reject()"></button>
     </p-footer>
   </p-confirmDialog>
 <nb-card>
@@ -48,19 +47,19 @@
             [rowsPerPageOptions]="[15,30,50]" [showCurrentPageReport]="true" [scrollable]="true" scrollHeight="300px">
             <ng-template pTemplate="header">
                     <tr>
-                        <th class="tablaHeaderAccion3">Acción</th>
+                        <th class="tablaHeaderAccion3" ALIGN="center">Acción</th>
                        
-                        <th pSortableColumn="Perfil" class="label" ALIGN="center" style="width: 5rem;  ">Código<p-sortIcon field="Perfil"></p-sortIcon>
+                        <th pSortableColumn="Perfil" class="label text-center" ALIGN="center" style="width: 5rem;">Código<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="VaEstado" class="label" ALIGN="center" style="width: 10rem;  ">Lista Base<p-sortIcon field="VaEstado"></p-sortIcon>
+                        <th pSortableColumn="VaEstado" class="label text-center" ALIGN="center" style="width: 10rem;  ">Lista Base<p-sortIcon field="VaEstado"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="VaEstado" class="label" ALIGN="center" style="width: 10rem;  ">Descripción<p-sortIcon field="VaEstado"></p-sortIcon>
+                        <th pSortableColumn="VaEstado" class="label text-center" ALIGN="center" style="width: 10rem;  ">Descripción<p-sortIcon field="VaEstado"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="Perfil" class="label" ALIGN="center" style="width: 5rem;  ">PrecioUnitarioLista<p-sortIcon field="Perfil"></p-sortIcon>
+                        <th pSortableColumn="Perfil" class="label text-center" ALIGN="center" style="width: 5rem;  ">PrecioUnitarioLista<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="Perfil" class="label" ALIGN="center" style="width: 5rem;  ">TipoFactor<p-sortIcon field="Perfil"></p-sortIcon>
+                        <th pSortableColumn="Perfil" class="label text-center" ALIGN="center" style="width: 5rem;  ">TipoFactor<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="Perfil" class="label" ALIGN="center" style="width: 5rem;  ">Estado<p-sortIcon field="Perfil"></p-sortIcon>
+                        <th pSortableColumn="Perfil" class="label text-center" ALIGN="center" style="width: 5rem;  ">Estado<p-sortIcon field="Perfil"></p-sortIcon>
                         </th>
 
                     </tr>
@@ -82,8 +81,8 @@
                                             (click)="coreVer(asignarPerfil)"></button>
                                     </th>
                                     <th>
-                                        <button pButton pRipple type="button" icon="fal fa-trash-alt"
-                                            class="p-button-rounded p-button-text" title="Inactivar"></button>
+                                        <button pButton pRipple type="button" icon="fad fa-minus-circle" *ngIf="asignarPerfil.Estado == 1" (click)="coreinactivar(asignarPerfil)"
+                                        class="p-button-rounded p-button-text" title="Inactivar"></button>
                                     </th>
                                 </tr>
                             </table>

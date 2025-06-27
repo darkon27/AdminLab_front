@@ -22,8 +22,7 @@
                         <label class="label">Titular</label>
                         <input pInputText type="text"
                             [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}" [disabled]="puedeEditar"
-                             [(ngModel)]="dto.Codigo" placeholder="Ingrese el Titular"
-                            maxlength="4" />
+                             [(ngModel)]="dto.Codigo" placeholder="Ingrese el Titular" />
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -31,8 +30,7 @@
                         <label class="label">Persona</label>
                         <input pInputText type="text"
                             [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}" [disabled]="puedeEditar"
-                             [(ngModel)]="dto.Persona" placeholder="Ingrese la Persona"
-                            maxlength="4" />
+                             [(ngModel)]="dto.Persona" placeholder="Ingrese la Persona"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -86,19 +84,19 @@
                 <div class="col-sm-6">  
                     <nb-checkbox 
                         status="success" 
-                        [(ngModel)]="dto.AplicaTitular"
-                        [checked]="dto.AplicaTitular === 1"
-                        (checkedChange)="dto.AplicaTitular = $event ? 1 : 0">
+                        [ngModel]="dto.AplicaTitular === 1 ? 1 : 0"
+                        (ngModelChange)="dto.AplicaTitular = $event ? 1 : 0"
+                        [disabled]="puedeEditar">
                         Asume Titular
                     </nb-checkbox>
                 </div>
-        
+
                 <div class="col-sm-6">  
                     <nb-checkbox 
                         status="success"
-                        [(ngModel)]="dto.AplicaMonto"
-                        [checked]="dto.AplicaMonto === 1"
-                        (checkedChange)="dto.AplicaMonto = $event ? 1 : 0">
+                        [ngModel]="dto.AplicaMonto === 1 ? 1 : 0"
+                        (ngModelChange)="dto.AplicaMonto = $event ? 1 : 0"
+                        [disabled]="puedeEditar">
                         Aplica Descuento
                     </nb-checkbox>
                 </div>

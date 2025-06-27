@@ -14,7 +14,7 @@
         <ngx-header-titulo [objTitulo]="objetoTitulo"></ngx-header-titulo>
     </nav>
 </nb-card-header>
-  <p-fieldset legend="Información Consulta">
+  <p-fieldset legend="Información Consulta" (keyup.enter)="coreBuscar()">
     <div class="row">
       <div class="col-sm-4">
         <label for="documentoFiscal" class="label">Autorizador</label>
@@ -67,7 +67,7 @@
       </div>
     </div>
   </p-fieldset>
-  <p-fieldset legend="Información Consulta">
+  <p-fieldset legend="Información Consulta" >
     <p-table #dt [rows]="15" [paginator]="true" [rowHover]="true" dataKey="num" [value]="lstModelo"
       [responsive]="true" [sortOrder]="1" sortField="num"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"

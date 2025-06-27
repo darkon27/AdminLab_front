@@ -76,10 +76,14 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
             this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
             this.dto.FechaCreacion = new Date();
             this.puedeEditar = false;
+            this.dto.IdAutorizacion = 1;
+            this.dto.AplicaTitular = this.dto.AplicaTitular ? 1 : 0;
+            this.dto.AplicaMonto = this.dto.AplicaMonto ? 1 : 0;
     
             this.usuario = this.getUsuarioAuth().data[0].NombreCompleto.trim();
             this.fechaCreacion = new Date();
             this.fechaModificacion = null;
+            this.dto.UneuNegocioId = 1;
             break;
     
           case ConstanteUI.ACCION_SOLICITADA_EDITAR:
@@ -116,7 +120,9 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
 
   async coreGuardar() {
           try {
-            if (this.estaVacio(this.dto.Observacion)) { this.MensajeToastComun('notification','warn', 'Advertencia', 'Ingrese un valor válido'); return; }
+            if (this.estaVacio(this.dto.UneuNegocioId)) { this.MensajeToastComun('notification','warn', 'Advertencia', 'Ingrese UneuNegocioId'); return; }
+            if (this.estaVacio(this.dto.IdAutorizacion)) { this.MensajeToastComun('notification','warn', 'Advertencia', 'Ingrese IdAutorizacion'); return; }
+            if (this.estaVacio(this.dto.Observacion)) { this.MensajeToastComun('notification','warn', 'Advertencia', 'Ingrese Observacion'); return; }
             if (this.estaVacio(this.dto.Estado)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una estado válido'); return; }
             //if (this.estaVacio(this.dto.Descripcion)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Ingrese una descripción válida'); return; }
             // if (this.estaVacio(this.dto.IdTipoCambio)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione un tipo de cambio válido'); return; }

@@ -10,6 +10,7 @@ import { DtoListaComponente } from '../../../framework-comun/Examen/dominio/dto/
 import { ExamenService } from '../../../framework-comun/Examen/servicio/Examen.service';
 import { listabaseServices } from '../../lista-base/service/listabase.service';
 import { ExamenListaMantenimientoComponent } from '../components/examen-lista-mantenimiento.component';
+import { ConstanteUI } from '../../../../../util/Constantes/Constantes';
 
 @Component({
   selector: 'ngx-examen-lista',
@@ -31,6 +32,7 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
     private messageService: MessageService,
     private ExamenService: ExamenService,
     private listabaseServices: listabaseServices,
+    private confirmationService: ConfirmationService,
     private toastrService: NbToastrService) {
     super();
   }
@@ -44,31 +46,18 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
   }
 
   coreNuevo(): void {
-    this.examenListaMantenimientoComponent.iniciarComponente("NUEVO",this.objetoTitulo.menuSeguridad.titulo)
-  }
+    this.examenListaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'EXAMEN_LISTA_BASE', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
+    }
 
   coreBuscar(): void {
-    // Validación de campos obligatorios
-    if (this.estaVacio(this.filtro.IdListaBase)) {
-      this.messageShow('warn', 'Advertencia', 'Debe seleccionar una Lista Base.');
-      return;
-    }
-  
-    if (this.estaVacio(this.filtro.Estado)) {
-      this.messageShow('warn', 'Advertencia', 'Debe seleccionar un Estado.');
-      return;
-    }
-
-    // Búsqueda
     this.bloquearPag = true;
-    this.ExamenService.ListadoBaseComponente(this.filtro).then((res) => {
-      this.bloquearPag = false;  
-      let contado = 1;
-      res.forEach(element => {
+    this.listabaseServices.ListadoBase(this.filtro).then((res) => {
+      var contado = 1;
+      res?.forEach(element => {
         element.num = contado++;
-      });  
-      this.lstListaBaseComponente = res;
-      //console.log("coreBuscar ListadoBaseComponente:", res);
+      });
+      this.lstListaBaseComponente = res?.length > 0 ? res : [];
+      this.bloquearPag = false;
     });
   }
 
@@ -84,12 +73,32 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
     throw new Error('Method not implemented.');
   }
 
-  coreVer(dto): void{
-    this.examenListaMantenimientoComponent.iniciarComponente("VER",this.objetoTitulo.menuSeguridad.titulo)
+  coreVer(row: any): void{
+    this.examenListaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'TIPO_TRABAJADOR', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, row);
   }
 
-  coreEditar(dto): void{
-    this.examenListaMantenimientoComponent.iniciarComponente("EDITAR",this.objetoTitulo.menuSeguridad.titulo)
+  coreEditar(row: any): void{
+    this.examenListaMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPO_TRABAJADOR', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, row)
+  }
+
+  coreinactivar(row) {
+    this.confirmationService.confirm({
+      header: "Confirmación",
+      icon: "fa fa-question-circle",
+      message: "¿Desea inactivar este registro ? ",
+      key: "confirm2",
+      accept: () => {
+        row.SedEstado = 2;
+        this.listabaseServices.MantenimientoBase(3, row, this.getUsuarioToken()).then(
+          res => {
+            if (res != null) {
+              this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Inactivado con éxito.' });
+              this.coreBuscar();
+            }
+          });
+      },
+
+    });
   }
 
   ngOnInit(): void {
