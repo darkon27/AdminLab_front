@@ -50,6 +50,15 @@ export class ExamenListaComponent extends ComponenteBasePrincipal implements OnI
     }
 
   coreBuscar(): void {
+    if (this.estaVacio(this.filtro.IdListaBase)) {
+      this.messageShow('warn', 'Advertencia', 'Debe seleccionar una Lista Base.');
+      return;
+    }
+  
+    if (this.estaVacio(this.filtro.Estado)) {
+      this.messageShow('warn', 'Advertencia', 'Debe seleccionar un Estado.');
+      return;
+    }
     this.bloquearPag = true;
     this.listabaseServices.ListadoBase(this.filtro).then((res) => {
       var contado = 1;
