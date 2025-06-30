@@ -76,7 +76,7 @@ export class CambioComercialMantenimientoComponent extends ComponenteBasePrincip
         this.dto = new CambioComercial();
         this.dto.Estado = 'A';
         this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
-        this.dto.IdTipoCambio = 1;
+        this.dto.IdTipoCambio = 1; // Asignar un valor por defecto
         this.dto.FechaCreacion = new Date();
         this.puedeEditar = false;
 
@@ -110,6 +110,9 @@ export class CambioComercialMantenimientoComponent extends ComponenteBasePrincip
   }
 
   async coreGuardar() {
+
+    console.log('Datos enviados:', this.dto);
+    console.log('Tipo de datos:', typeof this.dto);
         try {
           if (this.estaVacio(this.dto.Valor)) { this.MensajeToastComun('notification','warn', 'Advertencia', 'Ingrese un valor válido'); return; }
           if (this.estaVacio(this.dto.Estado)) { this.MensajeToastComun('notification', 'warn', 'Advertencia', 'Seleccione una estado válido'); return; }

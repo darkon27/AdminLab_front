@@ -67,20 +67,20 @@ export class CambioComercialComponent extends ComponenteBasePrincipal implements
 
 
   coreNuevo(): void {
-    this.cambioComercialMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'TIPO_TRABAJADOR', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
+    this.cambioComercialMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_NUEVO + 'CAMBIO_COMERCIAL', ''), ConstanteUI.ACCION_SOLICITADA_NUEVO, this.objetoTitulo.menuSeguridad.titulo, 0, {});
   }
   coreVer(row: any) {
-    this.cambioComercialMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'TIPO_TRABAJADOR', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, row);
+    this.cambioComercialMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_VER + 'CAMBIO_COMERCIAL', ''), ConstanteUI.ACCION_SOLICITADA_VER, this.objetoTitulo.menuSeguridad.titulo, 0, row);
   }
   coreEditar(row: any) {
-    this.cambioComercialMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPO_TRABAJADOR', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, row)
+    this.cambioComercialMantenimientoComponent.coreIniciarComponentemantenimiento(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_EDITAR + 'CAMBIO_COMERCIAL', ''), ConstanteUI.ACCION_SOLICITADA_EDITAR, this.objetoTitulo.menuSeguridad.titulo, 0, row)
   }
   coreMensaje(mensage: MensajeController): void {
     const dataDevuelta = mensage.resultado;
 
     switch (mensage.componente.toUpperCase()) {
-      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'TIPO_TRABAJADOR':
-      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'TIPO_TRABAJADOR':
+      case ConstanteUI.ACCION_SOLICITADA_NUEVO + 'CAMBIO_COMERCIAL':
+      case ConstanteUI.ACCION_SOLICITADA_EDITAR + 'CAMBIO_COMERCIAL':
         this.coreBuscar();
         break;
       default:

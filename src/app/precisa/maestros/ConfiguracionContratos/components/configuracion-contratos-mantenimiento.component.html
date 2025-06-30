@@ -23,7 +23,7 @@
                                 <b style="color: rgb(209, 5, 5);">*</b>
                             </label>
                             <div class="form-group">
-                                <p-dropdown [options]="lstTipoAdmision" formControlName="TIPOADMISIONID"
+                                <p-dropdown [options]="lstTipoAdmision" [(ngModel)]="TIPOADMISIONID"
                                     placeholder="-- Seleccione --" (onChange)="selectedTipoAdmision($event)"
                                     [disabled]="puedeEditar">
                                 </p-dropdown>
@@ -32,7 +32,7 @@
                         <div class="col-sm-6">
                             <label for="inputLastName" class="label">Tipo Paciente</label>
                             <div class="form-group">
-                                <p-dropdown [options]="lstTipoPaciente" formControlName="TipoPacienteId"
+                                <p-dropdown [options]="lstTipoPaciente" [(ngModel)]="TipoPacienteId"
                                     placeholder="-- Seleccione --" [disabled]="puedeEditar" [filter]="true">
                                 </p-dropdown>
                             </div>
@@ -41,7 +41,7 @@
                             <label for="inputLastName" class="label">Cliente</label>
                             <div class="p-inputgroup">
                                 <div class="p-inputgroup">
-                                    <input pInputText type="text" formControlName="RucEmpresa"
+                                    <input pInputText type="text" [(ngModel)]="RucEmpresa"
                                         (keydown)="validarTeclaEnterCliente($event)" 
                                         class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
                                         style="width:60%; background-color: rgb(247, 247, 208); height: 30px;" />
@@ -49,7 +49,7 @@
                                     <input pInputText type="text"
                                         class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
                                         style="width:140%; background-color: rgb(247, 247, 208); height: 30px;"
-                                        formControlName="empresa"  />
+                                        [(ngModel)]="empresa"  />
 
                                     <div class="input-group-append">
                                         <button class="btn btn-outline" type="button" id="button-addon2"
@@ -66,7 +66,7 @@
                         </div>
                         <div class="col-sm-12">
                             <label for="inputLastName" class="label">Descripcion</label>
-                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="Descripcion" />
+                            <input pInputText type="text" [style]="{'width':'100%'}" [(ngModel)]="Descripcion" />
                         </div>
 
                         <div class="row">
@@ -74,7 +74,7 @@
                                 <label class="label">Fecha Inicio</label>
                                 <div class="p-inputgroup">
                                     <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                        [style]="{'width':'100%'}" formControlName="FechaInicio"
+                                        [style]="{'width':'100%'}" [(ngModel)]="FechaInicio"
                                         [inputStyle]="{'width':'100%'}" [disabled]="true" yearRange="1940:2300"
                                         [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
                                     </p-calendar>
@@ -84,7 +84,7 @@
                                 <label class="label">Fecha Fin</label>
                                 <div class="p-inputgroup">
                                     <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                        [style]="{'width':'100%'}" formControlName="FechaTermino"
+                                        [style]="{'width':'100%'}" [(ngModel)]="FechaTermino"
                                         [inputStyle]="{'width':'100%'}" [disabled]="true" yearRange="1940:2300"
                                         [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
                                     </p-calendar>
@@ -93,12 +93,12 @@
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarContrato">
                             <label for="inputLastName" class="label">Contrato</label>
-                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="CodigoContrato" />
+                            <input pInputText type="text" [style]="{'width':'100%'}" [(ngModel)]="CodigoContrato" />
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarSede">
                             <label for="inputLastName" class="label">Sede</label>
                             <div class="form-group">
-                                <p-dropdown placeholder="-- Seleccione --" [options]="lstsedes" formControlName="IdSede"
+                                <p-dropdown placeholder="-- Seleccione --" [options]="lstsedes" [(ngModel)]="IdSede"
                                     [disabled]="puedeEditar">
                                 </p-dropdown>
                             </div>
@@ -107,7 +107,7 @@
                             <label for="inputLastName" class="label">Estado</label>
                             <div class="form-group">
                                 <p-dropdown placeholder="-- Seleccione --" [options]="lstEstados"
-                                    [disabled]="puedeEditar" formControlName="TipEstado">
+                                    [disabled]="puedeEditar" [(ngModel)]="TipEstado">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                             <label for="inputLastName" class="label">Lista Base</label>
                             <div class="form-group">
                                 <p-dropdown placeholder="-- Seleccione --" [options]="lstListaBase"
-                                    [disabled]="puedeEditar" formControlName="IdListaBase" [filter]="true">
+                                    [disabled]="puedeEditar" [(ngModel)]="IdListaBase" [filter]="true">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                             <label for="inputLastName" class="label">Moneda</label>
                             <div class="form-group">
                                 <p-dropdown placeholder="-- Seleccione --" [options]="lstMoneda"
-                                    [disabled]="puedeEditar" formControlName="TPMoneda">
+                                    [disabled]="puedeEditar" [(ngModel)]="TPMoneda">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -137,56 +137,56 @@
                             <label for="inputLastName" class="label"> Tipo Formula</label>
                             <div class="form-group">
                                 <p-dropdown placeholder="-- Seleccione --" [options]="lstFormula"
-                                    formControlName="AplicaFormula" [disabled]="puedeEditar" [filter]="true">
+                                    [(ngModel)]="AplicaFormula" [disabled]="puedeEditar" [filter]="true">
                                 </p-dropdown>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="inputLastName" class="label">Asume Empresa</label>
-                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="Monto"
+                            <input pInputText type="text" [style]="{'width':'100%'}" [(ngModel)]="Monto"
                                 (keypress)="validateDecimalInput($event)" (paste)="validatePaste($event)"
                                 pattern="^\d+(\.\d{0,2})?$" />
                         </div>
                         <div class="col-sm-6" style="margin-top: 10px;">
-                            <nb-checkbox status="success" formControlName="TPAplicaFactor">Aplica
+                            <nb-checkbox status="success" [(ngModel)]="TPAplicaFactor">Aplica
                                 Factor</nb-checkbox>
                         </div>
                         <div class="col-sm-6">
                             <label for="inputLastName" class="label">Factor</label>
-                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="TPFactor"
+                            <input pInputText type="text" [style]="{'width':'100%'}" [(ngModel)]="TPFactor"
                                 (keypress)="validateDecimalInput($event)" (paste)="validatePaste($event)"
                                 pattern="^\d+(\.\d{0,2})?$" />
                         </div>
                         <div class="col-sm-6" style="margin-top: 10px;">
-                            <nb-checkbox status="success" formControlName="FlaCon">Consentimiento</nb-checkbox>
+                            <nb-checkbox status="success" [(ngModel)]="FlaCon">Consentimiento</nb-checkbox>
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarSedeCliente" style="margin-top: 10px;">
                             <label for="inputLastName" class="label">Sede Cliente</label>
                             <div class="form-group">
                                 <p-dropdown placeholder="-- Seleccione --" [options]="lstsedeCliente"
-                                    [disabled]="puedeEditar" formControlName="IdSedeCliente">
+                                    [disabled]="puedeEditar" [(ngModel)]="IdSedeCliente">
                                 </p-dropdown>
                             </div>
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarAprobacion" style="margin-top: 10px;">
-                            <nb-checkbox status="success" formControlName="TPFactor">Aprobación</nb-checkbox>
+                            <nb-checkbox status="success" [(ngModel)]="TPFactor">Aprobación</nb-checkbox>
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarAdelanto" style="margin-top: 10px;">
-                            <nb-checkbox status="success" formControlName="FlagAdelanto">Requiere
+                            <nb-checkbox status="success" [(ngModel)]="FlagAdelanto">Requiere
                                 Adelanto</nb-checkbox>
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarMinimo" style="margin-top: 10px;">
                             <label for="inputLastName" class="label">% Minimo</label>
-                            <input pInputText type="text" [style]="{'width':'100%'}" formControlName="MontoMinimo"
+                            <input pInputText type="text" [style]="{'width':'100%'}" [(ngModel)]="MontoMinimo"
                                 (keypress)="validateDecimalInput($event)" (paste)="validatePaste($event)"
                                 pattern="^\d+(\.\d{0,2})?$" />
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarRedondeo" style="margin-top: 10px;">
-                            <nb-checkbox status="success" formControlName="FlagRedondeo">Redondeo a
+                            <nb-checkbox status="success" [(ngModel)]="FlagRedondeo">Redondeo a
                                 Entero</nb-checkbox>
                         </div>
                         <div class="col-sm-6" *ngIf="mostrarCortesia" style="margin-top: 10px;">
-                            <nb-checkbox status="success" formControlName="FlagCortesia">Cortesia (Grat.
+                            <nb-checkbox status="success" [(ngModel)]="FlagCortesia">Cortesia (Grat.
                                 Inafecto)</nb-checkbox>
                         </div>
                     </div>

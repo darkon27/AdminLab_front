@@ -3,13 +3,13 @@ export class CambioComercial {
 
   num: number;
   IdTipoCambio: number;
-  FechaInicio: string | Date;
-  FechaFin: string | Date;
+  FechaInicio: Date;
+  FechaFin: Date;
   Valor: number;
   Estado: string;
-  FechaCreacion: string | Date;
+  FechaCreacion: Date;
   UsuarioCreacion: string;
-  FechaModificacion: string | Date;
+  FechaModificacion: Date;
   UsuarioModificacion: string;
   EstadoDesc: string;
 }

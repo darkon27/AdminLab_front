@@ -66,19 +66,6 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
     });
   }
 
-  // coreMensaje(mensage: MensajeController): void {
-  //   if (mensage.componente == "SELECPACIENTE") {
-  //     this.filtro.DocPaciente = mensage.resultado.Documento;
-  //     this.filtro.Paciente = mensage.resultado.NombreCompleto;
-  //     this.filtro.IdPaciente = mensage.resultado.Persona;
-  //   }
-  //   if (mensage.componente == "SELECEMPLEADO") {
-  //     this.filtro.DocAutorizador= mensage.resultado.Documento;
-  //     this.filtro.Persona = mensage.resultado.NombreCompleto;
-  //     this.filtro.IdAutorizacion = mensage.resultado.Persona;
-  //   }    
-  // }
-
   coreMensaje(mensage: MensajeController): void {
       const dataDevuelta = mensage.resultado;
   

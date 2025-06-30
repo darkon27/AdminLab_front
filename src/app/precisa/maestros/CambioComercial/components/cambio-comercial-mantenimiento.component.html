@@ -1,17 +1,17 @@
 <p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
-  <img src="assets\img\ZZ5H.gif" style="width: 5%">
+    <img src="assets\img\ZZ5H.gif" style="width: 5%">
 </p-blockUI>
 <p-confirmDialog #c key="refinanciar" [visible]="visible" [baseZIndex]="10000">
-  <p-footer>
-    <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
-      (click)="c.accept()"></button>
-    <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
-      (click)="c.reject()"></button>
-  </p-footer>
+    <p-footer>
+        <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
+            (click)="c.accept()"></button>
+        <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
+            (click)="c.reject()"></button>
+    </p-footer>
 </p-confirmDialog>
 
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-  [style]="{width: '1000px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '1000px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
         <br>
@@ -24,25 +24,27 @@
             </div> -->
             <div class="col-sm-6" style="margin-bottom: 1rem;">
                 <label class="label">Fecha Inicio</label>
-                <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
-                [inputStyle]="{'width':'100%','background-color':'rgb(247, 247, 208)'}"
-                [style]="{'width':'100%'}" yearRange="1940:2200" [locale]="es" [(ngModel)]="dto.FechaInicio"
-                dateFormat="dd/mm/yy" [showIcon]="true">
-                </p-calendar>
+                <p-calendar [monthNavigator]="true" [(ngModel)]="dto.FechaInicio"
+                                    [yearNavigator]="true" [maxDate]="maxDate"
+                                    [style]="{'width':'100%'}"
+                                    [inputStyle]="{'background-color':'rgb(247, 247, 208)', 'width':'80%'}"
+                                    yearRange="1901:2200" [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy"  [disabled]="puedeEditar">
+                                </p-calendar>
             </div>
             <div class="col-sm-6" style="margin-bottom: 1rem;">
                 <label class="label">Fecha Fin</label>
-                <p-calendar [disabled]="puedeEditar" [monthNavigator]="true" [yearNavigator]="true"
-                [inputStyle]="{'width':'100%','background-color':'rgb(247, 247, 208)'}"
-                [style]="{'width':'100%'}" yearRange="1940:2200" [locale]="es" [(ngModel)]="dto.FechaFin"
-                dateFormat="dd/mm/yy" [showIcon]="true">
-                </p-calendar>
+                <p-calendar [monthNavigator]="true" [(ngModel)]="dto.FechaFin"
+                                    [yearNavigator]="true" [maxDate]="maxDate"
+                                    [style]="{'width':'100%'}"
+                                    [inputStyle]="{'background-color':'rgb(247, 247, 208)', 'width':'80%'}"
+                                    yearRange="1901:2200" [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy"  [disabled]="puedeEditar">
+                                </p-calendar>
             </div>
 
             <div class="col-sm-6" style="margin-bottom: 1rem;">
                 <label class="label">Valor</label>
-                <input pInputText type="text" [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" [(ngModel)]="dto.Valor"
-                [disabled]=" puedeEditar" />
+                <input pInputText type="number" step="0.01" [style]="{'background-color':'rgb(247, 247, 208)', 'width':'100%'}" [(ngModel)]="dto.Valor"
+                [disabled]="puedeEditar" />
             </div>
             <div class="col-sm-6" style="margin-bottom: 1rem;">
                 <label class="label">Estado</label>
