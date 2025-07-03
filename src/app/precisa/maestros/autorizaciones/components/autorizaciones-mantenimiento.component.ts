@@ -193,8 +193,12 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
 
     switch (mensage.componente.toUpperCase()) {
       case ConstanteUI.ACCION_SOLICITADA_SELECCION_EMPLEADO:
-        this.dto.IdUsuario = dataDevuelta.Documento.trim();
+        this.dto.DocAutorizador = dataDevuelta.Documento.trim();
         this.dto.Persona = dataDevuelta.NombreCompleto.trim();
+        break;
+      case ConstanteUI.ACCION_SOLICITADA_SELECCION_PACIENTE:
+        this.dto.DocPaciente = dataDevuelta.Documento.trim();
+        this.dto.Paciente = dataDevuelta.NombreCompleto.trim();
         break;
       default:
         break;
