@@ -6,10 +6,14 @@ import { ConstanteAngular } from "../../../../@theme/ConstanteAngular";
 import { ConsultaAdmisionService } from "../../../admision/consulta/servicio/consulta-admision.service";
 import { UsuarioAuth } from "../../../auth/model/usuario";
 import { PersonaBuscarComponent } from "../../../framework-comun/Persona/components/persona-buscar.component";
+import { PersonaService } from "../../../framework-comun/Persona/servicio/persona.service";
 import { Autorizacion } from "../model/autorizacion";
 import { AutorizacionService } from "../service/autorizacionService";
 import { forkJoin } from "rxjs";
 import { ConstanteUI } from "../../../../../util/Constantes/Constantes";
+import { dtoPersona } from "../../../framework-comun/Persona/dominio/dto/dtoPersona";
+import { FiltroPersona } from "../../persona/dominio/filtro/FiltroPersona";
+
 
 @Component({
     selector: 'ngx-autorizaciones-mantenimiento',
@@ -19,15 +23,29 @@ import { ConstanteUI } from "../../../../../util/Constantes/Constantes";
 export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipal implements OnInit {
   @ViewChild(PersonaBuscarComponent, { static: false }) personaBuscarComponent: PersonaBuscarComponent;
 
+
+  dtoPersona: dtoPersona = new dtoPersona();
+  filtroPersona: FiltroPersona = new FiltroPersona();
+  
+  lstTipoDocumento: SelectItem[] = [];
+  lstTipoFormula: SelectItem[] = [];
+  EnterPersona: SelectItem[] = [];
+  lstPersona: any[] = [];
   visible: boolean = false;
   bloquearPag: boolean;
   titulo: string = ''
+  filtro: Autorizacion = new Autorizacion();
+  editarCampo1: boolean = false;
+  editarCampoAutorizador: boolean = true;
+  editarCampo2: boolean = false;
+  editarCampoPaciente: boolean = true;
   accionRealizar: string = ''
   position: string = 'top'
   validarform: string = null;
   usuarioAuth: UsuarioAuth = new UsuarioAuth();
   dto: Autorizacion = new Autorizacion();
   lstEstados: SelectItem[] = [];
+  lstFormula: SelectItem[] = [];
   usuario: string;
   fechaCreacion: Date;
   fechaModificacion: Date;
@@ -35,7 +53,8 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
   constructor(
     private messageService: MessageService,
     private consultaAdmisionService: ConsultaAdmisionService,
-    private AutorizacionService: AutorizacionService
+    private AutorizacionService: AutorizacionService,
+    private personaService: PersonaService
   ) {
     super();
   }
@@ -46,14 +65,19 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
   }
 
   cargarSelect(): void {
-        const optTodos = { label: ConstanteAngular.COMBOTODOS, value: null };
-        forkJoin({
-          estados: this.obtenerDataMaestro('ESTGEN'),
-        }
-        ).subscribe(resp => {
-          this.lstEstados = [...resp.estados];
-        });
-      }
+    const opt = { label: ConstanteAngular.COMBOSELECCIONE, value: null };
+    forkJoin({
+      estados: this.obtenerDataMaestro('ESTGEN'),
+    }
+    ).subscribe(resp => {
+      const dataEstados = resp.estados?.map((ele: any) => ({
+        label: ele.label?.trim()?.toUpperCase() || "", value: Number.parseInt(ele.value)
+      }));
+      this.lstEstados = [opt, ...dataEstados];
+
+      this.lstTipoFormula = [{ label: 'PORCENTAJE', value: 2 }, { label: 'MONTO', value: 1 }];
+    });
+  }
 
 
   coreIniciarComponentemantenimiento(mensaje: MensajeController, accionform: string, titulo: string, page: number, data?: any): void {
@@ -84,6 +108,7 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
             this.fechaCreacion = new Date();
             this.fechaModificacion = null;
             this.dto.UneuNegocioId = 1;
+            this.dto.IdTitularAutorizado = 2;
             break;
     
           case ConstanteUI.ACCION_SOLICITADA_EDITAR:
@@ -109,11 +134,126 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
         }
     
       }
+  
+  verSelectorAutorizador(): void {
+    this.personaBuscarComponent.coreIniciarComponente(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_SELECCION_EMPLEADO, 'BUSCAR'), 'BUSCAR ', "E");
+  }
+
+  validarEnterAutorizador(evento) {   
+    if (evento.key == "Enter") {
+      if (this.filtro.DocAutorizador == null) {
+        this.toastMensaje('Ingrese un Nro. de documento', 'warning', 3000);
+      }
+      else if (this.filtro.DocAutorizador.trim().length <= 4) {
+        this.toastMensaje('Documento no encontrado, revise bien los parametros', 'warning', 3000);
+        this.filtro.DocPaciente = null;
+      } else {
+        this.getPersonaServicio(this.filtro.DocAutorizador.trim(), 1);
+      }
+    }
+  }
+
+  limpiarAutorizador() {
+    this.filtro.DocAutorizador = null;
+    this.filtro.IdAutorizacion = null;
+    this.filtro.Persona = null;
+    this.editarCampoAutorizador = false;
+  }
+
+  verSelectorPaciente(): void {
+    this.personaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECPACIENTE', 'BUSCAR'), 'BUSCAR','N');
+  }
+
+
+  validarEnterPaciente(evento) {
+    if (evento.key == "Enter") {
+      if (this.filtro.DocPaciente == null) {
+        this.toastMensaje('Ingrese un Nro. de documento', 'warning', 3000);
+      }
+      else if (this.filtro.DocPaciente.trim().length <= 4) {
+        this.toastMensaje('Documento no encontrado, revise bien los parametros', 'warning', 3000);
+        this.filtro.DocPaciente = null;
+      } else {
+        this.getPersonaServicio(this.filtro.DocPaciente.trim(), 2);
+      }
+    }
+  }
+
+
+  limpiarPaciente() {
+    this.filtro.Paciente = "";
+    this.filtro.IdPaciente = null;
+    this.filtro.DocPaciente = "";
+    this.editarCampoPaciente = false;
+    this.editarCampo2 = true;
+  }
+
+  coreMensaje(mensage: MensajeController): void {
+    const dataDevuelta = mensage.resultado;
+
+    switch (mensage.componente.toUpperCase()) {
+      case ConstanteUI.ACCION_SOLICITADA_SELECCION_EMPLEADO:
+        this.dto.IdUsuario = dataDevuelta.Documento.trim();
+        this.dto.Persona = dataDevuelta.NombreCompleto.trim();
+        break;
+      default:
+        break;
+    }
+  }
+
+  getPersonaServicio(documento: any, validator: number) {
+    //console.log("mensaje documento", documento);
+    let dto = {
+      Documento: documento.trim(),
+      tipopersona: "P",
+      SoloBeneficiarios: "0",
+      UneuNegocioId: "0"
+    }
+
+    return this.personaService.listaPersonaUsuario(dto).then((res) => {
+      //console.log("mensaje del res", res);
+      this.bloquearPag = false;
+      if (res.length > 0) {
+        if (validator == 1) {
+          if (this.estaVacio(res[0].NombreCompleto)) {
+            this.filtro.Persona = `${res[0].Nombres}, ${res[0].ApellidoPaterno}`
+          } else {
+            this.filtro.Persona = res[0].NombreCompleto;
+          }
+          this.filtro.DocAutorizador = res[0].Documento;
+          this.filtro.IdAutorizacion = res[0].Persona;
+         }
+         else {
+          if (this.estaVacio(res[0].NombreCompleto)) {
+            this.filtro.Paciente = `${res[0].Nombres}, ${res[0].ApellidoPaterno}`
+
+          } else {
+            this.filtro.Paciente = res[0].NombreCompleto;
+          }
+          this.filtro.DocPaciente = res[0].Documento;
+          this.filtro.IdPaciente = res[0].Persona;
+        }
+      } else {
+        //console.log("entroo nadaaa");
+        this.toastMensaje('Documento no encontrado, revise bien los parametros', 'warning', 3000)
+        this.filtro.DocPaciente = null;
+      }
+    }).catch(error => error);
+
+  }
 
   cargarComboEstados() {
       this.lstEstados = [];
       this.lstEstados.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
       this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
+        this.lstEstados.push({ label: i.Nombre.toUpperCase(), value: i.IdCodigo });
+      });
+  }
+
+  cargarComboFORMULA() {
+      this.lstFormula = [];
+      this.lstFormula.push({ label: ConstanteAngular.COMBOSELECCIONE, value: null });
+      this.getMiscelaneos()?.filter(x => x.CodigoTabla == "FORMULA").forEach(i => {
         this.lstEstados.push({ label: i.Nombre.toUpperCase(), value: i.IdCodigo });
       });
   }

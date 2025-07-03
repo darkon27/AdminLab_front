@@ -12,6 +12,8 @@ export class Autorizacion{
     FechaInicio?:       Date; 
     FechaFin?:          Date; 
 
+    IdUsuario: string;
+    NombreCompleto: string;
     AplicaTitular?:     number;
     AplicaMonto?:       number;
     AplicaFormula?:     number;

@@ -231,6 +231,7 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
     this.getMiscelaneos()?.filter(x => x.CodigoTabla == "ESTGEN").forEach(i => {
       this.lstEstado.push({ label: i.Nombre, value: i.IdCodigo });
     });
+    this.filtro.Estado = 1;
   }
 
 
@@ -287,7 +288,7 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
     this.editarCampo2 = true;
   }
 
-
+  
   getPersonaServicio(documento: any, validator: number) {
     //console.log("mensaje documento", documento);
     let dto = {

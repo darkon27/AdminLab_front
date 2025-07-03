@@ -11,7 +11,7 @@
 </p-confirmDialog>
 
 <p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '1000px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
+    [style]="{width: '850px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
 
     <ng-template pTemplate="content">
 
@@ -19,20 +19,50 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="label">Titular</label>
-                        <input pInputText type="text"
-                            [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}" [disabled]="puedeEditar"
-                             [(ngModel)]="dto.Codigo" placeholder="Ingrese el Titular" />
+                        <label for="inputLastName" class="label">Cliente</label>
+                        <div class="p-inputgroup">
+                            <div class="p-inputgroup">
+                                <input pInputText type="text" (keydown)="validarEnterAutorizador($event)"
+                                    class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                    style="width:70%; height: 30px;" [disabled]="true" [(ngModel)]="dto.IdUsuario" />
+                                &nbsp;
+                                <input pInputText type="text"
+                                    class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                                    style="width:130%; height: 30px;" [disabled]="true"
+                                    [(ngModel)]="dto.NombreCompleto" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline" type="button" id="button-addon2"
+                                        style=" height:30px; margin-left:-32px" (click)="limpiarAutorizador()"
+                                        [disabled]="editarCampo1">x</button>
+                                </div>
+                            </div>
+                            <button (click)="verSelectorAutorizador()" pButton icon="fa fa-search" class="botonbuscar"
+                                type="button" title="Buscar Autorizador" [disabled]="editarCampo1"></button>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="label">Persona</label>
+                    <label for="documentoFiscal" class="label">Paciente</label>
+                    <div class="p-inputgroup">
+                    <div class="p-inputgroup">
+                        <input pInputText type="text" (keydown)="validarEnterPaciente($event)" 
+                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                        style="width:70%; height: 30px;" [(ngModel)]="filtro.DocPaciente"
+                        [disabled]="editarCampoPaciente" />
+                        &nbsp;
                         <input pInputText type="text"
-                            [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}" [disabled]="puedeEditar"
-                             [(ngModel)]="dto.Persona" placeholder="Ingrese la Persona"/>
+                        class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                        style="width:130%; height: 30px;" [(ngModel)]="filtro.Paciente" [disabled]="true" />
+                        <div class="input-group-append">
+                        <button class="btn btn-outline" type="button" id="button-addon2"
+                            style=" height:30px; margin-left:-32px" (click)="limpiarPaciente()"
+                            [disabled]="editarCampo2">x</button>
+                        </div>
                     </div>
-                </div>
+                    <button (click)="verSelectorPaciente()" pButton icon="fa fa-search" class="botonbuscar" type="button"
+                        title="Buscar Empresa" [disabled]="editarCampo2"></button>
+                    </div>
+                </div> 
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="label">Observación</label>
@@ -100,141 +130,28 @@
                         Aplica Descuento
                     </nb-checkbox>
                 </div>
-            </div>
-        
-        </p-fieldset>
-        <br>
-        <p-fieldset legend="Auditoria">
-            <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
-                [modificacionFecha]="fechaModificacion"></ngx-auditoria>
-        </p-fieldset>
-    </ng-template>
-    <ng-template pTemplate="footer">
-        <p-button label="Guardar" icon="pi pi-save" styleClass="p-button-primary" [disabled]="puedeEditar" type="submit"
-            (click)="coreGuardar()"></p-button>
-    </ng-template>
-</p-dialog>
-<p-toast></p-toast>
-<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
-  position="top-right"></p-toast>
-
-<!-- <p-blockUI [blocked]="bloquearPag" [baseZIndex]="10000">
-    <img src="assets\img\ZZ5H.gif" style="width: 5%">
-</p-blockUI>
-<p-confirmDialog #c key="refinanciar" [visible]="visible" [baseZIndex]="10000">
-    <p-footer>
-        <button pButton type="button" icon="fa fa-check" label="Si, Guardar" class="ui-button-rounded ui-button-danger"
-            (click)="c.accept()"></button>
-        <button pButton type="button" icon="fa fa-close" label="No, Cancelar" class="ui-button-rounded"
-            (click)="c.reject()"></button>
-    </p-footer>
-</p-confirmDialog>
-
-<p-dialog [(visible)]="dialog" [draggable]="false" [modal]="true" [resizable]="false" [breakpoints]="{'950px': '75vw'}"
-    [style]="{width: '1000px'}" [header]="titulo" [position]="position" [maximizable]="true" [baseZIndex]="10000">
-
-    <ng-template pTemplate="content">
-        <br>
-        <p-fieldset legend="Datos">
-            <div class="row">
-                <div class="col-sm-12">        
-                     <label for="inputLastName" class="label">Titular</label>
-                     <div class="p-inputgroup">
-                        <div class="p-inputgroup">
-                            <input pInputText type="text" (keydown)="validarTeclaEnter($event)"
-                                [(ngModel)]="Entydad.Usuario" [disabled]="editarrepresen" [disabled]="true"
-                                class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
-                                style="width:70%; background-color: rgb(247, 247, 208); height: 30px;" />
-                            &nbsp;
-                            <input pInputText type="text" [(ngModel)]="Entydad.NombreCompleto"
-                                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
-                                style="width:130%; background-color: rgb(247, 247, 208); height: 30px;"
-                                [disabled]="true" />
-                            <div class="input-group-append">
-                                <button pButton icon="fad fa-minus-circle" type="button" title="Limpiar"
-                                    (click)="limpiarDocumento()" [disabled]="puedeEditar">
-                                </button>
-                            </div>
-                        </div>
-                        <button (click)="verSelector()" pButton icon="fal fa-search" class="botonbuscar"
-                            [disabled]="puedeEditar" type="button" title="Buscar"></button>
-                    </div>
-                </div>
-
-                <div class="col-sm-12">
-                    <label class="label">Persona</label>
-                    <div class="p-inputgroup">
-                        <div class="p-inputgroup">
-                            <input pInputText type="text" (keydown)="validarTeclaEnter($event)"
-                                [(ngModel)]="Entydad.Usuario" [disabled]="editarrepresen" [disabled]="true"
-                                class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
-                                style="width:70%; background-color: rgb(247, 247, 208); height: 30px;" />
-                            &nbsp;
-                            <input pInputText type="text" [(ngModel)]="Entydad.NombreCompleto"
-                                class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
-                                style="width:130%; background-color: rgb(247, 247, 208); height: 30px;"
-                                [disabled]="true" />
-                            <div class="input-group-append">
-                                <button pButton icon="fad fa-minus-circle" type="button" title="Limpiar"
-                                    (click)="limpiarDocumento()" [disabled]="puedeEditar">
-                                </button>
-                            </div>
-                        </div>
-                        <button (click)="verSelector()" pButton icon="fal fa-search" class="botonbuscar"
-                            [disabled]="puedeEditar" type="button" title="Buscar"></button>
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                        <label for="inputLastName" class="label">Observación</label>
-                        <textarea pInputTextarea style="width: 100%" rows="3" cols="30" maxlength="800"></textarea>
-                </div>
-
-                <div class="col-sm-6">
-                    <label for="inputLastName" class="label">Fecha Inicio</label>
-                    <div class="p-inputgroup">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                [style]="{'width':'100%'}"  
-                                [disabled]="true" yearRange="2000:2100"
-                                [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
-                        </p-calendar>
-                    </div>
-                </div>
-
-                <div class="col-sm-6">
-                    <label for="inputLastName" class="label">Fecha Fin</label>
-                    <div class="p-inputgroup">
-                        <p-calendar [monthNavigator]="true" [yearNavigator]="true"
-                                [style]="{'width':'100%'}"  
-                                [disabled]="true" yearRange="2000:2100"
-                                [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true">
-                        </p-calendar>
-                    </div>
-                </div>
-
-                <div class="col-sm-12">
-                    <br>
-                </div>
-     
-                <div class="col-sm-6">  
-                    <nb-checkbox status="success">Asume Titular</nb-checkbox>
-                </div>
-        
-                <div class="col-sm-6">  
-                    <nb-checkbox status="success">Aplica Descuento</nb-checkbox>
-                </div>
-                <div class="col-sm-12">
-                    <br>
-                </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6" *ngIf="dto.AplicaMonto === 1">
                     <div class="form-group">
-                        <label class="label">Estado</label>
-                        <p-dropdown [options]="lstEstados" [(ngModel)]="dto.Estado" [disabled]="puedeEditar"
-                           [style]="{'width':'100%','background-color': 'rgb(247, 247, 208)'}">
+                        <label for="inputLastName" class="label">Tipo formula</label>
+                        <p-dropdown placeholder="Seleccione" [options]="lstTipoFormula" [disabled]="puedeEditar"
+                            [(ngModel)]="dto.TipoDescuento">
                         </p-dropdown>
                     </div>
                 </div>
+                <div class="col-sm-6" *ngIf="dto.AplicaMonto === 1">
+                    <div class="form-group">
+                        <label for="inputLastName" class="label">Monto</label>
+                        <div class="p-inputgroup">
+                            <input pInputText type="text"
+                                class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                [(ngModel)]="dto.Monto" />
+                        </div>
+                    </div>
+                </div>
             </div>
+        
         </p-fieldset>
+        <br>
         <p-fieldset legend="Auditoria">
             <ngx-auditoria [creacionUsuario]="usuario" [creacionFecha]="fechaCreacion"
                 [modificacionFecha]="fechaModificacion"></ngx-auditoria>
@@ -246,7 +163,6 @@
     </ng-template>
 </p-dialog>
 <p-toast></p-toast>
-<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification"
-  position="top-right"></p-toast>
-
-<ngx-persona-buscar></ngx-persona-buscar> -->
+<ngx-persona-buscar></ngx-persona-buscar>
+<p-toast [showTransformOptions]="'translateY(90%)'" [baseZIndex]="10000" key="notification" 
+        position="top-right"></p-toast>
