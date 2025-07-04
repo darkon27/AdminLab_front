@@ -17,35 +17,27 @@
   <p-fieldset legend="Información Consulta" (keyup.enter)="coreBuscar()">
     <div class="row">
       <div class="col-sm-4">
-        <label for="documentoFiscal" class="label">Autorizador</label>
+        <label for="inputLastName" class="label">Autorizador</label>
         <div class="p-inputgroup">
-            <div class="p-inputgroup">
-                <input pInputText type="text" 
-                      (keydown)="validarEnterAutorizador($event)"
-                      class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
-                      style="width:70%; height: 30px;" 
-                      [(ngModel)]="filtro.DocAutorizador" 
-                      [disabled]="editarCampoAutorizador" />
-                &nbsp;
-                <input pInputText type="text"
-                      class="hoverDisabled size-medium col-9 status-basic shape-rectangle nb-transition"
-                      style="width:130%; height: 30px;" 
-                      [(ngModel)]="filtro.Persona" 
-                      [disabled]="true" />
-                <div class="input-group-append">
-                    <button class="btn btn-outline" type="button" id="button-addon2"
-                            *ngIf="filtro?.Persona != '' || filtro?.Persona != null || filtro?.Persona != undefined"
-                            style="height:30px; margin-left:-32px; display: flex; align-items: center;" 
-                            (click)="limpiarAutorizador()"
-                            [disabled]="editarCampo1" 
-                            title="Limpiar Autorizador">x</button>
-                </div>
-            </div>
-            <button (click)="verSelectorAutorizador()" pButton icon="fa fa-search" class="botonbuscar" type="button"
-                    title="Buscar Autorizador" 
-                    [disabled]="editarCampo1"></button>
+          <div class="p-inputgroup">
+        <input pInputText type="text" (keydown)="validarEnterAutorizador($event)"
+          class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+          style="width:70%; height: 30px;" [disabled]="true" [(ngModel)]="filtro.DocAutorizador" />
+        &nbsp;
+        <input pInputText type="text"
+          class="hoverDisabled size-medium col-9 status-basic shape-rectangle nb-transition"
+          style="width:130%; height: 30px;" [disabled]="true"
+          [(ngModel)]="filtro.Persona" />
+        <div class="input-group-append">
+          <button class="btn btn-outline" type="button" id="button-addon2"
+            style="height:30px; margin-left:-32px" (click)="limpiarAutorizador()"
+            [disabled]="editarCampo1">x</button>
         </div>
-    </div>
+          </div>
+          <button (click)="verSelectorAutorizador()" pButton icon="fa fa-search" class="botonbuscar"
+        type="button" title="Buscar Autorizador" [disabled]="editarCampo1"></button>
+        </div>
+      </div>
       <div class="col-sm-4">
         <label for="documentoFiscal" class="label">Paciente</label>
         <div class="p-inputgroup">

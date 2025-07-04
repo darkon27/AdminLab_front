@@ -310,8 +310,7 @@ export class AutorizacionesComponent extends ComponenteBasePrincipal implements 
           }
           this.filtro.DocAutorizador = res[0].Documento;
           this.filtro.IdAutorizacion = res[0].Persona;
-         }
-         else {
+        } else {
           if (this.estaVacio(res[0].NombreCompleto)) {
             this.filtro.Paciente = `${res[0].Nombres}, ${res[0].ApellidoPaterno}`
 

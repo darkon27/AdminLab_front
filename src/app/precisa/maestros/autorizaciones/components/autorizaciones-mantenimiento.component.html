@@ -42,27 +42,29 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <label for="documentoFiscal" class="label">Paciente</label>
-                    <div class="p-inputgroup">
-                    <div class="p-inputgroup">
-                        <input pInputText type="text" (keydown)="validarEnterPaciente($event)" 
-                        class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
-                        style="width:70%; height: 30px;" [(ngModel)]="dto.DocPaciente"
-                        [disabled]="editarCampoPaciente" />
-                        &nbsp;
-                        <input pInputText type="text"
-                        class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
-                        style="width:130%; height: 30px;" [(ngModel)]="dto.Paciente" [disabled]="true" />
-                        <div class="input-group-append">
-                        <button class="btn btn-outline" type="button" id="button-addon2"
-                            style=" height:30px; margin-left:-32px" (click)="limpiarPaciente()"
-                            [disabled]="editarCampo2">x</button>
+                    <div class="form-group">
+                        <label for="inputLastName" class="label">Paciente</label>
+                        <div class="p-inputgroup">
+                            <div class="p-inputgroup">
+                                <input pInputText type="text" (keydown)="validarEnterPaciente($event)"
+                                    class="hoverDisabled size-large status-basic shape-rectangle nb-transition"
+                                    style="width:70%; height: 30px;" [disabled]="editarCampoPaciente" [(ngModel)]="dto.DocPaciente" />
+                                &nbsp;
+                                <input pInputText type="text"
+                                    class="hoverDisabled  size-medium col-9 status-basic shape-rectangle nb-transition"
+                                    style="width:130%; height: 30px;" [disabled]="true"
+                                    [(ngModel)]="dto.Paciente" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline" type="button" id="button-addon2"
+                                        style=" height:30px; margin-left:-32px" (click)="limpiarPaciente()"
+                                        [disabled]="editarCampo2">x</button>
+                                </div>
+                            </div>
+                            <button (click)="verSelectorPaciente()" pButton icon="fa fa-search" class="botonbuscar"
+                                type="button" title="Buscar Paciente" [disabled]="editarCampo2"></button>
                         </div>
                     </div>
-                    <button (click)="verSelectorPaciente()" pButton icon="fa fa-search" class="botonbuscar" type="button"
-                        title="Buscar Paciente" [disabled]="editarCampo2"></button>
-                    </div>
-                </div> 
+                </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="label">Observación</label>

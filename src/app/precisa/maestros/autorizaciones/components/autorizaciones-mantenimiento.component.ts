@@ -100,7 +100,7 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
             this.dto.UsuarioCreacion = this.getUsuarioAuth().data[0].NombreCompleto.trim();
             this.dto.FechaCreacion = new Date();
             this.puedeEditar = false;
-            this.dto.IdAutorizacion = 1;
+            //this.dto.IdAutorizacion = 1;
             this.dto.AplicaTitular = this.dto.AplicaTitular ? 1 : 0;
             this.dto.AplicaMonto = this.dto.AplicaMonto ? 1 : 0;
     
@@ -108,7 +108,7 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
             this.fechaCreacion = new Date();
             this.fechaModificacion = null;
             this.dto.UneuNegocioId = 1;
-            this.dto.IdTitularAutorizado = 2;
+            //this.dto.IdTitularAutorizado = 2;
             break;
     
           case ConstanteUI.ACCION_SOLICITADA_EDITAR:
@@ -161,7 +161,7 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
   }
 
   verSelectorPaciente(): void {
-    this.personaBuscarComponent.coreIniciarComponente(new MensajeController(this, 'SELECPACIENTE', 'BUSCAR'), 'BUSCAR','N');
+    this.personaBuscarComponent.coreIniciarComponente(new MensajeController(this, ConstanteUI.ACCION_SOLICITADA_SELECCION_PACIENTE, 'BUSCAR'), 'BUSCAR ', "E");
   }
 
 
@@ -195,10 +195,16 @@ export class AutorizacionesMantenimientoComponent extends ComponenteBasePrincipa
       case ConstanteUI.ACCION_SOLICITADA_SELECCION_EMPLEADO:
         this.dto.DocAutorizador = dataDevuelta.Documento.trim();
         this.dto.Persona = dataDevuelta.NombreCompleto.trim();
+        this.dto.IdTitularAutorizado = dataDevuelta.Persona;
+        this.dto.IdAutorizacion = dataDevuelta.Persona;
+        console.log("Nombre: ", this.dto.Persona);
+        console.log("Documento: ", this.dto.DocAutorizador);
+        console.log("IdTitularAutorizado: ", this.dto.IdTitularAutorizado);
         break;
       case ConstanteUI.ACCION_SOLICITADA_SELECCION_PACIENTE:
         this.dto.DocPaciente = dataDevuelta.Documento.trim();
         this.dto.Paciente = dataDevuelta.NombreCompleto.trim();
+        this.dto.IdPaciente = dataDevuelta.Persona;
         break;
       default:
         break;
